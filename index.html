@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Goalkeeper Trainer</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Goalkeeper Trainer</p>
+        <h1>Allenamento portieri</h1>
+      </div>
+      <button id="resetBtn" class="ghost-btn" title="Reset storico">Reset</button>
+    </header>
+
+    <main>
+      <section id="homeView" class="view active">
+        <div class="hero-card">
+          <div>
+            <p class="eyebrow">Sessione rapida</p>
+            <h2>Allena riflessi, uscite e reattività</h2>
+            <p class="muted">Scegli un esercizio, avvia il timer, registra parate/errori/reazioni e salva la sessione.</p>
+          </div>
+          <div class="score-ring">
+            <span id="weekSessions">0</span>
+            <small>sedute</small>
+          </div>
+        </div>
+
+        <h3 class="section-title">Esercizi</h3>
+        <div id="exerciseList" class="exercise-list"></div>
+      </section>
+
+      <section id="detailView" class="view">
+        <button class="back-btn" data-go="home">← Esercizi</button>
+        <div id="exerciseDetail"></div>
+      </section>
+
+      <section id="workoutView" class="view">
+        <button class="back-btn" data-go="detail">← Dettaglio</button>
+
+        <div class="timer-card">
+          <p id="workoutCategory" class="eyebrow"></p>
+          <h2 id="workoutName"></h2>
+          <div id="timerDisplay" class="timer">00</div>
+          <p id="phaseLabel" class="muted">Pronto</p>
+
+          <div class="button-row">
+            <button id="startPauseBtn" class="primary-btn">Start</button>
+            <button id="finishBtn" class="dark-btn">Termina</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <button class="stat-btn green" data-stat="saves">
+            <strong id="savesCount">0</strong>
+            <span>Parate</span>
+          </button>
+          <button class="stat-btn red" data-stat="mistakes">
+            <strong id="mistakesCount">0</strong>
+            <span>Errori</span>
+          </button>
+          <button class="stat-btn orange" data-stat="reactions">
+            <strong id="reactionsCount">0</strong>
+            <span>Reazioni</span>
+          </button>
+        </div>
+
+        <div class="coach-card">
+          <div>
+            <p class="eyebrow">Coach vocale</p>
+            <h3 id="cueText">—</h3>
+            <p class="muted">Genera comandi casuali per reattività: destra, sinistra, alto, basso, uscita.</p>
+          </div>
+          <button id="cueBtn" class="ghost-btn">Comando</button>
+        </div>
+      </section>
+
+      <section id="historyView" class="view">
+        <h2>Storico</h2>
+        <p class="muted">Sessioni salvate localmente sul dispositivo/browser.</p>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button data-tab="home" class="nav-btn active">Esercizi</button>
+      <button data-tab="history" class="nav-btn">Storico</button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
