@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#07110b" />
-  <title>GK Trainer</title>
+  <title>GK Trainer FIGC</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -19,16 +19,14 @@
     </header>
 
     <main>
-      <!-- SETUP INIZIALE -->
       <section id="setupView" class="view active">
         <div class="setup-card">
           <p class="eyebrow">Schermata iniziale</p>
           <h2>Configura il gruppo portieri</h2>
-          <p class="muted">Questi dati servono solo per adattare esercizi, durata e riepilogo. Restano salvati nel browser.</p>
+          <p class="muted">La libreria esercizi è basata sul documento FIGC “Il portiere dentro il gioco - eserciziario attività giovanile”.</p>
 
           <form id="setupForm" class="form-grid">
-            <label>
-              Numero portieri
+            <label>Numero portieri
               <select id="keepersCount">
                 <option value="1">1 portiere</option>
                 <option value="2">2 portieri</option>
@@ -38,16 +36,14 @@
               </select>
             </label>
 
-            <label>
-              Sport
+            <label>Sport
               <select id="sportType">
                 <option value="calcio">Calcio</option>
                 <option value="futsal">Futsal</option>
               </select>
             </label>
 
-            <label>
-              Livello
+            <label>Livello
               <select id="level">
                 <option value="base">Base</option>
                 <option value="medio" selected>Medio</option>
@@ -55,8 +51,7 @@
               </select>
             </label>
 
-            <label>
-              Allenamenti a settimana
+            <label>Allenamenti a settimana
               <select id="sessionsPerWeek">
                 <option value="1">1 a settimana</option>
                 <option value="2" selected>2 a settimana</option>
@@ -64,8 +59,7 @@
               </select>
             </label>
 
-            <label>
-              Durata allenamento
+            <label>Durata allenamento
               <select id="sessionDuration">
                 <option value="60" selected>1 ora</option>
                 <option value="120">2 ore</option>
@@ -75,7 +69,7 @@
             <div class="keepers-box">
               <div class="keepers-header">
                 <h3>Portieri</h3>
-                <span class="pill">nome, altezza, peso</span>
+                <span class="pill">nome · altezza · peso</span>
               </div>
               <div id="keepersFields" class="keepers-fields"></div>
             </div>
@@ -85,7 +79,6 @@
         </div>
       </section>
 
-      <!-- HOME / ESERCIZI -->
       <section id="homeView" class="view">
         <div class="hero-card">
           <div>
@@ -100,25 +93,29 @@
         </div>
 
         <div class="filters">
-          <button class="filter-btn active" data-filter="all">Tutti</button>
+          <button class="filter-btn active" data-filter="recommended">Consigliati</button>
+          <button class="filter-btn" data-filter="all">Tutti</button>
           <button class="filter-btn" data-filter="calcio">Calcio</button>
           <button class="filter-btn" data-filter="futsal">Futsal</button>
+          <button class="filter-btn" data-filter="separata">Separata</button>
+          <button class="filter-btn" data-filter="integrata">Integrata</button>
           <button class="filter-btn" data-filter="base">Base</button>
           <button class="filter-btn" data-filter="medio">Medio</button>
           <button class="filter-btn" data-filter="pro">Pro</button>
         </div>
 
-        <h3 class="section-title">Esercizi predefiniti</h3>
+        <div class="section-header">
+          <h3>Proposte pratiche dal documento</h3>
+          <span id="exerciseCount" class="pill">0 esercizi</span>
+        </div>
         <div id="exerciseList" class="exercise-list"></div>
       </section>
 
-      <!-- DETTAGLIO ESERCIZIO -->
       <section id="detailView" class="view">
         <button class="back-btn" data-go="home">← Esercizi</button>
         <div id="exerciseDetail"></div>
       </section>
 
-      <!-- WORKOUT -->
       <section id="workoutView" class="view">
         <button class="back-btn" data-go="detail">← Dettaglio</button>
 
@@ -156,22 +153,20 @@
 
         <div class="coach-card">
           <div>
-            <p class="eyebrow">Coach vocale</p>
+            <p class="eyebrow">Comando rapido</p>
             <h3 id="cueText">—</h3>
-            <p class="muted">Comandi casuali per reattività: destra, sinistra, alto, basso, uscita, secondo palo.</p>
+            <p class="muted">Comandi casuali per reattività e orientamento.</p>
           </div>
           <button id="cueBtn" class="ghost-btn">Comando</button>
         </div>
       </section>
 
-      <!-- STORICO -->
       <section id="historyView" class="view">
         <h2>Storico</h2>
         <p class="muted">Sessioni salvate localmente su questo dispositivo/browser.</p>
         <div id="historyList" class="history-list"></div>
       </section>
 
-      <!-- PROFILO -->
       <section id="profileView" class="view">
         <div class="setup-card">
           <p class="eyebrow">Impostazioni</p>

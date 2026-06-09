@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-v2";
+const CACHE_NAME = "gk-trainer-figc-v1";
 const ASSETS = [
   "./",
   "./index.html",

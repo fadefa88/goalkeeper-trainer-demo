@@ -1,28 +1,29 @@
-# GK Trainer Demo v2
+# GK Trainer FIGC Demo
 
 Demo PWA per allenamento portieri.
 
-## Novità v2
+## Contenuto
 
-- Schermata iniziale con:
-  - numero portieri
-  - sport: calcio/futsal
-  - livello: base/medio/pro
-  - allenamenti a settimana
-  - durata seduta: 1 ora / 2 ore
-  - nome, altezza e peso portieri
-- Tema nero/verde.
-- Esercizi filtrati in base a sport e livello.
-- Storico per portiere.
-- Comandi vocali casuali.
-- Esercizi originali ispirati a principi pubblici FIGC/SGS e catalogo YouCoach/FIGC.
+La libreria esercizi è stata ricostruita dal documento caricato:
+**Il portiere dentro il gioco - eserciziario attività giovanile**.
+
+Sono presenti 31 esercizi/proposte pratiche, inclusi:
+- U6/U7 - U8/U9
+- U10/U11
+- U12/U13
+- Futsal
+- Modalità separata e integrata
 
 ## Come provarla
 
 Apri `index.html`, oppure usa VS Code + Live Server.
 
-## Come pubblicarla
+## Come pubblicarla su GitHub Pages
 
-Carica tutti i file nella root del repository GitHub e abilita GitHub Pages da:
-
-Settings > Pages > Deploy from a branch > main > /root
+1. Crea un repository pubblico.
+2. Carica tutti i file nella root del repository.
+3. Vai su Settings > Pages.
+4. Source: Deploy from a branch.
+5. Branch: main.
+6. Folder: /root.
+7. Save.
