@@ -1,10 +1,10 @@
 {
-  "name": "Goalkeeper Trainer",
+  "name": "GK Trainer",
   "short_name": "GK Trainer",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#0b1020",
-  "theme_color": "#0f172a",
+  "background_color": "#040805",
+  "theme_color": "#07110b",
   "icons": [
     {
       "src": "icon.svg",
