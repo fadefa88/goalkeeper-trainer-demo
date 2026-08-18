@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-input-zoom-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-ios-tap-zoom-v2";
 const ASSETS = [
   "./",
   "./index.html",
