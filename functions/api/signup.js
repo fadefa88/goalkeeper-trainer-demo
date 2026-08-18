@@ -1,4 +1,4 @@
-import { assertSameOrigin, createSession, error, hashPassword, isValidEmail, json, normalizeEmail, randomToken, readJson, sessionCookie } from "./_shared.js";
+import { assertSameOrigin, createSession, error, hashPassword, isValidEmail, json, normalizeEmail, PASSWORD_ITERATIONS, randomToken, readJson, sessionCookie } from "./_shared.js";
 
 function dbGuard(env) {
   if (!env?.DB || typeof env.DB.prepare !== "function") {
@@ -31,7 +31,7 @@ export async function onRequestPost({ request, env }) {
     if (existing) return error("Account già esistente", 409);
 
     const salt = randomToken(16);
-    const iterations = 150000;
+    const iterations = PASSWORD_ITERATIONS;
     const passwordHash = await hashPassword(secret, salt, iterations);
     const userId = crypto.randomUUID();
     const now = new Date().toISOString();
