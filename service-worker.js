@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-figc-v5-signup-fix";
+const CACHE_NAME = "gk-trainer-figc-v6-clean-auth-copy";
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,12 +9,25 @@ const ASSETS = [
 ];
 
 const AUTH_PATCH = `
-<script data-gk-signup-fix="v5">
+<script data-gk-signup-fix="v6">
 (() => {
   const SUPABASE_URL = "https://tjkwnhbqwvsxjfkycztn.supabase.co";
   const SUPABASE_KEY = "sb_publishable_2Kd0YDECk8IuaGwKjf3KVw_YqZKvFOl";
   const $ = (id) => document.getElementById(id);
   const setStatus = (msg) => { const el = $("authStatus"); if (el) el.textContent = msg || ""; };
+
+  function cleanAuthCopy() {
+    const authCard = document.querySelector("#authView .auth-card");
+    if (!authCard) return;
+    const removableTexts = [
+      "Cloud Supabase",
+      "Accedi per usare l'app",
+      "Modalità cloud-only: profilo, portieri, calendario e sessioni vengono salvati su Supabase."
+    ];
+    authCard.querySelectorAll("p, h2").forEach((el) => {
+      if (removableTexts.includes((el.textContent || "").trim())) el.remove();
+    });
+  }
 
   async function fixedSignUp(event) {
     if (event) {
@@ -68,8 +81,11 @@ const AUTH_PATCH = `
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    cleanAuthCopy();
     patchSignupButton();
+    setTimeout(cleanAuthCopy, 250);
     setTimeout(patchSignupButton, 500);
+    setTimeout(cleanAuthCopy, 1000);
     setTimeout(patchSignupButton, 1500);
   });
 })();
@@ -89,13 +105,21 @@ self.addEventListener("activate", event => {
   );
 });
 
+function cleanAuthHtml(html) {
+  return html
+    .replace('<p class="eyebrow">Cloud Supabase</p>', '')
+    .replace("<h2>Accedi per usare l'app</h2>", '')
+    .replace('<p class="muted">Modalità cloud-only: profilo, portieri, calendario e sessioni vengono salvati su Supabase.</p>', '');
+}
+
 async function patchedIndexResponse(request) {
   try {
     const networkResponse = await fetch(request);
     const html = await networkResponse.text();
-    const patchedHtml = html.includes('data-gk-signup-fix="v5"')
-      ? html
-      : html.replace("</body>", `${AUTH_PATCH}</body>`);
+    const cleanedHtml = cleanAuthHtml(html);
+    const patchedHtml = cleanedHtml.includes('data-gk-signup-fix="v6"')
+      ? cleanedHtml
+      : cleanedHtml.replace("</body>", `${AUTH_PATCH}</body>`);
 
     const cache = await caches.open(CACHE_NAME);
     await cache.put(request, new Response(patchedHtml, {
@@ -107,7 +131,12 @@ async function patchedIndexResponse(request) {
     });
   } catch (_error) {
     const cached = await caches.match(request);
-    if (cached) return cached;
+    if (cached) {
+      const html = await cached.text();
+      return new Response(cleanAuthHtml(html), {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    }
     return caches.match("./index.html");
   }
 }
