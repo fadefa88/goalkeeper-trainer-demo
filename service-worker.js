@@ -1,7 +1,8 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-progress-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-privacy-v1";
 const ASSETS = [
   "./",
   "./index.html",
+  "./privacy.html",
   "./style.css",
   "./app.js",
   "./cloudflare-client.js",
