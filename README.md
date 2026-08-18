@@ -1,29 +1,38 @@
-# GK Trainer FIGC Demo
+# GK Trainer
 
-Demo PWA per allenamento portieri.
+PWA per allenamento portieri con frontend statico, API su Cloudflare Pages Functions e database Cloudflare D1.
 
-## Contenuto
+## Stack produzione fase 1
 
-La libreria esercizi è stata ricostruita dal documento caricato:
-**Il portiere dentro il gioco - eserciziario attività giovanile**.
+- Frontend: Cloudflare Pages
+- API: Pages Functions in `functions/api/*`
+- Database: Cloudflare D1, binding `DB`
+- Auth: email/password gestita lato Function, cookie HttpOnly `gk_session`
+- Backup: export/import JSON dall'app
 
-Sono presenti 31 esercizi/proposte pratiche, inclusi:
-- U6/U7 - U8/U9
-- U10/U11
-- U12/U13
-- Futsal
-- Modalità separata e integrata
+## File principali
 
-## Come provarla
+- `index.html` UI
+- `style.css` tema nero/verde
+- `app.js` libreria esercizi e logica base PWA
+- `cloudflare-client.js` client API cloud
+- `functions/api/` endpoint API
+- `cloudflare-d1-schema.sql` schema D1
+- `service-worker.js` cache PWA
 
-Apri `index.html`, oppure usa VS Code + Live Server.
+## Deploy su Cloudflare Pages
 
-## Come pubblicarla su GitHub Pages
+1. Crea un database D1, per esempio `gk-trainer-db`.
+2. Esegui lo schema `cloudflare-d1-schema.sql` sul database D1.
+3. Crea un progetto Cloudflare Pages collegato a questo repository GitHub.
+4. Build command: lascia vuoto.
+5. Build output directory: `/` oppure root del repository.
+6. In Pages > Settings > Functions > D1 database bindings aggiungi:
+   - Variable name: `DB`
+   - D1 database: `gk-trainer-db`
+7. Aggiungi il dominio o sottodominio, ad esempio `gk.lucahome.uk`.
+8. Esegui un nuovo deploy.
 
-1. Crea un repository pubblico.
-2. Carica tutti i file nella root del repository.
-3. Vai su Settings > Pages.
-4. Source: Deploy from a branch.
-5. Branch: main.
-6. Folder: /root.
-7. Save.
+## Note
+
+L'app non usa più Supabase. Su GitHub Pages le API `/api/*` non esistono: la versione funzionante va pubblicata su Cloudflare Pages.
