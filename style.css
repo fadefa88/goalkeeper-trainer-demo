@@ -16,6 +16,11 @@
 * { box-sizing: border-box; }
 html, body { min-height: 100%; }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   color: var(--text);
@@ -103,6 +108,8 @@ select, input {
   border-radius: 15px;
   padding: 13px 14px;
   outline: none;
+  font-size: 16px;
+  line-height: 1.25;
 }
 
 select:focus, input:focus {
