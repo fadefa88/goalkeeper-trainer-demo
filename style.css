@@ -352,6 +352,40 @@ select:focus, input:focus {
   background: var(--green);
 }
 
+input, select, textarea,
+.keeper-tests input,
+.keeper-main input,
+.auth-card input,
+.keeper-selector-card input,
+.keeper-selector-card select {
+  font-size: 16px !important;
+  line-height: 1.25;
+}
+
+button,
+.primary-btn,
+.dark-btn,
+.ghost-btn,
+.danger-btn,
+.icon-btn,
+.stat-btn,
+.nav-btn,
+.filter-btn,
+.calendar-day,
+.exercise-card,
+.back-btn {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.stat-btn,
+.nav-btn,
+.filter-btn,
+.calendar-day {
+  -webkit-tap-highlight-color: transparent;
+}
+
 @media (max-width: 390px) {
   .keeper-row { grid-template-columns: 1fr; }
   .timer { font-size: 74px; }
