@@ -194,6 +194,144 @@
     list.innerHTML = items.length ? items.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Le sessioni completate in questa data compariranno qui.</p></div>`;
   }
 
+  function monthKey(value) {
+    const d = parseDateKey(value || todayKey());
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  }
+
+  function monthLabel(key) {
+    const [y, m] = key.split("-").map(Number);
+    return new Date(y, (m || 1) - 1, 1).toLocaleDateString("it-IT", { month: "short", year: "2-digit" }).replace(" ", " '");
+  }
+
+  function scoreFromTotals(saves, mistakes, reactions) {
+    const total = saves + mistakes + reactions;
+    if (!total) return null;
+    const score = ((saves + reactions * 0.6) / total) * 100;
+    return Math.max(0, Math.min(100, Math.round(score)));
+  }
+
+  function buildMonthlyStats() {
+    const map = new Map();
+    cloudHistory.forEach((s) => {
+      const key = monthKey(sessionKey(s));
+      if (!map.has(key)) map.set(key, { key, sessions: 0, minutes: 0, saves: 0, mistakes: 0, reactions: 0, exercises: new Set(), keepers: new Set() });
+      const row = map.get(key);
+      row.sessions += 1;
+      row.minutes += Number(s.plannedMinutes || 0);
+      row.saves += Number(s.saves || 0);
+      row.mistakes += Number(s.mistakes || 0);
+      row.reactions += Number(s.reactions || 0);
+      if (s.exerciseName) row.exercises.add(s.exerciseName);
+      if (s.keeper) row.keepers.add(s.keeper);
+    });
+    return Array.from(map.values()).sort((a, b) => a.key.localeCompare(b.key)).map((row) => ({
+      ...row,
+      quality: scoreFromTotals(row.saves, row.mistakes, row.reactions),
+      exerciseCount: row.exercises.size,
+      keeperCount: row.keepers.size
+    }));
+  }
+
+  function buildExerciseStats() {
+    const map = new Map();
+    cloudHistory.forEach((s) => {
+      const key = s.exerciseName || "Esercizio";
+      if (!map.has(key)) map.set(key, { name: key, category: s.category || "", sessions: 0, minutes: 0, saves: 0, mistakes: 0, reactions: 0, months: new Set() });
+      const row = map.get(key);
+      row.sessions += 1;
+      row.minutes += Number(s.plannedMinutes || 0);
+      row.saves += Number(s.saves || 0);
+      row.mistakes += Number(s.mistakes || 0);
+      row.reactions += Number(s.reactions || 0);
+      row.months.add(monthKey(sessionKey(s)));
+    });
+    return Array.from(map.values()).map((row) => ({
+      ...row,
+      actions: row.saves + row.mistakes + row.reactions,
+      quality: scoreFromTotals(row.saves, row.mistakes, row.reactions),
+      monthCount: row.months.size
+    })).sort((a, b) => (b.sessions - a.sessions) || ((b.quality || 0) - (a.quality || 0)) || a.name.localeCompare(b.name));
+  }
+
+  function renderProgressKpis(months) {
+    const box = q("progressKpis");
+    if (!box) return;
+    if (!months.length) {
+      box.innerHTML = `<div class="progress-kpi"><span>Stato</span><strong>0</strong><small>Nessuna sessione salvata.</small></div>`;
+      return;
+    }
+    const current = months[months.length - 1];
+    const previous = months.length > 1 ? months[months.length - 2] : null;
+    const delta = previous && current.quality !== null && previous.quality !== null ? current.quality - previous.quality : null;
+    const deltaText = delta === null ? "serve almeno un altro mese" : `${delta >= 0 ? "+" : ""}${delta} punti vs mese precedente`;
+    const qualityText = current.quality === null ? "—" : `${current.quality}`;
+    const actions = current.saves + current.mistakes + current.reactions;
+    box.innerHTML = `
+      <div class="progress-kpi"><span>Mese</span><strong>${esc(monthLabel(current.key))}</strong><small>${current.sessions} sedute · ${current.minutes}' totali</small></div>
+      <div class="progress-kpi"><span>Qualità</span><strong>${qualityText}</strong><small>${esc(deltaText)}</small></div>
+      <div class="progress-kpi"><span>Azioni</span><strong>${actions}</strong><small>${current.saves} parate · ${current.mistakes} errori · ${current.reactions} reazioni</small></div>`;
+  }
+
+  function renderMonthlyChart(months) {
+    const box = q("monthlyChart");
+    if (!box) return;
+    if (!months.length) {
+      box.innerHTML = `<div class="no-data">Completa almeno una sessione per vedere il grafico mese per mese.</div>`;
+      return;
+    }
+    const recent = months.slice(-6);
+    box.innerHTML = recent.map((m) => {
+      const quality = m.quality ?? 0;
+      const height = Math.max(8, quality);
+      return `<div class="month-column"><div class="month-bar-wrap"><div class="month-bar" style="height:${height}%">${m.quality ?? "—"}</div></div><span class="month-label">${esc(monthLabel(m.key))}</span><span class="month-sub">${m.sessions} sed.</span></div>`;
+    }).join("");
+  }
+
+  function renderKeeperMeasures() {
+    const box = q("keeperMeasures");
+    if (!box) return;
+    const keepers = cloudProfile?.keepers || [];
+    if (!keepers.length) {
+      box.innerHTML = `<div class="no-data">Inserisci i portieri nel profilo per vedere misure e test fisici.</div>`;
+      return;
+    }
+    box.innerHTML = keepers.map((k, i) => {
+      const tags = [
+        k.height ? `Altezza ${k.height} cm` : "Altezza n/d",
+        k.weight ? `Peso ${k.weight} kg` : "Peso n/d",
+        k.broadJump ? `Balzo fermo ${k.broadJump} cm` : "Balzo fermo n/d",
+        k.verticalJump ? `Balzo alto ${k.verticalJump} cm` : "Balzo alto n/d",
+        k.halfHeightJump ? `Mezza altezza ${k.halfHeightJump} cm` : "Mezza altezza n/d",
+        k.twoPostsTest ? `Due pali ${k.twoPostsTest} s` : "Due pali n/d"
+      ];
+      return `<div class="measure-card"><div class="quality-top"><div><p class="eyebrow">Portiere ${i + 1}</p><h3>${esc(k.name || `Portiere ${i + 1}`)}</h3></div></div><div class="metric-tags">${tags.map((t) => `<span class="metric-tag">${esc(t)}</span>`).join("")}</div></div>`;
+    }).join("");
+  }
+
+  function renderExerciseQuality() {
+    const box = q("exerciseQualityList");
+    if (!box) return;
+    const rows = buildExerciseStats().slice(0, 8);
+    if (!rows.length) {
+      box.innerHTML = `<div class="no-data">Completa sessioni diverse per capire quali esercizi stanno producendo più qualità.</div>`;
+      return;
+    }
+    box.innerHTML = rows.map((r) => {
+      const score = r.quality === null ? "—" : r.quality;
+      const focus = r.quality === null ? "Registra parate, errori e reazioni per valutare meglio." : r.quality >= 80 ? "Molto positivo: mantieni progressione o alza difficoltà." : r.quality >= 60 ? "Buono: continua e cura dettagli tecnici." : "Da lavorare: abbassa complessità o aumenta ripetizioni guidate.";
+      return `<div class="quality-item"><div class="quality-top"><div><p class="eyebrow">${esc(r.category || "Esercizio")}</p><h3>${esc(r.name)}</h3></div><div class="quality-score">${score}</div></div><div class="quality-meta">${r.sessions} sedute · ${r.minutes}' · ${r.actions} azioni · ${r.saves} parate / ${r.mistakes} errori / ${r.reactions} reazioni<br>${esc(focus)}</div></div>`;
+    }).join("");
+  }
+
+  function renderProgress() {
+    const months = buildMonthlyStats();
+    renderProgressKpis(months);
+    renderMonthlyChart(months);
+    renderKeeperMeasures();
+    renderExerciseQuality();
+  }
+
   const baseShowView = showView;
   showView = function (view) {
     if (!cloudUser && view !== "auth") return showAuth();
@@ -201,6 +339,7 @@
     baseShowView(view);
     if (view === "calendar") { q("screenTitle").textContent = "Calendario"; renderCalendar(); }
     if (view === "history") renderHistory();
+    if (view === "progress") { q("screenTitle").textContent = "Progressi"; renderProgress(); }
     if (view === "home") { renderProfileSummary(); renderExercises(); }
   };
 
