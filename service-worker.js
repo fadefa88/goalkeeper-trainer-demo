@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-figc-v3-backup";
+const CACHE_NAME = "gk-trainer-figc-v4-supabase-cloud";
 const ASSETS = [
   "./",
   "./index.html",
