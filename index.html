@@ -7,184 +7,76 @@
   <title>GK Trainer FIGC</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .bottom-nav{grid-template-columns:repeat(4,1fr)!important}.small-note{margin-top:8px;font-size:12px}.calendar-card,.calendar-list-card{background:rgba(7,17,11,.9);border:1px solid var(--line);border-radius:25px;box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:18px}.calendar-list-card{margin-top:14px}.calendar-top{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:12px;text-align:center}.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.calendar-weekdays{margin-top:18px;color:var(--muted);font-size:11px;font-weight:900;text-align:center;text-transform:uppercase}.calendar-grid{margin-top:8px}.calendar-day{min-height:52px;border-radius:16px;padding:7px 5px;color:var(--text);background:rgba(255,255,255,.045);border:1px solid var(--line);display:grid;align-content:space-between;justify-items:center}.calendar-day.empty{opacity:.25;pointer-events:none}.calendar-day.today{border-color:rgba(32,224,108,.65)}.calendar-day.selected{color:#001b0a;background:var(--green);border-color:var(--green)}.calendar-day-number{font-size:13px;font-weight:900}.calendar-dot{width:7px;height:7px;border-radius:999px;background:var(--green);box-shadow:0 0 14px rgba(32,224,108,.5)}.calendar-day.selected .calendar-dot{background:#001b0a}.history-list.compact{margin-top:12px}.history-list.compact .history-card{box-shadow:none}@media(max-width:390px){.bottom-nav{gap:6px}.nav-btn{font-size:12px;padding:11px 4px}}
+  </style>
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <div>
-        <p class="eyebrow">GK Trainer</p>
-        <h1 id="screenTitle">Setup allenamento</h1>
-      </div>
+      <div><p class="eyebrow">GK Trainer</p><h1 id="screenTitle">Setup allenamento</h1></div>
       <button id="settingsBtn" class="icon-btn" title="Impostazioni">⚙</button>
     </header>
-
     <main>
       <section id="setupView" class="view active">
         <div class="setup-card">
           <p class="eyebrow">Schermata iniziale</p>
           <h2>Configura il gruppo portieri</h2>
           <p class="muted">La libreria esercizi è basata sul documento FIGC “Il portiere dentro il gioco - eserciziario attività giovanile”.</p>
-
           <form id="setupForm" class="form-grid">
-            <label>Numero portieri
-              <select id="keepersCount">
-                <option value="1">1 portiere</option>
-                <option value="2">2 portieri</option>
-                <option value="3" selected>3 portieri</option>
-                <option value="4">4 portieri</option>
-                <option value="5">5+ portieri</option>
-              </select>
-            </label>
-
-            <label>Sport
-              <select id="sportType">
-                <option value="calcio">Calcio</option>
-                <option value="futsal">Futsal</option>
-              </select>
-            </label>
-
-            <label>Livello
-              <select id="level">
-                <option value="base">Base</option>
-                <option value="medio" selected>Medio</option>
-                <option value="pro">Pro</option>
-              </select>
-            </label>
-
-            <label>Allenamenti a settimana
-              <select id="sessionsPerWeek">
-                <option value="1">1 a settimana</option>
-                <option value="2" selected>2 a settimana</option>
-                <option value="3">3 a settimana</option>
-              </select>
-            </label>
-
-            <label>Durata allenamento
-              <select id="sessionDuration">
-                <option value="60" selected>1 ora</option>
-                <option value="120">2 ore</option>
-              </select>
-            </label>
-
-            <div class="keepers-box">
-              <div class="keepers-header">
-                <h3>Portieri</h3>
-                <span class="pill">nome · altezza · peso</span>
-              </div>
-              <div id="keepersFields" class="keepers-fields"></div>
-            </div>
-
+            <label>Numero portieri<select id="keepersCount"><option value="1">1 portiere</option><option value="2">2 portieri</option><option value="3" selected>3 portieri</option><option value="4">4 portieri</option><option value="5">5+ portieri</option></select></label>
+            <label>Sport<select id="sportType"><option value="calcio">Calcio</option><option value="futsal">Futsal</option></select></label>
+            <label>Livello<select id="level"><option value="base">Base</option><option value="medio" selected>Medio</option><option value="pro">Pro</option></select></label>
+            <label>Allenamenti a settimana<select id="sessionsPerWeek"><option value="1">1 a settimana</option><option value="2" selected>2 a settimana</option><option value="3">3 a settimana</option></select></label>
+            <label>Durata allenamento<select id="sessionDuration"><option value="60" selected>1 ora</option><option value="120">2 ore</option></select></label>
+            <div class="keepers-box"><div class="keepers-header"><h3>Portieri</h3><span class="pill">nome · altezza · peso</span></div><div id="keepersFields" class="keepers-fields"></div></div>
             <button class="primary-btn full" type="submit">Salva e vai agli esercizi</button>
           </form>
         </div>
       </section>
-
       <section id="homeView" class="view">
-        <div class="hero-card">
-          <div>
-            <p class="eyebrow">Profilo attivo</p>
-            <h2 id="profileSummaryTitle">Allenamento portieri</h2>
-            <p id="profileSummaryText" class="muted">Configura il gruppo per iniziare.</p>
-          </div>
-          <div class="score-ring">
-            <span id="weekSessions">0</span>
-            <small>sedute</small>
-          </div>
-        </div>
-
-        <div class="filters">
-          <button class="filter-btn active" data-filter="recommended">Consigliati</button>
-          <button class="filter-btn" data-filter="all">Tutti</button>
-          <button class="filter-btn" data-filter="calcio">Calcio</button>
-          <button class="filter-btn" data-filter="futsal">Futsal</button>
-          <button class="filter-btn" data-filter="separata">Separata</button>
-          <button class="filter-btn" data-filter="integrata">Integrata</button>
-          <button class="filter-btn" data-filter="base">Base</button>
-          <button class="filter-btn" data-filter="medio">Medio</button>
-          <button class="filter-btn" data-filter="pro">Pro</button>
-        </div>
-
-        <div class="section-header">
-          <h3>Proposte pratiche dal documento</h3>
-          <span id="exerciseCount" class="pill">0 esercizi</span>
-        </div>
-        <div id="exerciseList" class="exercise-list"></div>
+        <div class="hero-card"><div><p class="eyebrow">Profilo attivo</p><h2 id="profileSummaryTitle">Allenamento portieri</h2><p id="profileSummaryText" class="muted">Configura il gruppo per iniziare.</p></div><div class="score-ring"><span id="weekSessions">0</span><small>sedute</small></div></div>
+        <div class="filters"><button class="filter-btn active" data-filter="recommended">Consigliati</button><button class="filter-btn" data-filter="all">Tutti</button><button class="filter-btn" data-filter="calcio">Calcio</button><button class="filter-btn" data-filter="futsal">Futsal</button><button class="filter-btn" data-filter="separata">Separata</button><button class="filter-btn" data-filter="integrata">Integrata</button><button class="filter-btn" data-filter="base">Base</button><button class="filter-btn" data-filter="medio">Medio</button><button class="filter-btn" data-filter="pro">Pro</button></div>
+        <div class="section-header"><h3>Proposte pratiche dal documento</h3><span id="exerciseCount" class="pill">0 esercizi</span></div><div id="exerciseList" class="exercise-list"></div>
       </section>
-
-      <section id="detailView" class="view">
-        <button class="back-btn" data-go="home">← Esercizi</button>
-        <div id="exerciseDetail"></div>
-      </section>
-
+      <section id="detailView" class="view"><button class="back-btn" data-go="home">← Esercizi</button><div id="exerciseDetail"></div></section>
       <section id="workoutView" class="view">
         <button class="back-btn" data-go="detail">← Dettaglio</button>
-
-        <div class="timer-card">
-          <p id="workoutCategory" class="eyebrow"></p>
-          <h2 id="workoutName"></h2>
-          <div id="timerDisplay" class="timer">00</div>
-          <p id="phaseLabel" class="muted">Pronto</p>
-
-          <div class="button-row">
-            <button id="startPauseBtn" class="primary-btn">Start</button>
-            <button id="finishBtn" class="dark-btn">Termina</button>
-          </div>
-        </div>
-
-        <div class="stats-grid">
-          <button class="stat-btn green" data-stat="saves">
-            <strong id="savesCount">0</strong>
-            <span>Parate</span>
-          </button>
-          <button class="stat-btn red" data-stat="mistakes">
-            <strong id="mistakesCount">0</strong>
-            <span>Errori</span>
-          </button>
-          <button class="stat-btn orange" data-stat="reactions">
-            <strong id="reactionsCount">0</strong>
-            <span>Reazioni</span>
-          </button>
-        </div>
-
-        <div class="keeper-selector-card">
-          <p class="eyebrow">Portiere in lavoro</p>
-          <select id="activeKeeper"></select>
-        </div>
-
-        <div class="coach-card">
-          <div>
-            <p class="eyebrow">Comando rapido</p>
-            <h3 id="cueText">—</h3>
-            <p class="muted">Comandi casuali per reattività e orientamento.</p>
-          </div>
-          <button id="cueBtn" class="ghost-btn">Comando</button>
-        </div>
+        <div class="timer-card"><p id="workoutCategory" class="eyebrow"></p><h2 id="workoutName"></h2><div id="timerDisplay" class="timer">00</div><p id="phaseLabel" class="muted">Pronto</p><div class="button-row"><button id="startPauseBtn" class="primary-btn">Start</button><button id="finishBtn" class="dark-btn">Termina</button></div></div>
+        <div class="stats-grid"><button class="stat-btn green" data-stat="saves"><strong id="savesCount">0</strong><span>Parate</span></button><button class="stat-btn red" data-stat="mistakes"><strong id="mistakesCount">0</strong><span>Errori</span></button><button class="stat-btn orange" data-stat="reactions"><strong id="reactionsCount">0</strong><span>Reazioni</span></button></div>
+        <div class="keeper-selector-card"><p class="eyebrow">Portiere in lavoro</p><select id="activeKeeper"></select></div>
+        <div class="keeper-selector-card"><p class="eyebrow">Data sessione</p><input id="sessionDateInput" type="date" /><p class="muted small-note">La sessione verrà salvata nel calendario su questa data.</p></div>
+        <div class="coach-card"><div><p class="eyebrow">Comando rapido</p><h3 id="cueText">—</h3><p class="muted">Comandi casuali per reattività e orientamento.</p></div><button id="cueBtn" class="ghost-btn">Comando</button></div>
       </section>
-
-      <section id="historyView" class="view">
-        <h2>Storico</h2>
-        <p class="muted">Sessioni salvate localmente su questo dispositivo/browser.</p>
-        <div id="historyList" class="history-list"></div>
+      <section id="historyView" class="view"><h2>Storico</h2><p class="muted">Sessioni salvate localmente su questo dispositivo/browser.</p><div id="historyList" class="history-list"></div></section>
+      <section id="calendarView" class="view">
+        <div class="calendar-card"><div class="calendar-top"><button id="prevMonthBtn" class="ghost-btn" type="button">←</button><div><p class="eyebrow">Calendario sessioni</p><h2 id="calendarMonthTitle">—</h2></div><button id="nextMonthBtn" class="ghost-btn" type="button">→</button></div><div class="calendar-weekdays"><span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span></div><div id="calendarGrid" class="calendar-grid"></div></div>
+        <div class="calendar-list-card"><p class="eyebrow">Giorno selezionato</p><h3 id="selectedDateTitle">—</h3><div id="selectedDateSessions" class="history-list compact"></div></div>
       </section>
-
-      <section id="profileView" class="view">
-        <div class="setup-card">
-          <p class="eyebrow">Impostazioni</p>
-          <h2>Profilo allenamento</h2>
-          <p class="muted">Puoi modificare sport, livello, numero portieri e dati fisici.</p>
-          <button id="editSetupBtn" class="primary-btn full" type="button">Modifica impostazioni</button>
-          <button id="resetBtn" class="danger-btn full" type="button">Reset totale demo</button>
-        </div>
-      </section>
+      <section id="profileView" class="view"><div class="setup-card"><p class="eyebrow">Impostazioni</p><h2>Profilo allenamento</h2><p class="muted">Puoi modificare sport, livello, numero portieri e dati fisici.</p><button id="editSetupBtn" class="primary-btn full" type="button">Modifica impostazioni</button><button id="resetBtn" class="danger-btn full" type="button">Reset totale demo</button></div></section>
     </main>
-
-    <nav id="bottomNav" class="bottom-nav hidden">
-      <button data-tab="home" class="nav-btn active">Esercizi</button>
-      <button data-tab="history" class="nav-btn">Storico</button>
-      <button data-tab="profile" class="nav-btn">Profilo</button>
-    </nav>
+    <nav id="bottomNav" class="bottom-nav hidden"><button data-tab="home" class="nav-btn active">Esercizi</button><button data-tab="calendar" class="nav-btn">Calendario</button><button data-tab="history" class="nav-btn">Storico</button><button data-tab="profile" class="nav-btn">Profilo</button></nav>
   </div>
-
   <script src="app.js"></script>
+  <script>
+    (() => {
+      let selectedCalendarDate = toDateKey(new Date());
+      let calendarMonthDate = new Date();
+      function toDateKey(date){const d=new Date(date);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
+      function parseDateKey(key){const [y,m,d]=String(key).split("-").map(Number);return new Date(y,m-1,d||1);}
+      function formatDateKey(key){return parseDateKey(key).toLocaleDateString("it-IT",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});}
+      function getSessionDateKey(item){return item.sessionDate || toDateKey(new Date(item.date));}
+      function sessionsForDate(key){return getHistory().filter(item=>getSessionDateKey(item)===key);}
+      function sessionsByDate(){return getHistory().reduce((acc,item)=>{const key=getSessionDateKey(item);acc[key]=acc[key]||[];acc[key].push(item);return acc;},{});}
+      function renderSessionCard(item){const sessionDate=getSessionDateKey(item);const completedTime=item.date?new Date(item.date).toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}):"";return `<div class="history-card"><p class="eyebrow">${escapeHtml(item.category||"")} · pag. ${item.sourcePage||"-"}</p><h3>${escapeHtml(item.exerciseName)}</h3><p class="muted">${formatDateKey(sessionDate)}${completedTime?` · salvata alle ${completedTime}`:""} · ${escapeHtml(item.keeper||"Portiere")}</p><div class="history-row"><span>Parate: ${item.saves}</span><span>Errori: ${item.mistakes}</span><span>Reazioni: ${item.reactions}</span><span>Durata: ${item.plannedMinutes||"-"}'</span></div></div>`;}
+      function renderCalendar(){const grid=$("calendarGrid");const title=$("calendarMonthTitle");if(!grid||!title)return;const year=calendarMonthDate.getFullYear();const month=calendarMonthDate.getMonth();const firstDay=new Date(year,month,1);const daysInMonth=new Date(year,month+1,0).getDate();const startOffset=(firstDay.getDay()+6)%7;const todayKey=toDateKey(new Date());const sessionMap=sessionsByDate();title.textContent=firstDay.toLocaleDateString("it-IT",{month:"long",year:"numeric"});const cells=[];for(let i=0;i<startOffset;i++)cells.push(`<button class="calendar-day empty" type="button" tabindex="-1"></button>`);for(let day=1;day<=daysInMonth;day++){const key=`${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;const hasSessions=Boolean(sessionMap[key]?.length);const classes=["calendar-day",key===todayKey?"today":"",key===selectedCalendarDate?"selected":""].filter(Boolean).join(" ");cells.push(`<button class="${classes}" type="button" data-date="${key}"><span class="calendar-day-number">${day}</span>${hasSessions?`<span class="calendar-dot" title="${sessionMap[key].length} sessioni"></span>`:`<span></span>`}</button>`);}grid.innerHTML=cells.join("");document.querySelectorAll(".calendar-day[data-date]").forEach(btn=>btn.addEventListener("click",()=>{selectedCalendarDate=btn.dataset.date;renderCalendar();}));renderSelectedDateSessions();}
+      function renderSelectedDateSessions(){const title=$("selectedDateTitle");const list=$("selectedDateSessions");if(!title||!list)return;title.textContent=formatDateKey(selectedCalendarDate);const items=sessionsForDate(selectedCalendarDate);if(!items.length){list.innerHTML=`<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Le sessioni terminate con questa data compariranno qui.</p></div>`;return;}list.innerHTML=items.map(item=>renderSessionCard(item)).join("");}
+      const originalShowView=showView;showView=function(view){originalShowView(view);if(view==="calendar"){$("screenTitle").textContent="Calendario";renderCalendar();}};
+      const originalStartWorkoutScreen=startWorkoutScreen;startWorkoutScreen=function(){originalStartWorkoutScreen();const dateInput=$("sessionDateInput");if(dateInput)dateInput.value=toDateKey(new Date());};
+      finishWorkout=function(){if(!selectedExercise)return;running=false;clearInterval(timer);timer=null;const profile=getProfile();const activeKeeper=$("activeKeeper")?.value||"Portiere";const sessionDate=$("sessionDateInput")?.value||toDateKey(new Date());const history=getHistory();history.unshift({date:new Date().toISOString(),sessionDate,exerciseName:selectedExercise.name,category:selectedExercise.ambito,sourcePage:selectedExercise.sourcePage,sport:profile?.sportType||selectedExercise.sport,level:profile?.level||"",keeper:activeKeeper,saves:stats.saves,mistakes:stats.mistakes,reactions:stats.reactions,plannedMinutes:selectedExercise.durationMin});setHistory(history);selectedCalendarDate=sessionDate;calendarMonthDate=parseDateKey(sessionDate);$("phaseLabel").textContent="Sessione salvata nel calendario";$("startPauseBtn").textContent="Start";renderProfileSummary();};
+      renderHistory=function(){const history=getHistory();const list=$("historyList");if(!history.length){list.innerHTML=`<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Completa un allenamento per vedere lo storico.</p></div>`;return;}list.innerHTML=history.map(item=>renderSessionCard(item)).join("");};
+      document.addEventListener("DOMContentLoaded",()=>{const prev=$("prevMonthBtn");const next=$("nextMonthBtn");if(prev)prev.addEventListener("click",()=>{calendarMonthDate=new Date(calendarMonthDate.getFullYear(),calendarMonthDate.getMonth()-1,1);renderCalendar();});if(next)next.addEventListener("click",()=>{calendarMonthDate=new Date(calendarMonthDate.getFullYear(),calendarMonthDate.getMonth()+1,1);renderCalendar();});});
+    })();
+  </script>
 </body>
 </html>
