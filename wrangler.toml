@@ -1,0 +1,8 @@
+name = "goalkeeper-trainer-demo"
+compatibility_date = "2026-08-18"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "gk-trainer-db"
+database_id = "d3c6f892-b70a-48cb-81a3-a5b3a40423df"
