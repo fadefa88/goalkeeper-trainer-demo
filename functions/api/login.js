@@ -1,4 +1,7 @@
-import { assertSameOrigin, createSession, error, hashPassword, json, normalizeEmail, readJson, sessionCookie } from "./_shared.js";
+import { assertSameOrigin, createSession, error, hashPassword, json, loadProfile, normalizeEmail, PASSWORD_ITERATIONS, randomToken, readJson, sessionCookie } from "./_shared.js";
+
+const REVIEW_EMAIL = "review@gktrainer.app";
+const REVIEW_PASSWORD = "AppleReview2026!";
 
 function dbGuard(env) {
   if (!env?.DB || typeof env.DB.prepare !== "function") {
@@ -12,6 +15,66 @@ function exceptionError(err) {
   return error(`Errore login: ${message}`, 500);
 }
 
+function isReviewLogin(email, secret) {
+  return email === REVIEW_EMAIL && secret === REVIEW_PASSWORD;
+}
+
+async function ensureReviewProfile(env, userId) {
+  const existing = await loadProfile(env, userId);
+  if (existing) return;
+
+  const now = new Date().toISOString();
+  await env.DB.prepare("insert into user_settings (user_id, keepers_count, sport, level, sessions_per_week, session_duration, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?) on conflict(user_id) do nothing")
+    .bind(userId, 3, "calcio", "medio", 2, 60, now, now).run();
+
+  const keepers = [
+    { name: "Portiere Demo 1", height: 178, weight: 72, broadJump: 205, verticalJump: 42, halfHeightJump: 158, twoPostsTest: 5.84 },
+    { name: "Portiere Demo 2", height: 171, weight: 66, broadJump: 188, verticalJump: 38, halfHeightJump: 146, twoPostsTest: 6.12 },
+    { name: "Portiere Demo 3", height: 183, weight: 76, broadJump: 214, verticalJump: 45, halfHeightJump: 164, twoPostsTest: 5.62 }
+  ];
+
+  for (let i = 0; i < keepers.length; i++) {
+    const keeper = keepers[i];
+    await env.DB.prepare("insert into keepers (id, user_id, name, height_cm, weight_kg, sport, level, standing_broad_jump_cm, standing_vertical_jump_cm, standing_half_height_jump_cm, two_posts_test_sec, display_order, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(
+        crypto.randomUUID(),
+        userId,
+        keeper.name,
+        keeper.height,
+        keeper.weight,
+        "calcio",
+        "medio",
+        keeper.broadJump,
+        keeper.verticalJump,
+        keeper.halfHeightJump,
+        keeper.twoPostsTest,
+        i,
+        now,
+        now
+      ).run();
+  }
+}
+
+async function createOrRepairReviewUser(env) {
+  const salt = randomToken(16);
+  const passwordHash = await hashPassword(REVIEW_PASSWORD, salt, PASSWORD_ITERATIONS);
+  const now = new Date().toISOString();
+  const existing = await env.DB.prepare("select * from users where email = ? limit 1").bind(REVIEW_EMAIL).first();
+
+  if (existing) {
+    await env.DB.prepare("update users set password_hash = ?, salt = ?, iterations = ?, updated_at = ? where id = ?")
+      .bind(passwordHash, salt, PASSWORD_ITERATIONS, now, existing.id).run();
+    await ensureReviewProfile(env, existing.id);
+    return { ...existing, password_hash: passwordHash, salt, iterations: PASSWORD_ITERATIONS };
+  }
+
+  const userId = crypto.randomUUID();
+  await env.DB.prepare("insert into users (id, email, password_hash, salt, iterations, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?)")
+    .bind(userId, REVIEW_EMAIL, passwordHash, salt, PASSWORD_ITERATIONS, now, now).run();
+  await ensureReviewProfile(env, userId);
+  return { id: userId, email: REVIEW_EMAIL, password_hash: passwordHash, salt, iterations: PASSWORD_ITERATIONS };
+}
+
 export async function onRequestPost({ request, env }) {
   try {
     const originError = assertSameOrigin(request);
@@ -23,11 +86,25 @@ export async function onRequestPost({ request, env }) {
     const body = await readJson(request);
     const email = normalizeEmail(body.email);
     const secret = String(body.password || "");
-    const user = await env.DB.prepare("select * from users where email = ? limit 1").bind(email).first();
+    let user = await env.DB.prepare("select * from users where email = ? limit 1").bind(email).first();
+
+    if (!user && isReviewLogin(email, secret)) {
+      user = await createOrRepairReviewUser(env);
+    }
+
     if (!user) return error("Credenziali non valide", 401);
 
-    const candidate = await hashPassword(secret, user.salt, user.iterations);
+    let candidate = await hashPassword(secret, user.salt, user.iterations);
+    if (candidate !== user.password_hash && isReviewLogin(email, secret)) {
+      user = await createOrRepairReviewUser(env);
+      candidate = await hashPassword(secret, user.salt, user.iterations);
+    }
+
     if (candidate !== user.password_hash) return error("Credenziali non valide", 401);
+
+    if (isReviewLogin(email, secret)) {
+      await ensureReviewProfile(env, user.id);
+    }
 
     const token = await createSession(env, user.id);
     return json({ user: { id: user.id, email: user.email } }, 200, { "Set-Cookie": sessionCookie(token) });
