@@ -1,4 +1,5 @@
 const textEncoder = new TextEncoder();
+export const PASSWORD_ITERATIONS = 100000;
 
 export function json(data, status = 200, headers = {}) {
   return new Response(JSON.stringify(data), {
@@ -58,9 +59,10 @@ export async function sha256(value) {
   return bytesToBase64Url(new Uint8Array(digest));
 }
 
-export async function hashPassword(secret, salt, iterations = 150000) {
+export async function hashPassword(secret, salt, iterations = PASSWORD_ITERATIONS) {
+  const safeIterations = Math.min(Number(iterations) || PASSWORD_ITERATIONS, PASSWORD_ITERATIONS);
   const key = await crypto.subtle.importKey("raw", textEncoder.encode(secret), "PBKDF2", false, ["deriveBits"]);
-  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: base64UrlToBytes(salt), iterations, hash: "SHA-256" }, key, 256);
+  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: base64UrlToBytes(salt), iterations: safeIterations, hash: "SHA-256" }, key, 256);
   return bytesToBase64Url(new Uint8Array(bits));
 }
 
