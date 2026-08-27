@@ -4,6 +4,7 @@
   let cloudHistory = [];
   let selectedCalendarDate = todayKey();
   let calendarMonthDate = new Date();
+
   const q = (id) => document.getElementById(id);
   const esc = (v) => escapeHtml(String(v ?? ""));
   const cleanNum = (v) => v === "" || v === null || v === undefined ? null : Number(v);
@@ -112,24 +113,50 @@
     else { loadProfileIntoForm(); showView("setup"); }
   }
 
-  function currentProfileBase() {
-    return {
-      keepersCount: cloudProfile?.keepersCount || 3,
-      sportType: cloudProfile?.sportType || "calcio",
-      level: cloudProfile?.level || "medio",
-      sessionsPerWeek: cloudProfile?.sessionsPerWeek || 2,
-      sessionDuration: cloudProfile?.sessionDuration || 60,
-      keepers: cloudProfile?.keepers || []
-    };
+  function integrateProgressLayout() {
+    const progressView = q("progressView");
+    const performanceView = q("performanceView");
+    const nav = q("bottomNav");
+    const perfNav = document.querySelector('[data-tab="performance"]');
+
+    if (perfNav) perfNav.remove();
+    if (nav) nav.style.setProperty("grid-template-columns", "repeat(4,1fr)", "important");
+
+    if (!progressView || !performanceView) return;
+    if (progressView.querySelector("#performanceForm")) {
+      performanceView.remove();
+      return;
+    }
+
+    const qualityCard = q("exerciseQualityList")?.closest(".progress-card") || null;
+    Array.from(performanceView.children).forEach((card, index) => {
+      if (index === 0) {
+        card.querySelector(".eyebrow") && (card.querySelector(".eyebrow").textContent = "Performance");
+        const title = card.querySelector("h2");
+        const note = card.querySelector(".muted");
+        if (title) title.textContent = "Motore del portiere";
+        if (note) note.textContent = "Aggiorna i test fisici dalla stessa pagina in cui leggi l’andamento tecnico: balzi, rapidità laterale e profilo base restano collegati ai progressi.";
+      }
+      if (index === 1) {
+        card.querySelector(".eyebrow") && (card.querySelector(".eyebrow").textContent = "Dashboard fisica");
+        const title = card.querySelector("h2");
+        const note = card.querySelector(".muted");
+        if (title) title.textContent = "Profilo atletico portieri";
+        if (note) note.textContent = "Sintesi di altezza, peso, balzi e test due pali per leggere il portiere come atleta, non solo come seduta.";
+      }
+      progressView.insertBefore(card, qualityCard);
+    });
+    performanceView.remove();
   }
 
   renderKeeperFields = function () {
-    const count = Number(q("keepersCount").value);
+    const count = Number(q("keepersCount")?.value || 3);
     const previous = Array.from(document.querySelectorAll(".keeper-row")).map((row) => ({
       name: val(row, ".keeper-name"), height: val(row, ".keeper-height"), weight: val(row, ".keeper-weight")
     }));
     const keepers = cloudProfile?.keepers || [];
     const box = q("keepersFields");
+    if (!box) return;
     box.innerHTML = "";
     for (let i = 0; i < count; i++) {
       const k = previous[i] || keepers[i] || {};
@@ -141,7 +168,9 @@
   };
 
   async function saveCloudProfile(event) {
-    event?.preventDefault(); event?.stopPropagation(); event?.stopImmediatePropagation?.();
+    event?.preventDefault();
+    event?.stopPropagation();
+    event?.stopImmediatePropagation?.();
     const rows = Array.from(document.querySelectorAll(".keeper-row"));
     const profile = {
       keepersCount: Number(q("keepersCount").value),
@@ -163,20 +192,27 @@
         };
       })
     };
-    try { await api("/api/profile", { method: "PUT", body: { profile } }); await loadData(false); showView("home"); }
-    catch (e) { alert(e.message); }
+    try {
+      await api("/api/profile", { method: "PUT", body: { profile } });
+      await loadData(false);
+      showView("home");
+    } catch (e) { alert(e.message); }
   }
 
   async function login() {
     q("authStatus").textContent = "Accesso in corso...";
-    try { await api("/api/login", { method: "POST", body: { email: q("authEmail").value.trim(), password: q("authPassword").value } }); await loadData(true); }
-    catch (e) { q("authStatus").textContent = e.message; }
+    try {
+      await api("/api/login", { method: "POST", body: { email: q("authEmail").value.trim(), password: q("authPassword").value } });
+      await loadData(true);
+    } catch (e) { q("authStatus").textContent = e.message; }
   }
 
   async function signup() {
     q("authStatus").textContent = "Creazione account...";
-    try { await api("/api/signup", { method: "POST", body: { email: q("authEmail").value.trim(), password: q("authPassword").value } }); await loadData(true); }
-    catch (e) { q("authStatus").textContent = e.message; }
+    try {
+      await api("/api/signup", { method: "POST", body: { email: q("authEmail").value.trim(), password: q("authPassword").value } });
+      await loadData(true);
+    } catch (e) { q("authStatus").textContent = e.message; }
   }
 
   async function logout() {
@@ -188,13 +224,16 @@
   function sessionKey(s) { return s.sessionDate || todayKey(s.date || new Date()); }
   function sessionsForDate(key) { return cloudHistory.filter((s) => sessionKey(s) === key); }
   function sessionsByDate() { return cloudHistory.reduce((a, s) => { const k = sessionKey(s); (a[k] ||= []).push(s); return a; }, {}); }
+
   function renderSessionCard(s) {
-    const key = sessionKey(s); const time = s.date ? new Date(s.date).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : "";
+    const key = sessionKey(s);
+    const time = s.date ? new Date(s.date).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : "";
     return `<div class="history-card"><p class="eyebrow">${esc(s.category)} · pag. ${s.sourcePage || "-"}</p><h3>${esc(s.exerciseName || "Esercizio")}</h3><p class="muted">${formatDateKey(key)}${time ? ` · salvata alle ${time}` : ""} · ${esc(s.keeper || "Portiere")}</p><div class="history-row"><span>Parate: ${s.saves}</span><span>Errori: ${s.mistakes}</span><span>Reazioni: ${s.reactions}</span><span>Durata: ${s.plannedMinutes || "-"}'</span></div></div>`;
   }
 
   function renderCalendar() {
-    const grid = q("calendarGrid"), title = q("calendarMonthTitle"); if (!grid || !title) return;
+    const grid = q("calendarGrid"), title = q("calendarMonthTitle");
+    if (!grid || !title) return;
     const y = calendarMonthDate.getFullYear(), m = calendarMonthDate.getMonth(), first = new Date(y, m, 1);
     const days = new Date(y, m + 1, 0).getDate(), offset = (first.getDay() + 6) % 7, today = todayKey(), map = sessionsByDate();
     title.textContent = first.toLocaleDateString("it-IT", { month: "long", year: "numeric" });
@@ -207,9 +246,9 @@
     }
     grid.innerHTML = cells.join("");
     document.querySelectorAll(".calendar-day[data-date]").forEach((b) => b.addEventListener("click", () => { selectedCalendarDate = b.dataset.date; renderCalendar(); }));
-    const list = q("selectedDateSessions"); q("selectedDateTitle").textContent = formatDateKey(selectedCalendarDate);
+    q("selectedDateTitle").textContent = formatDateKey(selectedCalendarDate);
     const items = sessionsForDate(selectedCalendarDate);
-    list.innerHTML = items.length ? items.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Le sessioni completate in questa data compariranno qui.</p></div>`;
+    q("selectedDateSessions").innerHTML = items.length ? items.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Le sessioni completate in questa data compariranno qui.</p></div>`;
   }
 
   function monthKey(value) {
@@ -283,11 +322,10 @@
     const previous = months.length > 1 ? months[months.length - 2] : null;
     const delta = previous && current.quality !== null && previous.quality !== null ? current.quality - previous.quality : null;
     const deltaText = delta === null ? "serve almeno un altro mese" : `${delta >= 0 ? "+" : ""}${delta} punti vs mese precedente`;
-    const qualityText = current.quality === null ? "—" : `${current.quality}`;
     const actions = current.saves + current.mistakes + current.reactions;
     box.innerHTML = `
       <div class="progress-kpi"><span>Mese</span><strong>${esc(monthLabel(current.key))}</strong><small>${current.sessions} sedute · ${current.minutes}' totali</small></div>
-      <div class="progress-kpi"><span>Qualità</span><strong>${qualityText}</strong><small>${esc(deltaText)}</small></div>
+      <div class="progress-kpi"><span>Qualità</span><strong>${current.quality ?? "—"}</strong><small>${esc(deltaText)}</small></div>
       <div class="progress-kpi"><span>Azioni</span><strong>${actions}</strong><small>${current.saves} parate · ${current.mistakes} errori · ${current.reactions} reazioni</small></div>`;
   }
 
@@ -306,40 +344,30 @@
     }).join("");
   }
 
-  function renderKeeperMeasures() {
-    const box = q("keeperMeasures");
-    if (!box) return;
-    const keepers = cloudProfile?.keepers || [];
-    if (!keepers.length) {
-      box.innerHTML = `<div class="no-data">Inserisci i portieri nel profilo per vedere misure e test fisici.</div>`;
-      return;
-    }
-    box.innerHTML = keepers.map((k, i) => {
-      const tags = [
-        k.height ? `Altezza ${k.height} cm` : "Altezza n/d",
-        k.weight ? `Peso ${k.weight} kg` : "Peso n/d",
-        k.broadJump ? `Balzo fermo ${k.broadJump} cm` : "Balzo fermo n/d",
-        k.verticalJump ? `Balzo alto ${k.verticalJump} cm` : "Balzo alto n/d",
-        k.halfHeightJump ? `Mezza altezza ${k.halfHeightJump} cm` : "Mezza altezza n/d",
-        k.twoPostsTest ? `Due pali ${k.twoPostsTest} s` : "Due pali n/d"
-      ];
-      return `<div class="measure-card"><div class="quality-top"><div><p class="eyebrow">Portiere ${i + 1}</p><h3>${esc(k.name || `Portiere ${i + 1}`)}</h3></div></div><div class="metric-tags">${tags.map((t) => `<span class="metric-tag">${esc(t)}</span>`).join("")}</div></div>`;
-    }).join("");
+  function performanceCompleteness(k) {
+    return [k.broadJump, k.verticalJump, k.halfHeightJump, k.twoPostsTest].filter((v) => v !== "" && v !== null && v !== undefined).length;
   }
 
-  function renderPerformanceFields() {
+  function renderPerformanceForm() {
     const box = q("performanceFields");
-    if (!box) return;
+    const form = q("performanceForm");
+    if (!box || !form) return;
     const keepers = cloudProfile?.keepers || [];
     if (!keepers.length) {
-      box.innerHTML = `<div class="no-data">Prima salva almeno un portiere nelle impostazioni base.</div>`;
+      box.innerHTML = `<div class="no-data">Configura prima i portieri nel profilo.</div>`;
       return;
     }
+    form.onsubmit = savePerformanceProfile;
     box.innerHTML = keepers.map((k, i) => `
-      <div class="measure-card perf-row" data-index="${i}">
-        <p class="eyebrow">Portiere ${i + 1}</p>
-        <h3>${esc(k.name || `Portiere ${i + 1}`)}</h3>
-        <p class="muted small-note">${k.height ? `${esc(k.height)} cm` : "Altezza n/d"} · ${k.weight ? `${esc(k.weight)} kg` : "Peso n/d"}</p>
+      <div class="measure-card performance-row" data-index="${i}">
+        <div class="quality-top">
+          <div>
+            <p class="eyebrow">Portiere ${i + 1}</p>
+            <h3>${esc(k.name || `Portiere ${i + 1}`)}</h3>
+            <p class="muted small-note">${k.height ? `${esc(k.height)} cm` : "Altezza n/d"} · ${k.weight ? `${esc(k.weight)} kg` : "Peso n/d"}</p>
+          </div>
+          <div class="quality-score">${performanceCompleteness(k)}/4</div>
+        </div>
         <div class="performance-tests">
           <input class="perf-broad-jump" type="number" inputmode="decimal" placeholder="Balzo da fermo cm" value="${esc(k.broadJump)}" />
           <input class="perf-vertical-jump" type="number" inputmode="decimal" placeholder="Balzo in alto cm" value="${esc(k.verticalJump)}" />
@@ -350,27 +378,52 @@
   }
 
   async function savePerformanceProfile(event) {
-    event?.preventDefault(); event?.stopPropagation(); event?.stopImmediatePropagation?.();
-    if (!cloudProfile) return;
-    const profile = currentProfileBase();
-    const rows = Array.from(document.querySelectorAll(".perf-row"));
-    profile.keepers = profile.keepers.map((keeper, i) => {
-      const row = rows.find((item) => Number(item.dataset.index) === i);
-      if (!row) return keeper;
+    event?.preventDefault();
+    const base = cloudProfile || { keepers: [] };
+    const rows = Array.from(document.querySelectorAll(".performance-row"));
+    const keepers = (base.keepers || []).map((keeper, i) => {
+      const row = rows.find((r) => Number(r.dataset.index) === i);
       return {
-        ...keeper,
-        broadJump: cleanNum(val(row, ".perf-broad-jump")),
-        verticalJump: cleanNum(val(row, ".perf-vertical-jump")),
-        halfHeightJump: cleanNum(val(row, ".perf-half-height-jump")),
-        twoPostsTest: cleanNum(val(row, ".perf-two-posts-test"))
+        id: keeper.id || null,
+        name: keeper.name || `Portiere ${i + 1}`,
+        height: cleanNum(keeper.height),
+        weight: cleanNum(keeper.weight),
+        broadJump: cleanNum(row ? val(row, ".perf-broad-jump") : keeper.broadJump),
+        verticalJump: cleanNum(row ? val(row, ".perf-vertical-jump") : keeper.verticalJump),
+        halfHeightJump: cleanNum(row ? val(row, ".perf-half-height-jump") : keeper.halfHeightJump),
+        twoPostsTest: cleanNum(row ? val(row, ".perf-two-posts-test") : keeper.twoPostsTest)
       };
     });
+    const profile = { ...base, keepers };
     try {
       await api("/api/profile", { method: "PUT", body: { profile } });
       await loadData(false);
-      renderPerformance();
-      q("backupStatus") && (q("backupStatus").textContent = "Test fisici salvati.");
+      renderProgress();
+      if (q("backupStatus")) q("backupStatus").textContent = "Test fisici salvati.";
     } catch (e) { alert(e.message); }
+  }
+
+  function renderKeeperMeasures() {
+    const box = q("keeperMeasures");
+    if (!box) return;
+    const keepers = cloudProfile?.keepers || [];
+    if (!keepers.length) {
+      box.innerHTML = `<div class="no-data">Inserisci i portieri nel profilo per vedere misure e test fisici.</div>`;
+      return;
+    }
+    box.innerHTML = keepers.map((k, i) => {
+      const completed = performanceCompleteness(k);
+      const focus = completed === 4 ? "Scheda completa" : completed >= 2 ? "Completa i test mancanti" : "Da misurare";
+      const tags = [
+        k.height ? `Altezza ${k.height} cm` : "Altezza n/d",
+        k.weight ? `Peso ${k.weight} kg` : "Peso n/d",
+        k.broadJump ? `Balzo fermo ${k.broadJump} cm` : "Balzo fermo n/d",
+        k.verticalJump ? `Balzo alto ${k.verticalJump} cm` : "Balzo alto n/d",
+        k.halfHeightJump ? `Mezza altezza ${k.halfHeightJump} cm` : "Mezza altezza n/d",
+        k.twoPostsTest ? `Due pali ${k.twoPostsTest} s` : "Due pali n/d"
+      ];
+      return `<div class="measure-card"><div class="quality-top"><div><p class="eyebrow">${esc(focus)}</p><h3>${esc(k.name || `Portiere ${i + 1}`)}</h3></div><div class="quality-score">${completed}/4</div></div><div class="metric-tags">${tags.map((t) => `<span class="metric-tag">${esc(t)}</span>`).join("")}</div></div>`;
+    }).join("");
   }
 
   function renderExerciseQuality() {
@@ -389,32 +442,32 @@
   }
 
   function renderHistory() {
-    const list = q("historyList"); if (!list) return;
+    const list = q("historyList");
+    if (!list) return;
     list.innerHTML = cloudHistory.length ? cloudHistory.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Completa un allenamento per vedere lo storico.</p></div>`;
   }
 
   function renderProgress() {
+    integrateProgressLayout();
     const months = buildMonthlyStats();
     renderProgressKpis(months);
     renderMonthlyChart(months);
+    renderPerformanceForm();
+    renderKeeperMeasures();
     renderExerciseQuality();
     renderHistory();
-  }
-
-  function renderPerformance() {
-    renderPerformanceFields();
-    renderKeeperMeasures();
   }
 
   const baseShowView = showView;
   showView = function (view) {
     if (!cloudUser && view !== "auth") return showAuth();
     if (view === "auth") return showAuth();
-    baseShowView(view);
-    if (view === "calendar") { q("screenTitle").textContent = "Calendario"; renderCalendar(); }
-    if (view === "progress") { q("screenTitle").textContent = "Progressi"; renderProgress(); }
-    if (view === "performance") { q("screenTitle").textContent = "Motore"; renderPerformance(); }
-    if (view === "home") { renderProfileSummary(); renderExercises(); }
+    const target = view === "performance" || view === "history" ? "progress" : view;
+    baseShowView(target);
+    integrateProgressLayout();
+    if (target === "calendar") { q("screenTitle").textContent = "Calendario"; renderCalendar(); }
+    if (target === "progress") { q("screenTitle").textContent = "Progressi"; renderProgress(); }
+    if (target === "home") { renderProfileSummary(); renderExercises(); }
   };
 
   getProfile = () => cloudProfile;
@@ -422,7 +475,7 @@
   setProfile = () => {};
   setHistory = () => {};
   saveProfileFromForm = saveCloudProfile;
-  renderHistory = renderHistory;
+
   renderActiveKeeperSelect = function () {
     const select = q("activeKeeper"), keepers = cloudProfile?.keepers || [];
     select.innerHTML = keepers.length ? keepers.map((k, i) => {
@@ -430,30 +483,89 @@
       return `<option value="${esc(k.id)}" data-name="${esc(k.name || `Portiere ${i + 1}`)}">${esc(label)}</option>`;
     }).join("") : `<option value="" data-name="Portiere">Portiere</option>`;
   };
+
   finishWorkout = async function () {
     if (!selectedExercise || !cloudUser) return;
-    running = false; clearInterval(timer); timer = null;
+    running = false;
+    clearInterval(timer);
+    timer = null;
     const opt = q("activeKeeper")?.selectedOptions?.[0], sessionDate = q("sessionDateInput")?.value || todayKey();
-    const session = { keeperId: opt?.value || null, keeperName: opt?.dataset?.name || "Portiere", exerciseId: selectedExercise.id, exerciseName: selectedExercise.name, sessionDate, plannedMinutes: selectedExercise.durationMin, saves: stats.saves, mistakes: stats.mistakes, reactions: stats.reactions, category: selectedExercise.ambito, sourcePage: selectedExercise.sourcePage, sport: cloudProfile?.sportType || selectedExercise.sport, level: cloudProfile?.level || "medio" };
-    try { await api("/api/sessions", { method: "POST", body: { session } }); await loadData(false); selectedCalendarDate = sessionDate; calendarMonthDate = parseDateKey(sessionDate); q("phaseLabel").textContent = "Sessione salvata"; q("startPauseBtn").textContent = "Start"; renderProfileSummary(); }
-    catch (e) { q("phaseLabel").textContent = `Errore salvataggio: ${e.message}`; }
+    const session = {
+      keeperId: opt?.value || null,
+      keeperName: opt?.dataset?.name || "Portiere",
+      exerciseId: selectedExercise.id,
+      exerciseName: selectedExercise.name,
+      sessionDate,
+      plannedMinutes: selectedExercise.durationMin,
+      saves: stats.saves,
+      mistakes: stats.mistakes,
+      reactions: stats.reactions,
+      category: selectedExercise.ambito,
+      sourcePage: selectedExercise.sourcePage,
+      sport: cloudProfile?.sportType || selectedExercise.sport,
+      level: cloudProfile?.level || "medio"
+    };
+    try {
+      await api("/api/sessions", { method: "POST", body: { session } });
+      await loadData(false);
+      selectedCalendarDate = sessionDate;
+      calendarMonthDate = parseDateKey(sessionDate);
+      q("phaseLabel").textContent = "Sessione salvata";
+      q("startPauseBtn").textContent = "Start";
+      renderProfileSummary();
+    } catch (e) { q("phaseLabel").textContent = `Errore salvataggio: ${e.message}`; }
   };
+
   const baseStartWorkoutScreen = startWorkoutScreen;
-  startWorkoutScreen = function () { baseStartWorkoutScreen(); const d = q("sessionDateInput"); if (d) d.value = todayKey(); };
+  startWorkoutScreen = function () {
+    baseStartWorkoutScreen();
+    const d = q("sessionDateInput");
+    if (d) d.value = todayKey();
+  };
 
   document.addEventListener("DOMContentLoaded", async () => {
-    localStorage.removeItem("gk_profile"); localStorage.removeItem("gk_history");
+    integrateProgressLayout();
+    localStorage.removeItem("gk_profile");
+    localStorage.removeItem("gk_history");
     q("keepersCount")?.addEventListener("change", renderKeeperFields);
     q("setupForm")?.addEventListener("submit", saveCloudProfile, true);
-    q("performanceForm")?.addEventListener("submit", savePerformanceProfile, true);
     q("authForm")?.addEventListener("submit", (e) => { e.preventDefault(); login(); });
     q("loginBtn")?.addEventListener("click", login);
     q("signupBtn")?.addEventListener("click", signup);
     q("logoutBtn")?.addEventListener("click", logout);
-    q("exportJsonBtn")?.addEventListener("click", async () => { const data = await api("/api/export"); const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `gk-trainer-${todayKey()}.json`; a.click(); URL.revokeObjectURL(url); });
+    q("performanceForm")?.addEventListener("submit", savePerformanceProfile);
+    q("exportJsonBtn")?.addEventListener("click", async () => {
+      const data = await api("/api/export");
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `gk-trainer-${todayKey()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
     q("importJsonBtn")?.addEventListener("click", () => q("importJsonInput")?.click());
-    q("importJsonInput")?.addEventListener("change", async (e) => { const file = e.target.files?.[0]; if (!file) return; const data = JSON.parse(await file.text()); if (!confirm("Importare questo JSON? I dati attuali verranno sostituiti.")) return; await api("/api/import", { method: "POST", body: data }); await loadData(false); showView("profile"); e.target.value = ""; });
-    const oldReset = q("resetBtn"); if (oldReset) { const btn = oldReset.cloneNode(true); oldReset.replaceWith(btn); btn.addEventListener("click", async () => { if (!confirm("Cancellare profilo, portieri e sessioni?")) return; await api("/api/all-data", { method: "DELETE" }); await loadData(false); showView("setup"); }); }
+    q("importJsonInput")?.addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const data = JSON.parse(await file.text());
+      if (!confirm("Importare questo JSON? I dati attuali verranno sostituiti.")) return;
+      await api("/api/import", { method: "POST", body: data });
+      await loadData(false);
+      showView("profile");
+      e.target.value = "";
+    });
+    const oldReset = q("resetBtn");
+    if (oldReset) {
+      const btn = oldReset.cloneNode(true);
+      oldReset.replaceWith(btn);
+      btn.addEventListener("click", async () => {
+        if (!confirm("Cancellare profilo, portieri e sessioni?")) return;
+        await api("/api/all-data", { method: "DELETE" });
+        await loadData(false);
+        showView("setup");
+      });
+    }
     q("prevMonthBtn")?.addEventListener("click", () => { calendarMonthDate = new Date(calendarMonthDate.getFullYear(), calendarMonthDate.getMonth() - 1, 1); renderCalendar(); });
     q("nextMonthBtn")?.addEventListener("click", () => { calendarMonthDate = new Date(calendarMonthDate.getFullYear(), calendarMonthDate.getMonth() + 1, 1); renderCalendar(); });
     await loadData(true);
