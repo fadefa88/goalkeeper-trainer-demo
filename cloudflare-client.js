@@ -112,12 +112,21 @@
     else { loadProfileIntoForm(); showView("setup"); }
   }
 
+  function currentProfileBase() {
+    return {
+      keepersCount: cloudProfile?.keepersCount || 3,
+      sportType: cloudProfile?.sportType || "calcio",
+      level: cloudProfile?.level || "medio",
+      sessionsPerWeek: cloudProfile?.sessionsPerWeek || 2,
+      sessionDuration: cloudProfile?.sessionDuration || 60,
+      keepers: cloudProfile?.keepers || []
+    };
+  }
+
   renderKeeperFields = function () {
     const count = Number(q("keepersCount").value);
     const previous = Array.from(document.querySelectorAll(".keeper-row")).map((row) => ({
-      name: val(row, ".keeper-name"), height: val(row, ".keeper-height"), weight: val(row, ".keeper-weight"),
-      broadJump: val(row, ".keeper-broad-jump"), verticalJump: val(row, ".keeper-vertical-jump"),
-      halfHeightJump: val(row, ".keeper-half-height-jump"), twoPostsTest: val(row, ".keeper-two-posts-test")
+      name: val(row, ".keeper-name"), height: val(row, ".keeper-height"), weight: val(row, ".keeper-weight")
     }));
     const keepers = cloudProfile?.keepers || [];
     const box = q("keepersFields");
@@ -126,7 +135,7 @@
       const k = previous[i] || keepers[i] || {};
       const row = document.createElement("div");
       row.className = "keeper-row keeper-card";
-      row.innerHTML = `<div class="keeper-main"><input class="keeper-name" placeholder="Nome ${i + 1}" value="${esc(k.name)}" /><input class="keeper-height" type="number" inputmode="numeric" placeholder="Altezza cm" value="${esc(k.height)}" /><input class="keeper-weight" type="number" inputmode="decimal" placeholder="Peso kg" value="${esc(k.weight)}" /></div><div class="keeper-tests"><input class="keeper-broad-jump" type="number" inputmode="decimal" placeholder="Balzo da fermo cm" value="${esc(k.broadJump)}" /><input class="keeper-vertical-jump" type="number" inputmode="decimal" placeholder="Balzo in alto cm" value="${esc(k.verticalJump)}" /><input class="keeper-half-height-jump" type="number" inputmode="decimal" placeholder="Balzo mezza altezza cm" value="${esc(k.halfHeightJump)}" /><input class="keeper-two-posts-test" type="number" step="0.01" inputmode="decimal" placeholder="Test due pali sec" value="${esc(k.twoPostsTest)}" /></div>`;
+      row.innerHTML = `<div class="keeper-main"><input class="keeper-name" placeholder="Nome ${i + 1}" value="${esc(k.name)}" /><input class="keeper-height" type="number" inputmode="numeric" placeholder="Altezza cm" value="${esc(k.height)}" /><input class="keeper-weight" type="number" inputmode="decimal" placeholder="Peso kg" value="${esc(k.weight)}" /></div>`;
       box.appendChild(row);
     }
   };
@@ -135,15 +144,24 @@
     event?.preventDefault(); event?.stopPropagation(); event?.stopImmediatePropagation?.();
     const rows = Array.from(document.querySelectorAll(".keeper-row"));
     const profile = {
-      keepersCount: Number(q("keepersCount").value), sportType: q("sportType").value, level: q("level").value,
-      sessionsPerWeek: Number(q("sessionsPerWeek").value), sessionDuration: Number(q("sessionDuration").value),
-      keepers: rows.map((row, i) => ({
-        id: cloudProfile?.keepers?.[i]?.id || null,
-        name: val(row, ".keeper-name") || `Portiere ${i + 1}`,
-        height: cleanNum(val(row, ".keeper-height")), weight: cleanNum(val(row, ".keeper-weight")),
-        broadJump: cleanNum(val(row, ".keeper-broad-jump")), verticalJump: cleanNum(val(row, ".keeper-vertical-jump")),
-        halfHeightJump: cleanNum(val(row, ".keeper-half-height-jump")), twoPostsTest: cleanNum(val(row, ".keeper-two-posts-test"))
-      }))
+      keepersCount: Number(q("keepersCount").value),
+      sportType: q("sportType").value,
+      level: q("level").value,
+      sessionsPerWeek: Number(q("sessionsPerWeek").value),
+      sessionDuration: Number(q("sessionDuration").value),
+      keepers: rows.map((row, i) => {
+        const existing = cloudProfile?.keepers?.[i] || {};
+        return {
+          id: existing.id || null,
+          name: val(row, ".keeper-name") || `Portiere ${i + 1}`,
+          height: cleanNum(val(row, ".keeper-height")),
+          weight: cleanNum(val(row, ".keeper-weight")),
+          broadJump: existing.broadJump ?? null,
+          verticalJump: existing.verticalJump ?? null,
+          halfHeightJump: existing.halfHeightJump ?? null,
+          twoPostsTest: existing.twoPostsTest ?? null
+        };
+      })
     };
     try { await api("/api/profile", { method: "PUT", body: { profile } }); await loadData(false); showView("home"); }
     catch (e) { alert(e.message); }
@@ -309,6 +327,52 @@
     }).join("");
   }
 
+  function renderPerformanceFields() {
+    const box = q("performanceFields");
+    if (!box) return;
+    const keepers = cloudProfile?.keepers || [];
+    if (!keepers.length) {
+      box.innerHTML = `<div class="no-data">Prima salva almeno un portiere nelle impostazioni base.</div>`;
+      return;
+    }
+    box.innerHTML = keepers.map((k, i) => `
+      <div class="measure-card perf-row" data-index="${i}">
+        <p class="eyebrow">Portiere ${i + 1}</p>
+        <h3>${esc(k.name || `Portiere ${i + 1}`)}</h3>
+        <p class="muted small-note">${k.height ? `${esc(k.height)} cm` : "Altezza n/d"} · ${k.weight ? `${esc(k.weight)} kg` : "Peso n/d"}</p>
+        <div class="performance-tests">
+          <input class="perf-broad-jump" type="number" inputmode="decimal" placeholder="Balzo da fermo cm" value="${esc(k.broadJump)}" />
+          <input class="perf-vertical-jump" type="number" inputmode="decimal" placeholder="Balzo in alto cm" value="${esc(k.verticalJump)}" />
+          <input class="perf-half-height-jump" type="number" inputmode="decimal" placeholder="Balzo mezza altezza cm" value="${esc(k.halfHeightJump)}" />
+          <input class="perf-two-posts-test" type="number" step="0.01" inputmode="decimal" placeholder="Test due pali sec" value="${esc(k.twoPostsTest)}" />
+        </div>
+      </div>`).join("");
+  }
+
+  async function savePerformanceProfile(event) {
+    event?.preventDefault(); event?.stopPropagation(); event?.stopImmediatePropagation?.();
+    if (!cloudProfile) return;
+    const profile = currentProfileBase();
+    const rows = Array.from(document.querySelectorAll(".perf-row"));
+    profile.keepers = profile.keepers.map((keeper, i) => {
+      const row = rows.find((item) => Number(item.dataset.index) === i);
+      if (!row) return keeper;
+      return {
+        ...keeper,
+        broadJump: cleanNum(val(row, ".perf-broad-jump")),
+        verticalJump: cleanNum(val(row, ".perf-vertical-jump")),
+        halfHeightJump: cleanNum(val(row, ".perf-half-height-jump")),
+        twoPostsTest: cleanNum(val(row, ".perf-two-posts-test"))
+      };
+    });
+    try {
+      await api("/api/profile", { method: "PUT", body: { profile } });
+      await loadData(false);
+      renderPerformance();
+      q("backupStatus") && (q("backupStatus").textContent = "Test fisici salvati.");
+    } catch (e) { alert(e.message); }
+  }
+
   function renderExerciseQuality() {
     const box = q("exerciseQualityList");
     if (!box) return;
@@ -324,12 +388,22 @@
     }).join("");
   }
 
+  function renderHistory() {
+    const list = q("historyList"); if (!list) return;
+    list.innerHTML = cloudHistory.length ? cloudHistory.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Completa un allenamento per vedere lo storico.</p></div>`;
+  }
+
   function renderProgress() {
     const months = buildMonthlyStats();
     renderProgressKpis(months);
     renderMonthlyChart(months);
-    renderKeeperMeasures();
     renderExerciseQuality();
+    renderHistory();
+  }
+
+  function renderPerformance() {
+    renderPerformanceFields();
+    renderKeeperMeasures();
   }
 
   const baseShowView = showView;
@@ -338,8 +412,8 @@
     if (view === "auth") return showAuth();
     baseShowView(view);
     if (view === "calendar") { q("screenTitle").textContent = "Calendario"; renderCalendar(); }
-    if (view === "history") renderHistory();
     if (view === "progress") { q("screenTitle").textContent = "Progressi"; renderProgress(); }
+    if (view === "performance") { q("screenTitle").textContent = "Motore"; renderPerformance(); }
     if (view === "home") { renderProfileSummary(); renderExercises(); }
   };
 
@@ -348,15 +422,11 @@
   setProfile = () => {};
   setHistory = () => {};
   saveProfileFromForm = saveCloudProfile;
-  renderHistory = function () {
-    const list = q("historyList"); if (!list) return;
-    list.innerHTML = cloudHistory.length ? cloudHistory.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Completa un allenamento per vedere lo storico.</p></div>`;
-  };
+  renderHistory = renderHistory;
   renderActiveKeeperSelect = function () {
     const select = q("activeKeeper"), keepers = cloudProfile?.keepers || [];
     select.innerHTML = keepers.length ? keepers.map((k, i) => {
-      const perf = [k.broadJump ? `BF ${k.broadJump}cm` : "", k.verticalJump ? `BI ${k.verticalJump}cm` : "", k.halfHeightJump ? `BMA ${k.halfHeightJump}cm` : "", k.twoPostsTest ? `2P ${k.twoPostsTest}s` : ""].filter(Boolean).join(" · ");
-      const label = `${k.name || `Portiere ${i + 1}`}${k.height ? ` · ${k.height} cm` : ""}${k.weight ? ` · ${k.weight} kg` : ""}${perf ? ` · ${perf}` : ""}`;
+      const label = `${k.name || `Portiere ${i + 1}`}${k.height ? ` · ${k.height} cm` : ""}${k.weight ? ` · ${k.weight} kg` : ""}`;
       return `<option value="${esc(k.id)}" data-name="${esc(k.name || `Portiere ${i + 1}`)}">${esc(label)}</option>`;
     }).join("") : `<option value="" data-name="Portiere">Portiere</option>`;
   };
@@ -375,6 +445,7 @@
     localStorage.removeItem("gk_profile"); localStorage.removeItem("gk_history");
     q("keepersCount")?.addEventListener("change", renderKeeperFields);
     q("setupForm")?.addEventListener("submit", saveCloudProfile, true);
+    q("performanceForm")?.addEventListener("submit", savePerformanceProfile, true);
     q("authForm")?.addEventListener("submit", (e) => { e.preventDefault(); login(); });
     q("loginBtn")?.addEventListener("click", login);
     q("signupBtn")?.addEventListener("click", signup);
