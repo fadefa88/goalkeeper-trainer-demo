@@ -4,6 +4,7 @@
 
   const STORAGE_KEY = "gk_keeper_attendance_v2";
   let renderTimer = null;
+  let progressCleanupTimer = null;
 
   function byId(id) {
     return document.getElementById(id);
@@ -142,6 +143,33 @@
     updateSummary(card, dateKey, keepers);
   }
 
+  function keepOnlyPhysicalProgress() {
+    const progressView = byId("progressView");
+    if (!progressView || !progressView.classList.contains("active")) return;
+
+    const physicalForm = byId("performanceForm");
+    const physicalCard = physicalForm?.closest(".progress-card");
+    if (!physicalCard) return;
+
+    const eyebrow = physicalCard.querySelector(".eyebrow");
+    const title = physicalCard.querySelector("h2");
+    const note = physicalCard.querySelector(".muted");
+    if (eyebrow) eyebrow.textContent = "Parte fisica";
+    if (title) title.textContent = "Motore del portiere";
+    if (note) note.textContent = "Aggiorna solo i test fisici dei portieri: balzi, mezza altezza e test due pali.";
+
+    Array.from(progressView.children).forEach((child) => {
+      if (child !== physicalCard) child.remove();
+    });
+    if (progressView.firstElementChild !== physicalCard) progressView.prepend(physicalCard);
+  }
+
+  function scheduleProgressCleanup(delay = 0) {
+    clearTimeout(progressCleanupTimer);
+    progressCleanupTimer = setTimeout(keepOnlyPhysicalProgress, delay);
+    [80, 250, 700, 1400].forEach((extraDelay) => setTimeout(keepOnlyPhysicalProgress, extraDelay));
+  }
+
   function scheduleRender(delay = 0) {
     clearTimeout(renderTimer);
     renderTimer = setTimeout(render, delay);
@@ -154,6 +182,7 @@
       const result = previous.apply(this, arguments);
       scheduleRender(30);
       scheduleRender(180);
+      scheduleProgressCleanup(30);
       return result;
     };
     hooked.__keeperAttendanceDirectHook = true;
@@ -168,18 +197,30 @@
         scheduleRender(80);
         scheduleRender(260);
       }
+      if (event.target.closest("[data-tab='progress']")) {
+        scheduleProgressCleanup(60);
+      }
     });
 
     const observe = () => {
-      const target = byId("calendarView") || document.body;
-      if (!target || target.__keeperAttendanceObserved) return;
-      target.__keeperAttendanceObserved = true;
-      new MutationObserver(() => scheduleRender(50)).observe(target, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+      const calendarTarget = byId("calendarView") || document.body;
+      if (calendarTarget && !calendarTarget.__keeperAttendanceObserved) {
+        calendarTarget.__keeperAttendanceObserved = true;
+        new MutationObserver(() => scheduleRender(50)).observe(calendarTarget, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+      }
+
+      const progressTarget = byId("progressView");
+      if (progressTarget && !progressTarget.__physicalOnlyObserved) {
+        progressTarget.__physicalOnlyObserved = true;
+        new MutationObserver(() => scheduleProgressCleanup(50)).observe(progressTarget, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+      }
     };
 
     observe();
     scheduleRender(200);
     scheduleRender(800);
+    scheduleProgressCleanup(200);
+    scheduleProgressCleanup(800);
     setTimeout(observe, 800);
   }
 
