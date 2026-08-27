@@ -386,6 +386,155 @@ button,
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Structural overrides for the calendar planner. Keep this in the main CSS so it wins
+   over older inline/runtime rules during cache transitions. */
+.app-shell .bottom-nav {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.app-shell .bottom-nav [data-tab="performance"],
+.app-shell .bottom-nav [data-tab="profile"] {
+  display: none !important;
+}
+
+.calendar-list-card {
+  overflow: hidden;
+}
+
+.planner-card,
+.planner-card * {
+  min-width: 0;
+}
+
+.planner-card {
+  display: grid !important;
+  gap: 14px !important;
+  margin-top: 14px !important;
+}
+
+.planner-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+.planner-toolbar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 10px !important;
+  align-items: end !important;
+}
+
+.planner-summary {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin-top: 12px !important;
+}
+
+.planner-summary .progress-kpi {
+  min-width: 0;
+  padding: 10px !important;
+  border-radius: 15px !important;
+}
+
+.planner-summary .progress-kpi strong {
+  font-size: 20px;
+  word-break: break-word;
+}
+
+.planner-summary .over {
+  border-color: rgba(239,68,68,.55) !important;
+  background: rgba(239,68,68,.12) !important;
+}
+
+.planner-list {
+  display: grid !important;
+  gap: 10px !important;
+  margin-top: 12px !important;
+}
+
+.planner-item {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 78px 74px 42px !important;
+  gap: 8px !important;
+  align-items: center !important;
+  padding: 12px !important;
+  border-radius: 18px !important;
+  border: 1px solid var(--line) !important;
+  background: rgba(255,255,255,.045) !important;
+  overflow: hidden;
+}
+
+.planner-item h3,
+.planner-item .muted,
+.planner-item .eyebrow {
+  overflow-wrap: anywhere;
+}
+
+.planner-item input {
+  min-width: 0;
+  padding: 11px 10px;
+  text-align: center;
+  font-size: 16px !important;
+}
+
+.planner-item .ghost-btn,
+.planner-item .danger-btn {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 8px;
+  text-align: center;
+}
+
+.planner-actions {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+
+.planner-empty {
+  padding: 14px !important;
+  border: 1px dashed var(--line) !important;
+  border-radius: 18px !important;
+  color: var(--muted) !important;
+  line-height: 1.45 !important;
+}
+
+.planner-session-title {
+  margin-top: 18px !important;
+}
+
+.calendar-dot.planned {
+  background: var(--orange) !important;
+  box-shadow: 0 0 14px rgba(249,115,22,.45) !important;
+}
+
+@media (max-width: 430px) {
+  .planner-grid,
+  .planner-toolbar,
+  .planner-summary,
+  .planner-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .planner-toolbar .primary-btn,
+  .planner-actions button {
+    width: 100%;
+  }
+
+  .planner-item {
+    grid-template-columns: 1fr !important;
+  }
+
+  .planner-item input,
+  .planner-item .ghost-btn,
+  .planner-item .danger-btn {
+    width: 100%;
+  }
+}
+
 @media (max-width: 390px) {
   .keeper-row { grid-template-columns: 1fr; }
   .timer { font-size: 74px; }
