@@ -118,9 +118,11 @@
     const performanceView = q("performanceView");
     const nav = q("bottomNav");
     const perfNav = document.querySelector('[data-tab="performance"]');
+    const profileNav = document.querySelector('[data-tab="profile"]');
 
     if (perfNav) perfNav.remove();
-    if (nav) nav.style.setProperty("grid-template-columns", "repeat(4,1fr)", "important");
+    if (profileNav) profileNav.remove();
+    if (nav) nav.style.setProperty("grid-template-columns", "repeat(3,1fr)", "important");
 
     if (!progressView || !performanceView) return;
     if (progressView.querySelector("#performanceForm")) {
