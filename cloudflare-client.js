@@ -113,6 +113,31 @@
     else { loadProfileIntoForm(); showView("setup"); }
   }
 
+  function ensurePlannerStyles() {
+    if (document.getElementById("calendarPlannerStyles")) return;
+    const style = document.createElement("style");
+    style.id = "calendarPlannerStyles";
+    style.textContent = `
+      .bottom-nav{grid-template-columns:repeat(3,1fr)!important}
+      .planner-card{display:grid;gap:14px;margin-top:14px}
+      .planner-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+      .planner-grid label{font-size:12px}
+      .planner-toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+      .planner-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+      .planner-summary .progress-kpi{padding:10px;border-radius:15px}
+      .planner-summary .over{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.12)}
+      .planner-list{display:grid;gap:10px;margin-top:12px}
+      .planner-item{display:grid;grid-template-columns:1fr 92px 64px 44px;gap:8px;align-items:center;padding:12px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.045)}
+      .planner-item input{font-size:16px!important}
+      .planner-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+      .planner-empty{padding:14px;border:1px dashed var(--line);border-radius:18px;color:var(--muted);line-height:1.45}
+      .planner-session-title{margin-top:18px}
+      .calendar-dot.planned{background:#f97316;box-shadow:0 0 14px rgba(249,115,22,.45)}
+      @media(max-width:390px){.planner-grid,.planner-toolbar,.planner-summary,.planner-actions{grid-template-columns:1fr}.planner-item{grid-template-columns:1fr}.planner-item .ghost-btn,.planner-item .danger-btn{width:100%}}
+    `;
+    document.head.appendChild(style);
+  }
+
   function integrateProgressLayout() {
     const progressView = q("progressView");
     const performanceView = q("performanceView");
@@ -233,24 +258,243 @@
     return `<div class="history-card"><p class="eyebrow">${esc(s.category)} · pag. ${s.sourcePage || "-"}</p><h3>${esc(s.exerciseName || "Esercizio")}</h3><p class="muted">${formatDateKey(key)}${time ? ` · salvata alle ${time}` : ""} · ${esc(s.keeper || "Portiere")}</p><div class="history-row"><span>Parate: ${s.saves}</span><span>Errori: ${s.mistakes}</span><span>Reazioni: ${s.reactions}</span><span>Durata: ${s.plannedMinutes || "-"}'</span></div></div>`;
   }
 
+  function plannerStorageKey() {
+    return `gk_day_plans_${cloudUser?.email || cloudUser?.id || "local"}`;
+  }
+
+  function readPlans() {
+    try { return JSON.parse(localStorage.getItem(plannerStorageKey()) || "{}"); }
+    catch { return {}; }
+  }
+
+  function writePlans(plans) {
+    localStorage.setItem(plannerStorageKey(), JSON.stringify(plans));
+  }
+
+  function defaultPlan() {
+    return { time: "18:00", totalMinutes: Number(cloudProfile?.sessionDuration || 60), items: [] };
+  }
+
+  function getDayPlan(key = selectedCalendarDate) {
+    const plans = readPlans();
+    return { ...defaultPlan(), ...(plans[key] || {}), items: Array.isArray(plans[key]?.items) ? plans[key].items : [] };
+  }
+
+  function saveDayPlan(key, plan) {
+    const plans = readPlans();
+    plans[key] = { ...plan, items: Array.isArray(plan.items) ? plan.items : [] };
+    writePlans(plans);
+  }
+
+  function exerciseById(id) {
+    return exercises.find((ex) => ex.id === id) || null;
+  }
+
+  function plannerExercisePool() {
+    const sport = cloudProfile?.sportType || "calcio";
+    const level = cloudProfile?.level || "medio";
+    const recommended = exercises.filter((ex) => ex.sport === sport && ex.levels.includes(level));
+    return recommended.length ? recommended : exercises;
+  }
+
+  function planUsedMinutes(plan) {
+    return (plan.items || []).reduce((sum, item) => sum + Number(item.minutes || 0), 0);
+  }
+
+  function timeToMinutes(time) {
+    const [h, m] = String(time || "00:00").split(":").map(Number);
+    return (h || 0) * 60 + (m || 0);
+  }
+
+  function minutesToTime(total) {
+    const day = 24 * 60;
+    const value = ((total % day) + day) % day;
+    const h = Math.floor(value / 60);
+    const m = value % 60;
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  }
+
+  function planItemWindow(plan, index) {
+    const before = plan.items.slice(0, index).reduce((sum, item) => sum + Number(item.minutes || 0), 0);
+    const start = timeToMinutes(plan.time) + before;
+    const end = start + Number(plan.items[index]?.minutes || 0);
+    return `${minutesToTime(start)}-${minutesToTime(end)}`;
+  }
+
+  function renderDayPlanner(scroll = false) {
+    ensurePlannerStyles();
+    const title = q("selectedDateTitle");
+    const box = q("selectedDateSessions");
+    if (!title || !box) return;
+
+    const plan = getDayPlan(selectedCalendarDate);
+    const used = planUsedMinutes(plan);
+    const total = Number(plan.totalMinutes || cloudProfile?.sessionDuration || 60);
+    const remaining = total - used;
+    const pool = plannerExercisePool();
+    const sessions = sessionsForDate(selectedCalendarDate);
+
+    title.textContent = formatDateKey(selectedCalendarDate);
+    box.innerHTML = `
+      <div class="planner-card">
+        <div class="planner-grid">
+          <label>Orario allenamento
+            <input id="dayPlanTime" type="time" value="${esc(plan.time)}" />
+          </label>
+          <label>Tempo disponibile
+            <input id="dayPlanTotal" type="number" inputmode="numeric" min="10" step="5" value="${esc(total)}" />
+          </label>
+        </div>
+        <div class="planner-summary">
+          <div class="progress-kpi"><span>Inizio</span><strong>${esc(plan.time)}</strong><small>orario previsto</small></div>
+          <div class="progress-kpi"><span>Usati</span><strong>${used}'</strong><small>su ${total}' disponibili</small></div>
+          <div class="progress-kpi ${remaining < 0 ? "over" : ""}"><span>${remaining < 0 ? "Sforo" : "Residui"}</span><strong>${Math.abs(remaining)}'</strong><small>${remaining < 0 ? "riduci esercizi o durata" : "ancora programmabili"}</small></div>
+        </div>
+        <div class="planner-toolbar">
+          <label>Aggiungi esercizio
+            <select id="dayPlanExercise">
+              ${pool.map((ex) => `<option value="${esc(ex.id)}">${esc(ex.name)} · ${ex.durationMin}' · ${esc(ex.ambito)}</option>`).join("")}
+            </select>
+          </label>
+          <button id="addPlanExerciseBtn" class="primary-btn" type="button">Aggiungi</button>
+        </div>
+        <div class="planner-actions">
+          <button id="autoPlanBtn" class="dark-btn" type="button">Auto programma</button>
+          <button id="clearPlanBtn" class="danger-btn" type="button">Svuota giornata</button>
+        </div>
+        <div id="dayPlanItems" class="planner-list">
+          ${plan.items.length ? plan.items.map((item, index) => {
+            const ex = exerciseById(item.exerciseId);
+            return `<div class="planner-item" data-index="${index}">
+              <div>
+                <p class="eyebrow">${esc(planItemWindow(plan, index))}</p>
+                <h3>${esc(ex?.name || "Esercizio")}</h3>
+                <p class="muted small-note">${esc(ex?.ambito || "")} · durata consigliata ${ex?.durationMin || item.minutes}'</p>
+              </div>
+              <input class="plan-item-minutes" type="number" inputmode="numeric" min="1" step="1" value="${esc(item.minutes)}" />
+              <button class="ghost-btn" data-plan-start="${index}" type="button">Avvia</button>
+              <button class="danger-btn" data-plan-remove="${index}" type="button">×</button>
+            </div>`;
+          }).join("") : `<div class="planner-empty">Nessun esercizio programmato. Imposta durata, poi aggiungi manualmente o usa Auto programma.</div>`}
+        </div>
+        <div class="planner-session-title">
+          <p class="eyebrow">Sessioni completate</p>
+          <div class="history-list compact">${sessions.length ? sessions.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione completata</h3><p class="muted">Quando termini un allenamento in questa data, comparirà qui.</p></div>`}</div>
+        </div>
+      </div>`;
+
+    bindPlannerEvents();
+    if (scroll) q("selectedDateSessions")?.closest(".calendar-list-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function persistPlannerInputs() {
+    const plan = getDayPlan(selectedCalendarDate);
+    plan.time = q("dayPlanTime")?.value || plan.time;
+    plan.totalMinutes = Number(q("dayPlanTotal")?.value || plan.totalMinutes || cloudProfile?.sessionDuration || 60);
+    saveDayPlan(selectedCalendarDate, plan);
+  }
+
+  function bindPlannerEvents() {
+    q("dayPlanTime")?.addEventListener("change", () => { persistPlannerInputs(); renderCalendar(); });
+    q("dayPlanTotal")?.addEventListener("change", () => { persistPlannerInputs(); renderCalendar(); });
+    q("addPlanExerciseBtn")?.addEventListener("click", addExerciseToPlan);
+    q("autoPlanBtn")?.addEventListener("click", autoBuildPlan);
+    q("clearPlanBtn")?.addEventListener("click", () => {
+      if (!confirm("Svuotare la programmazione di questa giornata?")) return;
+      const plan = getDayPlan(selectedCalendarDate);
+      plan.items = [];
+      saveDayPlan(selectedCalendarDate, plan);
+      renderCalendar();
+    });
+    document.querySelectorAll(".plan-item-minutes").forEach((input) => {
+      input.addEventListener("change", () => {
+        const row = input.closest(".planner-item");
+        const index = Number(row?.dataset.index);
+        const plan = getDayPlan(selectedCalendarDate);
+        if (plan.items[index]) plan.items[index].minutes = Number(input.value || 0);
+        saveDayPlan(selectedCalendarDate, plan);
+        renderCalendar();
+      });
+    });
+    document.querySelectorAll("[data-plan-remove]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const index = Number(btn.dataset.planRemove);
+        const plan = getDayPlan(selectedCalendarDate);
+        plan.items.splice(index, 1);
+        saveDayPlan(selectedCalendarDate, plan);
+        renderCalendar();
+      });
+    });
+    document.querySelectorAll("[data-plan-start]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const index = Number(btn.dataset.planStart);
+        const plan = getDayPlan(selectedCalendarDate);
+        const item = plan.items[index];
+        const ex = exerciseById(item?.exerciseId);
+        if (!ex) return;
+        selectedExercise = { ...ex, durationMin: Number(item.minutes || ex.durationMin) };
+        startWorkoutScreen();
+        const dateInput = q("sessionDateInput");
+        if (dateInput) dateInput.value = selectedCalendarDate;
+      });
+    });
+  }
+
+  function addExerciseToPlan() {
+    persistPlannerInputs();
+    const plan = getDayPlan(selectedCalendarDate);
+    const id = q("dayPlanExercise")?.value;
+    const ex = exerciseById(id);
+    if (!ex) return;
+    const remaining = Number(plan.totalMinutes || 0) - planUsedMinutes(plan);
+    const minutes = remaining > 0 ? Math.min(ex.durationMin, remaining) : ex.durationMin;
+    plan.items.push({ exerciseId: ex.id, minutes: Math.max(1, Number(minutes || ex.durationMin)) });
+    saveDayPlan(selectedCalendarDate, plan);
+    renderCalendar();
+  }
+
+  function autoBuildPlan() {
+    persistPlannerInputs();
+    const plan = getDayPlan(selectedCalendarDate);
+    const total = Number(plan.totalMinutes || cloudProfile?.sessionDuration || 60);
+    const pool = plannerExercisePool();
+    const chosen = [];
+    let remaining = total;
+
+    const buckets = ["Tecnico", "Difesa spazio", "Finalizzazione", "Motorio", "Conoscenza del gioco"];
+    const ordered = [...pool].sort((a, b) => buckets.indexOf(a.ambito) - buckets.indexOf(b.ambito));
+    for (const ex of ordered) {
+      if (remaining <= 0) break;
+      if (ex.durationMin <= remaining || chosen.length === 0) {
+        chosen.push({ exerciseId: ex.id, minutes: Math.min(ex.durationMin, remaining || ex.durationMin) });
+        remaining -= ex.durationMin;
+      }
+    }
+    plan.items = chosen.length ? chosen : pool.slice(0, 1).map((ex) => ({ exerciseId: ex.id, minutes: Math.min(ex.durationMin, total) }));
+    saveDayPlan(selectedCalendarDate, plan);
+    renderCalendar();
+  }
+
   function renderCalendar() {
+    ensurePlannerStyles();
     const grid = q("calendarGrid"), title = q("calendarMonthTitle");
     if (!grid || !title) return;
     const y = calendarMonthDate.getFullYear(), m = calendarMonthDate.getMonth(), first = new Date(y, m, 1);
-    const days = new Date(y, m + 1, 0).getDate(), offset = (first.getDay() + 6) % 7, today = todayKey(), map = sessionsByDate();
+    const days = new Date(y, m + 1, 0).getDate(), offset = (first.getDay() + 6) % 7, today = todayKey(), map = sessionsByDate(), plans = readPlans();
     title.textContent = first.toLocaleDateString("it-IT", { month: "long", year: "numeric" });
     const cells = [];
     for (let i = 0; i < offset; i++) cells.push(`<button class="calendar-day empty" type="button"></button>`);
     for (let d = 1; d <= days; d++) {
       const key = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+      const hasSessions = Boolean(map[key]?.length);
+      const hasPlan = Boolean(plans[key]?.items?.length);
       const cls = ["calendar-day", key === today ? "today" : "", key === selectedCalendarDate ? "selected" : ""].filter(Boolean).join(" ");
-      cells.push(`<button class="${cls}" type="button" data-date="${key}"><span class="calendar-day-number">${d}</span>${map[key]?.length ? `<span class="calendar-dot"></span>` : `<span></span>`}</button>`);
+      const dot = hasSessions || hasPlan ? `<span class="calendar-dot ${hasPlan && !hasSessions ? "planned" : ""}"></span>` : `<span></span>`;
+      cells.push(`<button class="${cls}" type="button" data-date="${key}"><span class="calendar-day-number">${d}</span>${dot}</button>`);
     }
     grid.innerHTML = cells.join("");
-    document.querySelectorAll(".calendar-day[data-date]").forEach((b) => b.addEventListener("click", () => { selectedCalendarDate = b.dataset.date; renderCalendar(); }));
-    q("selectedDateTitle").textContent = formatDateKey(selectedCalendarDate);
-    const items = sessionsForDate(selectedCalendarDate);
-    q("selectedDateSessions").innerHTML = items.length ? items.map(renderSessionCard).join("") : `<div class="history-card"><h3>Nessuna sessione</h3><p class="muted">Le sessioni completate in questa data compariranno qui.</p></div>`;
+    document.querySelectorAll(".calendar-day[data-date]").forEach((b) => b.addEventListener("click", () => { selectedCalendarDate = b.dataset.date; renderCalendar(); renderDayPlanner(true); }));
+    renderDayPlanner();
   }
 
   function monthKey(value) {
@@ -522,10 +766,11 @@
   startWorkoutScreen = function () {
     baseStartWorkoutScreen();
     const d = q("sessionDateInput");
-    if (d) d.value = todayKey();
+    if (d) d.value = selectedCalendarDate || todayKey();
   };
 
   document.addEventListener("DOMContentLoaded", async () => {
+    ensurePlannerStyles();
     integrateProgressLayout();
     localStorage.removeItem("gk_profile");
     localStorage.removeItem("gk_history");
