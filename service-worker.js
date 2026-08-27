@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-calendar-keepers-direct-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-progress-physical-only-v1";
 const ASSETS = [
   "./",
   "./index.html",
