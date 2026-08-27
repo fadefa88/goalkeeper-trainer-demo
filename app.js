@@ -1067,6 +1067,8 @@ function renderExercises() {
 
 function renderDetail() {
   const ex = selectedExercise;
+  const visualHtml = renderExerciseVisual(ex);
+  const hasVisual = Boolean(visualHtml);
 
   $("exerciseDetail").innerHTML = `
     <div class="detail-card">
@@ -1085,6 +1087,12 @@ function renderDetail() {
         <span class="pill">${escapeHtml(ex.players)}</span>
         <span class="pill">${escapeHtml(ex.contenitore)}</span>
       </div>
+
+      ${hasVisual ? `
+      <div class="detail-block">
+        <h3>Visual esercizio</h3>
+        ${visualHtml}
+      </div>` : ""}
 
       <div class="detail-block">
         <h3>Organizzazione</h3>
@@ -1106,12 +1114,8 @@ function renderDetail() {
       </div>
 
       <p class="source-note">Fonte: “Il portiere dentro il gioco - eserciziario attività giovanile”, pag. ${ex.sourcePage}.</p>
-
-      <button id="beginWorkoutBtn" class="primary-btn full">Inizia allenamento</button>
     </div>
   `;
-
-  $("beginWorkoutBtn").addEventListener("click", startWorkoutScreen);
 }
 
 function startWorkoutScreen() {
@@ -1130,6 +1134,242 @@ function startWorkoutScreen() {
   $("cueText").textContent = "—";
   renderActiveKeeperSelect();
   showView("workout");
+}
+
+function renderExerciseVisual(ex) {
+  const visuals = {
+    "portiere-prese-contatti": visualPreseContatti,
+    "re-dei-portieri": visualReDeiPortieri,
+    "conduzione-palla-uscita-bassa": visualConduzioneUscitaBassa,
+    "lancio-presa-palla": visualLancioPresa,
+    "uscita-bassa-cross-laterale": visualUscitaCrossLaterale,
+    "attacchi-a-scelta": visualAttacchiScelta,
+    "passo-lungo-passo-corto": visualPassoLungoCorto,
+    "finalizzazioni-marcatura-individuale": visualFinalizzazioniMarcatura,
+    "portieri-partite-aeree-estese": visualPartiteAreeEstese,
+    "gioco-dentro-fuori": visualGiocoDentroFuori,
+  };
+  const fn = visuals[ex.id];
+  if (!fn) return "";
+  return `
+    <div class="exercise-visual-wrap">
+      ${exerciseVisualStyles()}
+      <div class="exercise-visual-caption">Schema animato ricavato da organizzazione e regole operative.</div>
+      ${fn()}
+    </div>
+  `;
+}
+
+function exerciseVisualStyles() {
+  return `
+    <style>
+      .exercise-visual-wrap{display:grid;gap:10px}
+      .exercise-visual-caption{font-size:12px;color:#7d8590}
+      .exercise-visual{width:100%;height:auto;display:block;border-radius:18px;background:#0f3d1f;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.03)}
+      .exercise-visual text{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;fill:#dfe7e2;font-size:11px}
+      .exercise-visual .label{font-size:12px;font-weight:700}
+      .exercise-visual .goal{fill:none;stroke:#e6efe8;stroke-width:3}
+      .exercise-visual .zone{fill:none;stroke:rgba(255,255,255,.18);stroke-width:2;stroke-dasharray:7 7}
+      .exercise-visual .corridor{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.25);stroke-width:2;stroke-dasharray:6 6}
+      .exercise-visual .arrow{fill:none;stroke:#ffd34d;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowHead)}
+      .exercise-visual .run{fill:none;stroke:#6fd3ff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowHeadBlue)}
+      .exercise-visual .ball{fill:#ffd34d;stroke:#1b1b1b;stroke-width:2}
+      .exercise-visual .keeper{fill:#101010;stroke:#ffffff;stroke-width:2}
+      .exercise-visual .player{fill:#ffffff;stroke:#101010;stroke-width:2}
+      .exercise-visual .support{fill:#d7f4de;stroke:#101010;stroke-width:2}
+      .exercise-visual .cone{fill:#ff8a3d;stroke:#fff0;}
+      .exercise-visual .ghost{opacity:.35}
+      .exercise-visual .tiny{font-size:10px}
+      .exercise-visual .badge{fill:rgba(0,0,0,.35);stroke:rgba(255,255,255,.12);stroke-width:1}
+    </style>
+  `;
+}
+
+function svgShell(inner, viewBox = "0 0 420 240") {
+  return `<svg class="exercise-visual" viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Visual esercizio">
+    <defs>
+      <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L8,3 z" fill="#ffd34d" />
+      </marker>
+      <marker id="arrowHeadBlue" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L8,3 z" fill="#6fd3ff" />
+      </marker>
+    </defs>
+    ${inner}
+  </svg>`;
+}
+
+function visualPreseContatti() {
+  return svgShell(`
+    <rect x="18" y="18" width="384" height="204" rx="18" class="zone"/>
+    <g class="ghost">
+      <rect x="42" y="38" width="34" height="18" class="goal"/>
+      <rect x="113" y="38" width="34" height="18" class="goal"/>
+      <rect x="184" y="38" width="34" height="18" class="goal"/>
+      <rect x="255" y="38" width="34" height="18" class="goal"/>
+      <rect x="326" y="38" width="34" height="18" class="goal"/>
+      <rect x="184" y="186" width="34" height="18" class="goal"/>
+    </g>
+    <circle cx="200" cy="158" r="11" class="keeper"><animate attributeName="cx" values="200;188;200" dur="2.6s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="112" r="10" class="player"><animate attributeName="cx" values="200;200;208" dur="2.6s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="112" r="5" class="ball"><animate attributeName="cx" values="200;200;188" dur="2.6s" repeatCount="indefinite"/><animate attributeName="cy" values="112;138;148" dur="2.6s" repeatCount="indefinite"/></circle>
+    <path d="M200 112 L200 144" class="arrow"/>
+    <path d="M200 158 L188 146" class="run"/>
+    <text x="24" y="210" class="tiny">6 porticine · 6 portieri in difesa · 6 giocatori con palla in attacco</text>
+    <text x="147" y="28" class="label">Ingresso frontale e opposizione del portiere</text>
+  `);
+}
+
+function visualReDeiPortieri() {
+  return svgShell(`
+    <rect x="18" y="18" width="384" height="204" rx="18" class="zone"/>
+    <rect x="332" y="88" width="48" height="64" class="goal"/>
+    <circle cx="310" cy="120" r="11" class="keeper"><animate attributeName="cy" values="120;112;120" dur="2.1s" repeatCount="indefinite"/></circle>
+    <circle cx="100" cy="120" r="10" class="player"/>
+    <circle cx="64" cy="92" r="9" class="player ghost"/>
+    <circle cx="64" cy="120" r="9" class="player ghost"/>
+    <circle cx="64" cy="148" r="9" class="player ghost"/>
+    <circle cx="100" cy="120" r="5" class="ball"><animate attributeName="cx" values="100;220;286" dur="2.1s" repeatCount="indefinite"/></circle>
+    <path d="M112 120 L286 120" class="arrow"/>
+    <path d="M122 92 Q160 72 300 88" class="run"/>
+    <text x="28" y="32" class="label">Tiro continuo · chi segna entra subito in porta</text>
+    <text x="28" y="210" class="tiny">Coda attaccanti a sinistra, portiere in porta, rotazione rapida dopo ogni tiro</text>
+  `);
+}
+
+function visualConduzioneUscitaBassa() {
+  return svgShell(`
+    <rect x="110" y="40" width="200" height="160" rx="14" class="zone"/>
+    <circle cx="160" cy="82" r="9" class="player"/><circle cx="160" cy="82" r="4" class="ball"/>
+    <circle cx="262" cy="82" r="9" class="player"/><circle cx="262" cy="82" r="4" class="ball"/>
+    <circle cx="250" cy="160" r="9" class="player"/><circle cx="250" cy="160" r="4" class="ball"/>
+    <circle cx="210" cy="132" r="11" class="keeper"><animate attributeName="cx" values="210;236;210" dur="2.3s" repeatCount="indefinite"/></circle>
+    <circle cx="250" cy="160" r="4" class="ball"><animate attributeName="cx" values="250;236;228" dur="2.3s" repeatCount="indefinite"/><animate attributeName="cy" values="160;152;154" dur="2.3s" repeatCount="indefinite"/></circle>
+    <path d="M250 160 Q240 154 228 154" class="arrow"/>
+    <path d="M210 132 Q228 144 236 152" class="run"/>
+    <text x="118" y="28" class="label">Quadrato 5x5 · tutti con palla tranne 1 portiere</text>
+    <text x="120" y="218" class="tiny">Il portiere entra deciso in tuffo basso per presa o respinta fuori dal quadrato</text>
+  `);
+}
+
+function visualLancioPresa() {
+  return svgShell(`
+    <circle cx="90" cy="120" r="10" class="player"/>
+    <circle cx="190" cy="60" r="10" class="player"/>
+    <circle cx="300" cy="120" r="10" class="support"/>
+    <circle cx="190" cy="180" r="10" class="player"/>
+    <path d="M100 114 L180 66" class="arrow"/>
+    <path d="M200 66 L288 114" class="arrow"/>
+    <path d="M290 126 L102 126" class="run"/>
+    <circle cx="90" cy="120" r="5" class="ball"><animateMotion dur="3.2s" repeatCount="indefinite" path="M0,0 L100,-60 L210,0 L0,0"/></circle>
+    <text x="26" y="30" class="label">Lancio, presa e trasmissione sul laterale libero</text>
+    <text x="26" y="212" class="tiny">2 palloni · rotazione ogni 1-2 minuti · triangolo con laterale d’appoggio</text>
+  `);
+}
+
+function visualUscitaCrossLaterale() {
+  return svgShell(`
+    <rect x="292" y="74" width="62" height="92" class="goal"/>
+    <circle cx="306" cy="120" r="11" class="keeper"><animateMotion dur="2.4s" repeatCount="indefinite" path="M0,0 L-28,16"/></circle>
+    <circle cx="78" cy="170" r="9" class="player"/>
+    <circle cx="92" cy="164" r="4" class="ball"><animate attributeName="cx" values="92;180;252" dur="2.4s" repeatCount="indefinite"/><animate attributeName="cy" values="164;154;136" dur="2.4s" repeatCount="indefinite"/></circle>
+    <path d="M96 162 Q178 150 252 136" class="arrow"/>
+    <path d="M306 120 Q292 128 280 136" class="run"/>
+    <text x="26" y="30" class="label">Portiere al palo · palla laterale nello spazio davanti alla porta</text>
+    <text x="26" y="212" class="tiny">Uscita bassa in tuffo per bloccare il cross rasoterra/laterale</text>
+  `);
+}
+
+function visualAttacchiScelta() {
+  return svgShell(`
+    <rect x="18" y="18" width="384" height="204" rx="18" class="zone"/>
+    <rect x="194" y="18" width="32" height="204" class="corridor"/>
+    <rect x="34" y="94" width="30" height="50" class="goal"/>
+    <rect x="356" y="94" width="30" height="50" class="goal"/>
+    <circle cx="110" cy="88" r="9" class="player"/>
+    <circle cx="142" cy="120" r="9" class="player"/>
+    <circle cx="96" cy="152" r="9" class="player"/>
+    <circle cx="310" cy="104" r="9" class="player"/>
+    <circle cx="290" cy="142" r="9" class="player"/>
+    <circle cx="250" cy="120" r="9" class="keeper"/>
+    <circle cx="168" cy="120" r="5" class="ball"><animate attributeName="cx" values="168;220;336" dur="2.8s" repeatCount="indefinite"/></circle>
+    <path d="M152 120 L336 120" class="arrow"/>
+    <path d="M250 120 L210 120" class="run"/>
+    <text x="24" y="30" class="label">Due attacchi contemporanei · scelta libera dei numeri</text>
+    <text x="24" y="212" class="tiny">Chi difende, se recupera, punta la meta nel corridoio centrale</text>
+  `);
+}
+
+function visualPassoLungoCorto() {
+  return svgShell(`
+    <circle cx="70" cy="120" r="10" class="player"/>
+    <circle cx="210" cy="120" r="10" class="player"/>
+    <circle cx="350" cy="120" r="10" class="player"/>
+    <path d="M82 114 L198 114" class="arrow"/>
+    <path d="M198 126 L82 126" class="run"/>
+    <path d="M222 114 L338 114" class="arrow"/>
+    <circle cx="70" cy="120" r="5" class="ball"><animateMotion dur="3.4s" repeatCount="indefinite" path="M0,0 L140,0 L-128,12 L140,-12"/></circle>
+    <text x="24" y="30" class="label">Lungo → corto → corto → lungo</text>
+    <text x="24" y="212" class="tiny">A gioca lungo a B, corre incontro, scarico corto, restituzione e nuova apertura verso C</text>
+  `);
+}
+
+function visualFinalizzazioniMarcatura() {
+  return svgShell(`
+    <rect x="24" y="36" width="170" height="168" rx="16" class="zone"/>
+    <rect x="226" y="36" width="170" height="168" rx="16" class="zone"/>
+    <rect x="138" y="92" width="36" height="56" class="goal"/>
+    <rect x="340" y="92" width="36" height="56" class="goal"/>
+    <circle cx="60" cy="120" r="8" class="support"/>
+    <circle cx="92" cy="120" r="9" class="player"/>
+    <circle cx="118" cy="98" r="9" class="player"/>
+    <circle cx="126" cy="142" r="9" class="keeper"/>
+    <circle cx="262" cy="120" r="8" class="support ghost"/>
+    <circle cx="294" cy="120" r="9" class="player ghost"/>
+    <circle cx="320" cy="98" r="9" class="player ghost"/>
+    <circle cx="328" cy="142" r="9" class="keeper ghost"/>
+    <path d="M64 120 L88 120" class="arrow"/>
+    <path d="M88 120 Q114 116 140 120" class="run"/>
+    <circle cx="60" cy="120" r="4" class="ball"><animate attributeName="cx" values="60;92;142" dur="2.6s" repeatCount="indefinite"/></circle>
+    <text x="24" y="26" class="label">Due settori 2v2 · palla inattiva e ingresso del battitore</text>
+    <text x="24" y="220" class="tiny">L’azione finisce con gol, uscita, riconquista difensiva o blocco del portiere</text>
+  `);
+}
+
+function visualPartiteAreeEstese() {
+  return svgShell(`
+    <rect x="18" y="18" width="384" height="204" rx="18" class="zone"/>
+    <line x1="210" y1="18" x2="210" y2="222" stroke="rgba(255,255,255,.22)" stroke-width="3" stroke-dasharray="8 8"/>
+    <rect x="28" y="94" width="28" height="50" class="goal"/>
+    <rect x="364" y="94" width="28" height="50" class="goal"/>
+    <circle cx="124" cy="120" r="10" class="player"/>
+    <circle cx="124" cy="120" r="5" class="ball"/>
+    <circle cx="296" cy="120" r="10" class="player"/>
+    <text x="74" y="58" class="label">Nella propria metà campo si può usare le mani</text>
+    <text x="252" y="58" class="label">Nell’altra metà si gioca normale</text>
+    <rect x="80" y="132" width="86" height="26" rx="13" class="badge"/><text x="94" y="149">max 6 secondi</text>
+    <path d="M132 112 Q148 102 166 112" class="run"/>
+    <text x="24" y="212" class="tiny">Partita a tema: mano efficace consentita solo nella propria metà campo</text>
+  `);
+}
+
+function visualGiocoDentroFuori() {
+  return svgShell(`
+    <rect x="110" y="40" width="200" height="160" rx="16" class="zone"/>
+    <circle cx="145" cy="78" r="9" class="player"/>
+    <circle cx="200" cy="78" r="9" class="player"/>
+    <circle cx="255" cy="78" r="9" class="player"/>
+    <circle cx="172" cy="160" r="9" class="player"/>
+    <circle cx="228" cy="160" r="9" class="player"/>
+    <circle cx="82" cy="118" r="9" class="support"/>
+    <circle cx="338" cy="118" r="9" class="support"/>
+    <circle cx="200" cy="118" r="4" class="ball"><animate attributeName="cx" values="200;332;200;88;200" dur="4s" repeatCount="indefinite"/></circle>
+    <path d="M200 118 L330 118" class="arrow"/>
+    <path d="M330 118 Q288 118 246 158" class="run"/>
+    <path d="M228 160 Q280 190 338 118" class="run"/>
+    <text x="24" y="28" class="label">Possesso con appoggi esterni · uno entra e un compagno esce</text>
+    <text x="24" y="218" class="tiny">Punto a tempo di possesso. Esterni usati come sostegno continuo.</text>
+  `);
 }
 
 function renderActiveKeeperSelect() {
