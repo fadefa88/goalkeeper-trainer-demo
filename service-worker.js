@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-physical-history-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-physical-readable-v1";
 const ASSETS = [
   "./",
   "./index.html",
