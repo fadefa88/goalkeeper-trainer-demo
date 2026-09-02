@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-exercises-pruned-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-minimal-workout-v1";
 const ASSETS = [
   "./",
   "./index.html",
@@ -83,6 +83,11 @@ const EXERCISES_UI_PATCH = String.raw`
   function cleanExerciseTab() {
     document.querySelectorAll(".filters").forEach((element) => element.remove());
     document.querySelectorAll(".cloud-pill").forEach((element) => element.remove());
+    document.querySelectorAll(".landing-stats").forEach((element) => element.remove());
+
+    document.querySelectorAll(".section-header h3").forEach((title) => {
+      if (String(title.textContent || "").trim().toLowerCase() === "proposte pratiche dal documento") title.remove();
+    });
 
     const summary = document.getElementById("profileSummaryText");
     if (summary) {
@@ -151,7 +156,8 @@ const EXERCISE_CATALOGUE_PATCH = String.raw`
     "attacco-linea-finalizzo",
     "bersaglio-mobile",
     "5-contro-3-uscita",
-    "partita-9-contro-9"
+    "partita-9-contro-9",
+    "partita-7-contro-7"
   ]);
 
   const removedNames = new Set([
@@ -165,7 +171,8 @@ const EXERCISE_CATALOGUE_PATCH = String.raw`
     "bersaglio mobile",
     "5 contro 3 con uscita",
     "5 contro 3 uscita",
-    "partita 9 contro 9"
+    "partita 9 contro 9",
+    "partita 7 contro 7"
   ]);
 
   function norm(value) {
@@ -243,6 +250,88 @@ const EXERCISE_CATALOGUE_PATCH = String.raw`
 })();
 `;
 
+const WORKOUT_UI_PATCH = String.raw`
+;(() => {
+  function ensureMinimalWorkoutStyle() {
+    if (document.getElementById("gkMinimalWorkoutStyle")) return;
+    const style = document.createElement("style");
+    style.id = "gkMinimalWorkoutStyle";
+    style.textContent = ".landing-stats,.stats-grid,.coach-card{display:none!important}.section-header h3:empty{display:none!important}";
+    document.head.appendChild(style);
+  }
+
+  function cleanMinimalWorkoutUi() {
+    ensureMinimalWorkoutStyle();
+    document.querySelectorAll(".landing-stats").forEach((element) => element.remove());
+    document.querySelectorAll(".stats-grid,.coach-card").forEach((element) => element.remove());
+    document.querySelectorAll(".section-header h3").forEach((title) => {
+      if (String(title.textContent || "").trim().toLowerCase() === "proposte pratiche dal documento") title.remove();
+    });
+  }
+
+  function patchWorkoutCore() {
+    if (typeof updateStats === "function" && !updateStats.__gkMinimalWorkoutUi) {
+      updateStats = function() {
+        const saves = document.getElementById("savesCount");
+        const mistakes = document.getElementById("mistakesCount");
+        const reactions = document.getElementById("reactionsCount");
+        if (saves) saves.textContent = stats?.saves ?? 0;
+        if (mistakes) mistakes.textContent = stats?.mistakes ?? 0;
+        if (reactions) reactions.textContent = stats?.reactions ?? 0;
+      };
+      updateStats.__gkMinimalWorkoutUi = true;
+    }
+
+    if (typeof randomCue === "function" && !randomCue.__gkMinimalWorkoutUi) {
+      randomCue = function() {
+        const cue = document.getElementById("cueText");
+        if (cue) cue.textContent = "—";
+      };
+      randomCue.__gkMinimalWorkoutUi = true;
+    }
+
+    if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkMinimalWorkoutUi) {
+      const previousStartWorkoutScreen = startWorkoutScreen;
+      startWorkoutScreen = function() {
+        const result = previousStartWorkoutScreen.apply(this, arguments);
+        if (typeof timeRemaining !== "undefined") timeRemaining = 0;
+        if (typeof updateTimer === "function") updateTimer();
+        cleanMinimalWorkoutUi();
+        return result;
+      };
+      startWorkoutScreen.__gkMinimalWorkoutUi = true;
+    }
+
+    if (typeof showView === "function" && !showView.__gkMinimalWorkoutUi) {
+      const previousShowView = showView;
+      showView = function() {
+        const result = previousShowView.apply(this, arguments);
+        cleanMinimalWorkoutUi();
+        setTimeout(cleanMinimalWorkoutUi, 80);
+        return result;
+      };
+      showView.__gkMinimalWorkoutUi = true;
+    }
+  }
+
+  function applyMinimalWorkoutUi() {
+    ensureMinimalWorkoutStyle();
+    patchWorkoutCore();
+    cleanMinimalWorkoutUi();
+  }
+
+  if (!window.__gkMinimalWorkoutUi) {
+    window.__gkMinimalWorkoutUi = true;
+    applyMinimalWorkoutUi();
+    [0, 80, 250, 700].forEach((delay) => setTimeout(applyMinimalWorkoutUi, delay));
+    document.addEventListener("DOMContentLoaded", () => {
+      applyMinimalWorkoutUi();
+      setTimeout(applyMinimalWorkoutUi, 250);
+    });
+  }
+})();
+`;
+
 self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
@@ -269,6 +358,7 @@ self.addEventListener("fetch", event => {
           if (!patched.includes("__gkCountUpTimerCore")) patched += `\n${COUNT_UP_TIMER_PATCH}`;
           if (!patched.includes("__gkExercisesCleanUi")) patched += `\n${EXERCISES_UI_PATCH}`;
           if (!patched.includes("__gkPrunedCatalogue")) patched += `\n${EXERCISE_CATALOGUE_PATCH}`;
+          if (!patched.includes("__gkMinimalWorkoutUi")) patched += `\n${WORKOUT_UI_PATCH}`;
           return new Response(patched, {
             status: 200,
             headers: {
