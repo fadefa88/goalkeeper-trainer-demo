@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-account-training-v1";
+const CACHE_NAME = "gk-trainer-account-training-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -14,7 +14,7 @@ const ASSETS = [
 ];
 
 const HTML_COMPAT_PATCH = String.raw`
-<style id="gkAccountTrainingStyleV1">
+<style id="gkAccountTrainingStyleV2">
   body:has(#landingView.active) #bottomNav,
   body:has(#landingView.active) #bottomNav.hidden { display:grid!important; }
   .training-card { display:grid!important; gap:14px!important; }
@@ -35,16 +35,14 @@ const HTML_COMPAT_PATCH = String.raw`
   .training-item textarea { min-height:52px!important; max-height:96px!important; resize:vertical; }
   @media(max-width:430px){ .training-item-top,.training-item-actions{grid-template-columns:1fr!important;display:grid!important}.training-item-actions .primary-btn{width:100%}.training-done{justify-content:flex-start}.training-filter{grid-template-columns:1fr!important} }
 </style>
-<script id="gkAccountTrainingV1">
+<script id="gkAccountTrainingV2">
 (() => {
-  if (window.__gkAccountTrainingV1) return;
-  window.__gkAccountTrainingV1 = true;
+  if (window.__gkAccountTrainingV2) return;
+  window.__gkAccountTrainingV2 = true;
 
   const FILTER_KEY = "gk_training_filter_date";
   const SYNC_STATUS_ID = "trainingCloudStatus";
   const $ = (id) => document.getElementById(id);
-  const norm = (value) => String(value || "").trim().toLowerCase();
-  const esc = (value) => String(value ?? "").replace(/[&<>'\"]/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#039;", "\"":"&quot;" }[char]));
   const todayKey = (date = new Date()) => String(date.getFullYear()) + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
   const parseDate = (key) => { const parts = String(key || todayKey()).split("-").map(Number); return new Date(parts[0] || 2000, (parts[1] || 1) - 1, parts[2] || 1); };
   const shortDate = (key) => parseDate(key).toLocaleDateString("it-IT", { day:"2-digit", month:"short", year:"numeric" });
@@ -64,17 +62,10 @@ const HTML_COMPAT_PATCH = String.raw`
     return data;
   }
 
-  function planKeys() {
-    return Object.keys(localStorage).filter((key) => key.startsWith("gk_day_plans_"));
-  }
-
-  function readKey(key) {
-    try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch { return {}; }
-  }
-
-  function writeKey(key, plans) {
-    localStorage.setItem(key, JSON.stringify(plans || {}));
-  }
+  function planKeys() { return Object.keys(localStorage).filter((key) => key.startsWith("gk_day_plans_")); }
+  function readKey(key) { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch { return {}; } }
+  function writeKey(key, plans) { localStorage.setItem(key, JSON.stringify(plans || {})); }
+  function readAllLocalPlans() { const merged = {}; planKeys().forEach((key) => Object.assign(merged, readKey(key))); return merged; }
 
   async function accountPlanKey() {
     try {
@@ -86,23 +77,12 @@ const HTML_COMPAT_PATCH = String.raw`
     }
   }
 
-  function readAllLocalPlans() {
-    const merged = {};
-    planKeys().forEach((key) => Object.assign(merged, readKey(key)));
-    return merged;
-  }
-
   function cleanPlans(plans) {
     const out = {};
     Object.entries(plans || {}).forEach(([date, plan]) => {
       const items = Array.isArray(plan?.items) ? plan.items.filter(Boolean) : [];
       if (!items.length) return;
-      out[date] = {
-        ...plan,
-        time: plan.time || "18:00",
-        totalMinutes: Number(plan.totalMinutes || 60),
-        items
-      };
+      out[date] = { ...plan, time: plan.time || "18:00", totalMinutes: Number(plan.totalMinutes || 60), items };
     });
     return out;
   }
@@ -122,8 +102,7 @@ const HTML_COMPAT_PATCH = String.raw`
     try {
       const profile = await rawProfile();
       const nextPlans = cleanPlans(plans);
-      const nextProfile = { ...profile, trainingPlans: nextPlans, training_plans: nextPlans };
-      await api("/api/profile", { method: "PUT", body: { profile: nextProfile } });
+      await api("/api/profile", { method: "PUT", body: { profile: { ...profile, trainingPlans: nextPlans, training_plans: nextPlans } } });
       if (!quiet) setStatus("Allenamento salvato sul tuo account.");
       return true;
     } catch (error) {
@@ -134,7 +113,7 @@ const HTML_COMPAT_PATCH = String.raw`
 
   function queueAccountSync(plans) {
     clearTimeout(syncTimer);
-    syncTimer = setTimeout(() => persistPlansToAccount(plans, true), 600);
+    syncTimer = setTimeout(() => persistPlansToAccount(plans, true), 650);
   }
 
   async function hydratePlansFromAccount() {
@@ -149,6 +128,7 @@ const HTML_COMPAT_PATCH = String.raw`
         writeKey(key, merged);
         window.__gkAccountPlanKey = key;
         if (Object.keys(localPlans).length && JSON.stringify(merged) !== JSON.stringify(cloudPlans)) queueAccountSync(merged);
+        if ($("calendarView")?.classList.contains("active") && typeof showView === "function") setTimeout(() => showView("calendar"), 50);
         renderTrainingSection();
         return merged;
       } catch {
@@ -177,8 +157,7 @@ const HTML_COMPAT_PATCH = String.raw`
   }
 
   function savedRows() {
-    const plans = cleanPlans(readAllLocalPlans());
-    return Object.entries(plans).map(([date, plan]) => ({ date, plan })).sort((a, b) => a.date.localeCompare(b.date));
+    return Object.entries(cleanPlans(readAllLocalPlans())).map(([date, plan]) => ({ date, plan })).sort((a, b) => a.date.localeCompare(b.date));
   }
 
   function nearestRow(rows) {
@@ -205,16 +184,33 @@ const HTML_COMPAT_PATCH = String.raw`
     filter.insertAdjacentElement("afterend", p);
   }
 
-  function renderTrainingSection() {
-    const view = $("trainingView");
-    const title = $("trainingTitle");
-    const subtitle = $("trainingSubtitle");
-    const list = $("trainingList");
-    const filterInput = $("trainingDateFilter");
-    const reset = $("trainingResetFilterBtn");
-    if (!view || !title || !subtitle || !list) return;
+  function emptyTraining(titleText, subtitleText, buttonText, onClick) {
+    const title = $("trainingTitle"), subtitle = $("trainingSubtitle"), list = $("trainingList");
+    if (title) title.textContent = titleText;
+    if (subtitle) subtitle.textContent = subtitleText;
+    if (!list) return;
+    list.innerHTML = "";
+    const box = document.createElement("div");
+    box.className = "training-empty";
+    const strong = document.createElement("strong");
+    strong.textContent = titleText;
+    const span = document.createElement("span");
+    span.textContent = subtitleText;
+    const btn = document.createElement("button");
+    btn.className = "primary-btn full";
+    btn.type = "button";
+    btn.textContent = buttonText;
+    btn.addEventListener("click", onClick);
+    box.append(strong, span, btn);
+    list.appendChild(box);
+  }
 
+  function renderTrainingSection() {
+    const view = $("trainingView"), title = $("trainingTitle"), subtitle = $("trainingSubtitle"), list = $("trainingList");
+    const filterInput = $("trainingDateFilter"), reset = $("trainingResetFilterBtn");
+    if (!view || !title || !subtitle || !list) return;
     ensureTrainingStatus();
+
     const filter = localStorage.getItem(FILTER_KEY) || "";
     if (filterInput && filterInput.value !== filter) filterInput.value = filter;
 
@@ -222,16 +218,10 @@ const HTML_COMPAT_PATCH = String.raw`
     const allRows = savedRows();
     if (!rows.length) {
       if (filter && allRows.length) {
-        title.textContent = "Allenamento · " + shortDate(filter);
-        subtitle.textContent = "Nessuna seduta salvata per la data selezionata.";
-        list.innerHTML = '<div class="training-empty"><strong>Nessun allenamento in questa data.</strong><span>Scegli un’altra data oppure torna alla prossima seduta disponibile.</span><button id="goNextTraining" class="primary-btn full" type="button">Mostra prossimo allenamento</button></div>';
-        $("goNextTraining")?.addEventListener("click", () => { localStorage.removeItem(FILTER_KEY); renderTrainingSection(); });
+        emptyTraining("Allenamento " + shortDate(filter), "Non ci sono sedute salvate per questa data.", "Mostra prossimo allenamento", () => { localStorage.removeItem(FILTER_KEY); renderTrainingSection(); });
         return;
       }
-      title.textContent = "Nessun allenamento salvato";
-      subtitle.textContent = "Prepara una seduta dal calendario, aggiungi esercizi e premi Salva allenamento.";
-      list.innerHTML = '<div class="training-empty"><strong>Aggiungi gli esercizi per il prossimo allenamento.</strong><span>Vai nel calendario, scegli il giorno e salva la seduta. Dopo la reinstallazione resterà collegata al tuo account.</span><button id="goCalendarFromTraining" class="primary-btn full" type="button">Vai al calendario</button></div>';
-      $("goCalendarFromTraining")?.addEventListener("click", () => { if (typeof showView === "function") showView("calendar"); });
+      emptyTraining("Nessun allenamento salvato", "Prepara una seduta dal calendario, aggiungi esercizi e premi Salva allenamento. Dopo la reinstallazione resterà collegata al tuo account.", "Vai al calendario", () => { if (typeof showView === "function") showView("calendar"); });
       return;
     }
 
@@ -240,29 +230,79 @@ const HTML_COMPAT_PATCH = String.raw`
     const done = row.plan.items.filter((item) => item.done).length;
     title.textContent = filter ? "Allenamento · " + shortDate(row.date) : "Prossimo allenamento · " + shortDate(row.date);
     subtitle.textContent = filter ? "Seduta salvata per la data selezionata." : "Di default vedi la prossima seduta rispetto a oggi. Usa il filtro per aprire un’altra data.";
+    list.innerHTML = "";
 
-    const meta = '<div class="training-session-meta"><h3>' + esc(longDate(row.date)) + '</h3><p class="muted">' + esc(row.plan.time || "orario non impostato") + ' · ' + row.plan.items.length + ' esercizi · ' + total + '\' programmati · ' + done + '/' + row.plan.items.length + ' fatti</p></div>';
-    const cards = row.plan.items.map((item, index) => {
+    const meta = document.createElement("div");
+    meta.className = "training-session-meta";
+    const h = document.createElement("h3");
+    h.textContent = longDate(row.date);
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = (row.plan.time || "orario non impostato") + " · " + row.plan.items.length + " esercizi · " + total + " min programmati · " + done + "/" + row.plan.items.length + " fatti";
+    meta.append(h, p);
+    list.appendChild(meta);
+
+    row.plan.items.forEach((item, index) => {
       const ex = exerciseByIdSafe(item.exerciseId);
-      const name = ex?.name || "Esercizio";
-      const ambito = ex?.ambito || "Esercizio";
-      const minutes = Number(item.minutes || ex?.durationMin || 0);
-      const checked = item.done ? " checked" : "";
-      const doneClass = item.done ? " is-done" : "";
-      return '<div class="training-item' + doneClass + '"><div class="training-item-top"><div><p class="eyebrow">' + esc(ambito) + ' · ' + minutes + '\'</p><h4>' + esc(name) + '</h4></div><button class="primary-btn" type="button" data-account-training-start="1" data-plan-date="' + esc(row.date) + '" data-plan-index="' + index + '">Avvia</button></div><div class="training-item-actions"><label class="training-done"><input type="checkbox" data-training-done="1" data-plan-date="' + esc(row.date) + '" data-plan-index="' + index + '"' + checked + ' /> Fatto</label></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-date="' + esc(row.date) + '" data-plan-index="' + index + '" placeholder="Note operative, varianti, focus tecnico...">' + esc(item.note || "") + '</textarea></label></div>';
-    }).join("");
-    list.innerHTML = meta + cards;
+      const card = document.createElement("div");
+      card.className = "training-item" + (item.done ? " is-done" : "");
 
-    if (filterInput && filterInput.dataset.gkAccountBound !== "1") {
-      filterInput.dataset.gkAccountBound = "1";
+      const top = document.createElement("div");
+      top.className = "training-item-top";
+      const info = document.createElement("div");
+      const eyebrow = document.createElement("p");
+      eyebrow.className = "eyebrow";
+      eyebrow.textContent = (ex?.ambito || "Esercizio") + " · " + Number(item.minutes || ex?.durationMin || 0) + " min";
+      const name = document.createElement("h4");
+      name.textContent = ex?.name || "Esercizio";
+      info.append(eyebrow, name);
+      const start = document.createElement("button");
+      start.className = "primary-btn";
+      start.type = "button";
+      start.textContent = "Avvia";
+      start.dataset.accountTrainingStart = "1";
+      start.dataset.planDate = row.date;
+      start.dataset.planIndex = String(index);
+      top.append(info, start);
+
+      const actions = document.createElement("div");
+      actions.className = "training-item-actions";
+      const doneLabel = document.createElement("label");
+      doneLabel.className = "training-done";
+      const check = document.createElement("input");
+      check.type = "checkbox";
+      check.checked = Boolean(item.done);
+      check.dataset.trainingDone = "1";
+      check.dataset.planDate = row.date;
+      check.dataset.planIndex = String(index);
+      doneLabel.append(check, document.createTextNode("Fatto"));
+      actions.appendChild(doneLabel);
+
+      const noteLabel = document.createElement("label");
+      noteLabel.className = "small-note";
+      noteLabel.appendChild(document.createTextNode("Note esercizio"));
+      const area = document.createElement("textarea");
+      area.placeholder = "Note operative, varianti, focus tecnico...";
+      area.value = item.note || "";
+      area.dataset.trainingNote = "1";
+      area.dataset.planDate = row.date;
+      area.dataset.planIndex = String(index);
+      noteLabel.appendChild(area);
+
+      card.append(top, actions, noteLabel);
+      list.appendChild(card);
+    });
+
+    if (filterInput && filterInput.dataset.gkAccountBound !== "2") {
+      filterInput.dataset.gkAccountBound = "2";
       filterInput.addEventListener("change", () => {
         if (filterInput.value) localStorage.setItem(FILTER_KEY, filterInput.value);
         else localStorage.removeItem(FILTER_KEY);
         renderTrainingSection();
       });
     }
-    if (reset && reset.dataset.gkAccountBound !== "1") {
-      reset.dataset.gkAccountBound = "1";
+    if (reset && reset.dataset.gkAccountBound !== "2") {
+      reset.dataset.gkAccountBound = "2";
       reset.addEventListener("click", () => {
         localStorage.removeItem(FILTER_KEY);
         if (filterInput) filterInput.value = "";
@@ -271,14 +311,14 @@ const HTML_COMPAT_PATCH = String.raw`
     }
   }
 
-  function updatePlanItem(date, index, patch) {
+  function updatePlanItem(date, index, patch, shouldRender = true) {
     const plans = cleanPlans(readAllLocalPlans());
     const item = plans?.[date]?.items?.[index];
     if (!item) return;
     Object.assign(item, patch);
     plans[date].savedAt = plans[date].savedAt || new Date().toISOString();
     writeMergedPlans(plans);
-    renderTrainingSection();
+    if (shouldRender) renderTrainingSection();
   }
 
   function selectedCalendarDate() {
@@ -299,7 +339,7 @@ const HTML_COMPAT_PATCH = String.raw`
         renderTrainingSection();
         setTimeout(() => setStatus("Le sedute salvate vengono collegate al tuo account."), 1800);
       }
-    }, 260);
+    }, 300);
   }
 
   function forceBottomNav() {
@@ -372,9 +412,9 @@ const HTML_COMPAT_PATCH = String.raw`
   }
   function bindTimerButtons() {
     const start = $("startPauseBtn");
-    if (start && start.dataset.gkTrueTimer !== "account-v1") {
+    if (start && start.dataset.gkTrueTimer !== "account-v2") {
       const next = start.cloneNode(true);
-      next.dataset.gkTrueTimer = "account-v1";
+      next.dataset.gkTrueTimer = "account-v2";
       start.replaceWith(next);
       next.addEventListener("click", (event) => {
         event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
@@ -382,9 +422,9 @@ const HTML_COMPAT_PATCH = String.raw`
       }, true);
     }
     const finish = $("finishBtn");
-    if (finish && finish.dataset.gkTrueTimer !== "account-v1") {
+    if (finish && finish.dataset.gkTrueTimer !== "account-v2") {
       const next = finish.cloneNode(true);
-      next.dataset.gkTrueTimer = "account-v1";
+      next.dataset.gkTrueTimer = "account-v2";
       finish.replaceWith(next);
       next.addEventListener("click", (event) => {
         event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
@@ -403,7 +443,7 @@ const HTML_COMPAT_PATCH = String.raw`
   function patchTimer() {
     try {
       updateTimer = function() { paintTimer(); };
-      if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkAccountTimer) {
+      if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkAccountTimerV2) {
         const previous = startWorkoutScreen;
         startWorkoutScreen = function() {
           const result = previous.apply(this, arguments);
@@ -411,7 +451,7 @@ const HTML_COMPAT_PATCH = String.raw`
           bindTimerButtons();
           return result;
         };
-        startWorkoutScreen.__gkAccountTimer = true;
+        startWorkoutScreen.__gkAccountTimerV2 = true;
       }
       bindTimerButtons();
       paintTimer();
@@ -431,18 +471,16 @@ const HTML_COMPAT_PATCH = String.raw`
   }
 
   function patchShowView() {
-    if (typeof showView !== "function" || showView.__gkAccountTraining) return;
+    if (typeof showView !== "function" || showView.__gkAccountTrainingV2) return;
     const previous = showView;
     showView = function(view) {
       const result = previous.apply(this, arguments);
       forceBottomNav();
       patchTimer();
-      if (view === "training") {
-        hydratePlansFromAccount().then(renderTrainingSection);
-      }
+      if (view === "training") hydratePlansFromAccount().then(renderTrainingSection);
       return result;
     };
-    showView.__gkAccountTraining = true;
+    showView.__gkAccountTrainingV2 = true;
   }
 
   function boot() {
@@ -453,7 +491,7 @@ const HTML_COMPAT_PATCH = String.raw`
   }
 
   document.addEventListener("click", (event) => {
-    const target = event.target.closest ? event.target : event.target?.parentElement;
+    const target = event.target?.closest ? event.target : event.target?.parentElement;
     const home = target?.closest?.("#homeTopBtn");
     if (home) {
       event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
@@ -482,7 +520,7 @@ const HTML_COMPAT_PATCH = String.raw`
       return;
     }
     if (target?.matches?.("[data-training-done]")) {
-      updatePlanItem(target.dataset.planDate, Number(target.dataset.planIndex), { done: Boolean(target.checked) });
+      updatePlanItem(target.dataset.planDate, Number(target.dataset.planIndex), { done: Boolean(target.checked) }, true);
       return;
     }
     if (target?.matches?.("#dayPlanTime,#dayPlanTotal,.plan-item-minutes")) {
@@ -492,9 +530,7 @@ const HTML_COMPAT_PATCH = String.raw`
 
   document.addEventListener("input", (event) => {
     const target = event.target;
-    if (target?.matches?.("[data-training-note]")) {
-      updatePlanItem(target.dataset.planDate, Number(target.dataset.planIndex), { note: target.value });
-    }
+    if (target?.matches?.("[data-training-note]")) updatePlanItem(target.dataset.planDate, Number(target.dataset.planIndex), { note: target.value }, false);
   }, true);
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
@@ -504,7 +540,7 @@ const HTML_COMPAT_PATCH = String.raw`
 </script>`;
 
 function patchHtml(source) {
-  if (source.includes("gkAccountTrainingV1")) return source;
+  if (source.includes("gkAccountTrainingV2")) return source;
   if (source.includes("</body>")) return source.replace("</body>", `${HTML_COMPAT_PATCH}\n</body>`);
   return `${source}\n${HTML_COMPAT_PATCH}`;
 }
