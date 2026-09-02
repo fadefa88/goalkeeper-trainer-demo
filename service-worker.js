@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-field-ui-v2";
+const CACHE_NAME = "gk-trainer-home-filter-v1";
 const ASSETS = [
   "./",
   "./index.html",
