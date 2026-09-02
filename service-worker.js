@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-home-filter-v1";
+const CACHE_NAME = "gk-trainer-home-nav-v1";
 const ASSETS = [
   "./",
   "./index.html",
@@ -14,7 +14,7 @@ const ASSETS = [
 ];
 
 const HTML_COMPAT_PATCH = String.raw`
-<script id="gkFieldUiCompatV1">
+<script id="gkHomeNavCompatV1">
 (() => {
   function ensureProgressCompat() {
     const progress = document.getElementById("progressView");
@@ -46,21 +46,38 @@ const HTML_COMPAT_PATCH = String.raw`
     nav.style.setProperty("grid-template-columns", "repeat(4,minmax(0,1fr))", "important");
   }
 
+  function keepNavOnLanding() {
+    const landing = document.getElementById("landingView");
+    const nav = document.getElementById("bottomNav");
+    if (!landing || !nav) return;
+    if (landing.classList.contains("active")) {
+      nav.classList.remove("hidden");
+      nav.querySelectorAll(".nav-btn").forEach((btn) => btn.classList.remove("active"));
+    }
+  }
+
   function run() {
     ensureProgressCompat();
     cleanCalendar();
     cleanNav();
+    keepNavOnLanding();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
   else run();
   [80, 250, 800, 1500].forEach((delay) => setTimeout(run, delay));
-  document.addEventListener("click", () => setTimeout(run, 80));
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("#homeTopBtn,[data-tab],[data-quick-go],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#saveCalendarPlanBtn")) {
+      setTimeout(run, 0);
+      setTimeout(run, 80);
+      setTimeout(run, 300);
+    }
+  });
 })();
 </script>`;
 
 function patchHtml(source) {
-  if (source.includes("gkFieldUiCompatV1")) return source;
+  if (source.includes("gkHomeNavCompatV1")) return source;
   if (source.includes("</body>")) return source.replace("</body>", `${HTML_COMPAT_PATCH}\n</body>`);
   return `${source}\n${HTML_COMPAT_PATCH}`;
 }
