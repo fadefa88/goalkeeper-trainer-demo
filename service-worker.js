@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-exercises-clean-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-exercises-pruned-v1";
 const ASSETS = [
   "./",
   "./index.html",
@@ -140,6 +140,109 @@ const EXERCISES_UI_PATCH = String.raw`
 })();
 `;
 
+const EXERCISE_CATALOGUE_PATCH = String.raw`
+;(() => {
+  const removedIds = new Set([
+    "attacchi-a-scelta",
+    "passo-lungo-passo-corto",
+    "finalizzazioni-marcatura-individuale",
+    "attacco-continuo",
+    "partita-situazioni",
+    "attacco-linea-finalizzo",
+    "bersaglio-mobile",
+    "5-contro-3-uscita",
+    "partita-9-contro-9"
+  ]);
+
+  const removedNames = new Set([
+    "attacchi a scelta",
+    "passo lungo, passo corto",
+    "finalizzazioni da marcatura individuale",
+    "attacco continuo",
+    "partita a situazioni",
+    "attacco la linea e finalizzo",
+    "attacco a linea e finalizzo",
+    "bersaglio mobile",
+    "5 contro 3 con uscita",
+    "5 contro 3 uscita",
+    "partita 9 contro 9"
+  ]);
+
+  function norm(value) {
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function shouldRemove(exercise) {
+    if (!exercise) return false;
+    return removedIds.has(norm(exercise.id)) || removedNames.has(norm(exercise.name));
+  }
+
+  function pruneExercisesArray() {
+    if (typeof exercises === "undefined" || !Array.isArray(exercises)) return;
+    for (let i = exercises.length - 1; i >= 0; i -= 1) {
+      if (shouldRemove(exercises[i])) exercises.splice(i, 1);
+    }
+  }
+
+  function patchCatalogueFunctions() {
+    if (typeof filteredExercises === "function" && !filteredExercises.__gkPrunedCatalogue) {
+      const previousFilteredExercises = filteredExercises;
+      filteredExercises = function() {
+        pruneExercisesArray();
+        return previousFilteredExercises.apply(this, arguments).filter((exercise) => !shouldRemove(exercise));
+      };
+      filteredExercises.__gkPrunedCatalogue = true;
+    }
+
+    if (typeof renderExercises === "function" && !renderExercises.__gkPrunedCatalogue) {
+      const previousRenderExercises = renderExercises;
+      renderExercises = function() {
+        pruneExercisesArray();
+        return previousRenderExercises.apply(this, arguments);
+      };
+      renderExercises.__gkPrunedCatalogue = true;
+    }
+
+    if (typeof plannerExercisePool === "function" && !plannerExercisePool.__gkPrunedCatalogue) {
+      const previousPlannerExercisePool = plannerExercisePool;
+      plannerExercisePool = function() {
+        pruneExercisesArray();
+        return previousPlannerExercisePool.apply(this, arguments).filter((exercise) => !shouldRemove(exercise));
+      };
+      plannerExercisePool.__gkPrunedCatalogue = true;
+    }
+
+    if (typeof exerciseById === "function" && !exerciseById.__gkPrunedCatalogue) {
+      const previousExerciseById = exerciseById;
+      exerciseById = function(id) {
+        const found = previousExerciseById.apply(this, arguments);
+        return shouldRemove(found) ? null : found;
+      };
+      exerciseById.__gkPrunedCatalogue = true;
+    }
+  }
+
+  function applyPrunedCatalogue() {
+    pruneExercisesArray();
+    patchCatalogueFunctions();
+    if (typeof renderExercises === "function") {
+      const home = document.getElementById("homeView");
+      if (home && home.classList.contains("active")) renderExercises();
+    }
+  }
+
+  if (!window.__gkPrunedCatalogue) {
+    window.__gkPrunedCatalogue = true;
+    applyPrunedCatalogue();
+    [0, 80, 250, 700].forEach((delay) => setTimeout(applyPrunedCatalogue, delay));
+    document.addEventListener("DOMContentLoaded", () => {
+      applyPrunedCatalogue();
+      setTimeout(applyPrunedCatalogue, 250);
+    });
+  }
+})();
+`;
+
 self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
@@ -165,6 +268,7 @@ self.addEventListener("fetch", event => {
           let patched = source;
           if (!patched.includes("__gkCountUpTimerCore")) patched += `\n${COUNT_UP_TIMER_PATCH}`;
           if (!patched.includes("__gkExercisesCleanUi")) patched += `\n${EXERCISES_UI_PATCH}`;
+          if (!patched.includes("__gkPrunedCatalogue")) patched += `\n${EXERCISE_CATALOGUE_PATCH}`;
           return new Response(patched, {
             status: 200,
             headers: {
