@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-count-up-timer-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-exercises-clean-v1";
 const ASSETS = [
   "./",
   "./index.html",
@@ -78,6 +78,68 @@ const COUNT_UP_TIMER_PATCH = String.raw`
 })();
 `;
 
+const EXERCISES_UI_PATCH = String.raw`
+;(() => {
+  function cleanExerciseTab() {
+    document.querySelectorAll(".filters").forEach((element) => element.remove());
+    document.querySelectorAll(".cloud-pill").forEach((element) => element.remove());
+
+    const summary = document.getElementById("profileSummaryText");
+    if (summary) {
+      summary.textContent = String(summary.textContent || "")
+        .replace(/\s*·\s*esercizi dal documento FIGC\.?/gi, "")
+        .replace(/esercizi dal documento FIGC\.?/gi, "")
+        .trim();
+    }
+  }
+
+  function patchRenderProfileSummary() {
+    if (typeof renderProfileSummary !== "function" || renderProfileSummary.__gkExercisesCleanUi) return;
+    const previousRenderProfileSummary = renderProfileSummary;
+    renderProfileSummary = function() {
+      const result = previousRenderProfileSummary.apply(this, arguments);
+      cleanExerciseTab();
+      return result;
+    };
+    renderProfileSummary.__gkExercisesCleanUi = true;
+  }
+
+  function patchShowView() {
+    if (typeof showView !== "function" || showView.__gkExercisesCleanUi) return;
+    const previousShowView = showView;
+    showView = function() {
+      const result = previousShowView.apply(this, arguments);
+      cleanExerciseTab();
+      setTimeout(cleanExerciseTab, 80);
+      return result;
+    };
+    showView.__gkExercisesCleanUi = true;
+  }
+
+  function applyExerciseCleanUi() {
+    patchRenderProfileSummary();
+    patchShowView();
+    cleanExerciseTab();
+  }
+
+  applyExerciseCleanUi();
+  [0, 80, 250, 700].forEach((delay) => setTimeout(applyExerciseCleanUi, delay));
+
+  if (!window.__gkExercisesCleanUiListeners) {
+    window.__gkExercisesCleanUiListeners = true;
+    document.addEventListener("DOMContentLoaded", () => {
+      applyExerciseCleanUi();
+      setTimeout(applyExerciseCleanUi, 250);
+    });
+    document.addEventListener("click", (event) => {
+      if (event.target.closest("[data-tab='home']") || event.target.closest("#goExercisesBtn") || event.target.closest(".topbar .eyebrow") || event.target.closest("#screenTitle")) {
+        setTimeout(applyExerciseCleanUi, 80);
+      }
+    });
+  }
+})();
+`;
+
 self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
@@ -100,7 +162,9 @@ self.addEventListener("fetch", event => {
       fetch(event.request, { cache: "no-store" })
         .then(async response => {
           const source = await response.text();
-          const patched = source.includes("__gkCountUpTimerCore") ? source : `${source}\n${COUNT_UP_TIMER_PATCH}`;
+          let patched = source;
+          if (!patched.includes("__gkCountUpTimerCore")) patched += `\n${COUNT_UP_TIMER_PATCH}`;
+          if (!patched.includes("__gkExercisesCleanUi")) patched += `\n${EXERCISES_UI_PATCH}`;
           return new Response(patched, {
             status: 200,
             headers: {
