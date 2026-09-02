@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-home-nav-v1";
+const CACHE_NAME = "gk-trainer-home-nav-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -14,7 +14,13 @@ const ASSETS = [
 ];
 
 const HTML_COMPAT_PATCH = String.raw`
-<script id="gkHomeNavCompatV1">
+<style id="gkHomeNavForceStyleV2">
+  body:has(#landingView.active) #bottomNav,
+  body:has(#landingView.active) #bottomNav.hidden {
+    display: grid !important;
+  }
+</style>
+<script id="gkHomeNavCompatV2">
 (() => {
   function ensureProgressCompat() {
     const progress = document.getElementById("progressView");
@@ -46,14 +52,21 @@ const HTML_COMPAT_PATCH = String.raw`
     nav.style.setProperty("grid-template-columns", "repeat(4,minmax(0,1fr))", "important");
   }
 
+  function forceNavVisible() {
+    const nav = document.getElementById("bottomNav");
+    if (!nav) return;
+    nav.classList.remove("hidden");
+    nav.hidden = false;
+    nav.removeAttribute("hidden");
+    nav.style.setProperty("display", "grid", "important");
+    nav.style.setProperty("grid-template-columns", "repeat(4,minmax(0,1fr))", "important");
+  }
+
   function keepNavOnLanding() {
     const landing = document.getElementById("landingView");
-    const nav = document.getElementById("bottomNav");
-    if (!landing || !nav) return;
-    if (landing.classList.contains("active")) {
-      nav.classList.remove("hidden");
-      nav.querySelectorAll(".nav-btn").forEach((btn) => btn.classList.remove("active"));
-    }
+    if (!landing || !landing.classList.contains("active")) return;
+    forceNavVisible();
+    document.querySelectorAll("#bottomNav .nav-btn").forEach((btn) => btn.classList.remove("active"));
   }
 
   function run() {
@@ -65,21 +78,42 @@ const HTML_COMPAT_PATCH = String.raw`
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
   else run();
-  [80, 250, 800, 1500].forEach((delay) => setTimeout(run, delay));
+  [0, 40, 120, 300, 800, 1500].forEach((delay) => setTimeout(run, delay));
+
   document.addEventListener("click", (event) => {
-    if (event.target.closest("#homeTopBtn,[data-tab],[data-quick-go],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#saveCalendarPlanBtn")) {
+    if (event.target.closest("#homeTopBtn")) {
+      [0, 20, 80, 200, 500].forEach((delay) => setTimeout(() => {
+        forceNavVisible();
+        keepNavOnLanding();
+      }, delay));
+      return;
+    }
+    if (event.target.closest("[data-tab],[data-quick-go],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#saveCalendarPlanBtn")) {
       setTimeout(run, 0);
       setTimeout(run, 80);
       setTimeout(run, 300);
     }
-  });
+  }, true);
 })();
 </script>`;
 
+function patchHomeFunction(source) {
+  return source
+    .replace(
+      'document.getElementById("bottomNav")?.classList.toggle("hidden", !localStorage.getItem("gk_profile") && !window.cloudProfile);',
+      'document.getElementById("bottomNav")?.classList.remove("hidden");'
+    )
+    .replace(
+      'document.getElementById("bottomNav")?.classList.toggle("hidden", !localStorage.getItem("gk_profile") && !window.cloudProfile)',
+      'document.getElementById("bottomNav")?.classList.remove("hidden")'
+    );
+}
+
 function patchHtml(source) {
-  if (source.includes("gkHomeNavCompatV1")) return source;
-  if (source.includes("</body>")) return source.replace("</body>", `${HTML_COMPAT_PATCH}\n</body>`);
-  return `${source}\n${HTML_COMPAT_PATCH}`;
+  let html = patchHomeFunction(source);
+  if (html.includes("gkHomeNavCompatV2")) return html;
+  if (html.includes("</body>")) return html.replace("</body>", `${HTML_COMPAT_PATCH}\n</body>`);
+  return `${html}\n${HTML_COMPAT_PATCH}`;
 }
 
 self.addEventListener("install", event => {
