@@ -394,3 +394,239 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
+
+(() => {
+  if (window.__gkExplicitTrainingOnlyV1) return;
+  window.__gkExplicitTrainingOnlyV1 = true;
+
+  const PHANTOM_ID = "conduzione-palla-uscita-bassa";
+  const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "'":"&#039;" }[char]));
+  let lastSaveIntentAt = 0;
+
+  function planKeys() {
+    const keys = [];
+    try {
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith("gk_day_plans_")) keys.push(key);
+      }
+    } catch {}
+    return keys;
+  }
+
+  function readJson(key) {
+    try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch { return {}; }
+  }
+
+  function writeJson(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value || {})); } catch {}
+  }
+
+  function selectedDate() {
+    return document.querySelector(".calendar-day.selected[data-date]")?.dataset?.date || todayKey();
+  }
+
+  function hasItems(plan) {
+    return Array.isArray(plan?.items) && plan.items.length > 0;
+  }
+
+  function isExplicit(plan) {
+    return Boolean(
+      plan?.explicitlySaved === true ||
+      plan?.savedFromCalendar === true ||
+      plan?.savedByUser === true ||
+      plan?.saveSource === "calendar-save" ||
+      plan?.source === "calendar-save"
+    );
+  }
+
+  function isLegacySaved(plan) {
+    return Boolean(plan?.savedAt && plan?.accountSaved && !isLikelyPhantom(plan));
+  }
+
+  function isTrainingEligible(plan) {
+    return hasItems(plan) && (isExplicit(plan) || isLegacySaved(plan));
+  }
+
+  function isLikelyPhantom(plan) {
+    const items = Array.isArray(plan?.items) ? plan.items : [];
+    if (isExplicit(plan)) return false;
+    if (items.length !== 1) return false;
+    const first = items[0] || {};
+    const id = first.exerciseId || first.id || first.exercise_id;
+    return id === PHANTOM_ID && !first.done && !first.note;
+  }
+
+  function savedOnly(plans) {
+    const out = {};
+    Object.entries(plans || {}).forEach(([date, plan]) => {
+      if (isTrainingEligible(plan)) out[date] = plan;
+    });
+    return out;
+  }
+
+  function removePhantoms(plans) {
+    const out = {};
+    Object.entries(plans || {}).forEach(([date, plan]) => {
+      if (!isLikelyPhantom(plan)) out[date] = plan;
+    });
+    return out;
+  }
+
+  function markSelectedPlanExplicit() {
+    const date = selectedDate();
+    const now = new Date().toISOString();
+    let marked = false;
+    planKeys().forEach((key) => {
+      const plans = readJson(key);
+      if (!hasItems(plans[date])) return;
+      plans[date] = {
+        ...plans[date],
+        savedAt: plans[date].savedAt || now,
+        updatedAt: now,
+        accountSaved: true,
+        explicitlySaved: true,
+        savedFromCalendar: true,
+        savedByUser: true,
+        saveSource: "calendar-save",
+        source: "calendar-save"
+      };
+      writeJson(key, plans);
+      marked = true;
+    });
+    if (marked) window.dispatchEvent(new CustomEvent("gk-training-plans-updated", { detail: { date } }));
+  }
+
+  function purgeLocalPhantoms() {
+    let changed = false;
+    planKeys().forEach((key) => {
+      const plans = readJson(key);
+      const cleaned = removePhantoms(plans);
+      if (JSON.stringify(cleaned) !== JSON.stringify(plans)) {
+        writeJson(key, cleaned);
+        changed = true;
+      }
+    });
+    return changed;
+  }
+
+  async function purgeCloudPhantoms() {
+    try {
+      const res = await fetch("/api/profile", { credentials: "same-origin", cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      const profile = data?.profile || {};
+      const cleaned = removePhantoms(profile.trainingPlans || profile.training_plans || {});
+      const changed = JSON.stringify(cleaned) !== JSON.stringify(profile.trainingPlans || {}) || JSON.stringify(cleaned) !== JSON.stringify(profile.training_plans || {});
+      if (!changed) return;
+      await fetch("/api/profile", {
+        method: "PUT",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ profile: { ...profile, trainingPlans: cleaned, training_plans: cleaned } })
+      });
+    } catch {}
+  }
+
+  function localEligibleRows() {
+    const merged = {};
+    planKeys().forEach((key) => Object.assign(merged, readJson(key)));
+    return Object.entries(savedOnly(merged)).sort((a, b) => a[0].localeCompare(b[0]));
+  }
+
+  function renderTrainingEmptyIfNeeded() {
+    const view = document.getElementById("trainingView");
+    if (!view?.classList.contains("active")) return;
+    purgeLocalPhantoms();
+    const rows = localEligibleRows();
+    if (rows.length) return;
+    const title = document.getElementById("trainingTitle");
+    const subtitle = document.getElementById("trainingSubtitle");
+    const list = document.getElementById("trainingList");
+    const filter = document.getElementById("trainingDateFilter");
+    if (filter) filter.value = "";
+    try { localStorage.removeItem("gk_training_filter_date"); } catch {}
+    if (title) title.textContent = "Nessun allenamento salvato";
+    if (subtitle) subtitle.textContent = "La scheda resta vuota finché non salvi una seduta dal Calendario con il bottone Salva allenamento.";
+    if (list) {
+      list.innerHTML = `<div class="training-empty"><strong>Nessun allenamento salvato.</strong><span>Vai nel Calendario, prepara la giornata e premi Salva allenamento. Le bozze del calendario non compaiono qui.</span><button id="goCalendarFromTraining" class="primary-btn full" type="button">Vai al calendario</button></div>`;
+      document.getElementById("goCalendarFromTraining")?.addEventListener("click", () => { if (typeof showView === "function") showView("calendar"); });
+    }
+  }
+
+  function installFetchGuard() {
+    if (window.fetch.__gkExplicitTrainingGuard) return;
+    const originalFetch = window.fetch.bind(window);
+    const guarded = async (input, init = {}) => {
+      let url = "";
+      try { url = typeof input === "string" ? input : input?.url || ""; } catch {}
+      const method = String(init?.method || (typeof input !== "string" ? input?.method : "GET") || "GET").toUpperCase();
+      if (url.includes("/api/profile") && method === "PUT" && init?.body) {
+        try {
+          const body = JSON.parse(init.body);
+          if (body?.profile) {
+            const explicit = savedOnly(removePhantoms(body.profile.trainingPlans || body.profile.training_plans || {}));
+            body.profile.trainingPlans = explicit;
+            body.profile.training_plans = explicit;
+            init = { ...init, body: JSON.stringify(body) };
+          }
+        } catch {}
+      }
+      const response = await originalFetch(input, init);
+      if (url.includes("/api/profile") && method === "GET" && response?.ok) {
+        try {
+          const clone = response.clone();
+          const data = await clone.json();
+          if (data?.profile) {
+            const explicit = savedOnly(removePhantoms(data.profile.trainingPlans || data.profile.training_plans || {}));
+            data.profile.trainingPlans = explicit;
+            data.profile.training_plans = explicit;
+            return new Response(JSON.stringify(data), {
+              status: response.status,
+              statusText: response.statusText,
+              headers: { "Content-Type": "application/json", "Cache-Control": "no-store" }
+            });
+          }
+        } catch {}
+      }
+      return response;
+    };
+    guarded.__gkExplicitTrainingGuard = true;
+    window.fetch = guarded;
+  }
+
+  function boot() {
+    installFetchGuard();
+    purgeLocalPhantoms();
+    purgeCloudPhantoms();
+    renderTrainingEmptyIfNeeded();
+    setTimeout(renderTrainingEmptyIfNeeded, 180);
+    setTimeout(renderTrainingEmptyIfNeeded, 650);
+  }
+
+  document.addEventListener("click", (event) => {
+    const target = event.target?.closest ? event.target : event.target?.parentElement;
+    if (!target) return;
+    if (target.closest("#saveCalendarPlanBtn")) {
+      lastSaveIntentAt = Date.now();
+      markSelectedPlanExplicit();
+      setTimeout(markSelectedPlanExplicit, 100);
+      setTimeout(markSelectedPlanExplicit, 450);
+      setTimeout(renderTrainingEmptyIfNeeded, 900);
+      return;
+    }
+    if (target.closest('[data-tab="training"], [data-quick-go="training"]')) {
+      setTimeout(renderTrainingEmptyIfNeeded, 120);
+      setTimeout(renderTrainingEmptyIfNeeded, 600);
+    }
+  }, true);
+
+  window.addEventListener("gk-training-plans-updated", () => {
+    if (Date.now() - lastSaveIntentAt > 2500) purgeLocalPhantoms();
+    setTimeout(renderTrainingEmptyIfNeeded, 160);
+  });
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+  [250, 800, 1600, 3000].forEach((delay) => setTimeout(boot, delay));
+})();
