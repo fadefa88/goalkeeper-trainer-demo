@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-minimal-workout-v1";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-minimal-workout-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -229,9 +229,32 @@ const EXERCISE_CATALOGUE_PATCH = String.raw`
     }
   }
 
+  function removeDeletedPlannedItems() {
+    let changed = false;
+    Object.keys(localStorage).forEach((key) => {
+      if (!key.startsWith("gk_day_plans_")) return;
+      try {
+        const plans = JSON.parse(localStorage.getItem(key) || "{}");
+        Object.keys(plans).forEach((dateKey) => {
+          const items = Array.isArray(plans[dateKey]?.items) ? plans[dateKey].items : [];
+          const nextItems = items.filter((item) => {
+            const ex = typeof exerciseById === "function" ? exerciseById(item.exerciseId) : null;
+            return ex && !shouldRemove(ex);
+          });
+          if (nextItems.length !== items.length) {
+            plans[dateKey].items = nextItems;
+            changed = true;
+          }
+        });
+        if (changed) localStorage.setItem(key, JSON.stringify(plans));
+      } catch {}
+    });
+  }
+
   function applyPrunedCatalogue() {
     pruneExercisesArray();
     patchCatalogueFunctions();
+    removeDeletedPlannedItems();
     if (typeof renderExercises === "function") {
       const home = document.getElementById("homeView");
       if (home && home.classList.contains("active")) renderExercises();
@@ -260,10 +283,31 @@ const WORKOUT_UI_PATCH = String.raw`
     document.head.appendChild(style);
   }
 
+  function ensureWorkoutCompatNodes() {
+    const target = document.getElementById("workoutView") || document.body;
+    if (!target) return;
+    if (!document.getElementById("cueText") || !document.getElementById("cueBtn")) {
+      const cueFallback = document.createElement("div");
+      cueFallback.hidden = true;
+      cueFallback.innerHTML = `<h3 id="cueText">—</h3><button id="cueBtn" type="button">Comando</button>`;
+      target.appendChild(cueFallback);
+    }
+    if (!document.getElementById("savesCount") || !document.getElementById("mistakesCount") || !document.getElementById("reactionsCount")) {
+      const statsFallback = document.createElement("div");
+      statsFallback.hidden = true;
+      statsFallback.innerHTML = `<span id="savesCount">0</span><span id="mistakesCount">0</span><span id="reactionsCount">0</span>`;
+      target.appendChild(statsFallback);
+    }
+  }
+
   function cleanMinimalWorkoutUi() {
     ensureMinimalWorkoutStyle();
+    ensureWorkoutCompatNodes();
     document.querySelectorAll(".landing-stats").forEach((element) => element.remove());
-    document.querySelectorAll(".stats-grid,.coach-card").forEach((element) => element.remove());
+    document.querySelectorAll(".stats-grid,.coach-card").forEach((element) => {
+      element.style.display = "none";
+      element.setAttribute("aria-hidden", "true");
+    });
     document.querySelectorAll(".section-header h3").forEach((title) => {
       if (String(title.textContent || "").trim().toLowerCase() === "proposte pratiche dal documento") title.remove();
     });
@@ -293,6 +337,7 @@ const WORKOUT_UI_PATCH = String.raw`
     if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkMinimalWorkoutUi) {
       const previousStartWorkoutScreen = startWorkoutScreen;
       startWorkoutScreen = function() {
+        ensureWorkoutCompatNodes();
         const result = previousStartWorkoutScreen.apply(this, arguments);
         if (typeof timeRemaining !== "undefined") timeRemaining = 0;
         if (typeof updateTimer === "function") updateTimer();
@@ -316,6 +361,7 @@ const WORKOUT_UI_PATCH = String.raw`
 
   function applyMinimalWorkoutUi() {
     ensureMinimalWorkoutStyle();
+    ensureWorkoutCompatNodes();
     patchWorkoutCore();
     cleanMinimalWorkoutUi();
   }
