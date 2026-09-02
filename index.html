@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#020604" />
   <title>GK Trainer</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css?v=account-source-v1" />
-  <style id="gkAccountSourceStyleV1">
+  <link rel="stylesheet" href="style.css?v=account-source-v3" />
+  <style id="gkAccountSourceStyleV3">
     .page-heading .eyebrow{display:none!important}
     .hero-card::before,.exercise-card::before,.progress-card::before,.calendar-list-card::before,.training-plan::before{content:none!important;display:none!important}
     #homeTopBtn.icon-btn::before,#settingsBtn.icon-btn::before,.topbar .icon-btn::before{content:none!important;display:none!important}
@@ -75,10 +75,10 @@
     <nav id="bottomNav" class="bottom-nav hidden"><button data-tab="home" class="nav-btn active">Esercizi</button><button data-tab="calendar" class="nav-btn">Calendario</button><button data-tab="training" class="nav-btn">Allenamento</button><button data-tab="progress" class="nav-btn">Progressi</button><button data-tab="performance" class="nav-btn">Motore</button><button data-tab="profile" class="nav-btn">Profilo</button></nav>
   </div>
 
-  <script src="app.js?v=account-source-v1"></script>
-  <script src="cloudflare-client.js?v=account-source-v1"></script>
-  <script src="calendar-keepers.js?v=account-source-v1"></script>
-  <script id="gkAccountSourceLogicV1">
+  <script src="app.js?v=account-source-v3"></script>
+  <script src="cloudflare-client.js?v=account-source-v3"></script>
+  <script src="calendar-keepers.js?v=account-source-v3"></script>
+  <script id="gkAccountSourceLogicV3">
     (() => {
       const $id = (id) => document.getElementById(id);
       const esc = (value) => String(value ?? '').replace(/[&<>'\"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#039;', '\"':'&quot;' }[char]));
@@ -175,7 +175,7 @@
             writeKey(key, merged);
             if (Object.keys(localPlans).length && JSON.stringify(merged) !== JSON.stringify(cloudPlans)) queueSync(merged);
             renderTrainingViewDirect();
-            if ($id('calendarView')?.classList.contains('active') && typeof showView === 'function') setTimeout(() => showView('calendar'), 80);
+            if ($id('calendarView')?.classList.contains('active')) { cleanCalendarUi(); ensureSaveButton(); }
             return merged;
           } catch {
             return readAllLocalPlans();
