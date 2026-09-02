@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#020604" />
   <title>GK Trainer</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css?v=home-filter-v1" />
-  <style id="gkHomeFilterStyleV1">
+  <link rel="stylesheet" href="style.css?v=account-source-v1" />
+  <style id="gkAccountSourceStyleV1">
     .page-heading .eyebrow{display:none!important}
     .hero-card::before,.exercise-card::before,.progress-card::before,.calendar-list-card::before,.training-plan::before{content:none!important;display:none!important}
     #homeTopBtn.icon-btn::before,#settingsBtn.icon-btn::before,.topbar .icon-btn::before{content:none!important;display:none!important}
@@ -21,11 +21,17 @@
     .landing-copy h2{font-size:clamp(34px,8vw,46px);letter-spacing:-.07em;line-height:.98}
     .landing-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
     .landing-placeholder{padding:18px;border:1px dashed var(--line);border-radius:24px;background:rgba(255,255,255,.035);color:var(--muted);line-height:1.45}
-    .training-filter{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin:16px 0 6px;align-items:end}
-    .training-filter label{margin:0}
-    .training-filter .ghost-btn{height:58px;white-space:nowrap}
-    .training-empty strong{color:var(--text)}
-    @media(max-width:430px){.landing-hero{min-height:330px;border-radius:28px}.landing-actions,.training-filter{grid-template-columns:1fr}.training-filter .ghost-btn{width:100%}}
+    body:has(#landingView.active) #bottomNav,body:has(#landingView.active) #bottomNav.hidden{display:grid!important}
+    .training-card{display:grid!important;gap:14px!important}
+    .training-card>.eyebrow{display:none!important}
+    .training-filter{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;margin:12px 0 0!important;align-items:end!important}
+    .training-filter label{margin:0}.training-filter .ghost-btn{height:58px;white-space:nowrap}
+    .training-sync-status{margin-top:0!important}.training-list{display:grid!important;gap:11px!important;margin-top:10px!important}
+    .training-session-meta{display:grid;gap:5px;padding:8px 0 4px;background:transparent;border:0}.training-session-meta h3{font-size:20px;line-height:1.1;margin:0}
+    .training-item{display:grid!important;gap:11px!important;padding:14px!important;border-radius:20px!important;background:rgba(255,255,255,.045)!important;border:1px solid var(--line)!important}
+    .training-item.is-done{opacity:.68;background:rgba(32,224,108,.07)!important}.training-item.is-done h4{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:rgba(32,224,108,.8)}
+    .training-item-top{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important}.training-item h4{margin:0;font-size:16px;line-height:1.2}.training-item-actions{display:flex;gap:10px;align-items:center;justify-content:flex-start}.training-done{display:flex!important;align-items:center;gap:9px;font-weight:900;color:var(--text);width:auto!important}.training-done input{width:22px!important;height:22px!important;accent-color:var(--green);padding:0!important}.training-empty strong{color:var(--text)}
+    @media(max-width:430px){.landing-hero{min-height:330px;border-radius:28px}.landing-actions,.training-filter,.training-item-top{grid-template-columns:1fr!important}.training-filter .ghost-btn,.training-item-top .primary-btn{width:100%}}
   </style>
 </head>
 <body>
@@ -40,513 +46,464 @@
       </button>
     </header>
 
-    <div class="page-heading">
-      <h1 id="screenTitle">Accesso</h1>
-    </div>
+    <div class="page-heading"><h1 id="screenTitle">Accesso</h1></div>
 
     <main>
-      <section id="authView" class="view active">
-        <div class="auth-card">
-          <div class="auth-logo">
-            <p class="eyebrow">Accesso</p>
-            <h2>Entra nel tuo gruppo</h2>
-          </div>
-          <form id="authForm" class="form-grid">
-            <label>Email
-              <input id="authEmail" type="email" autocomplete="email" placeholder="email" required />
-            </label>
-            <label>Password
-              <input id="authPassword" type="password" autocomplete="current-password" placeholder="minimo 8 caratteri" required />
-            </label>
-            <div class="auth-actions">
-              <button id="loginBtn" class="primary-btn full" type="button">Login</button>
-              <button id="signupBtn" class="dark-btn full" type="button">Crea account</button>
-            </div>
-          </form>
-          <p id="authStatus" class="muted auth-status"></p>
-        </div>
-      </section>
+      <section id="authView" class="view active"><div class="auth-card"><div class="auth-logo"><p class="eyebrow">Accesso</p><h2>Entra nel tuo gruppo</h2></div><form id="authForm" class="form-grid"><label>Email<input id="authEmail" type="email" autocomplete="email" placeholder="email" required /></label><label>Password<input id="authPassword" type="password" autocomplete="current-password" placeholder="minimo 8 caratteri" required /></label><div class="auth-actions"><button id="loginBtn" class="primary-btn full" type="button">Login</button><button id="signupBtn" class="dark-btn full" type="button">Crea account</button></div></form><p id="authStatus" class="muted auth-status"></p></div></section>
 
-      <section id="setupView" class="view">
-        <div class="setup-card">
-          <p class="eyebrow">Setup</p>
-          <h2>Configura il gruppo portieri</h2>
-          <p class="muted">Imposta gruppo, livello e durata sedute. I test fisici restano nella sezione Progressi.</p>
-          <form id="setupForm" class="form-grid">
-            <label>Numero portieri
-              <select id="keepersCount"><option value="1">1 portiere</option><option value="2">2 portieri</option><option value="3" selected>3 portieri</option><option value="4">4 portieri</option><option value="5">5+ portieri</option></select>
-            </label>
-            <label>Sport
-              <select id="sportType"><option value="calcio">Calcio</option><option value="futsal">Futsal</option></select>
-            </label>
-            <label>Livello
-              <select id="level"><option value="base">Base</option><option value="medio" selected>Medio</option><option value="pro">Pro</option></select>
-            </label>
-            <label>Allenamenti a settimana
-              <select id="sessionsPerWeek"><option value="1">1 a settimana</option><option value="2" selected>2 a settimana</option><option value="3">3 a settimana</option></select>
-            </label>
-            <label>Durata allenamento
-              <select id="sessionDuration"><option value="60" selected>1 ora</option><option value="120">2 ore</option></select>
-            </label>
-            <div class="keepers-box">
-              <div class="keepers-header"><h3>Portieri</h3><span class="pill">profilo base</span></div>
-              <div id="keepersFields" class="keepers-fields"></div>
-            </div>
-            <button class="primary-btn full" type="submit">Salva profilo</button>
-          </form>
-        </div>
-      </section>
+      <section id="setupView" class="view"><div class="setup-card"><p class="eyebrow">Setup</p><h2>Configura il gruppo portieri</h2><p class="muted">Imposta gruppo, livello e durata sedute. I test fisici restano nella sezione Progressi.</p><form id="setupForm" class="form-grid"><label>Numero portieri<select id="keepersCount"><option value="1">1 portiere</option><option value="2">2 portieri</option><option value="3" selected>3 portieri</option><option value="4">4 portieri</option><option value="5">5+ portieri</option></select></label><label>Sport<select id="sportType"><option value="calcio">Calcio</option><option value="futsal">Futsal</option></select></label><label>Livello<select id="level"><option value="base">Base</option><option value="medio" selected>Medio</option><option value="pro">Pro</option></select></label><label>Allenamenti a settimana<select id="sessionsPerWeek"><option value="1">1 a settimana</option><option value="2" selected>2 a settimana</option><option value="3">3 a settimana</option></select></label><label>Durata allenamento<select id="sessionDuration"><option value="60" selected>1 ora</option><option value="120">2 ore</option></select></label><div class="keepers-box"><div class="keepers-header"><h3>Portieri</h3><span class="pill">profilo base</span></div><div id="keepersFields" class="keepers-fields"></div></div><button class="primary-btn full" type="submit">Salva profilo</button></form></div></section>
 
-      <section id="landingView" class="view">
-        <div class="landing-home">
-          <div class="landing-hero">
-            <div class="landing-copy">
-              <p class="eyebrow">Home</p>
-              <h2>Campo pronto.</h2>
-              <p class="muted">Da qui riparti verso esercizi, calendario, sedute salvate e progressi. La homepage resta libera per i contenuti che aggiungerai dopo.</p>
-              <div class="landing-actions">
-                <button class="primary-btn full" type="button" data-quick-go="calendar">Calendario</button>
-                <button class="dark-btn full" type="button" data-quick-go="training">Allenamento</button>
-              </div>
-            </div>
-          </div>
-          <div class="landing-placeholder">Spazio homepage: qui potrai inserire riepiloghi, messaggi rapidi, prossima seduta, indicatori o contenuti personalizzati.</div>
-        </div>
-      </section>
+      <section id="landingView" class="view"><div class="landing-home"><div class="landing-hero"><div class="landing-copy"><p class="eyebrow">Home</p><h2>Campo pronto.</h2><p class="muted">Da qui riparti verso esercizi, calendario, sedute salvate e progressi. La homepage resta libera per i contenuti che aggiungerai dopo.</p><div class="landing-actions"><button class="primary-btn full" type="button" data-quick-go="calendar">Calendario</button><button class="dark-btn full" type="button" data-quick-go="training">Allenamento</button></div></div></div><div class="landing-placeholder">Spazio homepage: qui potrai inserire riepiloghi, messaggi rapidi, prossima seduta, indicatori o contenuti personalizzati.</div></div></section>
 
-      <section id="homeView" class="view">
-        <div class="hero-card">
-          <div>
-            <p class="eyebrow">Profilo attivo</p>
-            <h2 id="profileSummaryTitle">Allenamento portieri</h2>
-            <p id="profileSummaryText" class="muted">Configura il gruppo per iniziare.</p>
-          </div>
-          <div class="score-ring"><span id="weekSessions">0</span><small>sedute</small></div>
-        </div>
-        <div class="section-header"><span id="exerciseCount" class="pill">0 esercizi</span></div>
-        <div id="exerciseList" class="exercise-list"></div>
-      </section>
+      <section id="homeView" class="view"><div class="hero-card"><div><p class="eyebrow">Profilo attivo</p><h2 id="profileSummaryTitle">Allenamento portieri</h2><p id="profileSummaryText" class="muted">Configura il gruppo per iniziare.</p></div><div class="score-ring"><span id="weekSessions">0</span><small>sedute</small></div></div><div class="section-header"><span id="exerciseCount" class="pill">0 esercizi</span></div><div id="exerciseList" class="exercise-list"></div></section>
 
       <section id="detailView" class="view"><button class="back-btn" data-go="home">← Esercizi</button><div id="exerciseDetail"></div></section>
 
-      <section id="workoutView" class="view">
-        <button class="back-btn" data-go="detail">← Dettaglio</button>
-        <div class="timer-card"><p id="workoutCategory" class="eyebrow"></p><h2 id="workoutName"></h2><div id="timerDisplay" class="timer">00:00</div><p id="phaseLabel" class="muted">Pronto</p><div class="button-row"><button id="startPauseBtn" class="primary-btn">Start</button><button id="finishBtn" class="dark-btn">Termina</button></div></div>
-        <div class="stats-grid"><button class="stat-btn green" data-stat="saves"><strong id="savesCount">0</strong><span>Parate</span></button><button class="stat-btn red" data-stat="mistakes"><strong id="mistakesCount">0</strong><span>Errori</span></button><button class="stat-btn orange" data-stat="reactions"><strong id="reactionsCount">0</strong><span>Reazioni</span></button></div>
-        <div class="keeper-selector-card"><p class="eyebrow">Portiere in lavoro</p><select id="activeKeeper"></select></div>
-        <div class="keeper-selector-card"><p class="eyebrow">Data sessione</p><input id="sessionDateInput" type="date" /><p class="muted small-note">La sessione verrà salvata in questa data.</p></div>
-        <div class="coach-card"><div><p class="eyebrow">Comando rapido</p><h3 id="cueText">—</h3><p class="muted">Comandi casuali per reattività e orientamento.</p></div><button id="cueBtn" class="ghost-btn">Comando</button></div>
-      </section>
+      <section id="workoutView" class="view"><button class="back-btn" data-go="detail">← Dettaglio</button><div class="timer-card"><p id="workoutCategory" class="eyebrow"></p><h2 id="workoutName"></h2><div id="timerDisplay" class="timer">00:00</div><p id="phaseLabel" class="muted">Pronto</p><div class="button-row"><button id="startPauseBtn" class="primary-btn" type="button">Start</button><button id="finishBtn" class="dark-btn" type="button">Termina</button></div></div><div class="stats-grid"><button class="stat-btn green" data-stat="saves"><strong id="savesCount">0</strong><span>Parate</span></button><button class="stat-btn red" data-stat="mistakes"><strong id="mistakesCount">0</strong><span>Errori</span></button><button class="stat-btn orange" data-stat="reactions"><strong id="reactionsCount">0</strong><span>Reazioni</span></button></div><div class="keeper-selector-card"><p class="eyebrow">Portiere in lavoro</p><select id="activeKeeper"></select></div><div class="keeper-selector-card"><p class="eyebrow">Data sessione</p><input id="sessionDateInput" type="date" /><p class="muted small-note">La sessione verrà salvata in questa data.</p></div><div class="coach-card"><div><p class="eyebrow">Comando rapido</p><h3 id="cueText">—</h3><p class="muted">Comandi casuali per reattività e orientamento.</p></div><button id="cueBtn" class="ghost-btn" type="button">Comando</button></div></section>
 
-      <section id="calendarView" class="view">
-        <div class="calendar-card"><div class="calendar-top"><button id="prevMonthBtn" class="ghost-btn" type="button">←</button><div><p class="eyebrow">Calendario sessioni</p><h2 id="calendarMonthTitle">—</h2></div><button id="nextMonthBtn" class="ghost-btn" type="button">→</button></div><div class="calendar-weekdays"><span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span></div><div id="calendarGrid" class="calendar-grid"></div></div>
-        <div class="calendar-list-card"><p class="eyebrow">Giorno selezionato</p><h3 id="selectedDateTitle">—</h3><div id="selectedDateSessions" class="history-list compact"></div></div>
-      </section>
+      <section id="calendarView" class="view"><div class="calendar-card"><div class="calendar-top"><button id="prevMonthBtn" class="ghost-btn" type="button">←</button><div><p class="eyebrow">Calendario sessioni</p><h2 id="calendarMonthTitle">—</h2></div><button id="nextMonthBtn" class="ghost-btn" type="button">→</button></div><div class="calendar-weekdays"><span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span></div><div id="calendarGrid" class="calendar-grid"></div></div><div class="calendar-list-card"><p class="eyebrow">Giorno selezionato</p><h3 id="selectedDateTitle">—</h3><div id="selectedDateSessions" class="history-list compact"></div></div></section>
 
-      <section id="trainingView" class="view">
-        <div class="progress-card training-card">
-          <p class="eyebrow">Allenamento</p>
-          <h2 id="trainingTitle">Prossimo allenamento</h2>
-          <p id="trainingSubtitle" class="muted">Salva una seduta dal calendario per ritrovarla qui pronta da avviare.</p>
-          <div class="training-filter">
-            <label>Filtra per data
-              <input id="trainingDateFilter" type="date" />
-            </label>
-            <button id="trainingResetFilterBtn" class="ghost-btn" type="button">Prossimo</button>
-          </div>
-          <div id="trainingList" class="training-list"></div>
-        </div>
-      </section>
+      <section id="trainingView" class="view"><div class="progress-card training-card"><p class="eyebrow">Allenamento</p><h2 id="trainingTitle">Prossimo allenamento</h2><p id="trainingSubtitle" class="muted">Salva una seduta dal calendario per ritrovarla qui pronta da avviare.</p><div class="training-filter"><label>Filtra per data<input id="trainingDateFilter" type="date" /></label><button id="trainingResetFilterBtn" class="ghost-btn" type="button">Prossimo</button></div><p id="trainingSyncStatus" class="muted small-note training-sync-status">Le sedute salvate vengono collegate al tuo account.</p><div id="trainingList" class="training-list"></div></div></section>
 
-      <section id="progressView" class="view">
-        <div class="progress-card">
-          <p class="eyebrow">Parte fisica</p>
-          <h2>Motore del portiere</h2>
-          <p class="muted">Inserisci la data e aggiorna le misure: ogni salvataggio crea uno storico confrontabile durante l’anno.</p>
-          <form id="performanceForm" class="form-grid">
-            <div id="performanceFields" class="measure-grid"></div>
-            <button class="primary-btn full" type="submit">Salva test fisici</button>
-          </form>
-        </div>
-        <div class="progress-card">
-          <p class="eyebrow">Miglioramenti fisici</p>
-          <h2>Andamento misure</h2>
-          <div id="keeperMeasures" class="measure-grid"></div>
-        </div>
-        <div class="progress-card">
-          <p class="eyebrow">Storico</p>
-          <h2>Sessioni salvate</h2>
-          <div id="historyList" class="history-list"></div>
-        </div>
-        <div id="progressKpis" class="progress-kpis" hidden></div>
-        <div id="monthlyChart" class="monthly-chart" hidden></div>
-        <div id="exerciseQualityList" class="quality-list" hidden></div>
-      </section>
+      <section id="progressView" class="view"><div class="progress-card"><p class="eyebrow">Parte fisica</p><h2>Motore del portiere</h2><p class="muted">Inserisci la data e aggiorna le misure: ogni salvataggio crea uno storico confrontabile durante l’anno.</p><form id="performanceForm" class="form-grid"><div id="performanceFields" class="measure-grid"></div><button class="primary-btn full" type="submit">Salva test fisici</button></form></div><div class="progress-card"><p class="eyebrow">Miglioramenti fisici</p><h2>Andamento misure</h2><div id="keeperMeasures" class="measure-grid"></div></div><div class="progress-card"><p class="eyebrow">Storico</p><h2>Sessioni salvate</h2><div id="historyList" class="history-list"></div></div><div id="progressKpis" class="progress-kpis" hidden></div><div id="monthlyChart" class="monthly-chart" hidden></div><div id="exerciseQualityList" class="quality-list" hidden></div></section>
 
-      <section id="performanceView" class="view">
-        <div class="progress-card">
-          <p class="eyebrow">Motore</p>
-          <h2>Motore del portiere</h2>
-          <form id="performanceFormLegacy" class="form-grid"><div id="performanceFieldsLegacy" class="measure-grid"></div></form>
-        </div>
-      </section>
+      <section id="performanceView" class="view"><div class="progress-card"><p class="eyebrow">Motore</p><h2>Motore del portiere</h2><form id="performanceFormLegacy" class="form-grid"><div id="performanceFieldsLegacy" class="measure-grid"></div></form></div></section>
 
-      <section id="profileView" class="view">
-        <div class="setup-card"><p class="eyebrow">Impostazioni</p><h2>Profilo allenamento</h2><p id="cloudUserLabel" class="muted">Database Cloudflare D1</p><button id="editSetupBtn" class="primary-btn full" type="button">Modifica impostazioni base</button><div class="backup-actions"><button id="exportJsonBtn" class="dark-btn full" type="button">Esporta JSON</button><button id="importJsonBtn" class="dark-btn full" type="button">Importa JSON</button><a class="dark-btn full" href="privacy.html" target="_blank" rel="noopener">Privacy policy</a><input id="importJsonInput" class="hidden-file" type="file" accept="application/json,.json" /></div><p id="backupStatus" class="muted backup-status"></p><button id="resetBtn" class="danger-btn full" type="button">Cancella dati</button><button id="logoutBtn" class="ghost-btn full" type="button">Logout</button></div>
-      </section>
+      <section id="profileView" class="view"><div class="setup-card"><p class="eyebrow">Impostazioni</p><h2>Profilo allenamento</h2><p id="cloudUserLabel" class="muted">Database Cloudflare D1</p><button id="editSetupBtn" class="primary-btn full" type="button">Modifica impostazioni base</button><div class="backup-actions"><button id="exportJsonBtn" class="dark-btn full" type="button">Esporta JSON</button><button id="importJsonBtn" class="dark-btn full" type="button">Importa JSON</button><a class="dark-btn full" href="privacy.html" target="_blank" rel="noopener">Privacy policy</a><input id="importJsonInput" class="hidden-file" type="file" accept="application/json,.json" /></div><p id="backupStatus" class="muted backup-status"></p><button id="resetBtn" class="danger-btn full" type="button">Cancella dati</button><button id="logoutBtn" class="ghost-btn full" type="button">Logout</button></div></section>
     </main>
 
     <nav id="bottomNav" class="bottom-nav hidden"><button data-tab="home" class="nav-btn active">Esercizi</button><button data-tab="calendar" class="nav-btn">Calendario</button><button data-tab="training" class="nav-btn">Allenamento</button><button data-tab="progress" class="nav-btn">Progressi</button><button data-tab="performance" class="nav-btn">Motore</button><button data-tab="profile" class="nav-btn">Profilo</button></nav>
   </div>
 
-  <script src="app.js?v=home-filter-v1"></script>
-  <script src="cloudflare-client.js?v=home-filter-v1"></script>
-  <script src="calendar-keepers.js?v=home-filter-v1"></script>
-  <script>
+  <script src="app.js?v=account-source-v1"></script>
+  <script src="cloudflare-client.js?v=account-source-v1"></script>
+  <script src="calendar-keepers.js?v=account-source-v1"></script>
+  <script id="gkAccountSourceLogicV1">
     (() => {
-      const REMOVED_IDS = new Set(["attacchi-a-scelta","passo-lungo-passo-corto","finalizzazioni-marcatura-individuale","attacco-continuo","partita-situazioni","attacco-linea-finalizzo","bersaglio-mobile","5-contro-3-uscita","partita-9-contro-9","partita-7-contro-7"]);
-      const REMOVED_NAMES = new Set(["attacchi a scelta","passo lungo, passo corto","finalizzazioni da marcatura individuale","attacco continuo","partita a situazioni","attacco la linea e finalizzo","attacco a linea e finalizzo","bersaglio mobile","5 contro 3 con uscita","5 contro 3 uscita","partita 9 contro 9","partita 7 contro 7"]);
-      const esc = (value) => String(value ?? "").replace(/[&<>'\"]/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;","\"":"&quot;"}[char]));
-      const norm = (value) => String(value || "").trim().toLowerCase();
-      const todayKey = (date = new Date()) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
-      const parseDate = (key) => { const [y,m,d] = String(key || todayKey()).split("-").map(Number); return new Date(y || 2000, (m || 1) - 1, d || 1); };
-      const dateLabel = (key) => parseDate(key).toLocaleDateString("it-IT", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
-      const shortDateLabel = (key) => parseDate(key).toLocaleDateString("it-IT", { day: "2-digit", month: "short", year: "numeric" });
-      const fmt = (seconds) => { const value = Math.max(0, Number(seconds || 0)); return `${String(Math.floor(value / 60)).padStart(2,"0")}:${String(value % 60).padStart(2,"0")}`; };
-      const TRAINING_FILTER_KEY = "gk_training_filter_date";
+      const $id = (id) => document.getElementById(id);
+      const esc = (value) => String(value ?? '').replace(/[&<>'\"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#039;', '\"':'&quot;' }[char]));
+      const todayKey = (date = new Date()) => date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+      const parseDate = (key) => { const [y, m, d] = String(key || todayKey()).split('-').map(Number); return new Date(y || 2000, (m || 1) - 1, d || 1); };
+      const shortDate = (key) => parseDate(key).toLocaleDateString('it-IT', { day:'2-digit', month:'short', year:'numeric' });
+      const longDate = (key) => parseDate(key).toLocaleDateString('it-IT', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+      const FILTER_KEY = 'gk_training_filter_date';
+      let accountKeyCache = '';
+      let hydrateRunning = null;
+      let syncTimer = null;
 
-      function isRemovedExercise(exercise) {
-        if (!exercise) return false;
-        return REMOVED_IDS.has(norm(exercise.id)) || REMOVED_NAMES.has(norm(exercise.name));
+      async function cloudApi(path, options = {}) {
+        const init = { method: options.method || 'GET', credentials: 'same-origin', headers: {} };
+        if (options.body !== undefined) {
+          init.headers['Content-Type'] = 'application/json';
+          init.body = JSON.stringify(options.body);
+        }
+        const response = await fetch(path, init);
+        const text = await response.text();
+        let data = null;
+        try { data = text ? JSON.parse(text) : null; } catch { data = { error: text || 'Risposta non valida' }; }
+        if (!response.ok) throw new Error(data?.error || 'Errore ' + response.status);
+        return data;
       }
 
-      function pruneExercises() {
+      async function accountPlanKey() {
+        if (accountKeyCache) return accountKeyCache;
         try {
-          if (!Array.isArray(exercises)) return;
-          for (let i = exercises.length - 1; i >= 0; i -= 1) if (isRemovedExercise(exercises[i])) exercises.splice(i, 1);
-        } catch {}
+          const me = await cloudApi('/api/me');
+          const user = me?.user || {};
+          accountKeyCache = 'gk_day_plans_' + String(user.email || user.id || 'account');
+        } catch {
+          accountKeyCache = localStorage.getItem('gk_last_plan_key') || 'gk_day_plans_local';
+        }
+        localStorage.setItem('gk_last_plan_key', accountKeyCache);
+        return accountKeyCache;
       }
 
-      function exerciseLookup(id) {
-        try {
-          const found = typeof exerciseById === "function" ? exerciseById(id) : Array.isArray(exercises) ? exercises.find((item) => item.id === id) : null;
-          return isRemovedExercise(found) ? null : found;
-        } catch { return null; }
+      function readKey(key) {
+        try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; }
       }
-
-      function patchNativeTimer() {
-        try {
-          updateTimer = function() {
-            const display = document.getElementById("timerDisplay");
-            if (display) display.textContent = fmt(typeof timeRemaining === "undefined" ? 0 : timeRemaining);
-          };
-          toggleTimer = function() {
-            running = !running;
-            const startBtn = document.getElementById("startPauseBtn");
-            const phase = document.getElementById("phaseLabel");
-            if (startBtn) startBtn.textContent = running ? "Pausa" : "Start";
-            if (phase) phase.textContent = running ? "Timer attivo" : "In pausa";
-            if (running && !timer) {
-              timer = setInterval(() => {
-                if (!running) return;
-                timeRemaining = Math.max(0, Number(timeRemaining || 0)) + 1;
-                updateTimer();
-              }, 1000);
-            }
-          };
-          if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkHomeFilterTimer) {
-            const previousStart = startWorkoutScreen;
-            startWorkoutScreen = function() {
-              const result = previousStart.apply(this, arguments);
-              timeRemaining = 0;
-              running = false;
-              updateTimer();
-              const phase = document.getElementById("phaseLabel");
-              const startBtn = document.getElementById("startPauseBtn");
-              if (phase) phase.textContent = "Pronto";
-              if (startBtn) startBtn.textContent = "Start";
-              cleanUi();
-              return result;
-            };
-            startWorkoutScreen.__gkHomeFilterTimer = true;
-          }
-          if (typeof finishWorkout === "function" && !finishWorkout.__gkHomeFilterTimer) {
-            const previousFinish = finishWorkout;
-            finishWorkout = function() {
-              const elapsedSeconds = Math.max(0, Number(typeof timeRemaining === "undefined" ? 0 : timeRemaining));
-              if (selectedExercise) selectedExercise = Object.assign({}, selectedExercise, { durationMin: Math.max(1, Math.ceil(elapsedSeconds / 60)), actualSeconds: elapsedSeconds });
-              return previousFinish.apply(this, arguments);
-            };
-            finishWorkout.__gkHomeFilterTimer = true;
-          }
-        } catch {}
+      function writeKey(key, value) {
+        localStorage.setItem(key, JSON.stringify(value || {}));
       }
-
-      function selectedCalendarDateKey() {
-        return document.querySelector(".calendar-day.selected[data-date]")?.dataset?.date || todayKey();
+      function planKeys() {
+        return Object.keys(localStorage).filter((key) => key.startsWith('gk_day_plans_'));
       }
-      function planKeys() { return Object.keys(localStorage).filter((key) => key.startsWith("gk_day_plans_")); }
-      function readPlans(key) { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch { return {}; } }
-      function writePlans(key, plans) { localStorage.setItem(key, JSON.stringify(plans || {})); }
-      function activePlanKey(dateKey = selectedCalendarDateKey()) {
-        const keys = planKeys();
-        const exact = keys.find((key) => Object.prototype.hasOwnProperty.call(readPlans(key), dateKey));
-        return exact || keys[0] || "gk_day_plans_default";
-      }
-
-      function savedPlanRows() {
-        const rows = [];
-        planKeys().forEach((key) => {
-          const plans = readPlans(key);
-          Object.entries(plans).forEach(([date, plan]) => {
-            const items = Array.isArray(plan?.items) ? plan.items.filter((item) => exerciseLookup(item.exerciseId)) : [];
-            if (!items.length || !plan?.savedAt) return;
-            rows.push({ key, date, plan: Object.assign({}, plan, { items }) });
-          });
+      function cleanPlans(plans) {
+        const out = {};
+        Object.entries(plans || {}).forEach(([date, plan]) => {
+          const items = Array.isArray(plan?.items) ? plan.items.filter(Boolean) : [];
+          if (!items.length) return;
+          out[date] = { ...plan, time: plan.time || '18:00', totalMinutes: Number(plan.totalMinutes || 60), items };
         });
-        rows.sort((a, b) => a.date.localeCompare(b.date));
-        return rows;
+        return out;
       }
-
-      function currentTrainingFilter() {
-        return localStorage.getItem(TRAINING_FILTER_KEY) || "";
+      function readAllLocalPlans() {
+        return cleanPlans(planKeys().reduce((acc, key) => ({ ...acc, ...readKey(key) }), {}));
       }
-
-      function nearestTrainingRow(rows = savedPlanRows()) {
+      async function rawProfile() {
+        const result = await cloudApi('/api/profile');
+        return result?.profile || {};
+      }
+      function setSyncStatus(text) {
+        const el = $id('trainingSyncStatus') || $id('calendarSaveStatus');
+        if (el && text) el.textContent = text;
+      }
+      async function persistPlansToAccount(plans, visible = false) {
+        try {
+          const profile = await rawProfile();
+          const nextPlans = cleanPlans(plans);
+          await cloudApi('/api/profile', { method:'PUT', body:{ profile:{ ...profile, trainingPlans: nextPlans, training_plans: nextPlans } } });
+          if (visible) setSyncStatus('Allenamento salvato sul tuo account.');
+          return true;
+        } catch (error) {
+          if (visible) setSyncStatus('Salvato sul dispositivo, ma non sul cloud: ' + error.message);
+          return false;
+        }
+      }
+      function queueSync(plans) {
+        clearTimeout(syncTimer);
+        syncTimer = setTimeout(() => persistPlansToAccount(plans, false), 650);
+      }
+      async function hydratePlansFromAccount() {
+        if (hydrateRunning) return hydrateRunning;
+        hydrateRunning = (async () => {
+          try {
+            const key = await accountPlanKey();
+            const profile = await rawProfile();
+            const cloudPlans = cleanPlans(profile.trainingPlans || profile.training_plans || profile.dayPlans || {});
+            const localPlans = readAllLocalPlans();
+            const merged = cleanPlans({ ...cloudPlans, ...localPlans });
+            writeKey(key, merged);
+            if (Object.keys(localPlans).length && JSON.stringify(merged) !== JSON.stringify(cloudPlans)) queueSync(merged);
+            renderTrainingViewDirect();
+            if ($id('calendarView')?.classList.contains('active') && typeof showView === 'function') setTimeout(() => showView('calendar'), 80);
+            return merged;
+          } catch {
+            return readAllLocalPlans();
+          } finally {
+            hydrateRunning = null;
+          }
+        })();
+        return hydrateRunning;
+      }
+      async function writeMergedPlans(plans, sync = true) {
+        const key = await accountPlanKey();
+        const next = cleanPlans(plans);
+        writeKey(key, next);
+        if (sync) queueSync(next);
+        return next;
+      }
+      function selectedCalendarDateKey() {
+        return document.querySelector('.calendar-day.selected[data-date]')?.dataset?.date || todayKey();
+      }
+      function exerciseByIdSafe(id) {
+        try {
+          if (typeof exerciseById === 'function') return exerciseById(id);
+          if (typeof exercises !== 'undefined' && Array.isArray(exercises)) return exercises.find((item) => item.id === id) || null;
+        } catch {}
+        return null;
+      }
+      function savedRows() {
+        return Object.entries(readAllLocalPlans())
+          .filter(([, plan]) => plan?.savedAt)
+          .map(([date, plan]) => ({ date, plan }))
+          .sort((a, b) => a.date.localeCompare(b.date));
+      }
+      function nearestRow(rows) {
         if (!rows.length) return null;
         const today = todayKey();
         return rows.find((row) => row.date >= today) || rows[rows.length - 1];
       }
-
-      function trainingRowsToShow() {
-        const rows = savedPlanRows();
-        const filter = currentTrainingFilter();
-        if (filter) return rows.filter((row) => row.date === filter);
-        const next = nearestTrainingRow(rows);
+      function rowsForTraining() {
+        const rows = savedRows();
+        const filter = localStorage.getItem(FILTER_KEY) || '';
+        if (filter) return rows.filter((row) => row.date === filter).slice(0, 1);
+        const next = nearestRow(rows);
         return next ? [next] : [];
       }
 
-      function cleanUi() {
-        pruneExercises();
-        document.querySelectorAll(".filters,.cloud-pill,.landing-stats,.stats-grid,.coach-card").forEach((element) => {
-          element.style.display = "none";
-          element.setAttribute("aria-hidden", "true");
-        });
-        document.querySelectorAll(".planner-session-title").forEach((section) => section.remove());
-        document.querySelectorAll("#calendarView [data-plan-start]").forEach((button) => button.remove());
-        document.querySelectorAll(".section-header h3").forEach((title) => title.remove());
-        const summary = document.getElementById("profileSummaryText");
-        if (summary) summary.textContent = String(summary.textContent || "").replace(/\s*·\s*esercizi dal documento FIGC\.?/gi, "").replace(/esercizi dal documento FIGC\.?/gi, "").trim();
-        enhanceNavigation();
-      }
-
-      function enhanceNavigation() {
-        const nav = document.getElementById("bottomNav");
+      function forceBottomNav() {
+        const nav = $id('bottomNav');
         if (!nav) return;
+        nav.classList.remove('hidden');
+        nav.hidden = false;
+        nav.removeAttribute('hidden');
+        nav.style.setProperty('display', 'grid', 'important');
+        nav.style.setProperty('grid-template-columns', 'repeat(4,minmax(0,1fr))', 'important');
         nav.querySelectorAll('[data-tab="performance"],[data-tab="profile"]').forEach((button) => button.remove());
-        nav.style.setProperty("grid-template-columns", "repeat(4,minmax(0,1fr))", "important");
+      }
+      function showRealHome() {
+        document.querySelectorAll('.view').forEach((view) => view.classList.remove('active'));
+        $id('landingView')?.classList.add('active');
+        const title = $id('screenTitle');
+        if (title) title.textContent = 'Home';
+        document.querySelectorAll('#bottomNav .nav-btn').forEach((btn) => btn.classList.remove('active'));
+        forceBottomNav();
+        [50, 180, 500, 1000].forEach((delay) => setTimeout(forceBottomNav, delay));
       }
 
-      function showLandingHome() {
-        document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
-        document.getElementById("landingView")?.classList.add("active");
-        const title = document.getElementById("screenTitle");
-        if (title) title.textContent = "Home";
-        document.querySelectorAll(".nav-btn").forEach((btn) => btn.classList.remove("active"));
-        document.getElementById("bottomNav")?.classList.toggle("hidden", !localStorage.getItem("gk_profile") && !window.cloudProfile);
-        cleanUi();
+      function cleanCalendarUi() {
+        document.querySelectorAll('.planner-session-title').forEach((el) => el.remove());
+        document.querySelectorAll('#calendarView [data-plan-start]').forEach((el) => el.remove());
+        document.querySelectorAll('.filters,.cloud-pill,.landing-stats,.stats-grid,.coach-card,.section-header h3').forEach((el) => { el.style.display = 'none'; el.setAttribute('aria-hidden', 'true'); });
+        forceBottomNav();
       }
-
-      function saveCurrentCalendarPlan() {
+      function ensureSaveButton() {
+        const calendar = $id('calendarView');
+        if (!calendar?.classList.contains('active')) return;
+        cleanCalendarUi();
+        const planner = calendar.querySelector('.planner-card');
+        if (!planner || $id('saveCalendarPlanBtn')) return;
+        const row = document.createElement('div');
+        row.className = 'planner-save-row';
+        row.innerHTML = '<button id="saveCalendarPlanBtn" class="primary-btn full" type="button">Salva allenamento</button><p id="calendarSaveStatus" class="muted small-note calendar-save-status">Gli esercizi salvati saranno disponibili su questo account.</p>';
+        const actions = planner.querySelector('.planner-actions') || planner;
+        actions.insertAdjacentElement('afterend', row);
+      }
+      async function saveCalendarPlanToAccount() {
         const date = selectedCalendarDateKey();
-        const key = activePlanKey(date);
-        const plans = readPlans(key);
-        const plan = plans[date] || { time: document.getElementById("dayPlanTime")?.value || "18:00", totalMinutes: Number(document.getElementById("dayPlanTotal")?.value || 60), items: [] };
-        if (!Array.isArray(plan.items) || !plan.items.length) return { ok: false, message: "Aggiungi almeno un esercizio prima di salvare l’allenamento." };
-        plan.time = document.getElementById("dayPlanTime")?.value || plan.time || "18:00";
-        plan.totalMinutes = Number(document.getElementById("dayPlanTotal")?.value || plan.totalMinutes || 60);
-        plan.items = plan.items.filter((item) => exerciseLookup(item.exerciseId));
-        plan.savedAt = new Date().toISOString();
-        plans[date] = plan;
-        writePlans(key, plans);
-        if (!currentTrainingFilter()) localStorage.removeItem(TRAINING_FILTER_KEY);
-        return { ok: true, message: `Allenamento del ${shortDateLabel(date)} salvato.` };
-      }
-
-      function enhanceCalendarPlanner() {
-        const calendar = document.getElementById("calendarView");
-        if (!calendar?.classList.contains("active")) return;
-        calendar.querySelectorAll("[data-plan-start]").forEach((button) => button.remove());
-        calendar.querySelectorAll(".planner-session-title").forEach((section) => section.remove());
-        const planner = calendar.querySelector(".planner-card");
-        if (!planner || document.getElementById("saveCalendarPlanBtn")) return;
-        const row = document.createElement("div");
-        row.className = "planner-save-row";
-        row.innerHTML = `<button id="saveCalendarPlanBtn" class="primary-btn full" type="button">Salva allenamento</button><p id="calendarSaveStatus" class="muted small-note calendar-save-status">Gli esercizi salvati compariranno nella sezione Allenamento.</p>`;
-        const actions = planner.querySelector(".planner-actions") || planner;
-        actions.insertAdjacentElement("afterend", row);
-        document.getElementById("saveCalendarPlanBtn")?.addEventListener("click", () => {
-          const result = saveCurrentCalendarPlan();
-          const status = document.getElementById("calendarSaveStatus");
-          if (status) status.textContent = result.message;
-          renderTrainingView();
-        });
-      }
-
-      function updateTrainingNote(key, date, index, note) {
-        const plans = readPlans(key);
-        if (!plans[date] || !Array.isArray(plans[date].items) || !plans[date].items[index]) return;
-        plans[date].items[index].note = note;
-        plans[date].savedAt = plans[date].savedAt || new Date().toISOString();
-        writePlans(key, plans);
-      }
-
-      function startTrainingExercise(key, date, index) {
-        const plans = readPlans(key);
-        const item = plans?.[date]?.items?.[index];
-        const ex = exerciseLookup(item?.exerciseId);
-        if (!ex || typeof startWorkoutScreen !== "function") return;
-        selectedExercise = Object.assign({}, ex, { durationMin: Number(item.minutes || ex.durationMin) });
-        startWorkoutScreen();
-        const dateInput = document.getElementById("sessionDateInput");
-        if (dateInput) dateInput.value = date;
-      }
-
-      function bindTrainingFilter() {
-        const input = document.getElementById("trainingDateFilter");
-        const reset = document.getElementById("trainingResetFilterBtn");
-        if (input && input.dataset.bound !== "1") {
-          input.dataset.bound = "1";
-          input.addEventListener("change", () => {
-            if (input.value) localStorage.setItem(TRAINING_FILTER_KEY, input.value);
-            else localStorage.removeItem(TRAINING_FILTER_KEY);
-            renderTrainingView();
-          });
-        }
-        if (reset && reset.dataset.bound !== "1") {
-          reset.dataset.bound = "1";
-          reset.addEventListener("click", () => {
-            localStorage.removeItem(TRAINING_FILTER_KEY);
-            if (input) input.value = "";
-            renderTrainingView();
-          });
-        }
-      }
-
-      function renderTrainingView() {
-        enhanceNavigation();
-        bindTrainingFilter();
-        const list = document.getElementById("trainingList");
-        const title = document.getElementById("trainingTitle");
-        const subtitle = document.getElementById("trainingSubtitle");
-        const filterInput = document.getElementById("trainingDateFilter");
-        if (!list || !title || !subtitle) return;
-        pruneExercises();
-        const filter = currentTrainingFilter();
-        if (filterInput && filterInput.value !== filter) filterInput.value = filter;
-        const rows = trainingRowsToShow();
-        const hasAnySaved = savedPlanRows().length > 0;
-        if (!rows.length) {
-          if (filter && hasAnySaved) {
-            title.textContent = `Allenamento del ${shortDateLabel(filter)}`;
-            subtitle.textContent = "In questa data non ci sono sedute salvate.";
-            list.innerHTML = `<div class="training-empty"><strong>Nessun allenamento salvato per questa data.</strong><span>Scegli un’altra data oppure torna alla prossima seduta disponibile.</span><button id="goNextTraining" class="primary-btn full" type="button">Mostra prossimo allenamento</button></div>`;
-            document.getElementById("goNextTraining")?.addEventListener("click", () => {
-              localStorage.removeItem(TRAINING_FILTER_KEY);
-              renderTrainingView();
-            });
-            return;
-          }
-          title.textContent = "Nessun allenamento salvato";
-          subtitle.textContent = "Prepara una seduta dal calendario, aggiungi gli esercizi e premi Salva allenamento.";
-          list.innerHTML = `<div class="training-empty"><strong>Aggiungi gli esercizi per il prossimo allenamento.</strong><span>Apri il calendario, scegli il giorno, inserisci gli esercizi e salva la seduta. Poi la troverai qui con il pulsante Avvia.</span><button id="goCalendarFromTraining" class="primary-btn full" type="button">Vai al calendario</button></div>`;
-          document.getElementById("goCalendarFromTraining")?.addEventListener("click", () => showView("calendar"));
+        const plans = readAllLocalPlans();
+        const plan = plans[date];
+        if (!plan?.items?.length) {
+          setSyncStatus('Aggiungi almeno un esercizio prima di salvare l’allenamento.');
           return;
         }
-        const first = rows[0];
-        title.textContent = filter ? `Allenamento · ${shortDateLabel(first.date)}` : `Prossimo allenamento · ${shortDateLabel(first.date)}`;
-        subtitle.textContent = filter ? "Seduta salvata per la data selezionata." : "Di default vedi la prossima seduta rispetto a oggi. Usa il filtro per aprire un’altra data.";
-        list.innerHTML = rows.map((row, rowIndex) => {
-          const total = row.plan.items.reduce((sum, item) => sum + Number(item.minutes || 0), 0);
-          const time = row.plan.time || "orario non impostato";
-          return `<div class="training-plan"><div class="training-plan-head"><div><p class="eyebrow">${filter ? "Seduta filtrata" : rowIndex === 0 ? "Prossima seduta" : "Seduta salvata"}</p><h3>${dateLabel(row.date)}</h3><p class="muted small-note">${esc(time)} · ${row.plan.items.length} esercizi · ${total}' programmati</p></div><span class="pill">salvata</span></div><div class="training-items">${row.plan.items.map((item, index) => {
-            const ex = exerciseLookup(item.exerciseId);
-            return `<div class="training-item"><div class="training-item-top"><div><p class="eyebrow">${esc(ex?.ambito || "Esercizio")} · ${Number(item.minutes || ex?.durationMin || 0)}'</p><h4>${esc(ex?.name || "Esercizio")}</h4></div><button class="primary-btn" type="button" data-training-start="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}">Avvia</button></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}" placeholder="Note operative, varianti, focus tecnico...">${esc(item.note || "")}</textarea></label></div>`;
-          }).join("")}</div></div>`;
-        }).join("");
+        plan.time = $id('dayPlanTime')?.value || plan.time || '18:00';
+        plan.totalMinutes = Number($id('dayPlanTotal')?.value || plan.totalMinutes || 60);
+        plan.savedAt = new Date().toISOString();
+        plans[date] = plan;
+        await writeMergedPlans(plans, false);
+        setSyncStatus('Salvataggio sul tuo account...');
+        await persistPlansToAccount(plans, true);
+        renderTrainingViewDirect();
+      }
+
+      function renderTrainingViewDirect() {
+        const title = $id('trainingTitle'), subtitle = $id('trainingSubtitle'), list = $id('trainingList');
+        const filterInput = $id('trainingDateFilter');
+        if (!title || !subtitle || !list) return;
+        const filter = localStorage.getItem(FILTER_KEY) || '';
+        if (filterInput && filterInput.value !== filter) filterInput.value = filter;
+        const rows = rowsForTraining();
+        const allRows = savedRows();
+        list.innerHTML = '';
+        if (!rows.length) {
+          if (filter && allRows.length) {
+            title.textContent = 'Allenamento · ' + shortDate(filter);
+            subtitle.textContent = 'Non ci sono sedute salvate per questa data.';
+            list.innerHTML = '<div class="training-empty"><strong>Nessun allenamento in questa data.</strong><span>Scegli un’altra data oppure torna alla prossima seduta disponibile.</span><button id="goNextTraining" class="primary-btn full" type="button">Mostra prossimo allenamento</button></div>';
+            $id('goNextTraining')?.addEventListener('click', () => { localStorage.removeItem(FILTER_KEY); renderTrainingViewDirect(); });
+            return;
+          }
+          title.textContent = 'Nessun allenamento salvato';
+          subtitle.textContent = 'Prepara una seduta dal calendario e premi Salva allenamento. Dopo la reinstallazione resterà collegata al tuo account.';
+          list.innerHTML = '<div class="training-empty"><strong>Aggiungi gli esercizi per il prossimo allenamento.</strong><span>Apri il calendario, scegli il giorno, inserisci gli esercizi e salva la seduta.</span><button id="goCalendarFromTraining" class="primary-btn full" type="button">Vai al calendario</button></div>';
+          $id('goCalendarFromTraining')?.addEventListener('click', () => { if (typeof showView === 'function') showView('calendar'); });
+          return;
+        }
+        const row = rows[0];
+        const total = row.plan.items.reduce((sum, item) => sum + Number(item.minutes || 0), 0);
+        const done = row.plan.items.filter((item) => item.done).length;
+        title.textContent = filter ? 'Allenamento · ' + shortDate(row.date) : 'Prossimo allenamento · ' + shortDate(row.date);
+        subtitle.textContent = filter ? 'Seduta salvata per la data selezionata.' : 'Di default vedi la prossima seduta rispetto a oggi. Usa il filtro per aprire un’altra data.';
+        const meta = document.createElement('div');
+        meta.className = 'training-session-meta';
+        meta.innerHTML = '<h3>' + esc(longDate(row.date)) + '</h3><p class="muted">' + esc(row.plan.time || 'orario non impostato') + ' · ' + row.plan.items.length + ' esercizi · ' + total + ' min programmati · ' + done + '/' + row.plan.items.length + ' fatti</p>';
+        list.appendChild(meta);
+        row.plan.items.forEach((item, index) => {
+          const ex = exerciseByIdSafe(item.exerciseId);
+          const card = document.createElement('div');
+          card.className = 'training-item' + (item.done ? ' is-done' : '');
+          card.innerHTML = '<div class="training-item-top"><div><p class="eyebrow">' + esc(ex?.ambito || 'Esercizio') + ' · ' + Number(item.minutes || ex?.durationMin || 0) + ' min</p><h4>' + esc(ex?.name || 'Esercizio') + '</h4></div><button class="primary-btn" type="button" data-account-training-start="1" data-plan-date="' + esc(row.date) + '" data-plan-index="' + index + '">Avvia</button></div><div class="training-item-actions"><label class="training-done"><input type="checkbox" data-training-done="1" data-plan-date="' + esc(row.date) + '" data-plan-index="' + index + '"' + (item.done ? ' checked' : '') + ' /> Fatto</label></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-date="' + esc(row.date) + '" data-plan-index="' + index + '" placeholder="Note operative, varianti, focus tecnico...">' + esc(item.note || '') + '</textarea></label>';
+          list.appendChild(card);
+        });
+      }
+      async function updatePlanItem(date, index, patch, rerender = true) {
+        const plans = readAllLocalPlans();
+        const item = plans?.[date]?.items?.[index];
+        if (!item) return;
+        Object.assign(item, patch);
+        plans[date].savedAt = plans[date].savedAt || new Date().toISOString();
+        await writeMergedPlans(plans, true);
+        if (rerender) renderTrainingViewDirect();
+      }
+      function startTrainingExercise(date, index) {
+        const plans = readAllLocalPlans();
+        const item = plans?.[date]?.items?.[index];
+        const ex = exerciseByIdSafe(item?.exerciseId);
+        if (!ex || typeof startWorkoutScreen !== 'function') return;
+        try { selectedExercise = { ...ex, durationMin: Number(item.minutes || ex.durationMin || 1) }; } catch {}
+        startWorkoutScreen();
+        const dateInput = $id('sessionDateInput');
+        if (dateInput) dateInput.value = date;
+        resetTimerState();
+      }
+
+      const timerState = { elapsed:0, running:false, interval:null };
+      function timerText(seconds) {
+        const value = Math.max(0, Number(seconds || 0));
+        return String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0');
+      }
+      function syncTimerGlobals() {
+        try { timeRemaining = timerState.elapsed; } catch {}
+        try { running = timerState.running; } catch {}
+        try { timer = timerState.interval; } catch {}
+      }
+      function paintTimer() {
+        const display = $id('timerDisplay');
+        if (display) display.textContent = timerText(timerState.elapsed);
+        const phase = $id('phaseLabel');
+        if (phase) phase.textContent = timerState.running ? 'Timer attivo' : timerState.elapsed ? 'In pausa' : 'Pronto';
+        const start = $id('startPauseBtn');
+        if (start) start.textContent = timerState.running ? 'Pausa' : 'Start';
+        syncTimerGlobals();
+      }
+      function resetTimerState() {
+        if (timerState.interval) clearInterval(timerState.interval);
+        timerState.elapsed = 0;
+        timerState.running = false;
+        timerState.interval = null;
+        paintTimer();
+      }
+      function toggleTrueTimer() {
+        if (timerState.running) {
+          timerState.running = false;
+          if (timerState.interval) clearInterval(timerState.interval);
+          timerState.interval = null;
+          paintTimer();
+          return;
+        }
+        timerState.running = true;
+        timerState.interval = setInterval(() => {
+          if (!timerState.running) return;
+          timerState.elapsed += 1;
+          paintTimer();
+        }, 1000);
+        paintTimer();
+      }
+      function patchTimerFunctions() {
+        try { updateTimer = function() { paintTimer(); }; } catch {}
+        try {
+          if (typeof startWorkoutScreen === 'function' && !startWorkoutScreen.__gkAccountSourceTimer) {
+            const previous = startWorkoutScreen;
+            startWorkoutScreen = function() {
+              const result = previous.apply(this, arguments);
+              resetTimerState();
+              return result;
+            };
+            startWorkoutScreen.__gkAccountSourceTimer = true;
+          }
+        } catch {}
+        paintTimer();
       }
 
       function patchShowView() {
-        if (typeof showView !== "function" || showView.__gkHomeFilter) return;
+        if (typeof showView !== 'function' || showView.__gkAccountSource) return;
         const previous = showView;
         showView = function(view) {
           const result = previous.apply(this, arguments);
-          const screenTitle = document.getElementById("screenTitle");
-          const titleMap = { home: "Esercizi", calendar: "Calendario", training: "Allenamento", progress: "Progressi", workout: "Allenamento", detail: "Dettaglio", setup: "Setup", profile: "Profilo" };
-          if (screenTitle && titleMap[view]) screenTitle.textContent = titleMap[view];
-          if (view === "training") renderTrainingView();
-          setTimeout(runEnhancements, 80);
+          cleanCalendarUi();
+          patchTimerFunctions();
+          const title = $id('screenTitle');
+          const map = { home:'Esercizi', calendar:'Calendario', training:'Allenamento', progress:'Progressi', workout:'Allenamento', detail:'Dettaglio', setup:'Setup', profile:'Profilo' };
+          if (title && map[view]) title.textContent = map[view];
+          if (view === 'calendar') setTimeout(() => { ensureSaveButton(); hydratePlansFromAccount(); }, 160);
+          if (view === 'training') hydratePlansFromAccount().then(renderTrainingViewDirect);
           return result;
         };
-        showView.__gkHomeFilter = true;
+        showView.__gkAccountSource = true;
       }
 
-      function runEnhancements() {
-        patchNativeTimer();
-        patchShowView();
-        bindTopHome();
-        bindTrainingFilter();
-        cleanUi();
-        enhanceCalendarPlanner();
-        if (document.getElementById("trainingView")?.classList.contains("active")) renderTrainingView();
-      }
-
-      function bindTopHome() {
-        const btn = document.getElementById("homeTopBtn");
-        if (!btn || btn.dataset.bound === "1") return;
-        btn.dataset.bound = "1";
-        btn.addEventListener("click", (event) => {
-          event.preventDefault();
-          showLandingHome();
-        });
-        document.querySelectorAll("[data-quick-go]").forEach((button) => {
-          if (button.dataset.bound === "1") return;
-          button.dataset.bound = "1";
-          button.addEventListener("click", () => showView(button.dataset.quickGo));
-        });
-      }
-
-      document.addEventListener("click", (event) => {
-        const startButton = event.target.closest("[data-training-start]");
-        if (startButton) {
-          startTrainingExercise(startButton.dataset.planKey, startButton.dataset.planDate, Number(startButton.dataset.planIndex));
+      document.addEventListener('click', (event) => {
+        const target = event.target?.closest ? event.target : event.target?.parentElement;
+        const home = target?.closest?.('#homeTopBtn');
+        if (home) {
+          event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+          showRealHome();
           return;
         }
-        if (event.target.closest('[data-tab="home"],[data-tab="calendar"],[data-tab="training"],[data-tab="progress"],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#finishBtn,#saveCalendarPlanBtn,[data-quick-go]')) {
-          setTimeout(runEnhancements, 80);
-          setTimeout(runEnhancements, 350);
+        const startBtn = target?.closest?.('#startPauseBtn');
+        if (startBtn) {
+          event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+          toggleTrueTimer();
+          return;
         }
-      });
-
-      document.addEventListener("input", (event) => {
-        const note = event.target.closest("[data-training-note]");
-        if (note) updateTrainingNote(note.dataset.planKey, note.dataset.planDate, Number(note.dataset.planIndex), note.value);
-      });
-
-      document.addEventListener("change", (event) => {
-        if (event.target.closest("#dayPlanTime,#dayPlanTotal,.plan-item-minutes,#sessionDateInput,#physicalSaveDate,#trainingDateFilter")) {
-          setTimeout(runEnhancements, 80);
-          setTimeout(runEnhancements, 350);
+        const finishBtn = target?.closest?.('#finishBtn');
+        if (finishBtn) {
+          event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+          timerState.running = false;
+          if (timerState.interval) clearInterval(timerState.interval);
+          timerState.interval = null;
+          syncTimerGlobals();
+          try { if (selectedExercise) selectedExercise = { ...selectedExercise, durationMin: Math.max(1, Math.ceil(timerState.elapsed / 60)), actualSeconds: timerState.elapsed }; } catch {}
+          if (typeof finishWorkout === 'function') Promise.resolve(finishWorkout()).then(() => { renderTrainingViewDirect(); paintTimer(); });
+          return;
         }
-      });
+        const startTraining = target?.closest?.('[data-account-training-start]');
+        if (startTraining) {
+          event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+          startTrainingExercise(startTraining.dataset.planDate, Number(startTraining.dataset.planIndex));
+          return;
+        }
+        const save = target?.closest?.('#saveCalendarPlanBtn');
+        if (save) {
+          event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+          saveCalendarPlanToAccount();
+          return;
+        }
+        const quick = target?.closest?.('[data-quick-go]');
+        if (quick && typeof showView === 'function') {
+          event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+          showView(quick.dataset.quickGo);
+          return;
+        }
+        if (target?.closest?.('[data-tab="training"]')) setTimeout(() => hydratePlansFromAccount().then(renderTrainingViewDirect), 160);
+        if (target?.closest?.('[data-tab="calendar"],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove]')) {
+          setTimeout(() => { cleanCalendarUi(); ensureSaveButton(); }, 120);
+          setTimeout(() => { cleanCalendarUi(); ensureSaveButton(); }, 420);
+        }
+      }, true);
 
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => { bindTopHome(); runEnhancements(); });
-      } else {
-        bindTopHome();
-        runEnhancements();
+      document.addEventListener('change', (event) => {
+        const target = event.target;
+        if (target?.matches?.('#trainingDateFilter')) {
+          if (target.value) localStorage.setItem(FILTER_KEY, target.value); else localStorage.removeItem(FILTER_KEY);
+          renderTrainingViewDirect();
+          return;
+        }
+        if (target?.matches?.('#trainingResetFilterBtn')) return;
+        if (target?.matches?.('[data-training-done]')) {
+          updatePlanItem(target.dataset.planDate, Number(target.dataset.planIndex), { done:Boolean(target.checked) }, true);
+          return;
+        }
+        if (target?.matches?.('#dayPlanTime,#dayPlanTotal,.plan-item-minutes')) {
+          setTimeout(() => queueSync(readAllLocalPlans()), 700);
+        }
+      }, true);
+      document.addEventListener('input', (event) => {
+        const target = event.target;
+        if (target?.matches?.('[data-training-note]')) updatePlanItem(target.dataset.planDate, Number(target.dataset.planIndex), { note:target.value }, false);
+      }, true);
+      document.addEventListener('click', (event) => {
+        const reset = event.target?.closest?.('#trainingResetFilterBtn');
+        if (reset) {
+          event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+          localStorage.removeItem(FILTER_KEY);
+          const input = $id('trainingDateFilter');
+          if (input) input.value = '';
+          renderTrainingViewDirect();
+        }
+      }, true);
+
+      function boot() {
+        patchShowView();
+        patchTimerFunctions();
+        cleanCalendarUi();
+        ensureSaveButton();
+        hydratePlansFromAccount().then(renderTrainingViewDirect);
       }
-      [80, 250, 800, 1500].forEach((delay) => setTimeout(() => { bindTopHome(); runEnhancements(); }, delay));
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+      else boot();
+      [80, 250, 800, 1600, 2800].forEach((delay) => setTimeout(boot, delay));
     })();
   </script>
 </body>
