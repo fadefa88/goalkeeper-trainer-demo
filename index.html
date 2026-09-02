@@ -3,27 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#07110b" />
+  <meta name="theme-color" content="#020604" />
   <title>GK Trainer</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    .bottom-nav{grid-template-columns:repeat(5,1fr)!important}.small-note{margin-top:8px;font-size:12px}.auth-card,.calendar-card,.calendar-list-card,.progress-card{background:rgba(7,17,11,.9);border:1px solid var(--line);border-radius:25px;box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:18px}.calendar-list-card,.progress-card{margin-top:14px}.auth-card{padding:22px}.auth-actions,.backup-actions{display:grid;gap:10px;margin-top:16px}.auth-status,.backup-status{min-height:18px;margin-top:10px}.calendar-top{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:12px;text-align:center}.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.calendar-weekdays{margin-top:18px;color:var(--muted);font-size:11px;font-weight:900;text-align:center;text-transform:uppercase}.calendar-grid{margin-top:8px}.calendar-day{min-height:52px;border-radius:16px;padding:7px 5px;color:var(--text);background:rgba(255,255,255,.045);border:1px solid var(--line);display:grid;align-content:space-between;justify-items:center}.calendar-day.empty{opacity:.25;pointer-events:none}.calendar-day.today{border-color:rgba(32,224,108,.65)}.calendar-day.selected{color:#001b0a;background:var(--green);border-color:var(--green)}.calendar-day-number{font-size:13px;font-weight:900}.calendar-dot{width:7px;height:7px;border-radius:999px;background:var(--green);box-shadow:0 0 14px rgba(32,224,108,.5)}.calendar-day.selected .calendar-dot{background:#001b0a}.history-list.compact{margin-top:12px}.history-list.compact .history-card{box-shadow:none}.hidden-file{display:none}.cloud-pill{margin-top:12px;display:inline-block;color:#001b0a;background:var(--green);font-weight:900}.keeper-card{display:grid!important;grid-template-columns:1fr!important;gap:10px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035)}.keeper-main,.performance-main{display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:8px}.performance-tests{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.keeper-main input,.performance-tests input{font-size:16px!important}.performance-line{display:block;margin-top:4px;color:var(--muted);font-size:11px}.auth-card .form-grid{margin-top:0}.auth-logo{margin-bottom:18px}.auth-logo h2{font-size:28px}.progress-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.progress-kpi{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:12px}.progress-kpi span{display:block;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase}.progress-kpi strong{display:block;margin-top:6px;font-size:24px}.progress-kpi small{display:block;margin-top:4px;color:var(--muted);line-height:1.35}.monthly-chart{display:flex;align-items:flex-end;gap:10px;min-height:190px;margin-top:18px;padding:14px 6px 4px;overflow-x:auto}.month-column{min-width:58px;display:grid;grid-template-rows:1fr auto auto;gap:7px;text-align:center}.month-bar-wrap{height:120px;display:flex;align-items:flex-end;justify-content:center;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:5px}.month-bar{width:100%;min-height:8px;border-radius:12px 12px 8px 8px;background:linear-gradient(180deg,var(--green),#0e7a37);display:flex;align-items:flex-start;justify-content:center;color:#001b0a;font-size:11px;font-weight:900;padding-top:5px}.month-label{font-size:12px;font-weight:900}.month-sub{color:var(--muted);font-size:11px}.measure-grid,.quality-list{display:grid;gap:10px;margin-top:14px}.measure-card,.quality-item{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:13px}.metric-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.metric-tag{border:1px solid var(--line);border-radius:999px;padding:6px 9px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.04)}.quality-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.quality-score{min-width:54px;text-align:center;border-radius:14px;padding:8px 9px;color:#001b0a;background:var(--green);font-weight:900}.quality-meta{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.45}.no-data{margin-top:14px;padding:14px;border:1px dashed var(--line);border-radius:18px;color:var(--muted)}.landing-stats,.stats-grid,.coach-card{display:none!important}.section-header h3{display:none!important}.training-list{display:grid;gap:14px;margin-top:16px}.training-plan{display:grid;gap:12px;padding:14px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.04)}.training-plan-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.training-plan-head h3{margin:0}.training-items{display:grid;gap:10px}.training-item{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(7,17,11,.62)}.training-item-top{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px}.training-item h4{margin:0;font-size:15px}.training-item textarea{width:100%;min-height:70px;resize:vertical;border-radius:16px;padding:12px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);font:inherit}.training-empty{display:grid;gap:12px;padding:18px;border:1px dashed var(--line);border-radius:20px;color:var(--muted);line-height:1.45}.calendar-save-status{margin-top:8px}.planner-save-row{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}.planner-item [data-plan-start]{display:none!important}@media(max-width:390px){.bottom-nav{gap:5px}.nav-btn{font-size:10px;padding:11px 2px}.keeper-main,.performance-main,.performance-tests,.progress-kpis{grid-template-columns:1fr}.monthly-chart{gap:8px}.month-column{min-width:52px}.training-item-top,.training-plan-head{grid-template-columns:1fr;display:grid}}
-  </style>
+  <link rel="stylesheet" href="style.css?v=field-ui-v1" />
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <div><p class="eyebrow">GK Trainer</p><h1 id="screenTitle">Accesso</h1></div>
-      <button id="settingsBtn" class="icon-btn" title="Impostazioni">⚙</button>
+      <button id="homeTopBtn" class="icon-btn" type="button" title="Home" aria-label="Home">⌂</button>
+      <div class="app-brand">GK Trainer</div>
+      <button id="settingsBtn" class="icon-btn" type="button" title="Impostazioni" aria-label="Impostazioni">⚙</button>
     </header>
+
+    <div class="page-heading">
+      <p class="eyebrow">GK Trainer</p>
+      <h1 id="screenTitle">Accesso</h1>
+    </div>
 
     <main>
       <section id="authView" class="view active">
         <div class="auth-card">
           <div class="auth-logo">
-            <p class="eyebrow">GK Trainer</p>
-            <h2>Login</h2>
+            <p class="eyebrow">Accesso</p>
+            <h2>Entra nel tuo gruppo</h2>
           </div>
           <form id="authForm" class="form-grid">
             <label>Email
@@ -43,9 +46,9 @@
 
       <section id="setupView" class="view">
         <div class="setup-card">
-          <p class="eyebrow">Schermata iniziale</p>
+          <p class="eyebrow">Setup</p>
           <h2>Configura il gruppo portieri</h2>
-          <p class="muted">Al primo accesso bastano dati base: nome, altezza e peso. I test fisici sono nella sezione Motore.</p>
+          <p class="muted">Imposta gruppo, livello e durata sedute. I test fisici restano nella sezione Progressi.</p>
           <form id="setupForm" class="form-grid">
             <label>Numero portieri
               <select id="keepersCount"><option value="1">1 portiere</option><option value="2">2 portieri</option><option value="3" selected>3 portieri</option><option value="4">4 portieri</option><option value="5">5+ portieri</option></select>
@@ -91,7 +94,7 @@
         <div class="timer-card"><p id="workoutCategory" class="eyebrow"></p><h2 id="workoutName"></h2><div id="timerDisplay" class="timer">00:00</div><p id="phaseLabel" class="muted">Pronto</p><div class="button-row"><button id="startPauseBtn" class="primary-btn">Start</button><button id="finishBtn" class="dark-btn">Termina</button></div></div>
         <div class="stats-grid"><button class="stat-btn green" data-stat="saves"><strong id="savesCount">0</strong><span>Parate</span></button><button class="stat-btn red" data-stat="mistakes"><strong id="mistakesCount">0</strong><span>Errori</span></button><button class="stat-btn orange" data-stat="reactions"><strong id="reactionsCount">0</strong><span>Reazioni</span></button></div>
         <div class="keeper-selector-card"><p class="eyebrow">Portiere in lavoro</p><select id="activeKeeper"></select></div>
-        <div class="keeper-selector-card"><p class="eyebrow">Data sessione</p><input id="sessionDateInput" type="date" /><p class="muted small-note">La sessione verrà salvata nel database in questa data.</p></div>
+        <div class="keeper-selector-card"><p class="eyebrow">Data sessione</p><input id="sessionDateInput" type="date" /><p class="muted small-note">La sessione verrà salvata in questa data.</p></div>
         <div class="coach-card"><div><p class="eyebrow">Comando rapido</p><h3 id="cueText">—</h3><p class="muted">Comandi casuali per reattività e orientamento.</p></div><button id="cueBtn" class="ghost-btn">Comando</button></div>
       </section>
 
@@ -111,22 +114,22 @@
 
       <section id="progressView" class="view">
         <div class="progress-card">
-          <p class="eyebrow">Progressi</p>
-          <h2>Miglioramento mese per mese</h2>
-          <p class="muted">Indice qualità 0-100 calcolato da parate, reazioni ed errori salvati nelle sessioni.</p>
-          <div id="progressKpis" class="progress-kpis"></div>
-          <div id="monthlyChart" class="monthly-chart"></div>
+          <p class="eyebrow">Parte fisica</p>
+          <h2>Motore del portiere</h2>
+          <p class="muted">Inserisci la data e aggiorna le misure: ogni salvataggio crea uno storico confrontabile durante l’anno.</p>
+          <form id="performanceForm" class="form-grid">
+            <div id="performanceFields" class="measure-grid"></div>
+            <button class="primary-btn full" type="submit">Salva test fisici</button>
+          </form>
         </div>
         <div class="progress-card">
-          <p class="eyebrow">Qualità esercizi</p>
-          <h2>Esercizi più utili e aree da lavorare</h2>
-          <p class="muted">Aggregazione per esercizio: sedute, azioni registrate, minuti e qualità media.</p>
-          <div id="exerciseQualityList" class="quality-list"></div>
+          <p class="eyebrow">Miglioramenti fisici</p>
+          <h2>Andamento misure</h2>
+          <div id="keeperMeasures" class="measure-grid"></div>
         </div>
         <div class="progress-card">
           <p class="eyebrow">Storico</p>
           <h2>Sessioni salvate</h2>
-          <p class="muted">Lo storico ora è dentro Progressi, così lettura e analisi restano insieme.</p>
           <div id="historyList" class="history-list"></div>
         </div>
       </section>
@@ -135,17 +138,7 @@
         <div class="progress-card">
           <p class="eyebrow">Motore</p>
           <h2>Motore del portiere</h2>
-          <p class="muted">Gestisci qui balzi e test due pali. Il setup iniziale resta leggero.</p>
-          <form id="performanceForm" class="form-grid">
-            <div id="performanceFields" class="measure-grid"></div>
-            <button class="primary-btn full" type="submit">Salva test fisici</button>
-          </form>
-        </div>
-        <div class="progress-card">
-          <p class="eyebrow">Riepilogo</p>
-          <h2>Profilo fisico</h2>
-          <p class="muted">Vista rapida di altezza, peso, balzi e test due pali per ogni portiere.</p>
-          <div id="keeperMeasures" class="measure-grid"></div>
+          <form id="performanceFormLegacy" class="form-grid"><div id="performanceFieldsLegacy" class="measure-grid"></div></form>
         </div>
       </section>
 
@@ -157,9 +150,9 @@
     <nav id="bottomNav" class="bottom-nav hidden"><button data-tab="home" class="nav-btn active">Esercizi</button><button data-tab="calendar" class="nav-btn">Calendario</button><button data-tab="training" class="nav-btn">Allenamento</button><button data-tab="progress" class="nav-btn">Progressi</button><button data-tab="performance" class="nav-btn">Motore</button><button data-tab="profile" class="nav-btn">Profilo</button></nav>
   </div>
 
-  <script src="app.js?v=training-section-v1"></script>
-  <script src="cloudflare-client.js?v=training-section-v1"></script>
-  <script src="calendar-keepers.js?v=training-section-v1"></script>
+  <script src="app.js?v=field-ui-v1"></script>
+  <script src="cloudflare-client.js?v=field-ui-v1"></script>
+  <script src="calendar-keepers.js?v=field-ui-v1"></script>
   <script>
     (() => {
       const REMOVED_IDS = new Set(["attacchi-a-scelta","passo-lungo-passo-corto","finalizzazioni-marcatura-individuale","attacco-continuo","partita-situazioni","attacco-linea-finalizzo","bersaglio-mobile","5-contro-3-uscita","partita-9-contro-9","partita-7-contro-7"]);
@@ -180,9 +173,7 @@
       function pruneExercises() {
         try {
           if (!Array.isArray(exercises)) return;
-          for (let i = exercises.length - 1; i >= 0; i -= 1) {
-            if (isRemovedExercise(exercises[i])) exercises.splice(i, 1);
-          }
+          for (let i = exercises.length - 1; i >= 0; i -= 1) if (isRemovedExercise(exercises[i])) exercises.splice(i, 1);
         } catch {}
       }
 
@@ -208,12 +199,12 @@
             if (running && !timer) {
               timer = setInterval(() => {
                 if (!running) return;
-                timeRemaining += 1;
+                timeRemaining = Math.max(0, Number(timeRemaining || 0)) + 1;
                 updateTimer();
               }, 1000);
             }
           };
-          if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkTrainingTrueTimer) {
+          if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkFieldUiTimer) {
             const previousStart = startWorkoutScreen;
             startWorkoutScreen = function() {
               const result = previousStart.apply(this, arguments);
@@ -224,19 +215,19 @@
               const startBtn = document.getElementById("startPauseBtn");
               if (phase) phase.textContent = "Pronto";
               if (startBtn) startBtn.textContent = "Start";
-              cleanWorkoutAndSessions();
+              cleanUi();
               return result;
             };
-            startWorkoutScreen.__gkTrainingTrueTimer = true;
+            startWorkoutScreen.__gkFieldUiTimer = true;
           }
-          if (typeof finishWorkout === "function" && !finishWorkout.__gkTrainingTrueTimer) {
+          if (typeof finishWorkout === "function" && !finishWorkout.__gkFieldUiTimer) {
             const previousFinish = finishWorkout;
             finishWorkout = function() {
               const elapsedSeconds = Math.max(0, Number(typeof timeRemaining === "undefined" ? 0 : timeRemaining));
               if (selectedExercise) selectedExercise = Object.assign({}, selectedExercise, { durationMin: Math.max(1, Math.ceil(elapsedSeconds / 60)), actualSeconds: elapsedSeconds });
               return previousFinish.apply(this, arguments);
             };
-            finishWorkout.__gkTrainingTrueTimer = true;
+            finishWorkout.__gkFieldUiTimer = true;
           }
         } catch {}
       }
@@ -244,19 +235,9 @@
       function selectedCalendarDateKey() {
         return document.querySelector(".calendar-day.selected[data-date]")?.dataset?.date || todayKey();
       }
-
-      function planKeys() {
-        return Object.keys(localStorage).filter((key) => key.startsWith("gk_day_plans_"));
-      }
-
-      function readPlans(key) {
-        try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch { return {}; }
-      }
-
-      function writePlans(key, plans) {
-        localStorage.setItem(key, JSON.stringify(plans || {}));
-      }
-
+      function planKeys() { return Object.keys(localStorage).filter((key) => key.startsWith("gk_day_plans_")); }
+      function readPlans(key) { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch { return {}; } }
+      function writePlans(key, plans) { localStorage.setItem(key, JSON.stringify(plans || {})); }
       function activePlanKey(dateKey = selectedCalendarDateKey()) {
         const keys = planKeys();
         const exact = keys.find((key) => Object.prototype.hasOwnProperty.call(readPlans(key), dateKey));
@@ -284,24 +265,27 @@
         return future.length ? future : rows.slice(-1);
       }
 
-      function cleanWorkoutAndSessions() {
-        document.querySelectorAll(".stats-grid,.coach-card").forEach((element) => {
+      function cleanUi() {
+        pruneExercises();
+        document.querySelectorAll(".filters,.cloud-pill,.landing-stats,.stats-grid,.coach-card").forEach((element) => {
           element.style.display = "none";
           element.setAttribute("aria-hidden", "true");
         });
-        document.querySelectorAll(".planner-session-title .history-row").forEach((row) => {
-          Array.from(row.children).forEach((child) => {
-            const text = norm(child.textContent);
-            if (text.startsWith("parate:") || text.startsWith("errori:") || text.startsWith("reazioni:")) child.remove();
-          });
-        });
+        document.querySelectorAll(".planner-session-title").forEach((section) => section.remove());
+        document.querySelectorAll("#calendarView [data-plan-start]").forEach((button) => button.remove());
+        document.querySelectorAll(".section-header h3").forEach((title) => title.remove());
+        const summary = document.getElementById("profileSummaryText");
+        if (summary) summary.textContent = String(summary.textContent || "").replace(/\s*·\s*esercizi dal documento FIGC\.?/gi, "").replace(/esercizi dal documento FIGC\.?/gi, "").trim();
+        const title = document.getElementById("screenTitle");
+        if (document.getElementById("homeView")?.classList.contains("active") && title && /FIGC/i.test(title.textContent || "")) title.textContent = "Esercizi";
+        enhanceNavigation();
       }
 
       function enhanceNavigation() {
         const nav = document.getElementById("bottomNav");
         if (!nav) return;
         nav.querySelectorAll('[data-tab="performance"],[data-tab="profile"]').forEach((button) => button.remove());
-        nav.style.setProperty("grid-template-columns", "repeat(4,1fr)", "important");
+        nav.style.setProperty("grid-template-columns", "repeat(4,minmax(0,1fr))", "important");
       }
 
       function saveCurrentCalendarPlan() {
@@ -323,6 +307,7 @@
         const calendar = document.getElementById("calendarView");
         if (!calendar?.classList.contains("active")) return;
         calendar.querySelectorAll("[data-plan-start]").forEach((button) => button.remove());
+        calendar.querySelectorAll(".planner-session-title").forEach((section) => section.remove());
         const planner = calendar.querySelector(".planner-card");
         if (!planner || document.getElementById("saveCalendarPlanBtn")) return;
         const row = document.createElement("div");
@@ -380,37 +365,41 @@
           const time = row.plan.time || "orario non impostato";
           return `<div class="training-plan"><div class="training-plan-head"><div><p class="eyebrow">${rowIndex === 0 ? "Prossima seduta" : "Seduta salvata"}</p><h3>${dateLabel(row.date)}</h3><p class="muted small-note">${esc(time)} · ${row.plan.items.length} esercizi · ${total}' programmati</p></div><span class="pill">salvata</span></div><div class="training-items">${row.plan.items.map((item, index) => {
             const ex = exerciseLookup(item.exerciseId);
-            return `<div class="training-item"><div class="training-item-top"><div><p class="eyebrow">${esc(ex?.ambito || "Esercizio")} · ${Number(item.minutes || ex?.durationMin || 0)}'</p><h4>${esc(ex?.name || "Esercizio")}</h4></div><button class="primary-btn" type="button" data-training-start="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}">Avvia</button></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}" placeholder="Note per questo esercizio: varianti, focus tecnico, carico, osservazioni...">${esc(item.note || "")}</textarea></label></div>`;
+            return `<div class="training-item"><div class="training-item-top"><div><p class="eyebrow">${esc(ex?.ambito || "Esercizio")} · ${Number(item.minutes || ex?.durationMin || 0)}'</p><h4>${esc(ex?.name || "Esercizio")}</h4></div><button class="primary-btn" type="button" data-training-start="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}">Avvia</button></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}" placeholder="Note operative, varianti, focus tecnico...">${esc(item.note || "")}</textarea></label></div>`;
           }).join("")}</div></div>`;
         }).join("");
       }
 
-      function patchShowViewForTraining() {
-        if (typeof showView !== "function" || showView.__gkTrainingSection) return;
+      function patchShowView() {
+        if (typeof showView !== "function" || showView.__gkFieldUi) return;
         const previous = showView;
         showView = function(view) {
           const result = previous.apply(this, arguments);
-          enhanceNavigation();
-          pruneExercises();
-          if (view === "training") {
-            const screenTitle = document.getElementById("screenTitle");
-            if (screenTitle) screenTitle.textContent = "Allenamento";
-            renderTrainingView();
-          }
+          const screenTitle = document.getElementById("screenTitle");
+          const titleMap = { home: "Esercizi", calendar: "Calendario", training: "Allenamento", progress: "Progressi", workout: "Allenamento", detail: "Dettaglio", setup: "Setup", profile: "Profilo" };
+          if (screenTitle && titleMap[view]) screenTitle.textContent = titleMap[view];
+          if (view === "training") renderTrainingView();
           setTimeout(runEnhancements, 80);
           return result;
         };
-        showView.__gkTrainingSection = true;
+        showView.__gkFieldUi = true;
       }
 
       function runEnhancements() {
-        pruneExercises();
         patchNativeTimer();
-        patchShowViewForTraining();
-        enhanceNavigation();
-        cleanWorkoutAndSessions();
+        patchShowView();
+        cleanUi();
         enhanceCalendarPlanner();
         if (document.getElementById("trainingView")?.classList.contains("active")) renderTrainingView();
+      }
+
+      function bindTopHome() {
+        const btn = document.getElementById("homeTopBtn");
+        if (!btn || btn.dataset.bound === "1") return;
+        btn.dataset.bound = "1";
+        btn.addEventListener("click", () => {
+          if (typeof showView === "function") showView("home");
+        });
       }
 
       document.addEventListener("click", (event) => {
@@ -419,8 +408,8 @@
           startTrainingExercise(startButton.dataset.planKey, startButton.dataset.planDate, Number(startButton.dataset.planIndex));
           return;
         }
-        if (event.target.closest('[data-tab="calendar"],[data-tab="training"],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#finishBtn')) {
-          setTimeout(runEnhancements, 90);
+        if (event.target.closest('[data-tab="home"],[data-tab="calendar"],[data-tab="training"],[data-tab="progress"],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#finishBtn,#saveCalendarPlanBtn')) {
+          setTimeout(runEnhancements, 80);
           setTimeout(runEnhancements, 350);
         }
       });
@@ -431,15 +420,19 @@
       });
 
       document.addEventListener("change", (event) => {
-        if (event.target.closest("#dayPlanTime,#dayPlanTotal,.plan-item-minutes")) {
-          setTimeout(runEnhancements, 90);
+        if (event.target.closest("#dayPlanTime,#dayPlanTotal,.plan-item-minutes,#sessionDateInput,#physicalSaveDate")) {
+          setTimeout(runEnhancements, 80);
           setTimeout(runEnhancements, 350);
         }
       });
 
-      runEnhancements();
-      [80, 250, 800, 1500].forEach((delay) => setTimeout(runEnhancements, delay));
-      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", runEnhancements);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => { bindTopHome(); runEnhancements(); });
+      } else {
+        bindTopHome();
+        runEnhancements();
+      }
+      [80, 250, 800, 1500].forEach((delay) => setTimeout(() => { bindTopHome(); runEnhancements(); }, delay));
     })();
   </script>
 </body>
