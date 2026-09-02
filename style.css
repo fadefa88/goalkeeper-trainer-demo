@@ -568,3 +568,115 @@ button,
   .training-plan-head { grid-template-columns: minmax(0, 1fr); }
   .month-column { min-width: 52px; }
 }
+
+/* Calendar stability and save feedback v1 */
+#calendarView,
+#calendarView .calendar-list-card,
+#selectedDateSessions,
+#selectedDateSessions .planner-card,
+#dayPlanItems,
+#dayPlanItems .planner-item,
+#saveCalendarPlanBtn,
+#calendarSaveStatus {
+  overflow-anchor: none !important;
+}
+
+html:has(#calendarView.active) {
+  scroll-behavior: auto !important;
+}
+
+#calendarView .calendar-list-card {
+  min-height: 560px;
+}
+
+#selectedDateSessions .planner-card {
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+#dayPlanItems {
+  min-height: 92px;
+  transition: none !important;
+}
+
+#calendarView .planner-item,
+#calendarView .planner-card,
+#calendarView .planner-list,
+#calendarView .planner-summary,
+#calendarView .planner-actions {
+  transition: none !important;
+  animation: none !important;
+}
+
+#saveCalendarPlanBtn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 58px;
+  transition: transform .12s ease, box-shadow .18s ease, filter .18s ease !important;
+  box-shadow: 0 12px 28px rgba(32, 224, 108, .16), inset 0 1px 0 rgba(255,255,255,.26);
+}
+
+#saveCalendarPlanBtn::after {
+  content: "";
+  position: absolute;
+  inset: -40% auto -40% -35%;
+  width: 32%;
+  transform: skewX(-18deg) translateX(-140%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent);
+  opacity: 0;
+  z-index: -1;
+}
+
+#saveCalendarPlanBtn:active {
+  transform: scale(.985);
+  filter: brightness(1.07);
+}
+
+#saveCalendarPlanBtn:active::after,
+#saveCalendarPlanBtn:focus::after {
+  opacity: 1;
+  animation: saveShine .72s ease forwards;
+}
+
+#saveCalendarPlanBtn:focus {
+  animation: savePulse .9s ease both;
+}
+
+.calendar-save-status {
+  min-height: 42px;
+  margin-top: 0 !important;
+  padding: 11px 12px;
+  border-radius: 16px;
+  color: #d9ffe2 !important;
+  background: rgba(32,224,108,.09);
+  border: 1px solid rgba(32,224,108,.24);
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.calendar-save-status:not(:empty)::before {
+  content: "✓";
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 7px;
+  border-radius: 999px;
+  color: #001b0a;
+  background: var(--green);
+  font-size: 12px;
+  font-weight: 950;
+  vertical-align: -2px;
+}
+
+@keyframes saveShine {
+  0% { transform: skewX(-18deg) translateX(-140%); }
+  100% { transform: skewX(-18deg) translateX(520%); }
+}
+
+@keyframes savePulse {
+  0% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); }
+  45% { box-shadow: 0 0 0 5px rgba(32,224,108,.15), 0 18px 38px rgba(32,224,108,.22), inset 0 1px 0 rgba(255,255,255,.32); }
+  100% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); }
+}
