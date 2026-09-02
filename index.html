@@ -6,18 +6,41 @@
   <meta name="theme-color" content="#020604" />
   <title>GK Trainer</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css?v=field-ui-v1" />
+  <link rel="stylesheet" href="style.css?v=home-filter-v1" />
+  <style id="gkHomeFilterStyleV1">
+    .page-heading .eyebrow{display:none!important}
+    .hero-card::before,.exercise-card::before,.progress-card::before,.calendar-list-card::before,.training-plan::before{content:none!important;display:none!important}
+    #homeTopBtn.icon-btn::before,#settingsBtn.icon-btn::before,.topbar .icon-btn::before{content:none!important;display:none!important}
+    .topbar .icon-btn{display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;line-height:0!important;text-align:center!important}
+    .top-svg{width:23px;height:23px;display:block;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+    #settingsBtn .top-svg{width:22px;height:22px}
+    .landing-home{display:grid;gap:16px}
+    .landing-hero{min-height:360px;border-radius:30px;padding:22px;display:flex;align-items:flex-end;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(2,6,4,.06),rgba(2,6,4,.88) 74%),linear-gradient(120deg,rgba(32,224,108,.24),transparent 52%),url("gk-home-hero.png") center/cover no-repeat;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .landing-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 22% 12%,rgba(32,224,108,.18),transparent 28rem);pointer-events:none}
+    .landing-copy{position:relative;z-index:1;display:grid;gap:10px;max-width:360px}
+    .landing-copy h2{font-size:clamp(34px,8vw,46px);letter-spacing:-.07em;line-height:.98}
+    .landing-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+    .landing-placeholder{padding:18px;border:1px dashed var(--line);border-radius:24px;background:rgba(255,255,255,.035);color:var(--muted);line-height:1.45}
+    .training-filter{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin:16px 0 6px;align-items:end}
+    .training-filter label{margin:0}
+    .training-filter .ghost-btn{height:58px;white-space:nowrap}
+    .training-empty strong{color:var(--text)}
+    @media(max-width:430px){.landing-hero{min-height:330px;border-radius:28px}.landing-actions,.training-filter{grid-template-columns:1fr}.training-filter .ghost-btn{width:100%}}
+  </style>
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <button id="homeTopBtn" class="icon-btn" type="button" title="Home" aria-label="Home">⌂</button>
+      <button id="homeTopBtn" class="icon-btn" type="button" title="Home" aria-label="Home">
+        <svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5h5v5"/></svg>
+      </button>
       <div class="app-brand">GK Trainer</div>
-      <button id="settingsBtn" class="icon-btn" type="button" title="Impostazioni" aria-label="Impostazioni">⚙</button>
+      <button id="settingsBtn" class="icon-btn" type="button" title="Impostazioni" aria-label="Impostazioni">
+        <svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.04.04a2 2 0 0 1-2.83 2.83l-.04-.04A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.05a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.88.34l-.04.04a2 2 0 0 1-2.83-2.83l.04-.04A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.05A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.88l-.04-.04a2 2 0 0 1 2.83-2.83l.04.04A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.05a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.88-.34l.04-.04a2 2 0 0 1 2.83 2.83l-.04.04A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.05A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+      </button>
     </header>
 
     <div class="page-heading">
-      <p class="eyebrow">GK Trainer</p>
       <h1 id="screenTitle">Accesso</h1>
     </div>
 
@@ -74,6 +97,23 @@
         </div>
       </section>
 
+      <section id="landingView" class="view">
+        <div class="landing-home">
+          <div class="landing-hero">
+            <div class="landing-copy">
+              <p class="eyebrow">Home</p>
+              <h2>Campo pronto.</h2>
+              <p class="muted">Da qui riparti verso esercizi, calendario, sedute salvate e progressi. La homepage resta libera per i contenuti che aggiungerai dopo.</p>
+              <div class="landing-actions">
+                <button class="primary-btn full" type="button" data-quick-go="calendar">Calendario</button>
+                <button class="dark-btn full" type="button" data-quick-go="training">Allenamento</button>
+              </div>
+            </div>
+          </div>
+          <div class="landing-placeholder">Spazio homepage: qui potrai inserire riepiloghi, messaggi rapidi, prossima seduta, indicatori o contenuti personalizzati.</div>
+        </div>
+      </section>
+
       <section id="homeView" class="view">
         <div class="hero-card">
           <div>
@@ -108,6 +148,12 @@
           <p class="eyebrow">Allenamento</p>
           <h2 id="trainingTitle">Prossimo allenamento</h2>
           <p id="trainingSubtitle" class="muted">Salva una seduta dal calendario per ritrovarla qui pronta da avviare.</p>
+          <div class="training-filter">
+            <label>Filtra per data
+              <input id="trainingDateFilter" type="date" />
+            </label>
+            <button id="trainingResetFilterBtn" class="ghost-btn" type="button">Prossimo</button>
+          </div>
           <div id="trainingList" class="training-list"></div>
         </div>
       </section>
@@ -132,6 +178,9 @@
           <h2>Sessioni salvate</h2>
           <div id="historyList" class="history-list"></div>
         </div>
+        <div id="progressKpis" class="progress-kpis" hidden></div>
+        <div id="monthlyChart" class="monthly-chart" hidden></div>
+        <div id="exerciseQualityList" class="quality-list" hidden></div>
       </section>
 
       <section id="performanceView" class="view">
@@ -150,9 +199,9 @@
     <nav id="bottomNav" class="bottom-nav hidden"><button data-tab="home" class="nav-btn active">Esercizi</button><button data-tab="calendar" class="nav-btn">Calendario</button><button data-tab="training" class="nav-btn">Allenamento</button><button data-tab="progress" class="nav-btn">Progressi</button><button data-tab="performance" class="nav-btn">Motore</button><button data-tab="profile" class="nav-btn">Profilo</button></nav>
   </div>
 
-  <script src="app.js?v=field-ui-v1"></script>
-  <script src="cloudflare-client.js?v=field-ui-v1"></script>
-  <script src="calendar-keepers.js?v=field-ui-v1"></script>
+  <script src="app.js?v=home-filter-v1"></script>
+  <script src="cloudflare-client.js?v=home-filter-v1"></script>
+  <script src="calendar-keepers.js?v=home-filter-v1"></script>
   <script>
     (() => {
       const REMOVED_IDS = new Set(["attacchi-a-scelta","passo-lungo-passo-corto","finalizzazioni-marcatura-individuale","attacco-continuo","partita-situazioni","attacco-linea-finalizzo","bersaglio-mobile","5-contro-3-uscita","partita-9-contro-9","partita-7-contro-7"]);
@@ -164,6 +213,7 @@
       const dateLabel = (key) => parseDate(key).toLocaleDateString("it-IT", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
       const shortDateLabel = (key) => parseDate(key).toLocaleDateString("it-IT", { day: "2-digit", month: "short", year: "numeric" });
       const fmt = (seconds) => { const value = Math.max(0, Number(seconds || 0)); return `${String(Math.floor(value / 60)).padStart(2,"0")}:${String(value % 60).padStart(2,"0")}`; };
+      const TRAINING_FILTER_KEY = "gk_training_filter_date";
 
       function isRemovedExercise(exercise) {
         if (!exercise) return false;
@@ -204,7 +254,7 @@
               }, 1000);
             }
           };
-          if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkFieldUiTimer) {
+          if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkHomeFilterTimer) {
             const previousStart = startWorkoutScreen;
             startWorkoutScreen = function() {
               const result = previousStart.apply(this, arguments);
@@ -218,16 +268,16 @@
               cleanUi();
               return result;
             };
-            startWorkoutScreen.__gkFieldUiTimer = true;
+            startWorkoutScreen.__gkHomeFilterTimer = true;
           }
-          if (typeof finishWorkout === "function" && !finishWorkout.__gkFieldUiTimer) {
+          if (typeof finishWorkout === "function" && !finishWorkout.__gkHomeFilterTimer) {
             const previousFinish = finishWorkout;
             finishWorkout = function() {
               const elapsedSeconds = Math.max(0, Number(typeof timeRemaining === "undefined" ? 0 : timeRemaining));
               if (selectedExercise) selectedExercise = Object.assign({}, selectedExercise, { durationMin: Math.max(1, Math.ceil(elapsedSeconds / 60)), actualSeconds: elapsedSeconds });
               return previousFinish.apply(this, arguments);
             };
-            finishWorkout.__gkFieldUiTimer = true;
+            finishWorkout.__gkHomeFilterTimer = true;
           }
         } catch {}
       }
@@ -258,11 +308,22 @@
         return rows;
       }
 
-      function nextTrainingRows() {
-        const rows = savedPlanRows();
+      function currentTrainingFilter() {
+        return localStorage.getItem(TRAINING_FILTER_KEY) || "";
+      }
+
+      function nearestTrainingRow(rows = savedPlanRows()) {
+        if (!rows.length) return null;
         const today = todayKey();
-        const future = rows.filter((row) => row.date >= today);
-        return future.length ? future : rows.slice(-1);
+        return rows.find((row) => row.date >= today) || rows[rows.length - 1];
+      }
+
+      function trainingRowsToShow() {
+        const rows = savedPlanRows();
+        const filter = currentTrainingFilter();
+        if (filter) return rows.filter((row) => row.date === filter);
+        const next = nearestTrainingRow(rows);
+        return next ? [next] : [];
       }
 
       function cleanUi() {
@@ -276,8 +337,6 @@
         document.querySelectorAll(".section-header h3").forEach((title) => title.remove());
         const summary = document.getElementById("profileSummaryText");
         if (summary) summary.textContent = String(summary.textContent || "").replace(/\s*·\s*esercizi dal documento FIGC\.?/gi, "").replace(/esercizi dal documento FIGC\.?/gi, "").trim();
-        const title = document.getElementById("screenTitle");
-        if (document.getElementById("homeView")?.classList.contains("active") && title && /FIGC/i.test(title.textContent || "")) title.textContent = "Esercizi";
         enhanceNavigation();
       }
 
@@ -286,6 +345,16 @@
         if (!nav) return;
         nav.querySelectorAll('[data-tab="performance"],[data-tab="profile"]').forEach((button) => button.remove());
         nav.style.setProperty("grid-template-columns", "repeat(4,minmax(0,1fr))", "important");
+      }
+
+      function showLandingHome() {
+        document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+        document.getElementById("landingView")?.classList.add("active");
+        const title = document.getElementById("screenTitle");
+        if (title) title.textContent = "Home";
+        document.querySelectorAll(".nav-btn").forEach((btn) => btn.classList.remove("active"));
+        document.getElementById("bottomNav")?.classList.toggle("hidden", !localStorage.getItem("gk_profile") && !window.cloudProfile);
+        cleanUi();
       }
 
       function saveCurrentCalendarPlan() {
@@ -300,6 +369,7 @@
         plan.savedAt = new Date().toISOString();
         plans[date] = plan;
         writePlans(key, plans);
+        if (!currentTrainingFilter()) localStorage.removeItem(TRAINING_FILTER_KEY);
         return { ok: true, message: `Allenamento del ${shortDateLabel(date)} salvato.` };
       }
 
@@ -342,15 +412,51 @@
         if (dateInput) dateInput.value = date;
       }
 
+      function bindTrainingFilter() {
+        const input = document.getElementById("trainingDateFilter");
+        const reset = document.getElementById("trainingResetFilterBtn");
+        if (input && input.dataset.bound !== "1") {
+          input.dataset.bound = "1";
+          input.addEventListener("change", () => {
+            if (input.value) localStorage.setItem(TRAINING_FILTER_KEY, input.value);
+            else localStorage.removeItem(TRAINING_FILTER_KEY);
+            renderTrainingView();
+          });
+        }
+        if (reset && reset.dataset.bound !== "1") {
+          reset.dataset.bound = "1";
+          reset.addEventListener("click", () => {
+            localStorage.removeItem(TRAINING_FILTER_KEY);
+            if (input) input.value = "";
+            renderTrainingView();
+          });
+        }
+      }
+
       function renderTrainingView() {
         enhanceNavigation();
+        bindTrainingFilter();
         const list = document.getElementById("trainingList");
         const title = document.getElementById("trainingTitle");
         const subtitle = document.getElementById("trainingSubtitle");
+        const filterInput = document.getElementById("trainingDateFilter");
         if (!list || !title || !subtitle) return;
         pruneExercises();
-        const rows = nextTrainingRows();
+        const filter = currentTrainingFilter();
+        if (filterInput && filterInput.value !== filter) filterInput.value = filter;
+        const rows = trainingRowsToShow();
+        const hasAnySaved = savedPlanRows().length > 0;
         if (!rows.length) {
+          if (filter && hasAnySaved) {
+            title.textContent = `Allenamento del ${shortDateLabel(filter)}`;
+            subtitle.textContent = "In questa data non ci sono sedute salvate.";
+            list.innerHTML = `<div class="training-empty"><strong>Nessun allenamento salvato per questa data.</strong><span>Scegli un’altra data oppure torna alla prossima seduta disponibile.</span><button id="goNextTraining" class="primary-btn full" type="button">Mostra prossimo allenamento</button></div>`;
+            document.getElementById("goNextTraining")?.addEventListener("click", () => {
+              localStorage.removeItem(TRAINING_FILTER_KEY);
+              renderTrainingView();
+            });
+            return;
+          }
           title.textContent = "Nessun allenamento salvato";
           subtitle.textContent = "Prepara una seduta dal calendario, aggiungi gli esercizi e premi Salva allenamento.";
           list.innerHTML = `<div class="training-empty"><strong>Aggiungi gli esercizi per il prossimo allenamento.</strong><span>Apri il calendario, scegli il giorno, inserisci gli esercizi e salva la seduta. Poi la troverai qui con il pulsante Avvia.</span><button id="goCalendarFromTraining" class="primary-btn full" type="button">Vai al calendario</button></div>`;
@@ -358,12 +464,12 @@
           return;
         }
         const first = rows[0];
-        title.textContent = `Prossimo allenamento · ${shortDateLabel(first.date)}`;
-        subtitle.textContent = "Avvia gli esercizi programmati e aggiungi note operative per la seduta.";
+        title.textContent = filter ? `Allenamento · ${shortDateLabel(first.date)}` : `Prossimo allenamento · ${shortDateLabel(first.date)}`;
+        subtitle.textContent = filter ? "Seduta salvata per la data selezionata." : "Di default vedi la prossima seduta rispetto a oggi. Usa il filtro per aprire un’altra data.";
         list.innerHTML = rows.map((row, rowIndex) => {
           const total = row.plan.items.reduce((sum, item) => sum + Number(item.minutes || 0), 0);
           const time = row.plan.time || "orario non impostato";
-          return `<div class="training-plan"><div class="training-plan-head"><div><p class="eyebrow">${rowIndex === 0 ? "Prossima seduta" : "Seduta salvata"}</p><h3>${dateLabel(row.date)}</h3><p class="muted small-note">${esc(time)} · ${row.plan.items.length} esercizi · ${total}' programmati</p></div><span class="pill">salvata</span></div><div class="training-items">${row.plan.items.map((item, index) => {
+          return `<div class="training-plan"><div class="training-plan-head"><div><p class="eyebrow">${filter ? "Seduta filtrata" : rowIndex === 0 ? "Prossima seduta" : "Seduta salvata"}</p><h3>${dateLabel(row.date)}</h3><p class="muted small-note">${esc(time)} · ${row.plan.items.length} esercizi · ${total}' programmati</p></div><span class="pill">salvata</span></div><div class="training-items">${row.plan.items.map((item, index) => {
             const ex = exerciseLookup(item.exerciseId);
             return `<div class="training-item"><div class="training-item-top"><div><p class="eyebrow">${esc(ex?.ambito || "Esercizio")} · ${Number(item.minutes || ex?.durationMin || 0)}'</p><h4>${esc(ex?.name || "Esercizio")}</h4></div><button class="primary-btn" type="button" data-training-start="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}">Avvia</button></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-key="${esc(row.key)}" data-plan-date="${esc(row.date)}" data-plan-index="${index}" placeholder="Note operative, varianti, focus tecnico...">${esc(item.note || "")}</textarea></label></div>`;
           }).join("")}</div></div>`;
@@ -371,7 +477,7 @@
       }
 
       function patchShowView() {
-        if (typeof showView !== "function" || showView.__gkFieldUi) return;
+        if (typeof showView !== "function" || showView.__gkHomeFilter) return;
         const previous = showView;
         showView = function(view) {
           const result = previous.apply(this, arguments);
@@ -382,12 +488,14 @@
           setTimeout(runEnhancements, 80);
           return result;
         };
-        showView.__gkFieldUi = true;
+        showView.__gkHomeFilter = true;
       }
 
       function runEnhancements() {
         patchNativeTimer();
         patchShowView();
+        bindTopHome();
+        bindTrainingFilter();
         cleanUi();
         enhanceCalendarPlanner();
         if (document.getElementById("trainingView")?.classList.contains("active")) renderTrainingView();
@@ -397,8 +505,14 @@
         const btn = document.getElementById("homeTopBtn");
         if (!btn || btn.dataset.bound === "1") return;
         btn.dataset.bound = "1";
-        btn.addEventListener("click", () => {
-          if (typeof showView === "function") showView("home");
+        btn.addEventListener("click", (event) => {
+          event.preventDefault();
+          showLandingHome();
+        });
+        document.querySelectorAll("[data-quick-go]").forEach((button) => {
+          if (button.dataset.bound === "1") return;
+          button.dataset.bound = "1";
+          button.addEventListener("click", () => showView(button.dataset.quickGo));
         });
       }
 
@@ -408,7 +522,7 @@
           startTrainingExercise(startButton.dataset.planKey, startButton.dataset.planDate, Number(startButton.dataset.planIndex));
           return;
         }
-        if (event.target.closest('[data-tab="home"],[data-tab="calendar"],[data-tab="training"],[data-tab="progress"],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#finishBtn,#saveCalendarPlanBtn')) {
+        if (event.target.closest('[data-tab="home"],[data-tab="calendar"],[data-tab="training"],[data-tab="progress"],.calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#finishBtn,#saveCalendarPlanBtn,[data-quick-go]')) {
           setTimeout(runEnhancements, 80);
           setTimeout(runEnhancements, 350);
         }
@@ -420,7 +534,7 @@
       });
 
       document.addEventListener("change", (event) => {
-        if (event.target.closest("#dayPlanTime,#dayPlanTotal,.plan-item-minutes,#sessionDateInput,#physicalSaveDate")) {
+        if (event.target.closest("#dayPlanTime,#dayPlanTotal,.plan-item-minutes,#sessionDateInput,#physicalSaveDate,#trainingDateFilter")) {
           setTimeout(runEnhancements, 80);
           setTimeout(runEnhancements, 350);
         }
