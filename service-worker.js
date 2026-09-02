@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-minimal-workout-v2";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-minimal-workout-v3";
 const ASSETS = [
   "./",
   "./index.html",
