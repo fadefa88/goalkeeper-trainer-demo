@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-cloudflare-d1-minimal-workout-v3";
+const CACHE_NAME = "gk-trainer-cloudflare-d1-true-timer-v1";
 const ASSETS = [
   "./",
   "./index.html",
@@ -22,58 +22,81 @@ const COUNT_UP_TIMER_PATCH = String.raw`
     return String(minutes).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
   }
 
-  if (!window.__gkCountUpTimerCore) {
+  function setTimerToZero() {
+    try {
+      if (typeof timeRemaining !== "undefined") timeRemaining = 0;
+      if (typeof running !== "undefined") running = false;
+      if (typeof updateTimer === "function") updateTimer();
+      const display = document.getElementById("timerDisplay");
+      if (display) display.textContent = fmt(0);
+      const phase = document.getElementById("phaseLabel");
+      if (phase) phase.textContent = "Pronto";
+      const startBtn = document.getElementById("startPauseBtn");
+      if (startBtn) startBtn.textContent = "Start";
+    } catch {}
+  }
+
+  function patchCountUpTimer() {
     window.__gkCountUpTimerCore = true;
 
     updateTimer = function() {
       const display = document.getElementById("timerDisplay");
-      if (display) display.textContent = fmt(timeRemaining);
+      if (display) display.textContent = fmt(typeof timeRemaining === "undefined" ? 0 : timeRemaining);
     };
+    updateTimer.__gkCountUpTimerCore = true;
 
-    toggleTimer = function() {
-      running = !running;
-      const startBtn = document.getElementById("startPauseBtn");
-      const phase = document.getElementById("phaseLabel");
-      if (startBtn) startBtn.textContent = running ? "Pausa" : "Start";
-      if (phase) phase.textContent = running ? "Cronometro attivo" : "In pausa";
+    if (typeof toggleTimer === "function" && !toggleTimer.__gkCountUpTimerCore) {
+      toggleTimer = function() {
+        running = !running;
+        const startBtn = document.getElementById("startPauseBtn");
+        const phase = document.getElementById("phaseLabel");
+        if (startBtn) startBtn.textContent = running ? "Pausa" : "Start";
+        if (phase) phase.textContent = running ? "Timer attivo" : "In pausa";
 
-      if (running && !timer) {
-        timer = setInterval(() => {
-          if (!running) return;
-          timeRemaining += 1;
-          updateTimer();
-        }, 1000);
-      }
-    };
+        if (running && !timer) {
+          timer = setInterval(() => {
+            if (!running) return;
+            timeRemaining += 1;
+            updateTimer();
+          }, 1000);
+        }
+      };
+      toggleTimer.__gkCountUpTimerCore = true;
+    }
 
-    if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkCountUpStart) {
+    if (typeof startWorkoutScreen === "function" && !startWorkoutScreen.__gkCountUpTimerCore) {
       const previousStartWorkoutScreen = startWorkoutScreen;
       startWorkoutScreen = function() {
         const result = previousStartWorkoutScreen.apply(this, arguments);
-        timeRemaining = 0;
-        updateTimer();
-        const phase = document.getElementById("phaseLabel");
-        if (phase) phase.textContent = "Pronto";
+        setTimerToZero();
+        setTimeout(setTimerToZero, 60);
         return result;
       };
-      startWorkoutScreen.__gkCountUpStart = true;
+      startWorkoutScreen.__gkCountUpTimerCore = true;
+    }
+
+    if (typeof finishWorkout === "function" && !finishWorkout.__gkCountUpFinish) {
+      const previousFinishWorkout = finishWorkout;
+      finishWorkout = function() {
+        const elapsedSeconds = Math.max(0, Number(typeof timeRemaining === "undefined" ? 0 : timeRemaining));
+        if (selectedExercise) {
+          selectedExercise = Object.assign({}, selectedExercise, {
+            durationMin: Math.max(1, Math.ceil(elapsedSeconds / 60)),
+            actualSeconds: elapsedSeconds
+          });
+        }
+        return previousFinishWorkout.apply(this, arguments);
+      };
+      finishWorkout.__gkCountUpFinish = true;
     }
   }
 
-  if (typeof finishWorkout === "function" && !finishWorkout.__gkCountUpFinish) {
-    const previousFinishWorkout = finishWorkout;
-    finishWorkout = function() {
-      const elapsedSeconds = Math.max(0, Number(timeRemaining || 0));
-      if (selectedExercise) {
-        selectedExercise = {
-          ...selectedExercise,
-          durationMin: Math.max(1, Math.ceil(elapsedSeconds / 60)),
-          actualSeconds: elapsedSeconds
-        };
-      }
-      return previousFinishWorkout.apply(this, arguments);
-    };
-    finishWorkout.__gkCountUpFinish = true;
+  patchCountUpTimer();
+  [0, 80, 250, 700].forEach((delay) => setTimeout(patchCountUpTimer, delay));
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => { patchCountUpTimer(); setTimerToZero(); });
+  } else {
+    setTimerToZero();
   }
 })();
 `;
@@ -122,6 +145,7 @@ const EXERCISES_UI_PATCH = String.raw`
   }
 
   function applyExerciseCleanUi() {
+    window.__gkExercisesCleanUi = true;
     patchRenderProfileSummary();
     patchShowView();
     cleanExerciseTab();
@@ -230,10 +254,10 @@ const EXERCISE_CATALOGUE_PATCH = String.raw`
   }
 
   function removeDeletedPlannedItems() {
-    let changed = false;
     Object.keys(localStorage).forEach((key) => {
       if (!key.startsWith("gk_day_plans_")) return;
       try {
+        let changed = false;
         const plans = JSON.parse(localStorage.getItem(key) || "{}");
         Object.keys(plans).forEach((dateKey) => {
           const items = Array.isArray(plans[dateKey]?.items) ? plans[dateKey].items : [];
@@ -252,6 +276,7 @@ const EXERCISE_CATALOGUE_PATCH = String.raw`
   }
 
   function applyPrunedCatalogue() {
+    window.__gkPrunedCatalogue = true;
     pruneExercisesArray();
     patchCatalogueFunctions();
     removeDeletedPlannedItems();
@@ -261,10 +286,10 @@ const EXERCISE_CATALOGUE_PATCH = String.raw`
     }
   }
 
-  if (!window.__gkPrunedCatalogue) {
-    window.__gkPrunedCatalogue = true;
-    applyPrunedCatalogue();
-    [0, 80, 250, 700].forEach((delay) => setTimeout(applyPrunedCatalogue, delay));
+  applyPrunedCatalogue();
+  [0, 80, 250, 700].forEach((delay) => setTimeout(applyPrunedCatalogue, delay));
+  if (!window.__gkPrunedCatalogueListeners) {
+    window.__gkPrunedCatalogueListeners = true;
     document.addEventListener("DOMContentLoaded", () => {
       applyPrunedCatalogue();
       setTimeout(applyPrunedCatalogue, 250);
@@ -289,15 +314,25 @@ const WORKOUT_UI_PATCH = String.raw`
     if (!document.getElementById("cueText") || !document.getElementById("cueBtn")) {
       const cueFallback = document.createElement("div");
       cueFallback.hidden = true;
-      cueFallback.innerHTML = `<h3 id="cueText">—</h3><button id="cueBtn" type="button">Comando</button>`;
+      cueFallback.innerHTML = '<h3 id="cueText">—</h3><button id="cueBtn" type="button">Comando</button>';
       target.appendChild(cueFallback);
     }
     if (!document.getElementById("savesCount") || !document.getElementById("mistakesCount") || !document.getElementById("reactionsCount")) {
       const statsFallback = document.createElement("div");
       statsFallback.hidden = true;
-      statsFallback.innerHTML = `<span id="savesCount">0</span><span id="mistakesCount">0</span><span id="reactionsCount">0</span>`;
+      statsFallback.innerHTML = '<span id="savesCount">0</span><span id="mistakesCount">0</span><span id="reactionsCount">0</span>';
       target.appendChild(statsFallback);
     }
+  }
+
+  function cleanCompletedSessionStats() {
+    const scope = document.getElementById("calendarView") || document;
+    scope.querySelectorAll(".planner-session-title .history-row").forEach((row) => {
+      Array.from(row.children).forEach((child) => {
+        const text = String(child.textContent || "").trim().toLowerCase();
+        if (text.startsWith("parate:") || text.startsWith("errori:") || text.startsWith("reazioni:")) child.remove();
+      });
+    });
   }
 
   function cleanMinimalWorkoutUi() {
@@ -311,6 +346,7 @@ const WORKOUT_UI_PATCH = String.raw`
     document.querySelectorAll(".section-header h3").forEach((title) => {
       if (String(title.textContent || "").trim().toLowerCase() === "proposte pratiche dal documento") title.remove();
     });
+    cleanCompletedSessionStats();
   }
 
   function patchWorkoutCore() {
@@ -340,7 +376,10 @@ const WORKOUT_UI_PATCH = String.raw`
         ensureWorkoutCompatNodes();
         const result = previousStartWorkoutScreen.apply(this, arguments);
         if (typeof timeRemaining !== "undefined") timeRemaining = 0;
+        if (typeof running !== "undefined") running = false;
         if (typeof updateTimer === "function") updateTimer();
+        const display = document.getElementById("timerDisplay");
+        if (display) display.textContent = "00:00";
         cleanMinimalWorkoutUi();
         return result;
       };
@@ -353,26 +392,44 @@ const WORKOUT_UI_PATCH = String.raw`
         const result = previousShowView.apply(this, arguments);
         cleanMinimalWorkoutUi();
         setTimeout(cleanMinimalWorkoutUi, 80);
+        setTimeout(cleanCompletedSessionStats, 250);
         return result;
       };
       showView.__gkMinimalWorkoutUi = true;
     }
   }
 
+  function scheduleClean() {
+    cleanMinimalWorkoutUi();
+    setTimeout(cleanMinimalWorkoutUi, 80);
+    setTimeout(cleanCompletedSessionStats, 250);
+  }
+
   function applyMinimalWorkoutUi() {
+    window.__gkMinimalWorkoutUi = true;
     ensureMinimalWorkoutStyle();
     ensureWorkoutCompatNodes();
     patchWorkoutCore();
     cleanMinimalWorkoutUi();
   }
 
-  if (!window.__gkMinimalWorkoutUi) {
-    window.__gkMinimalWorkoutUi = true;
-    applyMinimalWorkoutUi();
-    [0, 80, 250, 700].forEach((delay) => setTimeout(applyMinimalWorkoutUi, delay));
+  applyMinimalWorkoutUi();
+  [0, 80, 250, 700].forEach((delay) => setTimeout(applyMinimalWorkoutUi, delay));
+  if (!window.__gkMinimalWorkoutUiListeners) {
+    window.__gkMinimalWorkoutUiListeners = true;
     document.addEventListener("DOMContentLoaded", () => {
       applyMinimalWorkoutUi();
-      setTimeout(applyMinimalWorkoutUi, 250);
+      setTimeout(scheduleClean, 250);
+    });
+    document.addEventListener("click", (event) => {
+      if (event.target.closest("[data-tab='calendar']") || event.target.closest(".calendar-day[data-date]") || event.target.closest("#prevMonthBtn") || event.target.closest("#nextMonthBtn") || event.target.closest("#addPlanExerciseBtn") || event.target.closest("#autoPlanBtn") || event.target.closest("#clearPlanBtn") || event.target.closest("[data-plan-remove]") || event.target.closest("[data-plan-start]") || event.target.closest("#finishBtn")) {
+        setTimeout(scheduleClean, 80);
+      }
+    });
+    document.addEventListener("change", (event) => {
+      if (event.target.closest("#dayPlanTime") || event.target.closest("#dayPlanTotal") || event.target.closest(".plan-item-minutes")) {
+        setTimeout(scheduleClean, 80);
+      }
     });
   }
 })();
@@ -401,10 +458,10 @@ self.addEventListener("fetch", event => {
         .then(async response => {
           const source = await response.text();
           let patched = source;
-          if (!patched.includes("__gkCountUpTimerCore")) patched += `\n${COUNT_UP_TIMER_PATCH}`;
-          if (!patched.includes("__gkExercisesCleanUi")) patched += `\n${EXERCISES_UI_PATCH}`;
-          if (!patched.includes("__gkPrunedCatalogue")) patched += `\n${EXERCISE_CATALOGUE_PATCH}`;
-          if (!patched.includes("__gkMinimalWorkoutUi")) patched += `\n${WORKOUT_UI_PATCH}`;
+          if (!patched.includes("__gkCountUpTimerCore")) patched += "\n" + COUNT_UP_TIMER_PATCH;
+          if (!patched.includes("__gkExercisesCleanUi")) patched += "\n" + EXERCISES_UI_PATCH;
+          if (!patched.includes("__gkPrunedCatalogue")) patched += "\n" + EXERCISE_CATALOGUE_PATCH;
+          if (!patched.includes("__gkMinimalWorkoutUi")) patched += "\n" + WORKOUT_UI_PATCH;
           return new Response(patched, {
             status: 200,
             headers: {
