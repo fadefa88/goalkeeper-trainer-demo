@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-first-team-calendar-v1";
+const CACHE_NAME = "gk-trainer-first-team-calendar-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -39,7 +39,20 @@ self.addEventListener("fetch", event => {
     url.pathname.endsWith("/calendar-keepers.js");
 
   if (isFresh) {
-    event.respondWith(fetch(event.request, { cache: "no-store" }).catch(() => caches.match(event.request)));
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" })
+        .then(response => {
+          if (!response || !response.ok) return response;
+          const headers = new Headers(response.headers);
+          headers.set("Cache-Control", "no-store, max-age=0, must-revalidate");
+          return new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers
+          });
+        })
+        .catch(() => caches.match(event.request))
+    );
     return;
   }
 
