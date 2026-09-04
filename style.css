@@ -88,19 +88,8 @@ h3 { font-size: 18px; line-height: 1.15; letter-spacing: -.035em; }
   text-transform: uppercase;
 }
 
-.page-heading {
-  margin: 2px 0 22px;
-}
-
-.eyebrow {
-  color: var(--green);
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: .22em;
-  font-weight: 950;
-  margin-bottom: 8px;
-}
-
+.page-heading { margin: 2px 0 22px; }
+.eyebrow { color: var(--green); text-transform: uppercase; font-size: 11px; letter-spacing: .22em; font-weight: 950; margin-bottom: 8px; }
 .muted { color: var(--muted); line-height: 1.45; }
 .small-note { margin-top: 8px; font-size: 12px; }
 .view { display: none; }
@@ -149,7 +138,6 @@ h3 { font-size: 18px; line-height: 1.15; letter-spacing: -.035em; }
 
 .calendar-list-card,
 .progress-card { margin-top: 14px; }
-
 .auth-logo { margin-bottom: 18px; }
 .auth-logo h2 { font-size: 30px; }
 .auth-actions,
@@ -159,14 +147,7 @@ h3 { font-size: 18px; line-height: 1.15; letter-spacing: -.035em; }
 .hidden-file { display: none; }
 .form-grid { display: grid; gap: 14px; margin-top: 20px; }
 
-label {
-  display: grid;
-  gap: 8px;
-  color: #d9ffe2;
-  font-size: 13px;
-  font-weight: 850;
-}
-
+label { display: grid; gap: 8px; color: #d9ffe2; font-size: 13px; font-weight: 850; }
 select,
 input,
 textarea {
@@ -184,13 +165,7 @@ textarea {
   box-sizing: border-box;
 }
 
-input[type="date"],
-input[type="time"],
-input[type="number"],
-#dayPlanTime,
-#dayPlanTotal,
-#sessionDateInput,
-#physicalSaveDate {
+input[type="date"], input[type="time"], input[type="number"], #dayPlanTime, #dayPlanTotal, #sessionDateInput, #physicalSaveDate {
   display: block;
   width: 100% !important;
   max-width: 100% !important;
@@ -204,21 +179,13 @@ input[type="number"],
 
 select:focus,
 input:focus,
-textarea:focus {
-  border-color: rgba(32,224,108,.74);
-  box-shadow: 0 0 0 4px rgba(32,224,108,.10);
-}
+textarea:focus { border-color: rgba(32,224,108,.74); box-shadow: 0 0 0 4px rgba(32,224,108,.10); }
 
 .primary-btn,
 .dark-btn,
 .ghost-btn,
 .danger-btn,
-.icon-btn {
-  padding: 14px 16px;
-  border-radius: 18px;
-  font-weight: 950;
-}
-
+.icon-btn { padding: 14px 16px; border-radius: 18px; font-weight: 950; }
 .primary-btn { color: #001b0a; background: linear-gradient(180deg, #35f57d, var(--green)); }
 .dark-btn { color: var(--text); background: #010302; border: 1px solid var(--line); }
 .ghost-btn,
@@ -226,73 +193,21 @@ textarea:focus {
 .danger-btn { color: #fff; background: rgba(239,68,68,.2); border: 1px solid rgba(239,68,68,.35); }
 .full { width: 100%; }
 
-.icon-btn {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  min-height: 48px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  line-height: 1;
-  font-size: 22px;
-  border-radius: 18px;
-}
-
+.icon-btn { width: 48px; height: 48px; min-width: 48px; min-height: 48px; display: grid; place-items: center; padding: 0; line-height: 1; font-size: 22px; border-radius: 18px; }
 #settingsBtn.icon-btn,
-.topbar .icon-btn {
-  font-size: 0;
-}
-
+.topbar .icon-btn { font-size: 0; }
 #settingsBtn.icon-btn::before,
-.topbar .icon-btn[title="Impostazioni"]::before {
-  content: "⚙";
-  font-size: 23px;
-  line-height: 1;
-  transform: translateY(-1px);
-}
-
+.topbar .icon-btn[title="Impostazioni"]::before { content: "⚙"; font-size: 23px; line-height: 1; transform: translateY(-1px); }
 #homeTopBtn.icon-btn::before,
-.topbar .icon-btn[title="Home"]::before {
-  content: "⌂";
-  font-size: 25px;
-  line-height: 1;
-  transform: translateY(-1px);
-}
+.topbar .icon-btn[title="Home"]::before { content: "⌂"; font-size: 25px; line-height: 1; transform: translateY(-1px); }
 
-.hero-card {
-  padding: 22px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 88px;
-  gap: 18px;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
+.hero-card { padding: 22px; display: grid; grid-template-columns: minmax(0, 1fr) 88px; gap: 18px; align-items: center; position: relative; overflow: hidden; }
 .hero-card::before,
 .exercise-card::before,
 .progress-card::before,
 .calendar-list-card::before,
-.training-plan::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 4px;
-  background: linear-gradient(180deg, rgba(32,224,108,.95), rgba(32,224,108,.05));
-  opacity: .8;
-}
-
-.score-ring {
-  min-width: 82px;
-  width: 82px;
-  height: 82px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  border: 2px solid rgba(32,224,108,.58);
-  background: rgba(32,224,108,.11);
-}
+.training-plan::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: linear-gradient(180deg, rgba(32,224,108,.95), rgba(32,224,108,.05)); opacity: .8; }
+.score-ring { min-width: 82px; width: 82px; height: 82px; border-radius: 999px; display: grid; place-items: center; border: 2px solid rgba(32,224,108,.58); background: rgba(32,224,108,.11); }
 .score-ring span { font-size: 30px; font-weight: 950; line-height: 1; }
 .score-ring small { display: block; color: var(--muted); font-size: 11px; margin-top: -20px; }
 
@@ -305,62 +220,24 @@ textarea:focus {
 #bottomNav [data-tab="performance"],
 #bottomNav [data-tab="profile"],
 .planner-session-title,
-#calendarView [data-plan-start] {
-  display: none !important;
-}
+#calendarView [data-plan-start] { display: none !important; }
 
-.section-header {
-  margin: 20px 0 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
+.section-header { margin: 20px 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .filter-btn,
-.pill {
-  white-space: nowrap;
-  font-size: 12px;
-  padding: 8px 11px;
-  border-radius: 999px;
-  color: var(--muted);
-  background: rgba(255,255,255,.06);
-  border: 1px solid var(--line);
-}
-
+.pill { white-space: nowrap; font-size: 12px; padding: 8px 11px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.06); border: 1px solid var(--line); }
 .exercise-list,
 .history-list,
 .measure-grid,
 .quality-list,
 .training-list { display: grid; gap: 13px; margin-top: 14px; }
-
-.exercise-card {
-  width: 100%;
-  color: var(--text);
-  text-align: left;
-  padding: 18px 18px 18px 20px;
-  position: relative;
-  transition: transform .15s ease, border-color .15s ease, background .15s ease;
-}
+.exercise-card { width: 100%; color: var(--text); text-align: left; padding: 18px 18px 18px 20px; position: relative; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
 .exercise-card:hover { transform: translateY(-2px); border-color: rgba(32,224,108,.5); }
 .exercise-card h3 { font-size: 21px; margin-bottom: 8px; }
 .exercise-meta { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
 .source-note { margin-top: 12px; color: #cdfbd6; font-size: 12px; opacity: .84; }
 
-.back-btn {
-  color: var(--text);
-  background: transparent;
-  margin-bottom: 18px;
-  padding: 8px 0;
-  font-size: 18px;
-}
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
-  margin: 16px 0;
-}
+.back-btn { color: var(--text); background: transparent; margin-bottom: 18px; padding: 8px 0; font-size: 18px; }
+.detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin: 16px 0; }
 .mini-metric { padding: 12px; }
 .mini-metric strong { display: block; color: var(--green); margin-bottom: 3px; overflow-wrap: anywhere; }
 .points { display: grid; gap: 10px; margin: 14px 0 22px; }
@@ -369,39 +246,16 @@ textarea:focus {
 .detail-block h3 { margin-bottom: 8px; }
 
 .timer-card { text-align: center; }
-.timer {
-  font-size: clamp(74px, 21vw, 104px);
-  font-weight: 950;
-  letter-spacing: -.09em;
-  margin: 18px 0 8px;
-  color: var(--green);
-  text-shadow: 0 0 42px rgba(32,224,108,.22);
-}
+.timer { font-size: clamp(74px, 21vw, 104px); font-weight: 950; letter-spacing: -.09em; margin: 18px 0 8px; color: var(--green); text-shadow: 0 0 42px rgba(32,224,108,.22); }
 .button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
 .keeper-selector-card { margin-bottom: 16px; }
 
-.calendar-top {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
-  align-items: center;
-  gap: 12px;
-  text-align: center;
-}
+.calendar-top { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; gap: 12px; text-align: center; }
 .calendar-weekdays,
 .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 7px; }
 .calendar-weekdays { margin-top: 18px; color: var(--muted); font-size: 11px; font-weight: 900; text-align: center; text-transform: uppercase; }
 .calendar-grid { margin-top: 8px; }
-.calendar-day {
-  min-height: 52px;
-  border-radius: 16px;
-  padding: 7px 5px;
-  color: var(--text);
-  background: rgba(255,255,255,.045);
-  border: 1px solid var(--line);
-  display: grid;
-  align-content: space-between;
-  justify-items: center;
-}
+.calendar-day { min-height: 52px; border-radius: 16px; padding: 7px 5px; color: var(--text); background: rgba(255,255,255,.045); border: 1px solid var(--line); display: grid; align-content: space-between; justify-items: center; }
 .calendar-day.empty { opacity: .25; pointer-events: none; }
 .calendar-day.today { border-color: rgba(32,224,108,.65); }
 .calendar-day.selected { color: #001b0a; background: var(--green); border-color: var(--green); }
@@ -497,22 +351,7 @@ textarea:focus {
   -webkit-backdrop-filter: blur(22px) saturate(1.25);
 }
 .bottom-nav.hidden { display: none !important; }
-.nav-btn {
-  min-width: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  color: var(--muted);
-  background: transparent;
-  border-radius: 18px;
-  padding: 13px 2px !important;
-  font-size: clamp(10px, 2.75vw, 12px) !important;
-  line-height: 1.05;
-  letter-spacing: -.055em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: center;
-  font-weight: 950;
-}
+.nav-btn { min-width: 0 !important; width: 100% !important; max-width: 100% !important; color: var(--muted); background: transparent; border-radius: 18px; padding: 13px 2px !important; font-size: clamp(10px, 2.75vw, 12px) !important; line-height: 1.05; letter-spacing: -.055em; white-space: nowrap; overflow: hidden; text-align: center; font-weight: 950; }
 .nav-btn[data-tab="training"] { font-size: clamp(9.4px, 2.45vw, 11px) !important; }
 .nav-btn.active { color: #001b0a; background: var(--green); }
 
@@ -527,29 +366,11 @@ button,
 .filter-btn,
 .calendar-day,
 .exercise-card,
-.back-btn {
-  touch-action: manipulation;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
+.back-btn { touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
 
 @media (min-width: 520px) {
-  .topbar {
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(100%, 490px);
-    border-left: 1px solid rgba(213,255,222,.08);
-    border-right: 1px solid rgba(213,255,222,.08);
-    border-radius: 0 0 24px 24px;
-  }
-  .bottom-nav {
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-    width: min(100%, 490px) !important;
-    border-radius: 26px 26px 0 0;
-  }
+  .topbar { left: 50%; transform: translateX(-50%); width: min(100%, 490px); border-left: 1px solid rgba(213,255,222,.08); border-right: 1px solid rgba(213,255,222,.08); border-radius: 0 0 24px 24px; }
+  .bottom-nav { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; width: min(100%, 490px) !important; border-radius: 26px 26px 0 0; }
 }
 
 @media (max-width: 430px) {
@@ -577,109 +398,26 @@ button,
 #dayPlanItems,
 #dayPlanItems .planner-item,
 #saveCalendarPlanBtn,
-#calendarSaveStatus {
-  overflow-anchor: none !important;
-}
-
-html:has(#calendarView.active) {
-  scroll-behavior: auto !important;
-}
-
-#calendarView .calendar-list-card {
-  min-height: 560px;
-}
-
-#selectedDateSessions .planner-card {
-  contain: layout style;
-  transform: translateZ(0);
-}
-
-#dayPlanItems {
-  min-height: 92px;
-  transition: none !important;
-}
-
+#calendarSaveStatus { overflow-anchor: none !important; }
+html:has(#calendarView.active) { scroll-behavior: auto !important; }
+#calendarView .calendar-list-card { min-height: 560px; }
+#selectedDateSessions .planner-card { contain: layout style; transform: translateZ(0); }
+#dayPlanItems { min-height: 92px; transition: none !important; }
 #calendarView .planner-item,
 #calendarView .planner-card,
 #calendarView .planner-list,
 #calendarView .planner-summary,
-#calendarView .planner-actions {
-  transition: none !important;
-  animation: none !important;
-}
-
-#saveCalendarPlanBtn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  min-height: 58px;
-  transition: transform .12s ease, box-shadow .18s ease, filter .18s ease !important;
-  box-shadow: 0 12px 28px rgba(32, 224, 108, .16), inset 0 1px 0 rgba(255,255,255,.26);
-}
-
-#saveCalendarPlanBtn::after {
-  content: "";
-  position: absolute;
-  inset: -40% auto -40% -35%;
-  width: 32%;
-  transform: skewX(-18deg) translateX(-140%);
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent);
-  opacity: 0;
-  z-index: -1;
-}
-
-#saveCalendarPlanBtn:active {
-  transform: scale(.985);
-  filter: brightness(1.07);
-}
-
+#calendarView .planner-actions { transition: none !important; animation: none !important; }
+#saveCalendarPlanBtn { position: relative; overflow: hidden; isolation: isolate; min-height: 58px; transition: transform .12s ease, box-shadow .18s ease, filter .18s ease !important; box-shadow: 0 12px 28px rgba(32, 224, 108, .16), inset 0 1px 0 rgba(255,255,255,.26); }
+#saveCalendarPlanBtn::after { content: ""; position: absolute; inset: -40% auto -40% -35%; width: 32%; transform: skewX(-18deg) translateX(-140%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent); opacity: 0; z-index: -1; }
+#saveCalendarPlanBtn:active { transform: scale(.985); filter: brightness(1.07); }
 #saveCalendarPlanBtn:active::after,
-#saveCalendarPlanBtn:focus::after {
-  opacity: 1;
-  animation: saveShine .72s ease forwards;
-}
-
-#saveCalendarPlanBtn:focus {
-  animation: savePulse .9s ease both;
-}
-
-.calendar-save-status {
-  min-height: 42px;
-  margin-top: 0 !important;
-  padding: 11px 12px;
-  border-radius: 16px;
-  color: #d9ffe2 !important;
-  background: rgba(32,224,108,.09);
-  border: 1px solid rgba(32,224,108,.24);
-  font-weight: 850;
-  line-height: 1.35;
-}
-
-.calendar-save-status:not(:empty)::before {
-  content: "✓";
-  display: inline-grid;
-  place-items: center;
-  width: 18px;
-  height: 18px;
-  margin-right: 7px;
-  border-radius: 999px;
-  color: #001b0a;
-  background: var(--green);
-  font-size: 12px;
-  font-weight: 950;
-  vertical-align: -2px;
-}
-
-@keyframes saveShine {
-  0% { transform: skewX(-18deg) translateX(-140%); }
-  100% { transform: skewX(-18deg) translateX(520%); }
-}
-
-@keyframes savePulse {
-  0% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); }
-  45% { box-shadow: 0 0 0 5px rgba(32,224,108,.15), 0 18px 38px rgba(32,224,108,.22), inset 0 1px 0 rgba(255,255,255,.32); }
-  100% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); }
-}
+#saveCalendarPlanBtn:focus::after { opacity: 1; animation: saveShine .72s ease forwards; }
+#saveCalendarPlanBtn:focus { animation: savePulse .9s ease both; }
+.calendar-save-status { min-height: 42px; margin-top: 0 !important; padding: 11px 12px; border-radius: 16px; color: #d9ffe2 !important; background: rgba(32,224,108,.09); border: 1px solid rgba(32,224,108,.24); font-weight: 850; line-height: 1.35; }
+.calendar-save-status:not(:empty)::before { content: "✓"; display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 7px; border-radius: 999px; color: #001b0a; background: var(--green); font-size: 12px; font-weight: 950; vertical-align: -2px; }
+@keyframes saveShine { 0% { transform: skewX(-18deg) translateX(-140%); } 100% { transform: skewX(-18deg) translateX(520%); } }
+@keyframes savePulse { 0% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); } 45% { box-shadow: 0 0 0 5px rgba(32,224,108,.15), 0 18px 38px rgba(32,224,108,.22), inset 0 1px 0 rgba(255,255,255,.32); } 100% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); } }
 
 /* Mantova visual theme v1 */
 :root {
@@ -702,72 +440,19 @@ html:has(#calendarView.active) {
   --mantova-logo: url("https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_Mantova_1911.svg");
   --shadow: 0 18px 52px rgba(48,0,6,.52);
 }
-
-body {
-  background:
-    radial-gradient(circle at 8% -12%, rgba(220,6,25,.34), transparent 23rem),
-    radial-gradient(circle at 96% 8%, rgba(255,255,255,.10), transparent 18rem),
-    linear-gradient(145deg, #070102 0%, #300207 44%, #110103 100%) !important;
-}
-
-body::before {
-  opacity: .11 !important;
-  background:
-    linear-gradient(135deg, transparent 0 41%, rgba(255,255,255,.34) 41.5% 42.8%, rgba(220,6,25,.56) 43% 48%, transparent 48.4%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 1px, transparent 1px 70px) !important;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: -35%;
-  pointer-events: none;
-  opacity: .13;
-  background: linear-gradient(135deg, transparent 42%, rgba(255,255,255,.88) 42.3% 43.2%, rgba(220,6,25,.92) 43.4% 47.7%, rgba(255,255,255,.78) 47.9% 48.6%, transparent 48.8%);
-  z-index: 0;
-}
-
+body { background: radial-gradient(circle at 8% -12%, rgba(220,6,25,.34), transparent 23rem), radial-gradient(circle at 96% 8%, rgba(255,255,255,.10), transparent 18rem), linear-gradient(145deg, #070102 0%, #300207 44%, #110103 100%) !important; }
+body::before { opacity: .11 !important; background: linear-gradient(135deg, transparent 0 41%, rgba(255,255,255,.34) 41.5% 42.8%, rgba(220,6,25,.56) 43% 48%, transparent 48.4%), repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 1px, transparent 1px 70px) !important; }
+body::after { content: ""; position: fixed; inset: -35%; pointer-events: none; opacity: .13; background: linear-gradient(135deg, transparent 42%, rgba(255,255,255,.88) 42.3% 43.2%, rgba(220,6,25,.92) 43.4% 47.7%, rgba(255,255,255,.78) 47.9% 48.6%, transparent 48.8%); z-index: 0; }
 .app-shell,
 .topbar,
 .bottom-nav,
 main,
 .view { position: relative; z-index: 1; }
-
 .topbar,
-.bottom-nav {
-  background: linear-gradient(180deg, rgba(55,3,9,.94), rgba(13,1,3,.94)) !important;
-  border-color: rgba(255,255,255,.16) !important;
-  box-shadow: 0 16px 42px rgba(54,0,7,.38) !important;
-}
-
-.app-brand {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 9px !important;
-  color: var(--mantova-white) !important;
-  letter-spacing: .09em !important;
-}
-
-.app-brand::before {
-  content: "";
-  width: 27px;
-  height: 33px;
-  flex: 0 0 27px;
-  background: var(--mantova-logo) center/contain no-repeat;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,.34));
-}
-
-.auth-logo::before {
-  content: "";
-  display: block;
-  width: 82px;
-  height: 98px;
-  margin: 0 auto 14px;
-  background: var(--mantova-logo) center/contain no-repeat;
-  filter: drop-shadow(0 10px 22px rgba(0,0,0,.38));
-}
-
+.bottom-nav { background: linear-gradient(180deg, rgba(55,3,9,.94), rgba(13,1,3,.94)) !important; border-color: rgba(255,255,255,.16) !important; box-shadow: 0 16px 42px rgba(54,0,7,.38) !important; }
+.app-brand { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 9px !important; color: var(--mantova-white) !important; letter-spacing: .09em !important; }
+.app-brand::before { content: ""; width: 27px; height: 33px; flex: 0 0 27px; background: var(--mantova-logo) center/contain no-repeat; filter: drop-shadow(0 5px 10px rgba(0,0,0,.34)); }
+.auth-logo::before { content: ""; display: block; width: 82px; height: 98px; margin: 0 auto 14px; background: var(--mantova-logo) center/contain no-repeat; filter: drop-shadow(0 10px 22px rgba(0,0,0,.38)); }
 .setup-card,
 .auth-card,
 .hero-card,
@@ -793,11 +478,7 @@ main,
 .physical-save-meta,
 .physical-kpi,
 .physical-history-item,
-.progress-kpi {
-  background: linear-gradient(165deg, rgba(58,6,11,.90), rgba(15,1,3,.90)) !important;
-  border-color: rgba(255,255,255,.17) !important;
-}
-
+.progress-kpi { background: linear-gradient(165deg, rgba(58,6,11,.90), rgba(15,1,3,.90)) !important; border-color: rgba(255,255,255,.17) !important; }
 .auth-card,
 .setup-card,
 .calendar-card,
@@ -806,11 +487,7 @@ main,
 .training-card,
 .timer-card,
 .hero-card,
-.detail-card {
-  position: relative !important;
-  overflow: hidden !important;
-}
-
+.detail-card { position: relative !important; overflow: hidden !important; }
 .auth-card::after,
 .setup-card::after,
 .calendar-card::after,
@@ -819,132 +496,42 @@ main,
 .training-card::after,
 .timer-card::after,
 .hero-card::after,
-.detail-card::after {
-  content: "";
-  position: absolute;
-  right: -18px;
-  bottom: -26px;
-  width: 112px;
-  height: 134px;
-  background: var(--mantova-logo) center/contain no-repeat;
-  opacity: .075;
-  pointer-events: none;
-  filter: drop-shadow(0 12px 24px rgba(0,0,0,.38));
-}
-
-.landing-hero {
-  background:
-    linear-gradient(180deg, rgba(18,1,3,.04), rgba(18,1,3,.88) 74%),
-    linear-gradient(135deg, transparent 0 38%, rgba(255,255,255,.42) 38.6% 40%, rgba(220,6,25,.70) 40.2% 48%, transparent 48.4%),
-    linear-gradient(120deg, rgba(220,6,25,.28), transparent 52%),
-    url("gk-home-hero.png") center/cover no-repeat !important;
-  border-color: rgba(255,255,255,.18) !important;
-}
-
-.landing-hero::before {
-  content: "";
-  position: absolute;
-  right: 18px;
-  top: 18px;
-  width: 82px;
-  height: 98px;
-  background: var(--mantova-logo) center/contain no-repeat;
-  filter: drop-shadow(0 12px 24px rgba(0,0,0,.42));
-  z-index: 1;
-}
-
-.landing-hero::after {
-  background: radial-gradient(circle at 22% 12%, rgba(220,6,25,.22), transparent 28rem) !important;
-}
-
+.detail-card::after { content: ""; position: absolute; right: -18px; bottom: -26px; width: 112px; height: 134px; background: var(--mantova-logo) center/contain no-repeat; opacity: .075; pointer-events: none; filter: drop-shadow(0 12px 24px rgba(0,0,0,.38)); }
+.landing-hero { background: linear-gradient(180deg, rgba(18,1,3,.04), rgba(18,1,3,.88) 74%), linear-gradient(135deg, transparent 0 38%, rgba(255,255,255,.42) 38.6% 40%, rgba(220,6,25,.70) 40.2% 48%, transparent 48.4%), linear-gradient(120deg, rgba(220,6,25,.28), transparent 52%), url("gk-home-hero.png") center/cover no-repeat !important; border-color: rgba(255,255,255,.18) !important; }
+.landing-hero::before { content: ""; position: absolute; right: 18px; top: 18px; width: 82px; height: 98px; background: var(--mantova-logo) center/contain no-repeat; filter: drop-shadow(0 12px 24px rgba(0,0,0,.42)); z-index: 1; }
+.landing-hero::after { background: radial-gradient(circle at 22% 12%, rgba(220,6,25,.22), transparent 28rem) !important; }
 .eyebrow,
 .mini-metric strong,
 .timer,
 .physical-chart-line,
-.physical-chart-value {
-  color: var(--mantova-white) !important;
-}
-
-.eyebrow::after {
-  content: "";
-  display: inline-block;
-  width: 24px;
-  height: 3px;
-  margin-left: 8px;
-  border-radius: 999px;
-  background: var(--mantova-red);
-  vertical-align: middle;
-}
-
+.physical-chart-value { color: var(--mantova-white) !important; }
+.eyebrow::after { content: ""; display: inline-block; width: 24px; height: 3px; margin-left: 8px; border-radius: 999px; background: var(--mantova-red); vertical-align: middle; }
 label { color: #fff4f4 !important; }
 select,
 input,
-textarea {
-  background: rgba(255,255,255,.075) !important;
-  border-color: rgba(255,255,255,.18) !important;
-}
+textarea { background: rgba(255,255,255,.075) !important; border-color: rgba(255,255,255,.18) !important; }
 select:focus,
 input:focus,
-textarea:focus {
-  border-color: rgba(220,6,25,.78) !important;
-  box-shadow: 0 0 0 4px rgba(220,6,25,.14) !important;
-}
-
-.primary-btn {
-  color: #fff !important;
-  background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important;
-  box-shadow: 0 12px 28px rgba(220,6,25,.24), inset 0 1px 0 rgba(255,255,255,.28) !important;
-}
+textarea:focus { border-color: rgba(220,6,25,.78) !important; box-shadow: 0 0 0 4px rgba(220,6,25,.14) !important; }
+.primary-btn { color: #fff !important; background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important; box-shadow: 0 12px 28px rgba(220,6,25,.24), inset 0 1px 0 rgba(255,255,255,.28) !important; }
 .dark-btn,
 .ghost-btn,
-.icon-btn {
-  background: rgba(255,255,255,.075) !important;
-  border-color: rgba(255,255,255,.18) !important;
-}
-.danger-btn {
-  background: rgba(220,6,25,.22) !important;
-  border-color: rgba(220,6,25,.38) !important;
-}
-
+.icon-btn { background: rgba(255,255,255,.075) !important; border-color: rgba(255,255,255,.18) !important; }
+.danger-btn { background: rgba(220,6,25,.22) !important; border-color: rgba(220,6,25,.38) !important; }
 .pill,
 .filter-btn,
-.metric-tag {
-  color: #fff3f3 !important;
-  background: rgba(255,255,255,.075) !important;
-  border-color: rgba(255,255,255,.18) !important;
-}
-
+.metric-tag { color: #fff3f3 !important; background: rgba(255,255,255,.075) !important; border-color: rgba(255,255,255,.18) !important; }
 .calendar-day.today { border-color: rgba(255,255,255,.62) !important; }
 .calendar-day.selected,
 .nav-btn.active,
 .quality-score,
-.month-bar {
-  color: #fff !important;
-  background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important;
-  border-color: var(--mantova-red) !important;
-}
-.calendar-dot {
-  background: var(--mantova-white) !important;
-  box-shadow: 0 0 14px rgba(255,255,255,.42) !important;
-}
-.calendar-dot.planned {
-  background: var(--mantova-gold) !important;
-  box-shadow: 0 0 14px rgba(255,189,0,.48) !important;
-}
+.month-bar { color: #fff !important; background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important; border-color: var(--mantova-red) !important; }
+.calendar-dot { background: var(--mantova-white) !important; box-shadow: 0 0 14px rgba(255,255,255,.42) !important; }
+.calendar-dot.planned { background: var(--mantova-gold) !important; box-shadow: 0 0 14px rgba(255,189,0,.48) !important; }
 .calendar-day.selected .calendar-dot,
-.calendar-save-status:not(:empty)::before {
-  color: var(--mantova-red) !important;
-  background: #fff !important;
-}
-
-.score-ring {
-  border-color: rgba(255,255,255,.56) !important;
-  background: rgba(220,6,25,.22) !important;
-}
-.point {
-  color: #fff4f4 !important;
-  background: rgba(220,6,25,.10) !important;
-}
+.calendar-save-status:not(:empty)::before { color: var(--mantova-red) !important; background: #fff !important; }
+.score-ring { border-color: rgba(255,255,255,.56) !important; background: rgba(220,6,25,.22) !important; }
+.point { color: #fff4f4 !important; background: rgba(220,6,25,.10) !important; }
 .source-note { color: #ffe3e3 !important; }
 .exercise-card:hover { border-color: rgba(255,255,255,.42) !important; }
 .timer { text-shadow: 0 0 42px rgba(220,6,25,.34) !important; }
@@ -954,68 +541,73 @@ textarea:focus {
 #saveCalendarPlanBtn { box-shadow: 0 12px 28px rgba(220,6,25,.20), inset 0 1px 0 rgba(255,255,255,.26) !important; }
 #saveCalendarPlanBtn.gk-saving,
 #saveCalendarPlanBtn.gk-saved,
-#saveCalendarPlanBtn:focus {
-  box-shadow: 0 0 0 5px rgba(220,6,25,.18), 0 18px 38px rgba(220,6,25,.26), inset 0 1px 0 rgba(255,255,255,.32) !important;
-}
+#saveCalendarPlanBtn:focus { box-shadow: 0 0 0 5px rgba(220,6,25,.18), 0 18px 38px rgba(220,6,25,.26), inset 0 1px 0 rgba(255,255,255,.32) !important; }
 #calendarSaveStatus,
-.calendar-save-status {
-  color: #fff4f4 !important;
-  background: rgba(220,6,25,.11) !important;
-  border-color: rgba(220,6,25,.28) !important;
-}
+.calendar-save-status { color: #fff4f4 !important; background: rgba(220,6,25,.11) !important; border-color: rgba(220,6,25,.28) !important; }
 #calendarSaveStatus.gk-ok { background: rgba(220,6,25,.16) !important; border-color: rgba(220,6,25,.42) !important; }
 
 /* Mantova layout fixes v2 */
-body:not(.gk-authenticated) .app-shell {
+body:not(.gk-authenticated) .app-shell { min-height: 100dvh !important; padding: 0 16px !important; }
+body:not(.gk-authenticated) #authView.active { min-height: 100dvh; display: grid !important; align-items: center; justify-items: stretch; padding-top: max(22px, env(safe-area-inset-top, 0px)); padding-bottom: max(22px, env(safe-area-inset-bottom, 0px)); }
+body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !important; margin: 0 auto !important; }
+.auth-logo h2 { display: none !important; }
+.auth-logo .eyebrow { text-align: center; margin-bottom: 0; }
+.topbar { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; max-width: none !important; transform: none !important; border-radius: 0 !important; z-index: 1000 !important; }
+.landing-hero { background: linear-gradient(180deg, rgba(18,1,3,.04), rgba(18,1,3,.88) 74%), url("gk-home-hero.png") center/cover no-repeat !important; }
+@media (orientation: portrait) and (max-width: 430px) { body:not(.gk-authenticated) #authView.active { min-height: 100dvh; align-items: center; } }
+
+/* Mantova auth and home fixes v3 */
+html:has(#authView.active),
+body:has(#authView.active) {
+  height: 100dvh !important;
   min-height: 100dvh !important;
+  max-height: 100dvh !important;
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+body:has(#authView.active) {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+}
+body:has(#authView.active) .app-shell {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  max-width: 490px !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
   padding: 0 16px !important;
+  overflow: hidden !important;
 }
-
-body:not(.gk-authenticated) #authView.active {
-  min-height: 100dvh;
+body:has(#authView.active) main { height: 100% !important; }
+body:has(#authView.active) #authView.active {
+  height: 100% !important;
+  min-height: 0 !important;
   display: grid !important;
-  align-items: center;
-  justify-items: stretch;
-  padding-top: max(22px, env(safe-area-inset-top, 0px));
-  padding-bottom: max(22px, env(safe-area-inset-bottom, 0px));
+  place-items: center !important;
+  padding-top: max(20px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  overflow: hidden !important;
 }
-
-body:not(.gk-authenticated) .auth-card {
-  width: 100%;
+body:has(#authView.active) .topbar,
+body:has(#authView.active) .page-heading,
+body:has(#authView.active) #bottomNav {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+body:has(#authView.active) .auth-card {
+  width: 100% !important;
   max-width: 420px !important;
   margin: 0 auto !important;
 }
-
-.auth-logo h2 {
-  display: none !important;
-}
-
-.auth-logo .eyebrow {
-  text-align: center;
-  margin-bottom: 0;
-}
-
-.topbar {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  max-width: none !important;
-  transform: none !important;
-  border-radius: 0 !important;
-  z-index: 1000 !important;
-}
-
 .landing-hero {
   background:
-    linear-gradient(180deg, rgba(18,1,3,.04), rgba(18,1,3,.88) 74%),
+    linear-gradient(rgba(71,2,10,.52), rgba(71,2,10,.52)),
     url("gk-home-hero.png") center/cover no-repeat !important;
 }
-
-@media (orientation: portrait) and (max-width: 430px) {
-  body:not(.gk-authenticated) #authView.active {
-    min-height: 100dvh;
-    align-items: center;
-  }
+.landing-hero::after {
+  background: rgba(220,6,25,.08) !important;
 }
