@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-mantova-theme-v2";
+const CACHE_NAME = "gk-trainer-mantova-theme-v3";
 const ASSETS = [
   "./",
   "./index.html",
