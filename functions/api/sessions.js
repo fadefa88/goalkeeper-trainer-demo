@@ -1,5 +1,7 @@
 import { assertSameOrigin, error, json, loadSessions, readJson, requireAuth } from "./_shared.js";
 
+const MATCH_CATEGORY = "__match__";
+
 export async function onRequestGet({ request, env }) {
   const { response, user } = await requireAuth(env, request);
   if (response) return response;
@@ -17,6 +19,13 @@ export async function onRequestPost({ request, env }) {
   const session = body.session || body;
   if (!session?.exerciseName || !session?.sessionDate) return error("Sessione incompleta", 400);
 
+  const exerciseId = session.exerciseId || session.exercise_id || "exercise";
+  if (session.category === MATCH_CATEGORY) {
+    await env.DB.prepare("delete from training_sessions where user_id = ? and exercise_id = ? and category = ?")
+      .bind(user.id, exerciseId, MATCH_CATEGORY)
+      .run();
+  }
+
   const now = new Date().toISOString();
   const id = crypto.randomUUID();
   await env.DB.prepare("insert into training_sessions (id, user_id, keeper_id, keeper_name, exercise_id, exercise_name, session_date, planned_minutes, saves, mistakes, reactions, category, source_page, sport, level, notes, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
@@ -25,7 +34,7 @@ export async function onRequestPost({ request, env }) {
       user.id,
       session.keeperId || null,
       session.keeperName || session.keeper || null,
-      session.exerciseId || session.exercise_id || "exercise",
+      exerciseId,
       session.exerciseName,
       session.sessionDate,
       session.plannedMinutes ?? null,
