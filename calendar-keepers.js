@@ -307,7 +307,6 @@ style.textContent = `
 .match-scoreboard{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center;padding:16px 12px;border:1px solid rgba(255,255,255,.16);border-radius:20px;background:rgba(255,255,255,.055)}
 .match-team{font-size:16px;font-weight:950;line-height:1.15}.match-team.away{text-align:right}.match-score{font-size:30px;font-weight:950;letter-spacing:-.06em;white-space:nowrap}
 .match-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.match-meta{padding:11px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.04)}.match-meta span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;font-weight:900}.match-meta strong{display:block;margin-top:4px;font-size:13px}
-.match-day-lock{padding:12px 13px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);font-size:12px;line-height:1.4;color:#fff}
 .match-report{display:grid;gap:12px;padding-top:4px}.match-report-grid{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px}.match-report textarea{min-height:92px;resize:vertical}.match-save-status{min-height:20px;color:var(--muted);font-size:12px;font-weight:800}
 .match-save-status.ok{color:#fff}.match-save-status.error{color:#ffd5d5}
 #selectedDateSessions[data-first-team-match="1"] .keeper-attendance-card,#selectedDateSessions[data-first-team-match="1"] .planner-card,#selectedDateSessions[data-first-team-match="1"] .planner-save-row{display:none!important}
@@ -615,7 +614,7 @@ const savedNote = meta.note || "";
 const competition = match.competition || "Prima squadra";
 const statusText = resultText(match);
 const round = match.round || "Turno da definire";
-const venue = match.venue || "Stadio da definire";
+const isSerieB = String(competition).trim().toLowerCase() === "serie b";
 box.dataset.matchSignature = signature;
 box.innerHTML = `
 <div class="first-team-match-card" data-match-id="${esc(match.id)}">
@@ -630,11 +629,9 @@ box.innerHTML = `
 </div>
 <div class="match-meta-grid">
 <div class="match-meta"><span>Calcio d'inizio</span><strong>${esc(matchTime(match))}</strong></div>
-<div class="match-meta"><span>Turno</span><strong>${esc(round)}</strong></div>
-<div class="match-meta"><span>Campo</span><strong>${esc(venue)}</strong></div>
+${isSerieB ? "" : `<div class="match-meta"><span>Turno</span><strong>${esc(round)}</strong></div>`}
 <div class="match-meta"><span>Mantova</span><strong>${match.isHome ? "Casa" : "Trasferta"}</strong></div>
 </div>
-<div class="match-day-lock"><strong>Giorno partita.</strong> In questa data la programmazione degli allenamenti è disabilitata.</div>
 <div class="match-report">
 <p class="eyebrow">Rapporto portiere</p>
 <div class="match-report-grid">
