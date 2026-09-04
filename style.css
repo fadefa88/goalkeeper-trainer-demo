@@ -680,3 +680,287 @@ html:has(#calendarView.active) {
   45% { box-shadow: 0 0 0 5px rgba(32,224,108,.15), 0 18px 38px rgba(32,224,108,.22), inset 0 1px 0 rgba(255,255,255,.32); }
   100% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); }
 }
+
+/* Mantova visual theme v1 */
+:root {
+  --bg: #100103;
+  --panel: rgba(45, 5, 9, .88);
+  --panel-2: rgba(78, 7, 14, .80);
+  --text: #fffafa;
+  --muted: #f0c7c7;
+  --line: rgba(255,255,255,.18);
+  --line-strong: rgba(220,6,25,.46);
+  --green: #dc0619;
+  --green-2: #9f0010;
+  --red: #dc0619;
+  --orange: #ffbd00;
+  --black: #080102;
+  --mantova-red: #dc0619;
+  --mantova-deep: #6c000b;
+  --mantova-white: #ffffff;
+  --mantova-gold: #ffbd00;
+  --mantova-logo: url("https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_Mantova_1911.svg");
+  --shadow: 0 18px 52px rgba(48,0,6,.52);
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% -12%, rgba(220,6,25,.34), transparent 23rem),
+    radial-gradient(circle at 96% 8%, rgba(255,255,255,.10), transparent 18rem),
+    linear-gradient(145deg, #070102 0%, #300207 44%, #110103 100%) !important;
+}
+
+body::before {
+  opacity: .11 !important;
+  background:
+    linear-gradient(135deg, transparent 0 41%, rgba(255,255,255,.34) 41.5% 42.8%, rgba(220,6,25,.56) 43% 48%, transparent 48.4%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 1px, transparent 1px 70px) !important;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: -35%;
+  pointer-events: none;
+  opacity: .13;
+  background: linear-gradient(135deg, transparent 42%, rgba(255,255,255,.88) 42.3% 43.2%, rgba(220,6,25,.92) 43.4% 47.7%, rgba(255,255,255,.78) 47.9% 48.6%, transparent 48.8%);
+  z-index: 0;
+}
+
+.app-shell,
+.topbar,
+.bottom-nav,
+main,
+.view { position: relative; z-index: 1; }
+
+.topbar,
+.bottom-nav {
+  background: linear-gradient(180deg, rgba(55,3,9,.94), rgba(13,1,3,.94)) !important;
+  border-color: rgba(255,255,255,.16) !important;
+  box-shadow: 0 16px 42px rgba(54,0,7,.38) !important;
+}
+
+.app-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  color: var(--mantova-white) !important;
+  letter-spacing: .09em !important;
+}
+
+.app-brand::before {
+  content: "";
+  width: 27px;
+  height: 33px;
+  flex: 0 0 27px;
+  background: var(--mantova-logo) center/contain no-repeat;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,.34));
+}
+
+.auth-logo::before {
+  content: "";
+  display: block;
+  width: 82px;
+  height: 98px;
+  margin: 0 auto 14px;
+  background: var(--mantova-logo) center/contain no-repeat;
+  filter: drop-shadow(0 10px 22px rgba(0,0,0,.38));
+}
+
+.setup-card,
+.auth-card,
+.hero-card,
+.exercise-card,
+.detail-card,
+.timer-card,
+.history-card,
+.keeper-selector-card,
+.calendar-card,
+.calendar-list-card,
+.progress-card,
+.training-plan,
+.training-item,
+.measure-card,
+.quality-item,
+.keepers-box,
+.point,
+.mini-metric,
+.planner-card,
+.planner-item,
+.training-saved-card,
+.keeper-attendance-card,
+.physical-save-meta,
+.physical-kpi,
+.physical-history-item,
+.progress-kpi {
+  background: linear-gradient(165deg, rgba(58,6,11,.90), rgba(15,1,3,.90)) !important;
+  border-color: rgba(255,255,255,.17) !important;
+}
+
+.auth-card,
+.setup-card,
+.calendar-card,
+.calendar-list-card,
+.progress-card,
+.training-card,
+.timer-card,
+.hero-card,
+.detail-card {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.auth-card::after,
+.setup-card::after,
+.calendar-card::after,
+.calendar-list-card::after,
+.progress-card::after,
+.training-card::after,
+.timer-card::after,
+.hero-card::after,
+.detail-card::after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  bottom: -26px;
+  width: 112px;
+  height: 134px;
+  background: var(--mantova-logo) center/contain no-repeat;
+  opacity: .075;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.38));
+}
+
+.landing-hero {
+  background:
+    linear-gradient(180deg, rgba(18,1,3,.04), rgba(18,1,3,.88) 74%),
+    linear-gradient(135deg, transparent 0 38%, rgba(255,255,255,.42) 38.6% 40%, rgba(220,6,25,.70) 40.2% 48%, transparent 48.4%),
+    linear-gradient(120deg, rgba(220,6,25,.28), transparent 52%),
+    url("gk-home-hero.png") center/cover no-repeat !important;
+  border-color: rgba(255,255,255,.18) !important;
+}
+
+.landing-hero::before {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  width: 82px;
+  height: 98px;
+  background: var(--mantova-logo) center/contain no-repeat;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.42));
+  z-index: 1;
+}
+
+.landing-hero::after {
+  background: radial-gradient(circle at 22% 12%, rgba(220,6,25,.22), transparent 28rem) !important;
+}
+
+.eyebrow,
+.mini-metric strong,
+.timer,
+.physical-chart-line,
+.physical-chart-value {
+  color: var(--mantova-white) !important;
+}
+
+.eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 3px;
+  margin-left: 8px;
+  border-radius: 999px;
+  background: var(--mantova-red);
+  vertical-align: middle;
+}
+
+label { color: #fff4f4 !important; }
+select,
+input,
+textarea {
+  background: rgba(255,255,255,.075) !important;
+  border-color: rgba(255,255,255,.18) !important;
+}
+select:focus,
+input:focus,
+textarea:focus {
+  border-color: rgba(220,6,25,.78) !important;
+  box-shadow: 0 0 0 4px rgba(220,6,25,.14) !important;
+}
+
+.primary-btn {
+  color: #fff !important;
+  background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important;
+  box-shadow: 0 12px 28px rgba(220,6,25,.24), inset 0 1px 0 rgba(255,255,255,.28) !important;
+}
+.dark-btn,
+.ghost-btn,
+.icon-btn {
+  background: rgba(255,255,255,.075) !important;
+  border-color: rgba(255,255,255,.18) !important;
+}
+.danger-btn {
+  background: rgba(220,6,25,.22) !important;
+  border-color: rgba(220,6,25,.38) !important;
+}
+
+.pill,
+.filter-btn,
+.metric-tag {
+  color: #fff3f3 !important;
+  background: rgba(255,255,255,.075) !important;
+  border-color: rgba(255,255,255,.18) !important;
+}
+
+.calendar-day.today { border-color: rgba(255,255,255,.62) !important; }
+.calendar-day.selected,
+.nav-btn.active,
+.quality-score,
+.month-bar {
+  color: #fff !important;
+  background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important;
+  border-color: var(--mantova-red) !important;
+}
+.calendar-dot {
+  background: var(--mantova-white) !important;
+  box-shadow: 0 0 14px rgba(255,255,255,.42) !important;
+}
+.calendar-dot.planned {
+  background: var(--mantova-gold) !important;
+  box-shadow: 0 0 14px rgba(255,189,0,.48) !important;
+}
+.calendar-day.selected .calendar-dot,
+.calendar-save-status:not(:empty)::before {
+  color: var(--mantova-red) !important;
+  background: #fff !important;
+}
+
+.score-ring {
+  border-color: rgba(255,255,255,.56) !important;
+  background: rgba(220,6,25,.22) !important;
+}
+.point {
+  color: #fff4f4 !important;
+  background: rgba(220,6,25,.10) !important;
+}
+.source-note { color: #ffe3e3 !important; }
+.exercise-card:hover { border-color: rgba(255,255,255,.42) !important; }
+.timer { text-shadow: 0 0 42px rgba(220,6,25,.34) !important; }
+.physical-chart-line { stroke: var(--mantova-red) !important; }
+.physical-chart-fill { fill: rgba(220,6,25,.10) !important; }
+.physical-chart-dot { fill: var(--mantova-white) !important; stroke: var(--mantova-red) !important; }
+#saveCalendarPlanBtn { box-shadow: 0 12px 28px rgba(220,6,25,.20), inset 0 1px 0 rgba(255,255,255,.26) !important; }
+#saveCalendarPlanBtn.gk-saving,
+#saveCalendarPlanBtn.gk-saved,
+#saveCalendarPlanBtn:focus {
+  box-shadow: 0 0 0 5px rgba(220,6,25,.18), 0 18px 38px rgba(220,6,25,.26), inset 0 1px 0 rgba(255,255,255,.32) !important;
+}
+#calendarSaveStatus,
+.calendar-save-status {
+  color: #fff4f4 !important;
+  background: rgba(220,6,25,.11) !important;
+  border-color: rgba(220,6,25,.28) !important;
+}
+#calendarSaveStatus.gk-ok { background: rgba(220,6,25,.16) !important; border-color: rgba(220,6,25,.42) !important; }
