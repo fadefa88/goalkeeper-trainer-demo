@@ -491,7 +491,7 @@
         </div>
         <div class="planner-save-row">
           <button id="saveCalendarPlanBtn" class="primary-btn full" type="button">Salva allenamento</button>
-          <p id="calendarSaveStatus" class="muted small-note calendar-save-status">Gli esercizi salvati saranno disponibili su questo account.</p>
+          <p id="calendarSaveStatus" class="muted small-note calendar-save-status"></p>
         </div>
         <div id="dayPlanItems" class="planner-list">
           ${plan.items.length ? plan.items.map((item, index) => {
@@ -539,7 +539,7 @@
       status.classList.remove("gk-ok", "gk-error");
       if (state === "gk-saved") status.classList.add("gk-ok");
       if (state === "gk-error") status.classList.add("gk-error");
-      status.textContent = text || "Gli esercizi salvati saranno disponibili su questo account.";
+      status.textContent = text || "";
     }
   }
 
@@ -806,7 +806,7 @@
     }
     const row = rows[0];
     title.textContent = filter ? `Allenamento · ${shortDateKey(row.date)}` : `Prossimo allenamento · ${shortDateKey(row.date)}`;
-    subtitle.textContent = filter ? "Seduta salvata per la data selezionata." : "Di default vedi la prossima seduta rispetto a oggi. Sotto trovi anche tutte le sedute salvate.";
+    subtitle.textContent = filter ? "Seduta salvata per la data selezionata." : "";
     appendTrainingExercises(list, row);
     appendAllSavedTrainingPlans(list, allRows, row.date);
   }
