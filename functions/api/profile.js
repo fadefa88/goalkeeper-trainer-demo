@@ -22,31 +22,45 @@ export async function onRequestPut({ request, env }) {
   const keepers = Array.isArray(profile.keepers) ? profile.keepers : [];
   const now = new Date().toISOString();
 
-  await env.DB.prepare("insert into user_settings (user_id, keepers_count, sport, level, sessions_per_week, session_duration, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?) on conflict(user_id) do update set keepers_count = excluded.keepers_count, sport = excluded.sport, level = excluded.level, sessions_per_week = excluded.sessions_per_week, session_duration = excluded.session_duration, updated_at = excluded.updated_at")
-    .bind(user.id, Number(profile.keepersCount || 3), sport, level, Number(profile.sessionsPerWeek || 2), Number(profile.sessionDuration || 60), now, now).run();
+  const statements = [];
 
-  await env.DB.prepare("delete from keepers where user_id = ?").bind(user.id).run();
+  statements.push(env.DB.prepare("insert into user_settings (user_id, keepers_count, sport, level, sessions_per_week, session_duration, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?) on conflict(user_id) do update set keepers_count = excluded.keepers_count, sport = excluded.sport, level = excluded.level, sessions_per_week = excluded.sessions_per_week, session_duration = excluded.session_duration, updated_at = excluded.updated_at")
+    .bind(user.id, Number(profile.keepersCount || 3), sport, level, Number(profile.sessionsPerWeek || 2), Number(profile.sessionDuration || 60), now, now));
 
-  for (let i = 0; i < keepers.length; i++) {
-    const keeper = keepers[i];
-    await env.DB.prepare("insert into keepers (id, user_id, name, height_cm, weight_kg, sport, level, standing_broad_jump_cm, standing_vertical_jump_cm, standing_half_height_jump_cm, two_posts_test_sec, display_order, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-      .bind(
-        crypto.randomUUID(),
-        user.id,
-        keeper.name || `Portiere ${i + 1}`,
-        keeper.height ?? null,
-        keeper.weight ?? null,
-        sport,
-        level,
-        keeper.broadJump ?? null,
-        keeper.verticalJump ?? null,
-        keeper.halfHeightJump ?? null,
-        keeper.twoPostsTest ?? null,
-        i,
-        now,
-        now
-      ).run();
-  }
+  // Upsert per id invece di "delete all + reinsert": preserva l'identità di ogni
+  // portiere (keeper_id resta valido su training_sessions / presenze / storico
+  // fisico) anche quando il profilo viene salvato più volte di seguito.
+  const existingRows = await env.DB.prepare("select id from keepers where user_id = ?").bind(user.id).all();
+  const existingIds = new Set((existingRows.results || []).map((row) => row.id));
+  const keptIds = new Set();
+
+  keepers.forEach((keeper, i) => {
+    const reuseId = Boolean(keeper.id) && existingIds.has(keeper.id);
+    const id = reuseId ? keeper.id : crypto.randomUUID();
+    keptIds.add(id);
+    const name = keeper.name || `Portiere ${i + 1}`;
+    const height = keeper.height ?? null;
+    const weight = keeper.weight ?? null;
+    const broadJump = keeper.broadJump ?? null;
+    const verticalJump = keeper.verticalJump ?? null;
+    const halfHeightJump = keeper.halfHeightJump ?? null;
+    const twoPostsTest = keeper.twoPostsTest ?? null;
+
+    if (reuseId) {
+      statements.push(env.DB.prepare("update keepers set name = ?, height_cm = ?, weight_kg = ?, sport = ?, level = ?, standing_broad_jump_cm = ?, standing_vertical_jump_cm = ?, standing_half_height_jump_cm = ?, two_posts_test_sec = ?, display_order = ?, updated_at = ? where id = ? and user_id = ?")
+        .bind(name, height, weight, sport, level, broadJump, verticalJump, halfHeightJump, twoPostsTest, i, now, id, user.id));
+    } else {
+      statements.push(env.DB.prepare("insert into keepers (id, user_id, name, height_cm, weight_kg, sport, level, standing_broad_jump_cm, standing_vertical_jump_cm, standing_half_height_jump_cm, two_posts_test_sec, display_order, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        .bind(id, user.id, name, height, weight, sport, level, broadJump, verticalJump, halfHeightJump, twoPostsTest, i, now, now));
+    }
+  });
+
+  // Cancella solo i portieri che il client ha effettivamente rimosso dalla lista.
+  existingIds.forEach((id) => {
+    if (!keptIds.has(id)) statements.push(env.DB.prepare("delete from keepers where id = ? and user_id = ?").bind(id, user.id));
+  });
+
+  if (statements.length) await env.DB.batch(statements);
 
   return json({ profile: await loadProfile(env, user.id) });
 }
