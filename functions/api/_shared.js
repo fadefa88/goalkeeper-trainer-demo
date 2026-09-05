@@ -121,17 +121,90 @@ export function mapKeeper(row) {
   };
 }
 
+// Categorie riservate di training_sessions: non sono vere sedute di allenamento,
+// ma righe di storage per dati account che lo schema D1 attuale non prevede come
+// tabelle proprie. "__match__" (rapporti partita prima squadra) esiste già;
+// "__physical__" e "__plan__" sono introdotte qui per persistere davvero lo
+// storico fisico e gli allenamenti salvati dal calendario, che prima venivano
+// accettati dalla PUT /api/profile e scartati senza essere mai scritti.
+export const MATCH_CATEGORY = "__match__";
+export const PHYSICAL_HISTORY_CATEGORY = "__physical__";
+export const TRAINING_PLANS_CATEGORY = "__plan__";
+export const RESERVED_EXTRAS_CATEGORIES = [PHYSICAL_HISTORY_CATEGORY, TRAINING_PLANS_CATEGORY];
+
+const EXTRAS = {
+  physicalHistory: { category: PHYSICAL_HISTORY_CATEGORY, exerciseId: "extras-physical-history", label: "Storico fisico", empty: [] },
+  trainingPlans: { category: TRAINING_PLANS_CATEGORY, exerciseId: "extras-training-plans", label: "Allenamenti salvati", empty: {} }
+};
+
+async function loadExtra(env, userId, key) {
+  const def = EXTRAS[key];
+  const row = await env.DB.prepare("select notes from training_sessions where user_id = ? and category = ? and exercise_id = ? limit 1")
+    .bind(userId, def.category, def.exerciseId).first();
+  if (!row?.notes) return def.empty;
+  try {
+    const parsed = JSON.parse(row.notes);
+    return parsed && typeof parsed === "object" ? parsed : def.empty;
+  } catch {
+    return def.empty;
+  }
+}
+
+// Prepara (senza eseguire) l'upsert di una riga "extra". Va sempre incluso in un
+// batch insieme alle altre scritture del profilo per restare atomico.
+async function extraStatement(env, userId, key, value) {
+  const def = EXTRAS[key];
+  const now = new Date().toISOString();
+  const existing = await env.DB.prepare("select id from training_sessions where user_id = ? and category = ? and exercise_id = ? limit 1")
+    .bind(userId, def.category, def.exerciseId).first();
+  const notes = JSON.stringify(value);
+  if (existing) {
+    return env.DB.prepare("update training_sessions set notes = ?, updated_at = ? where id = ?").bind(notes, now, existing.id);
+  }
+  return env.DB.prepare("insert into training_sessions (id, user_id, exercise_id, exercise_name, session_date, category, notes, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    .bind(crypto.randomUUID(), userId, def.exerciseId, def.label, now.slice(0, 10), def.category, notes, now, now);
+}
+
+export async function loadProfileExtras(env, userId) {
+  const [physicalHistory, trainingPlans] = await Promise.all([
+    loadExtra(env, userId, "physicalHistory"),
+    loadExtra(env, userId, "trainingPlans")
+  ]);
+  return {
+    physicalHistory: Array.isArray(physicalHistory) ? physicalHistory : [],
+    trainingPlans: trainingPlans && typeof trainingPlans === "object" && !Array.isArray(trainingPlans) ? trainingPlans : {}
+  };
+}
+
+// Restituisce le statement da aggiungere al batch della PUT /api/profile, una
+// per ogni campo "extra" realmente presente nel body. Un campo assente nel body
+// non genera nessuna statement: la riga esistente resta intatta, quindi nessuna
+// PUT del profilo di base (che non conosce questi campi) può cancellarla.
+export async function buildProfileExtraStatements(env, userId, profile) {
+  const statements = [];
+  const physicalHistory = profile.physicalHistory ?? profile.physical_history;
+  if (Array.isArray(physicalHistory)) statements.push(await extraStatement(env, userId, "physicalHistory", physicalHistory));
+  const trainingPlans = profile.trainingPlans ?? profile.training_plans;
+  if (trainingPlans && typeof trainingPlans === "object" && !Array.isArray(trainingPlans)) {
+    statements.push(await extraStatement(env, userId, "trainingPlans", trainingPlans));
+  }
+  return statements;
+}
+
 export async function loadProfile(env, userId) {
   const settings = await env.DB.prepare("select * from user_settings where user_id = ?").bind(userId).first();
   if (!settings) return null;
   const keepers = await env.DB.prepare("select * from keepers where user_id = ? order by display_order asc, created_at asc").bind(userId).all();
+  const extras = await loadProfileExtras(env, userId);
   return {
     keepersCount: settings.keepers_count,
     sportType: settings.sport,
     level: settings.level,
     sessionsPerWeek: settings.sessions_per_week,
     sessionDuration: settings.session_duration,
-    keepers: (keepers.results || []).map(mapKeeper)
+    keepers: (keepers.results || []).map(mapKeeper),
+    physicalHistory: extras.physicalHistory,
+    trainingPlans: extras.trainingPlans
   };
 }
 
@@ -156,6 +229,10 @@ export function mapSession(row) {
 }
 
 export async function loadSessions(env, userId) {
-  const rows = await env.DB.prepare("select * from training_sessions where user_id = ? order by session_date desc, created_at desc").bind(userId).all();
+  // Le righe "__physical__"/"__plan__" sono storage per il profilo (vedi
+  // buildProfileExtraStatements), non sedute: non devono mai comparire come
+  // sessione in Progressi, Storico o nell'export JSON.
+  const rows = await env.DB.prepare("select * from training_sessions where user_id = ? and category not in (?, ?) order by session_date desc, created_at desc")
+    .bind(userId, PHYSICAL_HISTORY_CATEGORY, TRAINING_PLANS_CATEGORY).all();
   return (rows.results || []).map(mapSession);
 }

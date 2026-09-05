@@ -1,4 +1,4 @@
-import { assertSameOrigin, error, json, loadProfile, readJson, requireAuth } from "./_shared.js";
+import { assertSameOrigin, buildProfileExtraStatements, error, json, loadProfile, readJson, requireAuth } from "./_shared.js";
 
 export async function onRequestGet({ request, env }) {
   const { response, user } = await requireAuth(env, request);
@@ -59,6 +59,11 @@ export async function onRequestPut({ request, env }) {
   existingIds.forEach((id) => {
     if (!keptIds.has(id)) statements.push(env.DB.prepare("delete from keepers where id = ? and user_id = ?").bind(id, user.id));
   });
+
+  // Storico fisico e allenamenti salvati: aggiornati SOLO se il body li contiene
+  // davvero. Un salvataggio del profilo base (che non li conosce) non genera
+  // nessuna statement per loro, quindi non può cancellarli.
+  statements.push(...await buildProfileExtraStatements(env, user.id, profile));
 
   if (statements.length) await env.DB.batch(statements);
 

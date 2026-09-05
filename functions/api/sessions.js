@@ -1,6 +1,4 @@
-import { assertSameOrigin, error, json, loadSessions, readJson, requireAuth } from "./_shared.js";
-
-const MATCH_CATEGORY = "__match__";
+import { assertSameOrigin, error, json, loadSessions, MATCH_CATEGORY, readJson, requireAuth, RESERVED_EXTRAS_CATEGORIES } from "./_shared.js";
 
 export async function onRequestGet({ request, env }) {
   const { response, user } = await requireAuth(env, request);
@@ -18,6 +16,10 @@ export async function onRequestPost({ request, env }) {
   const body = await readJson(request);
   const session = body.session || body;
   if (!session?.exerciseName || !session?.sessionDate) return error("Sessione incompleta", 400);
+  // "__physical__"/"__plan__" sono righe di storage riservate al profilo
+  // (vedi buildProfileExtraStatements in _shared.js): non possono essere create
+  // come sessione qualunque, altrimenti collidono con quelle righe.
+  if (RESERVED_EXTRAS_CATEGORIES.includes(session.category)) return error("Categoria non consentita", 400);
 
   const exerciseId = session.exerciseId || session.exercise_id || "exercise";
   if (session.category === MATCH_CATEGORY) {

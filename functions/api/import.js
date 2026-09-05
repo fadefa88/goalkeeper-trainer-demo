@@ -1,4 +1,4 @@
-import { assertSameOrigin, error, json, readJson, requireAuth } from "./_shared.js";
+import { assertSameOrigin, buildProfileExtraStatements, error, json, readJson, requireAuth } from "./_shared.js";
 
 export async function onRequestPost({ request, env }) {
   const originError = assertSameOrigin(request);
@@ -57,6 +57,13 @@ export async function onRequestPost({ request, env }) {
         now
       ).run();
   }
+
+  // Il delete-all di training_sessions sopra cancella anche le righe "extra"
+  // (storico fisico, allenamenti salvati). Il JSON esportato da questa stessa
+  // app le include già dentro "profile": vanno riscritte oppure vengono perse
+  // a ogni importazione.
+  const extraStatements = await buildProfileExtraStatements(env, user.id, profile);
+  for (const statement of extraStatements) await statement.run();
 
   return json({ ok: true });
 }
