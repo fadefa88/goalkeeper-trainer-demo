@@ -1,19 +1,51 @@
+/* ============================================================
+   GK Trainer — Mantova 1911
+   Design tokens: one dark neutral surface system, one red accent
+   used deliberately (primary action / active state / brand), no
+   gradients-as-decoration, no glow, no per-card watermark.
+   ============================================================ */
+
 :root {
-  --bg: #020604;
-  --panel: rgba(5, 16, 10, .82);
-  --panel-2: rgba(11, 30, 18, .78);
-  --text: #f3fff6;
-  --muted: #a5b9aa;
-  --line: rgba(207, 255, 220, .16);
-  --line-strong: rgba(55, 255, 126, .34);
-  --green: #20e06c;
-  --green-2: #11a24b;
-  --red: #ef4444;
-  --orange: #f97316;
-  --black: #020403;
-  --shadow: 0 18px 48px rgba(0,0,0,.42);
-  --radius-xl: 26px;
-  --radius-lg: 20px;
+  /* Surfaces — flat neutral dark, not red-tinted */
+  --bg: #0b0b0c;
+  --panel: #16171a;
+  --panel-2: #1c1e21;
+  --line: rgba(255, 255, 255, .10);
+  --line-strong: rgba(255, 255, 255, .20);
+
+  /* Text */
+  --text: #f2f2f0;
+  --muted: #9a9a9d;
+  --faint: #6b6b6e;
+
+  /* Accent — Mantova red, used deliberately, not as a wash.
+     --green/--mantova-red kept as aliases: calendar-keepers.js's
+     injected styles (match card, physical chart, keeper attendance)
+     still reference these names directly. */
+  --red: #dc0619;
+  --red-deep: #8c0510;
+  --red-soft: rgba(220, 6, 25, .14);
+  --green: var(--red);
+  --mantova-red: var(--red);
+  --mantova-gold: #c99a4b;
+  --orange: var(--mantova-gold);
+  --white: #ffffff;
+  --mantova-logo: url("https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_Mantova_1911.svg");
+
+  /* Spacing scale */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+
+  /* Radius scale — three tiers, not sixteen near-identical values */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+
+  --shadow: 0 8px 24px rgba(0, 0, 0, .34);
   --topbar-h: 68px;
   --bottombar-h: 82px;
 }
@@ -26,102 +58,88 @@ body {
   margin: 0;
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Inter, Arial, sans-serif;
-  background:
-    radial-gradient(circle at 12% -10%, rgba(32,224,108,.28), transparent 23rem),
-    radial-gradient(circle at 92% 8%, rgba(32,224,108,.16), transparent 20rem),
-    linear-gradient(155deg, #020403 0%, #06180e 48%, #020604 100%);
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .08;
-  background:
-    linear-gradient(90deg, transparent 0 49%, rgba(255,255,255,.55) 49.5% 50.5%, transparent 51%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.065) 0 1px, transparent 1px 70px);
+  background: var(--bg);
 }
 
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; }
 h1, h2, h3, p { margin: 0; }
-h1 { font-size: clamp(34px, 8.3vw, 45px); line-height: .98; letter-spacing: -.065em; }
-h2 { font-size: clamp(25px, 6.6vw, 36px); line-height: 1.05; letter-spacing: -.055em; }
-h3 { font-size: 18px; line-height: 1.15; letter-spacing: -.035em; }
+h1 { font-size: clamp(24px, 6vw, 28px); font-weight: 700; line-height: 1.1; letter-spacing: -.01em; }
+h2 { font-size: clamp(19px, 5vw, 21px); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+h3 { font-size: 16px; font-weight: 600; line-height: 1.25; }
 
 .app-shell {
   width: 100%;
   max-width: 490px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: calc(var(--topbar-h) + 22px + env(safe-area-inset-top, 0px)) 16px calc(var(--bottombar-h) + 34px + env(safe-area-inset-bottom, 0px));
+  padding: calc(var(--topbar-h) + 20px + env(safe-area-inset-top, 0px)) 16px calc(var(--bottombar-h) + 28px + env(safe-area-inset-bottom, 0px));
   position: relative;
   overflow-x: hidden;
 }
 
 .topbar {
   position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  right: 0;
+  z-index: 1000;
+  top: 0; left: 0; right: 0;
+  width: 100%;
+  max-width: none;
+  transform: none;
   height: calc(var(--topbar-h) + env(safe-area-inset-top, 0px));
   padding: calc(9px + env(safe-area-inset-top, 0px)) 14px 9px;
   display: grid;
   grid-template-columns: 48px minmax(0, 1fr) 48px;
   align-items: center;
   gap: 10px;
-  background: rgba(1, 7, 4, .86);
-  border-bottom: 1px solid rgba(213,255,222,.12);
-  backdrop-filter: blur(22px) saturate(1.25);
-  -webkit-backdrop-filter: blur(22px) saturate(1.25);
-  box-shadow: 0 10px 36px rgba(0,0,0,.28);
+  background: rgba(14, 15, 16, .92);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
 }
 
 .app-brand {
   justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--text);
-  font-weight: 950;
-  font-size: 17px;
-  letter-spacing: .11em;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .04em;
   text-transform: uppercase;
 }
+.app-brand::before {
+  content: "";
+  width: 22px; height: 26px; flex: 0 0 22px;
+  background: var(--mantova-logo) center/contain no-repeat;
+}
 
-.page-heading { margin: 2px 0 22px; }
-.eyebrow { color: var(--green); text-transform: uppercase; font-size: 11px; letter-spacing: .22em; font-weight: 950; margin-bottom: 8px; }
+.page-heading { margin: 2px 0 var(--sp-5); }
+.eyebrow { color: var(--muted); text-transform: uppercase; font-size: 11px; letter-spacing: .04em; font-weight: 600; margin-bottom: 6px; }
 .muted { color: var(--muted); line-height: 1.45; }
-.small-note { margin-top: 8px; font-size: 12px; }
+.small-note { margin-top: var(--sp-2); font-size: 12px; }
 .view { display: none; }
 .view.active { display: block; }
 
+/* --- Card tier 1: primary panel (one main container per screen) --- */
 .setup-card,
 .auth-card,
-.hero-card,
-.exercise-card,
-.detail-card,
-.timer-card,
-.coach-card,
-.history-card,
-.keeper-selector-card,
 .calendar-card,
 .calendar-list-card,
 .progress-card,
-.training-plan,
-.training-item,
-.measure-card,
-.quality-item,
-.keepers-box,
-.point,
-.mini-metric {
-  background: linear-gradient(165deg, rgba(9, 26, 15, .88), rgba(3, 10, 6, .86));
+.detail-card,
+.timer-card,
+.keeper-selector-card,
+.planner-card,
+.physical-main-card,
+.physical-progress-card,
+.first-team-match-card {
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  border-radius: var(--radius-md);
+  box-shadow: none;
 }
-
 .setup-card,
 .auth-card,
 .calendar-card,
@@ -130,24 +148,41 @@ h3 { font-size: 18px; line-height: 1.15; letter-spacing: -.035em; }
 .detail-card,
 .timer-card,
 .keeper-selector-card {
-  padding: 20px;
+  padding: var(--sp-5);
   width: 100%;
   max-width: 100%;
   overflow: hidden;
 }
-
 .calendar-list-card,
-.progress-card { margin-top: 14px; }
-.auth-logo { margin-bottom: 18px; }
-.auth-logo h2 { font-size: 30px; }
-.auth-actions,
-.backup-actions { display: grid; gap: 10px; margin-top: 16px; }
-.auth-status,
-.backup-status { min-height: 18px; margin-top: 10px; }
-.hidden-file { display: none; }
-.form-grid { display: grid; gap: 14px; margin-top: 20px; }
+.progress-card { margin-top: var(--sp-4); }
 
-label { display: grid; gap: 8px; color: #d9ffe2; font-size: 13px; font-weight: 850; }
+/* --- Card tier 2: list row (repeating item inside a list/panel) --- */
+.hero-card,
+.exercise-card,
+.coach-card,
+.history-card,
+.training-item,
+.measure-card,
+.keepers-box,
+.point,
+.mini-metric,
+.keeper-card {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.auth-logo { margin-bottom: var(--sp-4); display: grid; justify-items: center; gap: var(--sp-2); text-align: center; }
+.auth-logo::before { content: ""; display: block; width: 56px; height: 66px; background: var(--mantova-logo) center/contain no-repeat; }
+.auth-logo h2 { display: none; }
+.auth-actions,
+.backup-actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-4); }
+.auth-status,
+.backup-status { min-height: 18px; margin-top: var(--sp-2); font-size: 13px; }
+.hidden-file { display: none; }
+.form-grid { display: grid; gap: var(--sp-4); margin-top: var(--sp-5); }
+
+label { display: grid; gap: var(--sp-2); color: var(--text); font-size: 13px; font-weight: 600; }
 select,
 input,
 textarea {
@@ -155,10 +190,10 @@ textarea {
   max-width: 100%;
   min-width: 0;
   color: var(--text);
-  background: rgba(255,255,255,.065);
+  background: var(--panel-2);
   border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 14px 14px;
+  border-radius: var(--radius-sm);
+  padding: 14px;
   outline: none;
   font-size: 16px !important;
   line-height: 1.25;
@@ -174,40 +209,34 @@ input[type="date"], input[type="time"], input[type="number"], #dayPlanTime, #day
   appearance: none;
   text-align: center;
   min-height: 58px;
-  border-radius: 20px;
+  border-radius: var(--radius-sm);
 }
 
 select:focus,
 input:focus,
-textarea:focus { border-color: rgba(32,224,108,.74); box-shadow: 0 0 0 4px rgba(32,224,108,.10); }
+textarea:focus { border-color: var(--red); }
 
 .primary-btn,
 .dark-btn,
 .ghost-btn,
 .danger-btn,
-.icon-btn { padding: 14px 16px; border-radius: 18px; font-weight: 950; }
-.primary-btn { color: #001b0a; background: linear-gradient(180deg, #35f57d, var(--green)); }
-.dark-btn { color: var(--text); background: #010302; border: 1px solid var(--line); }
+.icon-btn { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; }
+.primary-btn { color: #fff; background: var(--red); }
+.primary-btn:active { background: var(--red-deep); }
+.dark-btn,
 .ghost-btn,
-.icon-btn { color: var(--text); background: rgba(255,255,255,.065); border: 1px solid var(--line); }
-.danger-btn { color: #fff; background: rgba(239,68,68,.2); border: 1px solid rgba(239,68,68,.35); }
+.icon-btn { color: var(--text); background: var(--panel-2); border: 1px solid var(--line); }
+.danger-btn { color: var(--text); background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .3); }
 .full { width: 100%; }
 
-.icon-btn { width: 48px; height: 48px; min-width: 48px; min-height: 48px; display: grid; place-items: center; padding: 0; line-height: 1; font-size: 22px; border-radius: 18px; }
-#settingsBtn.icon-btn,
-.topbar .icon-btn { font-size: 0; }
-/* Le icone gear/home in ::before ("⚙"/"⌂") sono rimpiazzate dalle SVG inline
-   nel markup (.top-svg): il blocco "Mantova layout fixes" più sotto le
-   annulla incondizionatamente con content:none, quindi non erano più
-   raggiungibili. Rimosse insieme al loro annullamento, stesso risultato. */
+.icon-btn { width: 44px; height: 44px; min-width: 44px; min-height: 44px; display: grid; place-items: center; padding: 0; line-height: 1; border-radius: var(--radius-sm); }
+.topbar .icon-btn { background: transparent; border: 0; display: flex; align-items: center; justify-content: center; }
+.top-svg { width: 22px; height: 22px; display: block; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 
-.hero-card { padding: 22px; display: grid; grid-template-columns: minmax(0, 1fr) 88px; gap: 18px; align-items: center; position: relative; overflow: hidden; }
-/* La barra di accento a sinistra (::before su hero-card/exercise-card/
-   progress-card/calendar-list-card/training-plan) era annullata senza
-   condizioni dallo stesso blocco più sotto — vedi nota sopra. */
-.score-ring { min-width: 82px; width: 82px; height: 82px; border-radius: 999px; display: grid; place-items: center; border: 2px solid rgba(32,224,108,.58); background: rgba(32,224,108,.11); }
-.score-ring span { font-size: 30px; font-weight: 950; line-height: 1; }
-.score-ring small { display: block; color: var(--muted); font-size: 11px; margin-top: -20px; }
+.hero-card { padding: var(--sp-4); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-4); align-items: center; }
+.score-ring { min-width: 60px; padding: var(--sp-2) var(--sp-3); border-radius: var(--radius-sm); display: grid; justify-items: center; background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .28); }
+.score-ring span { font-size: 20px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.score-ring small { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .03em; }
 
 .filters,
 .cloud-pill,
@@ -218,47 +247,55 @@ textarea:focus { border-color: rgba(32,224,108,.74); box-shadow: 0 0 0 4px rgba(
 .planner-session-title,
 #calendarView [data-plan-start] { display: none !important; }
 
-.section-header { margin: 20px 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.section-header { margin: var(--sp-5) 0 var(--sp-3); display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
 .filter-btn,
-.pill { white-space: nowrap; font-size: 12px; padding: 8px 11px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.06); border: 1px solid var(--line); }
+.pill { white-space: nowrap; font-size: 12px; padding: 6px 10px; border-radius: var(--radius-pill); color: var(--muted); background: var(--panel-2); border: 1px solid var(--line); }
 .exercise-list,
 .history-list,
 .measure-grid,
-.quality-list,
-.training-list { display: grid; gap: 13px; margin-top: 14px; }
-.exercise-card { width: 100%; color: var(--text); text-align: left; padding: 18px 18px 18px 20px; position: relative; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
-.exercise-card:hover { transform: translateY(-2px); border-color: rgba(32,224,108,.5); }
-.exercise-card h3 { font-size: 21px; margin-bottom: 8px; }
-.exercise-meta { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
-.source-note { margin-top: 12px; color: #cdfbd6; font-size: 12px; opacity: .84; }
+.training-list { display: grid; gap: var(--sp-3); margin-top: var(--sp-4); }
+.exercise-card { width: 100%; color: var(--text); text-align: left; padding: 14px 16px; }
+.exercise-card:active { border-color: var(--line-strong); }
+.exercise-card h3 { font-size: 16px; margin-bottom: 4px; }
+.exercise-card .muted { font-size: 14px; }
+.exercise-meta { margin-top: var(--sp-2); display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.exercise-list-meta { margin-top: 6px; font-size: 12px; color: var(--muted); }
+.source-note { margin-top: var(--sp-3); color: var(--muted); font-size: 12px; }
 
-.back-btn { color: var(--text); background: transparent; margin-bottom: 18px; padding: 8px 0; font-size: 18px; }
-.detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin: 16px 0; }
-.mini-metric { padding: 12px; }
-.mini-metric strong { display: block; color: var(--green); margin-bottom: 3px; overflow-wrap: anywhere; }
-.points { display: grid; gap: 10px; margin: 14px 0 22px; }
-.point { padding: 12px; color: #d9ffe2; background: rgba(32,224,108,.08); }
-.detail-block { margin-top: 18px; }
-.detail-block h3 { margin-bottom: 8px; }
+.back-btn { color: var(--muted); background: transparent; margin-bottom: var(--sp-4); padding: var(--sp-2) 0; font-size: 15px; font-weight: 600; }
+.detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-2); margin: var(--sp-4) 0; }
+.mini-metric { padding: var(--sp-3); }
+.mini-metric strong { display: block; color: var(--text); font-size: 16px; margin-bottom: 2px; overflow-wrap: anywhere; }
+.mini-metric span { font-size: 11px; color: var(--muted); }
+.points { display: grid; gap: var(--sp-2); margin: var(--sp-3) 0 var(--sp-5); }
+.point { padding: var(--sp-3); color: var(--text); font-size: 14px; }
+.detail-block { margin-top: var(--sp-4); }
+.detail-block h3 { margin-bottom: var(--sp-2); }
 
 .timer-card { text-align: center; }
-.timer { font-size: clamp(74px, 21vw, 104px); font-weight: 950; letter-spacing: -.09em; margin: 18px 0 8px; color: var(--green); text-shadow: 0 0 42px rgba(32,224,108,.22); }
-.button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-.keeper-selector-card { margin-bottom: 16px; }
+.timer { font-size: clamp(64px, 18vw, 88px); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.02em; margin: var(--sp-4) 0 var(--sp-2); color: var(--text); }
+.button-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-top: var(--sp-5); }
+.keeper-selector-card { margin-bottom: var(--sp-4); }
+.stat-btn { padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line); color: var(--text); display: grid; gap: 2px; justify-items: center; }
+.stat-btn strong { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat-btn span { font-size: 12px; color: var(--muted); }
 
-.calendar-top { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; gap: 12px; text-align: center; }
+.calendar-top { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: var(--sp-3); text-align: center; }
 .calendar-weekdays,
-.calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 7px; }
-.calendar-weekdays { margin-top: 18px; color: var(--muted); font-size: 11px; font-weight: 900; text-align: center; text-transform: uppercase; }
-.calendar-grid { margin-top: 8px; }
-.calendar-day { min-height: 52px; border-radius: 16px; padding: 7px 5px; color: var(--text); background: rgba(255,255,255,.045); border: 1px solid var(--line); display: grid; align-content: space-between; justify-items: center; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.calendar-weekdays { margin-top: var(--sp-4); color: var(--muted); font-size: 11px; font-weight: 600; text-align: center; text-transform: uppercase; }
+.calendar-grid { margin-top: var(--sp-2); }
+.calendar-day { position: relative; min-height: 48px; border-radius: var(--radius-sm); padding: 6px 4px; color: var(--text); background: var(--panel-2); border: 1px solid var(--line); display: grid; align-content: space-between; justify-items: center; }
 .calendar-day.empty { opacity: .25; pointer-events: none; }
-.calendar-day.today { border-color: rgba(32,224,108,.65); }
-.calendar-day.selected { color: #001b0a; background: var(--green); border-color: var(--green); }
-.calendar-day-number { font-size: 13px; font-weight: 950; }
-.calendar-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--green); box-shadow: 0 0 14px rgba(32,224,108,.5); }
-.calendar-dot.planned { background: var(--orange) !important; box-shadow: 0 0 14px rgba(249,115,22,.45) !important; }
-.calendar-day.selected .calendar-dot { background: #001b0a; }
+.calendar-day.today { border-color: var(--line-strong); }
+.calendar-day.selected { color: #fff; background: var(--red); border-color: var(--red); }
+.calendar-day.first-team-match-day { border-color: rgba(220, 6, 25, .5); }
+.calendar-day.first-team-match-day.selected { background: var(--red); }
+.calendar-day-number { font-size: 13px; font-weight: 600; }
+.calendar-dot { width: 6px; height: 6px; border-radius: var(--radius-pill); background: var(--red); }
+.calendar-dot.planned { background: var(--mantova-gold) !important; box-shadow: none !important; }
+.calendar-day.selected .calendar-dot { background: #fff; }
+.calendar-match-badge { position: absolute; top: 2px; right: 2px; min-width: 15px; height: 15px; padding: 0 3px; border-radius: var(--radius-pill); display: grid; place-items: center; background: var(--white); color: var(--red); font-size: 8px; font-weight: 700; line-height: 1; }
 
 .planner-card,
 .planner-card *,
@@ -270,67 +307,59 @@ textarea:focus { border-color: rgba(32,224,108,.74); box-shadow: 0 0 0 4px rgba(
 .measure-card,
 .training-card,
 .training-card * { max-width: 100%; box-sizing: border-box; }
-.planner-card { display: grid !important; gap: 14px !important; margin-top: 14px !important; }
+.planner-card { display: grid !important; gap: var(--sp-3) !important; margin-top: var(--sp-4) !important; padding: var(--sp-4) !important; }
 .planner-grid,
 .planner-toolbar,
 .planner-summary,
 .planner-actions,
 .physical-chart-controls,
-.physical-kpis { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; }
-.planner-item { display: grid !important; grid-template-columns: minmax(0,1fr) !important; gap: 9px !important; padding: 13px !important; border-radius: 18px !important; border: 1px solid var(--line) !important; background: rgba(255,255,255,.045) !important; overflow: hidden; }
+.physical-kpis { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: var(--sp-2) !important; }
+.planner-item { display: grid !important; grid-template-columns: minmax(0,1fr) !important; gap: var(--sp-2) !important; padding: var(--sp-3) !important; border-radius: var(--radius-sm) !important; border: 1px solid var(--line) !important; background: var(--panel-2) !important; overflow: hidden; }
 .planner-item h3,
 .planner-item .muted,
 .planner-item .eyebrow { overflow-wrap: anywhere; }
-.planner-save-row { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 10px; }
-.planner-empty { padding: 14px !important; border: 1px dashed var(--line) !important; border-radius: 18px !important; color: var(--muted) !important; line-height: 1.45 !important; }
+.planner-save-row { display: grid; grid-template-columns: 1fr; gap: var(--sp-2); margin-top: var(--sp-2); }
+.planner-empty { padding: var(--sp-4) !important; border: 1px dashed var(--line) !important; border-radius: var(--radius-sm) !important; color: var(--muted) !important; line-height: 1.45 !important; }
 
-.keepers-box { margin-top: 6px; padding: 14px; background: rgba(255,255,255,.035); }
-.keepers-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
-.keepers-fields { display: grid; gap: 12px; }
+.keepers-box { margin-top: var(--sp-1); padding: var(--sp-3); }
+.keepers-header { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2); margin-bottom: var(--sp-3); }
+.keepers-fields { display: grid; gap: var(--sp-3); }
 .keeper-row,
 .keeper-main,
 .performance-main,
-.performance-tests { display: grid; grid-template-columns: minmax(0,1fr); gap: 10px; }
-.keeper-card { display: grid !important; grid-template-columns: 1fr !important; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.035); }
+.performance-tests { display: grid; grid-template-columns: minmax(0,1fr); gap: var(--sp-2); }
+.keeper-card { display: grid !important; grid-template-columns: 1fr !important; gap: var(--sp-2); padding: var(--sp-3); }
 .performance-line { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
 
-.progress-kpis { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
-.progress-kpi { background: rgba(255,255,255,.045); border: 1px solid var(--line); border-radius: 18px; padding: 12px; }
-.progress-kpi span { display: block; color: var(--muted); font-size: 11px; font-weight: 850; text-transform: uppercase; }
-.progress-kpi strong { display: block; margin-top: 6px; font-size: 24px; }
-.progress-kpi small { display: block; margin-top: 4px; color: var(--muted); line-height: 1.35; }
-.monthly-chart { display: flex; align-items: flex-end; gap: 10px; min-height: 190px; margin-top: 18px; padding: 14px 6px 4px; overflow-x: auto; }
-.month-column { min-width: 58px; display: grid; grid-template-rows: 1fr auto auto; gap: 7px; text-align: center; }
-.month-bar-wrap { height: 120px; display: flex; align-items: flex-end; justify-content: center; border-radius: 16px; background: rgba(255,255,255,.04); border: 1px solid var(--line); padding: 5px; }
-.month-bar { width: 100%; min-height: 8px; border-radius: 12px 12px 8px 8px; background: linear-gradient(180deg,var(--green),#0e7a37); display: flex; align-items: flex-start; justify-content: center; color: #001b0a; font-size: 11px; font-weight: 950; padding-top: 5px; }
-.month-label { font-size: 12px; font-weight: 950; }
-.month-sub { color: var(--muted); font-size: 11px; }
-.metric-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
-.metric-tag { border: 1px solid var(--line); border-radius: 999px; padding: 6px 9px; font-size: 12px; color: var(--muted); background: rgba(255,255,255,.04); }
-.quality-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-.quality-score { min-width: 54px; text-align: center; border-radius: 14px; padding: 8px 9px; color: #001b0a; background: var(--green); font-weight: 950; }
-.quality-meta { margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.45; }
-.no-data { margin-top: 14px; padding: 14px; border: 1px dashed var(--line); border-radius: 18px; color: var(--muted); }
-.history-card { padding: 16px; }
-.history-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
+/* Stat tile — the one component reused wherever a metric is shown
+   (planner summary, physical KPIs). One treatment, not four. */
+.progress-kpis { display: grid; grid-template-columns: 1fr; gap: var(--sp-2); margin-top: var(--sp-4); }
+.progress-kpi,
+.physical-kpi { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: var(--sp-3); }
+.progress-kpi span,
+.physical-kpi span { display: block; color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
+.progress-kpi strong,
+.physical-kpi strong { display: block; margin-top: 4px; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.progress-kpi small,
+.physical-kpi small { display: block; margin-top: 2px; color: var(--muted); line-height: 1.35; font-size: 11px; }
+.progress-kpi.over { border-color: rgba(220, 6, 25, .45); background: var(--red-soft); }
+.metric-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-2); }
+.metric-tag { border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 5px 9px; font-size: 12px; color: var(--muted); background: var(--panel-2); }
+.no-data { margin-top: var(--sp-4); padding: var(--sp-4); border: 1px dashed var(--line); border-radius: var(--radius-sm); color: var(--muted); }
+.history-card { padding: var(--sp-4); }
+.history-row { display: flex; justify-content: space-between; gap: var(--sp-3); margin-top: var(--sp-2); color: var(--muted); font-size: 13px; flex-wrap: wrap; }
 
-.training-list { gap: 14px; margin-top: 16px; }
-.training-plan { display: grid; gap: 12px; padding: 16px; position: relative; }
-.training-plan-head { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; gap: 12px; }
-.training-plan-head h3 { margin: 0; }
-.training-items { display: grid; gap: 10px; }
-.training-item { display: grid; gap: 10px; padding: 13px; background: rgba(7,17,11,.62); }
-.training-item-top { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 10px; }
-.training-item h4 { margin: 0; font-size: 16px; }
-.training-item textarea { min-height: 58px; max-height: 110px; resize: vertical; }
-.training-empty { display: grid; gap: 12px; padding: 18px; border: 1px dashed var(--line); border-radius: 20px; color: var(--muted); line-height: 1.45; }
+.training-list { gap: var(--sp-4); margin-top: var(--sp-4); }
+.training-item { display: grid; gap: var(--sp-2); padding: var(--sp-3); }
+.training-item-top { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: var(--sp-2); }
+.training-item h4 { margin: 0; font-size: 15px; font-weight: 600; }
+.training-item textarea { min-height: 56px; max-height: 110px; resize: vertical; }
+.training-empty { display: grid; gap: var(--sp-3); padding: var(--sp-4); border: 1px dashed var(--line); border-radius: var(--radius-md); color: var(--muted); line-height: 1.45; }
 
 .bottom-nav {
   position: fixed !important;
   z-index: 100;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
+  left: 0 !important; right: 0 !important; bottom: 0 !important;
   transform: none !important;
   width: 100% !important;
   max-width: none !important;
@@ -338,18 +367,17 @@ textarea:focus { border-color: rgba(32,224,108,.74); box-shadow: 0 0 0 4px rgba(
   grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   gap: 0 !important;
   padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px)) !important;
-  background: rgba(1, 6, 3, .92);
+  background: rgba(14, 15, 16, .96);
   border: 0;
-  border-top: 1px solid rgba(213,255,222,.14);
-  border-radius: 26px 26px 0 0;
-  box-shadow: 0 -18px 46px rgba(0,0,0,.42);
-  backdrop-filter: blur(22px) saturate(1.25);
-  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
 }
 .bottom-nav.hidden { display: none !important; }
-.nav-btn { min-width: 0 !important; width: 100% !important; max-width: 100% !important; color: var(--muted); background: transparent; border-radius: 18px; padding: 13px 2px !important; font-size: clamp(10px, 2.75vw, 12px) !important; line-height: 1.05; letter-spacing: -.055em; white-space: nowrap; overflow: hidden; text-align: center; font-weight: 950; }
+.nav-btn { min-width: 0 !important; width: 100% !important; max-width: 100% !important; color: var(--muted); background: transparent; border-radius: var(--radius-sm); padding: 12px 2px !important; font-size: clamp(10px, 2.75vw, 12px) !important; line-height: 1.1; white-space: nowrap; overflow: hidden; text-align: center; font-weight: 600; }
 .nav-btn[data-tab="training"] { font-size: clamp(9.4px, 2.45vw, 11px) !important; }
-.nav-btn.active { color: #001b0a; background: var(--green); }
+.nav-btn.active { color: var(--red); background: var(--red-soft); }
 
 button,
 .primary-btn,
@@ -365,29 +393,30 @@ button,
 .back-btn { touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
 
 @media (min-width: 520px) {
-  .topbar { left: 50%; transform: translateX(-50%); width: min(100%, 490px); border-left: 1px solid rgba(213,255,222,.08); border-right: 1px solid rgba(213,255,222,.08); border-radius: 0 0 24px 24px; }
-  .bottom-nav { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; width: min(100%, 490px) !important; border-radius: 26px 26px 0 0; }
+  .topbar { left: 50%; transform: translateX(-50%); width: min(100%, 490px); border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .bottom-nav { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; width: min(100%, 490px) !important; }
 }
 
 @media (max-width: 430px) {
   .app-shell { padding-left: 16px; padding-right: 16px; }
-  .hero-card { grid-template-columns: minmax(0, 1fr) 78px; padding: 20px; }
-  .score-ring { width: 76px; height: 76px; min-width: 76px; }
-  .calendar-card,
-  .calendar-list-card,
-  .progress-card,
-  .timer-card,
-  .keeper-selector-card,
-  .training-card { border-radius: 24px; }
   .detail-grid,
   .button-row,
-  .training-item-top,
-  .training-plan-head { grid-template-columns: minmax(0, 1fr); }
-  .month-column { min-width: 52px; }
+  .training-item-top { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Calendar stability and save feedback v1 */
+/* ============================================================
+   Functional fixes — layout/behaviour, not decoration. Kept as-is
+   from the refactor; do not remove without re-checking the reason
+   noted next to each block.
+   ============================================================ */
+
+/* Calendar stability: prevents the page from jumping vertically when
+   the planner re-renders after an edit. Union of two overlapping rule
+   sets that had accumulated here (one already in style.css, one moved
+   in from index.html's inline style in the refactor) — merged into
+   one, keeping every protected selector from both, none dropped. */
 #calendarView,
+#calendarView *,
 #calendarView .calendar-list-card,
 #selectedDateSessions,
 #selectedDateSessions .planner-card,
@@ -395,7 +424,9 @@ button,
 #dayPlanItems .planner-item,
 #saveCalendarPlanBtn,
 #calendarSaveStatus { overflow-anchor: none !important; }
-html:has(#calendarView.active) { scroll-behavior: auto !important; }
+html:has(#calendarView.active),
+#calendarView,
+#calendarView * { scroll-behavior: auto !important; }
 #calendarView .calendar-list-card { min-height: 560px; }
 #selectedDateSessions .planner-card { contain: layout style; transform: translateZ(0); }
 #dayPlanItems { min-height: 92px; transition: none !important; }
@@ -403,156 +434,28 @@ html:has(#calendarView.active) { scroll-behavior: auto !important; }
 #calendarView .planner-card,
 #calendarView .planner-list,
 #calendarView .planner-summary,
-#calendarView .planner-actions { transition: none !important; animation: none !important; }
-#saveCalendarPlanBtn { position: relative; overflow: hidden; isolation: isolate; min-height: 58px; transition: transform .12s ease, box-shadow .18s ease, filter .18s ease !important; box-shadow: 0 12px 28px rgba(32, 224, 108, .16), inset 0 1px 0 rgba(255,255,255,.26); }
-#saveCalendarPlanBtn::after { content: ""; position: absolute; inset: -40% auto -40% -35%; width: 32%; transform: skewX(-18deg) translateX(-140%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent); opacity: 0; z-index: -1; }
-#saveCalendarPlanBtn:active { transform: scale(.985); filter: brightness(1.07); }
-#saveCalendarPlanBtn:active::after,
-#saveCalendarPlanBtn:focus::after { opacity: 1; animation: saveShine .72s ease forwards; }
-#saveCalendarPlanBtn:focus { animation: savePulse .9s ease both; }
-.calendar-save-status { min-height: 42px; margin-top: 0 !important; padding: 11px 12px; border-radius: 16px; color: #d9ffe2 !important; background: rgba(32,224,108,.09); border: 1px solid rgba(32,224,108,.24); font-weight: 850; line-height: 1.35; }
-.calendar-save-status:not(:empty)::before { content: "✓"; display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 7px; border-radius: 999px; color: #001b0a; background: var(--green); font-size: 12px; font-weight: 950; vertical-align: -2px; }
-@keyframes saveShine { 0% { transform: skewX(-18deg) translateX(-140%); } 100% { transform: skewX(-18deg) translateX(520%); } }
-@keyframes savePulse { 0% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); } 45% { box-shadow: 0 0 0 5px rgba(32,224,108,.15), 0 18px 38px rgba(32,224,108,.22), inset 0 1px 0 rgba(255,255,255,.32); } 100% { box-shadow: 0 12px 28px rgba(32,224,108,.16), inset 0 1px 0 rgba(255,255,255,.26); } }
+#calendarView .planner-actions,
+#calendarView .planner-save-row { transition: none !important; animation: none !important; }
+.planner-save-row { min-height: 112px; }
 
-/* Mantova visual theme v1 */
-:root {
-  --bg: #100103;
-  --panel: rgba(45, 5, 9, .88);
-  --panel-2: rgba(78, 7, 14, .80);
-  --text: #fffafa;
-  --muted: #f0c7c7;
-  --line: rgba(255,255,255,.18);
-  --line-strong: rgba(220,6,25,.46);
-  --green: #dc0619;
-  --green-2: #9f0010;
-  --red: #dc0619;
-  --orange: #ffbd00;
-  --black: #080102;
-  --mantova-red: #dc0619;
-  --mantova-deep: #6c000b;
-  --mantova-white: #ffffff;
-  --mantova-gold: #ffbd00;
-  --mantova-logo: url("https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_Mantova_1911.svg");
-  --shadow: 0 18px 52px rgba(48,0,6,.52);
-}
-body { background: radial-gradient(circle at 8% -12%, rgba(220,6,25,.34), transparent 23rem), radial-gradient(circle at 96% 8%, rgba(255,255,255,.10), transparent 18rem), linear-gradient(145deg, #070102 0%, #300207 44%, #110103 100%) !important; }
-body::before { opacity: .11 !important; background: linear-gradient(135deg, transparent 0 41%, rgba(255,255,255,.34) 41.5% 42.8%, rgba(220,6,25,.56) 43% 48%, transparent 48.4%), repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 1px, transparent 1px 70px) !important; }
-body::after { content: ""; position: fixed; inset: -35%; pointer-events: none; opacity: .13; background: linear-gradient(135deg, transparent 42%, rgba(255,255,255,.88) 42.3% 43.2%, rgba(220,6,25,.92) 43.4% 47.7%, rgba(255,255,255,.78) 47.9% 48.6%, transparent 48.8%); z-index: 0; }
-.app-shell,
-.topbar,
-.bottom-nav,
-main,
-.view { position: relative; z-index: 1; }
-.topbar,
-.bottom-nav { background: linear-gradient(180deg, rgba(55,3,9,.94), rgba(13,1,3,.94)) !important; border-color: rgba(255,255,255,.16) !important; box-shadow: 0 16px 42px rgba(54,0,7,.38) !important; }
-.app-brand { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 9px !important; color: var(--mantova-white) !important; letter-spacing: .09em !important; }
-.app-brand::before { content: ""; width: 27px; height: 33px; flex: 0 0 27px; background: var(--mantova-logo) center/contain no-repeat; filter: drop-shadow(0 5px 10px rgba(0,0,0,.34)); }
-.auth-logo::before { content: ""; display: block; width: 82px; height: 98px; margin: 0 auto 14px; background: var(--mantova-logo) center/contain no-repeat; filter: drop-shadow(0 10px 22px rgba(0,0,0,.38)); }
-.setup-card,
-.auth-card,
-.hero-card,
-.exercise-card,
-.detail-card,
-.timer-card,
-.history-card,
-.keeper-selector-card,
-.calendar-card,
-.calendar-list-card,
-.progress-card,
-.training-plan,
-.training-item,
-.measure-card,
-.quality-item,
-.keepers-box,
-.point,
-.mini-metric,
-.planner-card,
-.planner-item,
-.training-saved-card,
-.keeper-attendance-card,
-.physical-save-meta,
-.physical-kpi,
-.physical-history-item,
-.progress-kpi { background: linear-gradient(165deg, rgba(58,6,11,.90), rgba(15,1,3,.90)) !important; border-color: rgba(255,255,255,.17) !important; }
-.auth-card,
-.setup-card,
-.calendar-card,
-.calendar-list-card,
-.progress-card,
-.training-card,
-.timer-card,
-.hero-card,
-.detail-card { position: relative !important; overflow: hidden !important; }
-.auth-card::after,
-.setup-card::after,
-.calendar-card::after,
-.calendar-list-card::after,
-.progress-card::after,
-.training-card::after,
-.timer-card::after,
-.hero-card::after,
-.detail-card::after { content: ""; position: absolute; right: -18px; bottom: -26px; width: 112px; height: 134px; background: var(--mantova-logo) center/contain no-repeat; opacity: .075; pointer-events: none; filter: drop-shadow(0 12px 24px rgba(0,0,0,.38)); }
-.landing-hero { background: linear-gradient(180deg, rgba(18,1,3,.04), rgba(18,1,3,.88) 74%), linear-gradient(135deg, transparent 0 38%, rgba(255,255,255,.42) 38.6% 40%, rgba(220,6,25,.70) 40.2% 48%, transparent 48.4%), linear-gradient(120deg, rgba(220,6,25,.28), transparent 52%), url("gk-home-hero.png") center/cover no-repeat !important; border-color: rgba(255,255,255,.18) !important; }
-.landing-hero::before { content: ""; position: absolute; right: 18px; top: 18px; width: 82px; height: 98px; background: var(--mantova-logo) center/contain no-repeat; filter: drop-shadow(0 12px 24px rgba(0,0,0,.42)); z-index: 1; }
-.landing-hero::after { background: radial-gradient(circle at 22% 12%, rgba(220,6,25,.22), transparent 28rem) !important; }
-.eyebrow,
-.mini-metric strong,
-.timer,
-.physical-chart-line,
-.physical-chart-value { color: var(--mantova-white) !important; }
-.eyebrow::after { content: ""; display: inline-block; width: 24px; height: 3px; margin-left: 8px; border-radius: 999px; background: var(--mantova-red); vertical-align: middle; }
-label { color: #fff4f4 !important; }
-select,
-input,
-textarea { background: rgba(255,255,255,.075) !important; border-color: rgba(255,255,255,.18) !important; }
-select:focus,
-input:focus,
-textarea:focus { border-color: rgba(220,6,25,.78) !important; box-shadow: 0 0 0 4px rgba(220,6,25,.14) !important; }
-.primary-btn { color: #fff !important; background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important; box-shadow: 0 12px 28px rgba(220,6,25,.24), inset 0 1px 0 rgba(255,255,255,.28) !important; }
-.dark-btn,
-.ghost-btn,
-.icon-btn { background: rgba(255,255,255,.075) !important; border-color: rgba(255,255,255,.18) !important; }
-.danger-btn { background: rgba(220,6,25,.22) !important; border-color: rgba(220,6,25,.38) !important; }
-.pill,
-.filter-btn,
-.metric-tag { color: #fff3f3 !important; background: rgba(255,255,255,.075) !important; border-color: rgba(255,255,255,.18) !important; }
-.calendar-day.today { border-color: rgba(255,255,255,.62) !important; }
-.calendar-day.selected,
-.nav-btn.active,
-.quality-score,
-.month-bar { color: #fff !important; background: linear-gradient(180deg, #f0182b, var(--mantova-red)) !important; border-color: var(--mantova-red) !important; }
-.calendar-dot { background: var(--mantova-white) !important; box-shadow: 0 0 14px rgba(255,255,255,.42) !important; }
-.calendar-dot.planned { background: var(--mantova-gold) !important; box-shadow: 0 0 14px rgba(255,189,0,.48) !important; }
-.calendar-day.selected .calendar-dot,
-.calendar-save-status:not(:empty)::before { color: var(--mantova-red) !important; background: #fff !important; }
-.score-ring { border-color: rgba(255,255,255,.56) !important; background: rgba(220,6,25,.22) !important; }
-.point { color: #fff4f4 !important; background: rgba(220,6,25,.10) !important; }
-.source-note { color: #ffe3e3 !important; }
-.exercise-card:hover { border-color: rgba(255,255,255,.42) !important; }
-.timer { text-shadow: 0 0 42px rgba(220,6,25,.34) !important; }
-.physical-chart-line { stroke: var(--mantova-red) !important; }
-.physical-chart-fill { fill: rgba(220,6,25,.10) !important; }
-.physical-chart-dot { fill: var(--mantova-white) !important; stroke: var(--mantova-red) !important; }
-#saveCalendarPlanBtn { box-shadow: 0 12px 28px rgba(220,6,25,.20), inset 0 1px 0 rgba(255,255,255,.26) !important; }
-#saveCalendarPlanBtn.gk-saving,
-#saveCalendarPlanBtn.gk-saved,
-#saveCalendarPlanBtn:focus { box-shadow: 0 0 0 5px rgba(220,6,25,.18), 0 18px 38px rgba(220,6,25,.26), inset 0 1px 0 rgba(255,255,255,.32) !important; }
-#calendarSaveStatus,
-.calendar-save-status { color: #fff4f4 !important; background: rgba(220,6,25,.11) !important; border-color: rgba(220,6,25,.28) !important; }
-#calendarSaveStatus.gk-ok { background: rgba(220,6,25,.16) !important; border-color: rgba(220,6,25,.42) !important; }
+#saveCalendarPlanBtn { min-height: 58px; }
+.calendar-save-status { min-height: 42px; margin-top: 0 !important; padding: 11px 12px; border-radius: var(--radius-sm); color: var(--text) !important; background: var(--panel-2); border: 1px solid var(--line); font-weight: 600; line-height: 1.35; }
+.calendar-save-status:not(:empty)::before { content: "✓"; display: inline-grid; place-items: center; width: 16px; height: 16px; margin-right: var(--sp-2); border-radius: var(--radius-pill); color: #fff; background: var(--red); font-size: 11px; font-weight: 700; vertical-align: -2px; }
+#saveCalendarPlanBtn.gk-saving { opacity: .75; }
+#saveCalendarPlanBtn.gk-saved { background: var(--red-deep); }
+#saveCalendarPlanBtn.gk-error { background: var(--panel-2); color: var(--text); border: 1px solid rgba(220, 6, 25, .4); }
+#calendarSaveStatus.gk-ok { border-color: rgba(220, 6, 25, .35); }
+#calendarSaveStatus.gk-error { border-color: rgba(220, 6, 25, .4); color: #ffdede !important; }
 
-/* Mantova layout fixes v2 */
+/* Chrome hidden before authentication; the login screen locked full-
+   height, centered, non-scrollable on iPhone. */
+body:not(.gk-authenticated) .topbar,
+body:not(.gk-authenticated) .page-heading,
+body:not(.gk-authenticated) #bottomNav { display: none !important; }
 body:not(.gk-authenticated) .app-shell { min-height: 100dvh !important; padding: 0 16px !important; }
-body:not(.gk-authenticated) #authView.active { min-height: 100dvh; display: grid !important; align-items: center; justify-items: stretch; padding-top: max(22px, env(safe-area-inset-top, 0px)); padding-bottom: max(22px, env(safe-area-inset-bottom, 0px)); }
-body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !important; margin: 0 auto !important; }
-.auth-logo h2 { display: none !important; }
-.auth-logo .eyebrow { text-align: center; margin-bottom: 0; }
-.topbar { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; max-width: none !important; transform: none !important; border-radius: 0 !important; z-index: 1000 !important; }
-.landing-hero { background: linear-gradient(180deg, rgba(18,1,3,.04), rgba(18,1,3,.88) 74%), url("gk-home-hero.png") center/cover no-repeat !important; }
-@media (orientation: portrait) and (max-width: 430px) { body:not(.gk-authenticated) #authView.active { min-height: 100dvh; align-items: center; } }
+body.gk-authenticated:has(#landingView.active) #bottomNav,
+body.gk-authenticated:has(#landingView.active) #bottomNav.hidden { display: grid !important; }
 
-/* Mantova auth and home fixes v3 */
 html:has(#authView.active),
 body:has(#authView.active) {
   height: 100dvh !important;
@@ -561,11 +464,7 @@ body:has(#authView.active) {
   overflow: hidden !important;
   overscroll-behavior: none !important;
 }
-body:has(#authView.active) {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100% !important;
-}
+body:has(#authView.active) { position: fixed !important; inset: 0 !important; width: 100% !important; }
 body:has(#authView.active) .app-shell {
   position: fixed !important;
   inset: 0 !important;
@@ -589,69 +488,46 @@ body:has(#authView.active) #authView.active {
 }
 body:has(#authView.active) .topbar,
 body:has(#authView.active) .page-heading,
-body:has(#authView.active) #bottomNav {
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-body:has(#authView.active) .auth-card {
-  width: 100% !important;
-  max-width: 420px !important;
-  margin: 0 auto !important;
-}
-.landing-hero {
-  background:
-    linear-gradient(rgba(71,2,10,.52), rgba(71,2,10,.52)),
-    url("gk-home-hero.png") center/cover no-repeat !important;
-}
-.landing-hero::after {
-  background: rgba(220,6,25,.08) !important;
-}
+body:has(#authView.active) #bottomNav { visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+body:has(#authView.active) .auth-card,
+body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !important; margin: 0 auto !important; }
 
-/* Account source chrome v5 — spostato qui da index.html (era uno <style>
-   inline separato); stesso ordine di cascata (era l'ultimo blocco caricato),
-   nessuna regola riscritta. Le due neutralizzazioni ::before che qui
-   comparivano sono state rimosse insieme alle regole base che annullavano,
-   più sopra. */
-body:not(.gk-authenticated) .topbar,
-body:not(.gk-authenticated) .page-heading,
-body:not(.gk-authenticated) #bottomNav{display:none!important}
-body:not(.gk-authenticated) .app-shell{padding-top:24px!important;padding-bottom:24px!important}
-.page-heading .eyebrow{display:none!important}
-.topbar .icon-btn{display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;line-height:0!important;text-align:center!important}
-.top-svg{width:23px;height:23px;display:block;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-#settingsBtn .top-svg{width:22px;height:22px}
-.landing-home{display:grid;gap:16px}
-.landing-hero{min-height:360px;border-radius:30px;padding:22px;display:flex;align-items:flex-end;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(2,6,4,.06),rgba(2,6,4,.88) 74%),linear-gradient(120deg,rgba(32,224,108,.24),transparent 52%),url("gk-home-hero.png") center/cover no-repeat;border:1px solid var(--line);box-shadow:var(--shadow)}
-.landing-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 22% 12%,rgba(32,224,108,.18),transparent 28rem);pointer-events:none}
-.landing-copy{position:relative;z-index:1;display:grid;gap:10px;max-width:360px}
-.landing-copy h2{font-size:clamp(34px,8vw,46px);letter-spacing:-.07em;line-height:.98}
-.landing-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-.landing-placeholder{padding:18px;border:1px dashed var(--line);border-radius:24px;background:rgba(255,255,255,.035);color:var(--muted);line-height:1.45}
-body.gk-authenticated:has(#landingView.active) #bottomNav,body.gk-authenticated:has(#landingView.active) #bottomNav.hidden{display:grid!important}
-.training-card{display:grid!important;gap:14px!important}
-.training-card>.eyebrow{display:none!important}
-.training-filter{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;margin:12px 0 0!important;align-items:end!important}
-.training-filter label{margin:0}.training-filter .ghost-btn{height:58px;white-space:nowrap}
-.training-sync-status{margin-top:0!important}.training-list{display:grid!important;gap:11px!important;margin-top:10px!important}
-.training-session-meta{display:grid;gap:5px;padding:8px 0 4px;background:transparent;border:0}.training-session-meta h3{font-size:20px;line-height:1.1;margin:0}
-.training-item{display:grid!important;gap:11px!important;padding:14px!important;border-radius:20px!important;background:rgba(255,255,255,.045)!important;border:1px solid var(--line)!important}
-.training-item.is-done{opacity:.68;background:rgba(32,224,108,.07)!important}.training-item.is-done h4{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:rgba(32,224,108,.8)}
-.training-item-top{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important}.training-item h4{margin:0;font-size:16px;line-height:1.2}.training-item-actions{display:flex;gap:10px;align-items:center;justify-content:flex-start}.training-done{display:flex!important;align-items:center;gap:9px;font-weight:900;color:var(--text);width:auto!important}.training-done input{width:22px!important;height:22px!important;accent-color:var(--green);padding:0!important}.training-empty strong{color:var(--text)}
-.training-all-title{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:950}
-.training-saved-card{display:grid;gap:8px;padding:14px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
-.training-saved-card.is-current{border-color:rgba(32,224,108,.45);background:rgba(32,224,108,.08)}
-.training-saved-card h4{margin:0;font-size:16px}.training-saved-card .primary-btn{margin-top:4px}
-#calendarView,#calendarView *{scroll-behavior:auto!important;overflow-anchor:none!important}
-#selectedDateSessions .planner-card,#calendarView .planner-item,#calendarView .planner-actions,#calendarView .planner-summary,#calendarView .planner-save-row{transition:none!important;animation:none!important;overflow-anchor:none!important}
-.planner-save-row{min-height:112px!important}
-#calendarSaveStatus{display:block!important;min-height:44px!important;margin-top:8px!important;padding:12px 13px!important;border-radius:16px!important;color:#d9ffe2!important;background:rgba(32,224,108,.08)!important;border:1px solid rgba(32,224,108,.22)!important;font-weight:850!important;line-height:1.35!important}
-#calendarSaveStatus.gk-ok{background:rgba(32,224,108,.14)!important;border-color:rgba(32,224,108,.42)!important;color:#effff2!important}
-#calendarSaveStatus.gk-error{background:rgba(239,68,68,.14)!important;border-color:rgba(239,68,68,.38)!important;color:#ffecec!important}
-#saveCalendarPlanBtn{position:relative!important;overflow:hidden!important;min-height:58px!important;transition:transform .14s ease,filter .18s ease,box-shadow .18s ease!important}
-#saveCalendarPlanBtn.gk-saving{transform:scale(.985)!important;filter:brightness(1.12) saturate(1.08)!important;box-shadow:0 0 0 5px rgba(32,224,108,.16),0 16px 36px rgba(32,224,108,.24)!important}
-#saveCalendarPlanBtn.gk-saved{filter:brightness(1.18) saturate(1.12)!important;box-shadow:0 0 0 6px rgba(32,224,108,.2),0 20px 44px rgba(32,224,108,.3)!important}
-#saveCalendarPlanBtn.gk-error{filter:brightness(.95) saturate(.9)!important;box-shadow:0 0 0 5px rgba(239,68,68,.16)!important}
-#saveCalendarPlanBtn.gk-saving::after,#saveCalendarPlanBtn.gk-saved::after{content:"";position:absolute;inset:-45% auto -45% -40%;width:36%;transform:skewX(-18deg) translateX(-140%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);animation:gkSaveSweep .75s ease forwards;pointer-events:none}
-@keyframes gkSaveSweep{0%{transform:skewX(-18deg) translateX(-140%);opacity:0}18%{opacity:1}100%{transform:skewX(-18deg) translateX(520%);opacity:0}}
-@media(max-width:430px){.landing-hero{min-height:330px;border-radius:28px}.landing-actions,.training-filter,.training-item-top{grid-template-columns:1fr!important}.training-filter .ghost-btn,.training-item-top .primary-btn{width:100%}}
+/* Home ("Campo pronto.") — the one screen with a photo hero. Uniform
+   red-tinted overlay for legibility; no diagonal band, no per-card
+   watermark. */
+.landing-home { display: grid; gap: var(--sp-4); }
+.landing-hero {
+  min-height: 340px;
+  border-radius: var(--radius-md);
+  padding: var(--sp-5);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(11, 1, 2, .25), rgba(11, 1, 2, .82) 78%),
+    url("gk-home-hero.png") center/cover no-repeat;
+  border: 1px solid var(--line);
+}
+.landing-copy { position: relative; z-index: 1; display: grid; gap: var(--sp-2); max-width: 340px; }
+.landing-copy h2 { font-size: clamp(26px, 7vw, 32px); font-weight: 700; letter-spacing: -.01em; line-height: 1.05; }
+.landing-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); margin-top: 4px; }
+@media (max-width: 430px) { .landing-hero { min-height: 300px; } .landing-actions { grid-template-columns: 1fr; } }
+
+.training-card { display: grid !important; gap: var(--sp-3) !important; }
+.training-filter { display: grid !important; grid-template-columns: minmax(0,1fr) auto !important; gap: var(--sp-2) !important; margin: var(--sp-3) 0 0 !important; align-items: end !important; }
+.training-filter label { margin: 0; } .training-filter .ghost-btn { height: 54px; white-space: nowrap; }
+@media (max-width: 430px) { .training-filter { grid-template-columns: 1fr !important; } .training-filter .ghost-btn { width: 100%; } }
+.training-sync-status { margin-top: 0 !important; }
+.training-session-meta { display: grid; gap: 4px; padding: var(--sp-2) 0 4px; }
+.training-session-meta h3 { font-size: 17px; line-height: 1.15; margin: 0; }
+.training-item.is-done { opacity: .6; }
+.training-item.is-done h4 { text-decoration: line-through; text-decoration-color: var(--muted); }
+.training-item-actions { display: flex; gap: var(--sp-2); align-items: center; justify-content: flex-start; }
+.training-done { display: flex !important; align-items: center; gap: var(--sp-2); font-weight: 600; color: var(--text); width: auto !important; }
+.training-done input { width: 20px !important; height: 20px !important; accent-color: var(--red); padding: 0 !important; }
+.training-empty strong { color: var(--text); }
+.training-all-title { margin-top: var(--sp-4); padding-top: var(--sp-4); border-top: 1px solid var(--line); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); font-weight: 600; }
+.training-saved-card { display: grid; gap: var(--sp-2); padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line); }
+.training-saved-card.is-current { border-color: rgba(220, 6, 25, .4); }
+.training-saved-card h4 { margin: 0; font-size: 15px; font-weight: 600; } .training-saved-card .primary-btn { margin-top: 4px; }

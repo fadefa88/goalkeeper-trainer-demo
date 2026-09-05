@@ -1051,18 +1051,14 @@ function renderExercises() {
     return;
   }
 
+  // Riga di scansione compatta: nome, descrizione, una sola riga di meta.
+  // Il dettaglio completo (spazio, giocatori, citazione fonte) resta nella
+  // vista di dettaglio, aperta al tocco.
   list.innerHTML = items.map(ex => `
     <button class="exercise-card" data-id="${ex.id}">
-      <p class="eyebrow">${escapeHtml(ex.docCategory)} · pag. ${ex.sourcePage}</p>
       <h3>${escapeHtml(ex.name)}</h3>
       <p class="muted">${escapeHtml(ex.description)}</p>
-      <div class="exercise-meta">
-        <span class="pill">${escapeHtml(ex.ambito)}</span>
-        <span class="pill">${escapeHtml(ex.mode)}</span>
-        <span class="pill">${ex.durationMin} min</span>
-        <span class="pill">${escapeHtml(ex.players)}</span>
-      </div>
-      <div class="source-note">Fonte: eserciziario FIGC, pagina ${ex.sourcePage}</div>
+      <p class="exercise-list-meta">${escapeHtml(ex.docCategory)} · ${escapeHtml(ex.ambito)} · ${ex.durationMin} min</p>
     </button>
   `).join("");
 
