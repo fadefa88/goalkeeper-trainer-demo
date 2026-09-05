@@ -1,4 +1,9 @@
 (() => {
+  // I rapporti partita prima squadra vivono in training_sessions con questa
+  // category (stesso valore usato server-side e in calendar-keepers.js), ma
+  // non sono allenamenti: esclusi qui, alla fonte, invece che con un filtro
+  // sulla risposta fetch applicato altrove.
+  const MATCH_CATEGORY = "__match__";
   let cloudUser = null;
   let cloudProfile = null;
   let cloudHistory = [];
@@ -10,8 +15,15 @@
   const cleanNum = (v) => v === "" || v === null || v === undefined ? null : Number(v);
   const val = (row, selector) => row.querySelector(selector)?.value?.trim() || "";
 
+  // Europe/Rome esplicito invece dell'ora locale del dispositivo: le date
+  // partita (functions/api/health.js, calendar-keepers.js) sono già calcolate
+  // così. Con questa funzione ancorata al fuso del dispositivo, un telefono
+  // impostato su un fuso diverso vedeva "oggi" e il giorno partita disallineati
+  // di un giorno intorno alla mezzanotte.
   function todayKey(d = new Date()) {
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(d);
+    const get = (type) => parts.find((p) => p.type === type)?.value || "";
+    return `${get("year")}-${get("month")}-${get("day")}`;
   }
 
   function parseDateKey(key) {
@@ -112,7 +124,7 @@
       const profileRes = await api("/api/profile");
       const sessionsRes = await api("/api/sessions");
       cloudProfile = normalizeProfile(profileRes.profile);
-      cloudHistory = (sessionsRes.sessions || []).map(normalizeSession);
+      cloudHistory = (sessionsRes.sessions || []).filter((s) => s.category !== MATCH_CATEGORY).map(normalizeSession);
       if (q("cloudUserLabel")) q("cloudUserLabel").textContent = `Connesso come ${cloudUser.email}`;
       // Unico punto in cui lo stato "autenticato" viene deciso: la topbar, il
       // titolo pagina e la bottom bar dipendono da questa classe via CSS.
@@ -350,6 +362,20 @@
     const box = q("selectedDateSessions");
     if (!title || !box) return;
 
+    title.textContent = formatDateKey(selectedCalendarDate);
+
+    // Giorno partita: si mostra la card rapporto al posto del planner, non
+    // sopra. Il planner non viene proprio renderizzato, quindi non c'è nulla
+    // su cui intervenire in seguito per impedire di inserire allenamenti.
+    const match = window.gkCalendarExtras?.matchForDate?.(selectedCalendarDate);
+    if (match) {
+      window.gkCalendarExtras.renderMatchCard(match);
+      if (scroll) box.closest(".calendar-list-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    delete box.dataset.firstTeamMatch;
+    delete box.dataset.matchSignature;
+
     const plan = getDayPlan(selectedCalendarDate);
     const used = planUsedMinutes(plan);
     const total = Number(plan.totalMinutes || cloudProfile?.sessionDuration || 60);
@@ -357,7 +383,6 @@
     const pool = plannerExercisePool();
     const sessions = sessionsForDate(selectedCalendarDate);
 
-    title.textContent = formatDateKey(selectedCalendarDate);
     box.innerHTML = `
       <div class="planner-card">
         <div class="planner-grid">
@@ -411,6 +436,7 @@
       </div>`;
 
     bindPlannerEvents();
+    window.gkCalendarExtras?.renderKeeperAttendance?.();
     if (scroll) q("selectedDateSessions")?.closest(".calendar-list-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -579,9 +605,11 @@
       const key = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
       const hasSessions = Boolean(map[key]?.length);
       const hasPlan = Boolean(plans[key]?.items?.length);
-      const cls = ["calendar-day", key === today ? "today" : "", key === selectedCalendarDate ? "selected" : ""].filter(Boolean).join(" ");
+      const match = window.gkCalendarExtras?.matchForDate?.(key);
+      const cls = ["calendar-day", key === today ? "today" : "", key === selectedCalendarDate ? "selected" : "", match ? "first-team-match-day" : ""].filter(Boolean).join(" ");
       const dot = hasSessions || hasPlan ? `<span class="calendar-dot ${hasPlan && !hasSessions ? "planned" : ""}"></span>` : `<span></span>`;
-      cells.push(`<button class="${cls}" type="button" data-date="${key}"><span class="calendar-day-number">${d}</span>${dot}</button>`);
+      const badge = match ? `<span class="calendar-match-badge" title="${esc(match.homeTeam)} - ${esc(match.awayTeam)}">1ª</span>` : "";
+      cells.push(`<button class="${cls}" type="button" data-date="${key}"><span class="calendar-day-number">${d}</span>${dot}${badge}</button>`);
     }
     grid.innerHTML = cells.join("");
     document.querySelectorAll(".calendar-day[data-date]").forEach((b) => b.addEventListener("click", () => { selectedCalendarDate = b.dataset.date; renderCalendar(); renderDayPlanner(true); }));
@@ -945,7 +973,17 @@
     baseShowView(target);
     integrateProgressLayout();
     if (q("screenTitle") && VIEW_TITLES[target]) q("screenTitle").textContent = VIEW_TITLES[target];
-    if (target === "calendar") renderCalendar();
+    if (target === "calendar") {
+      renderCalendar();
+      // Le partite arrivano async (fetch + cache in calendar-keepers.js). Il
+      // primo render di una sessione può quindi non avere ancora i badge/la
+      // card rapporto: un solo re-render mirato quando i dati arrivano, non
+      // un polling — se sono già in cache la promise si risolve subito e
+      // questo è comunque un solo render extra, non un ciclo.
+      window.gkCalendarExtras?.ensureMatchesLoaded?.()?.then(() => {
+        if (q("calendarView")?.classList.contains("active")) renderCalendar();
+      });
+    }
     if (target === "progress") renderProgress();
     if (target === "home") { renderProfileSummary(); renderExercises(); }
     if (target === "training") renderTrainingView();

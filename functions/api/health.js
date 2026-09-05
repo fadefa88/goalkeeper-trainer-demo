@@ -1,4 +1,4 @@
-import { json } from "./_shared.js";
+import { json, requireAuth } from "./_shared.js";
 
 const MANTOVA_ESPN_ID = "3991";
 const ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer";
@@ -148,11 +148,23 @@ async function loadMantovaMatches() {
   ]);
   const remote = remoteResults.flatMap((result) => result.status === "fulfilled" ? result.value : []);
 
-  const byDate = new Map(BUNDLED_MATCHES.map((match) => [romeDateKey(match.startTimestamp), match]));
-  remote.forEach((match) => {
+  // Unione per data E per id partita: un merge per sola data lascia un
+  // duplicato (vecchia data dal fixture imbustato + nuova data da ESPN) ogni
+  // volta che una partita viene rinviata. Se ESPN restituisce lo stesso id di
+  // un fixture imbustato ma in una data diversa, lo slot alla vecchia data
+  // viene rimosso prima di scrivere quello nuovo.
+  const byId = new Map();
+  const byDate = new Map();
+  const upsert = (match) => {
     if (!match?.startTimestamp) return;
-    byDate.set(romeDateKey(match.startTimestamp), match);
-  });
+    const dateKey = romeDateKey(match.startTimestamp);
+    const previousDateKey = byId.get(match.id);
+    if (previousDateKey && previousDateKey !== dateKey) byDate.delete(previousDateKey);
+    byId.set(match.id, dateKey);
+    byDate.set(dateKey, match);
+  };
+  BUNDLED_MATCHES.forEach(upsert);
+  remote.forEach(upsert);
 
   return {
     source: remote.length ? "Calendario 2026/27 + ESPN live" : "Calendario 2026/27 integrato",
@@ -172,6 +184,11 @@ export async function onRequestGet({ request, env }) {
       matches: result.matches
     }, 200, { "Cache-Control": "no-store, max-age=0" });
   }
+
+  // Diagnostica D1 (elenco tabelle): non pubblica, a differenza del feed
+  // partite sopra. Richiede una sessione valida.
+  const { response } = await requireAuth(env, request);
+  if (response) return response;
 
   if (!env?.DB || typeof env.DB.prepare !== "function") {
     return json({

@@ -12,13 +12,10 @@ const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
 }[char]));
 const keeperKey = (keeper, index) => String(keeper?.id || keeper?.name || `keeper-${index}`);
 const profile = () => { try { return typeof getProfile === "function" ? getProfile() : null; } catch { return null; } };
-const rawFetch = window.fetch.bind(window);
 let matches = [];
 let reports = new Map();
 let matchesFetchedAt = 0;
 let loadMatchesPromise = null;
-let enhanceTimer = null;
-let observer = null;
 function localDateKey(date = new Date()) {
 const parts = new Intl.DateTimeFormat("en-CA", {
 timeZone: "Europe/Rome", year: "numeric", month: "2-digit", day: "2-digit"
@@ -411,48 +408,6 @@ changed = true;
 });
 if (changed) window.dispatchEvent(new CustomEvent("gk-training-plans-updated", { detail: { date } }));
 }
-async function purgeTrainingOnMatchDates() {
-const matchDates = new Set(matches.map(matchDate));
-if (!matchDates.size) return;
-let localChanged = false;
-planKeys().forEach((key) => {
-const plans = readJson(key);
-let changed = false;
-matchDates.forEach((date) => {
-if (plans[date]) {
-delete plans[date];
-changed = true;
-localChanged = true;
-}
-});
-if (changed) writeJson(key, plans);
-});
-if (localChanged) window.dispatchEvent(new CustomEvent("gk-training-plans-updated"));
-try {
-const response = await fetch("/api/profile", { credentials: "same-origin", cache: "no-store" });
-if (!response.ok) return;
-const data = await response.json();
-const p = data?.profile || {};
-const current = p.trainingPlans || p.training_plans;
-if (!current || typeof current !== "object") return;
-const clean = { ...current };
-let changed = false;
-matchDates.forEach((date) => {
-if (clean[date]) {
-delete clean[date];
-changed = true;
-}
-});
-if (changed) {
-await fetch("/api/profile", {
-method: "PUT",
-credentials: "same-origin",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ profile: { ...p, trainingPlans: clean, training_plans: clean } })
-});
-}
-} catch {}
-}
 function localEligibleRows() {
 const merged = {};
 planKeys().forEach((key) => Object.assign(merged, readJson(key)));
@@ -476,61 +431,9 @@ list.innerHTML = `<div class="training-empty"><strong>Nessun allenamento salvato
 $("goCalendarFromTraining")?.addEventListener("click", () => { if (typeof showView === "function") showView("calendar"); });
 }
 }
-function installFetchGuards() {
-if (window.fetch.__gkMantovaCalendarGuard) return;
-const previous = window.fetch.bind(window);
-const guarded = async (input, init = {}) => {
-let url = "";
-try { url = typeof input === "string" ? input : input?.url || ""; } catch {}
-const method = String(init?.method || (typeof input !== "string" ? input?.method : "GET") || "GET").toUpperCase();
-if (url.includes("/api/profile") && method === "PUT" && init?.body) {
-try {
-const body = typeof init.body === "string" ? JSON.parse(init.body) : null;
-if (body?.profile && ("trainingPlans" in body.profile || "training_plans" in body.profile)) {
-const explicit = savedOnly(removePhantoms(body.profile.trainingPlans || body.profile.training_plans || {}));
-body.profile.trainingPlans = explicit;
-body.profile.training_plans = explicit;
-init = { ...init, body: JSON.stringify(body) };
-}
-} catch {}
-}
-const response = await previous(input, init);
-if (url.includes("/api/profile") && method === "GET" && response?.ok) {
-try {
-const data = await response.clone().json();
-if (data?.profile && ("trainingPlans" in data.profile || "training_plans" in data.profile)) {
-const explicit = savedOnly(removePhantoms(data.profile.trainingPlans || data.profile.training_plans || {}));
-data.profile.trainingPlans = explicit;
-data.profile.training_plans = explicit;
-return new Response(JSON.stringify(data), {
-status: response.status,
-statusText: response.statusText,
-headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }
-});
-}
-} catch {}
-}
-if (url.includes("/api/sessions") && method === "GET" && response?.ok) {
-try {
-const data = await response.clone().json();
-if (Array.isArray(data?.sessions)) {
-data.sessions = data.sessions.filter((session) => session?.category !== MATCH_CATEGORY);
-return new Response(JSON.stringify(data), {
-status: response.status,
-statusText: response.statusText,
-headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }
-});
-}
-} catch {}
-}
-return response;
-};
-guarded.__gkMantovaCalendarGuard = true;
-window.fetch = guarded;
-}
 async function loadMatchReports() {
 try {
-const response = await rawFetch("/api/sessions", { credentials: "same-origin", cache: "no-store" });
+const response = await fetch("/api/sessions", { credentials: "same-origin", cache: "no-store" });
 if (!response.ok) return;
 const data = await response.json();
 const next = new Map();
@@ -574,8 +477,6 @@ console.warn("[GK Trainer] Calendario prima squadra non disponibile:", error);
 }
 }
 await loadMatchReports();
-await purgeTrainingOnMatchDates();
-enhanceCalendar();
 return matches;
 })().finally(() => { loadMatchesPromise = null; });
 return loadMatchesPromise;
@@ -687,7 +588,7 @@ startTimestamp: match.startTimestamp
 })
 };
 try {
-const response = await rawFetch("/api/sessions", {
+const response = await fetch("/api/sessions", {
 method: "POST",
 credentials: "same-origin",
 headers: { "Content-Type": "application/json" },
@@ -758,62 +659,7 @@ const names = keepers.filter((keeper, index) => present.includes(keeperKey(keepe
 summary.textContent = names.length ? `${names.length} presenti: ${names.join(", ")}` : "Nessun portiere selezionato per questa giornata.";
 }
 }
-function enhanceCalendar() {
-if (!$("calendarView")?.classList.contains("active")) return;
-ensureStyles();
-document.querySelectorAll(".calendar-day[data-date]").forEach((day) => {
-const match = matchForDate(day.dataset.date);
-day.classList.toggle("first-team-match-day", Boolean(match));
-day.querySelector(".calendar-match-badge")?.remove();
-if (match) {
-const badge = document.createElement("span");
-badge.className = "calendar-match-badge";
-badge.textContent = "1ª";
-badge.title = `${match.homeTeam} - ${match.awayTeam}`;
-day.appendChild(badge);
-}
-});
-const match = matchForDate(selectedDate());
-const box = $("selectedDateSessions");
-if (match) {
-renderMatchCard(match);
-box?.querySelectorAll(".keeper-attendance-card,.planner-save-row").forEach((node) => node.remove());
-} else {
-if (box) {
-delete box.dataset.firstTeamMatch;
-delete box.dataset.matchSignature;
-}
-renderKeeperAttendance();
-}
-}
-function scheduleEnhance(delay = 80) {
-clearTimeout(enhanceTimer);
-enhanceTimer = setTimeout(() => {
-enhanceCalendar();
-renderTrainingEmptyIfNeeded();
-}, delay);
-}
-function observeCalendar() {
-if (observer) return;
-const grid = $("calendarGrid");
-const sessions = $("selectedDateSessions");
-if (!grid && !sessions) return;
-observer = new MutationObserver(() => scheduleEnhance(35));
-if (grid) observer.observe(grid, { childList: true });
-if (sessions) observer.observe(sessions, { childList: true, subtree: true });
-}
-function blockTrainingOnMatchDay(event) {
-if (!matchForDate(selectedDate())) return false;
-const target = event.target?.closest?.("#addPlanExerciseBtn,#autoPlanBtn,#clearPlanBtn,[data-plan-remove],#saveCalendarPlanBtn,.plan-item-minutes,#dayPlanExercise,#dayPlanTime,#dayPlanTotal");
-if (!target) return false;
-event.preventDefault();
-event.stopPropagation();
-event.stopImmediatePropagation();
-renderMatchCard(matchForDate(selectedDate()));
-return true;
-}
 document.addEventListener("click", (event) => {
-if (blockTrainingOnMatchDay(event)) return;
 const target = event.target?.closest ? event.target : event.target?.parentElement;
 if (!target) return;
 const saveReport = target.closest("#saveMatchReportBtn");
@@ -829,12 +675,6 @@ markSelectedPlanExplicit();
 setTimeout(markSelectedPlanExplicit, 120);
 setTimeout(renderTrainingEmptyIfNeeded, 700);
 }
-if (target.closest(".calendar-day[data-date],#prevMonthBtn,#nextMonthBtn,[data-tab='calendar']")) {
-scheduleEnhance(40);
-setTimeout(() => enhanceCalendar(), 140);
-setTimeout(() => enhanceCalendar(), 420);
-if (target.closest("[data-tab='calendar']")) loadMatches(false);
-}
 if (target.closest("[data-tab='progress']")) {
 physicalRenderDone = false;
 setTimeout(() => ensurePhysicalUi(), 120);
@@ -845,28 +685,29 @@ setTimeout(renderTrainingEmptyIfNeeded, 120);
 setTimeout(renderTrainingEmptyIfNeeded, 600);
 }
 }, true);
-document.addEventListener("change", (event) => {
-if (blockTrainingOnMatchDay(event)) return;
-if (event.target?.closest?.("#dayPlanTime,#dayPlanTotal,.plan-item-minutes")) {
-scheduleEnhance(100);
-setTimeout(renderKeeperAttendance, 280);
-}
-}, true);
 window.addEventListener("gk-training-plans-updated", () => {
 purgeLocalPhantoms();
 setTimeout(renderTrainingEmptyIfNeeded, 140);
 });
+// Interfaccia minima per cloudflare-client.js: renderCalendar()/renderDayPlanner()
+// consumano queste funzioni direttamente (badge sui giorni partita, card
+// rapporto al posto del planner, presenze portieri), invece di scoprire lo
+// stato partita dopo il rendering tramite MutationObserver come accadeva prima
+// di questo step.
+window.gkCalendarExtras = {
+matchForDate,
+ensureMatchesLoaded: (force) => loadMatches(force),
+renderMatchCard,
+renderKeeperAttendance
+};
 function boot() {
 ensureStyles();
 hookLanding();
 purgeLocalPhantoms();
-observeCalendar();
 loadMatches(false);
 renderTrainingEmptyIfNeeded();
 ensurePhysicalUi();
-scheduleEnhance(120);
 }
-installFetchGuards();
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
 else boot();
 [300, 900, 1800, 3200].forEach((delay) => setTimeout(boot, delay));
