@@ -148,29 +148,10 @@
     else { loadProfileIntoForm(); showView("setup"); }
   }
 
-  function ensurePlannerStyles() {
-    if (document.getElementById("calendarPlannerStyles")) return;
-    const style = document.createElement("style");
-    style.id = "calendarPlannerStyles";
-    style.textContent = `
-      .planner-card{display:grid;gap:14px;margin-top:14px}
-      .planner-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-      .planner-grid label{font-size:12px}
-      .planner-toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
-      .planner-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-      .planner-summary .progress-kpi{padding:10px;border-radius:15px}
-      .planner-summary .over{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.12)}
-      .planner-list{display:grid;gap:10px;margin-top:12px}
-      .planner-item{display:grid;grid-template-columns:1fr 92px 64px 44px;gap:8px;align-items:center;padding:12px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.045)}
-      .planner-item input{font-size:16px!important}
-      .planner-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-      .planner-empty{padding:14px;border:1px dashed var(--line);border-radius:18px;color:var(--muted);line-height:1.45}
-      .planner-session-title{margin-top:18px}
-      .calendar-dot.planned{background:#f97316;box-shadow:0 0 14px rgba(249,115,22,.45)}
-      @media(max-width:390px){.planner-grid,.planner-toolbar,.planner-summary,.planner-actions{grid-template-columns:1fr}.planner-item{grid-template-columns:1fr}.planner-item .ghost-btn,.planner-item .danger-btn{width:100%}}
-    `;
-    document.head.appendChild(style);
-  }
+  // ensurePlannerStyles() è stato rimosso: ogni regola che era ancora viva
+  // (non già sovrascritta dalle versioni con !important in style.css) è
+  // stata spostata dentro style.css stesso — vedi .planner-list,
+  // .planner-item, .planner-toolbar, .planner-summary, .planner-grid label.
 
   renderKeeperFields = function () {
     const count = Number(q("keepersCount")?.value || 3);
@@ -318,7 +299,6 @@
   }
 
   function renderDayPlanner(scroll = false) {
-    ensurePlannerStyles();
     const title = q("selectedDateTitle");
     const box = q("selectedDateSessions");
     if (!title || !box) return;
@@ -449,6 +429,10 @@
       await api("/api/profile", { method: "PUT", body: { profile: { ...cloudProfile, trainingPlans: nextPlans, training_plans: nextPlans } } });
       writePlans(nextPlans);
       await loadData(false);
+      // Anche il pallino nel mese va aggiornato subito: senza questo,
+      // il giorno svuotato restava marcato come "programmato" (pallino
+      // oro) finché non si usciva e rientrava nel Calendario.
+      renderCalendar();
       renderTrainingView();
       window.dispatchEvent(new CustomEvent("gk-training-plans-updated", { detail: { date } }));
       setSaveButtonState("gk-saved", "Eliminato");
@@ -581,7 +565,6 @@
   }
 
   function renderCalendar() {
-    ensurePlannerStyles();
     const grid = q("calendarGrid"), title = q("calendarMonthTitle");
     if (!grid || !title) return;
     const y = calendarMonthDate.getFullYear(), m = calendarMonthDate.getMonth(), first = new Date(y, m, 1);
@@ -867,7 +850,6 @@
   };
 
   document.addEventListener("DOMContentLoaded", async () => {
-    ensurePlannerStyles();
     localStorage.removeItem("gk_profile");
     localStorage.removeItem("gk_history");
     q("keepersCount")?.addEventListener("change", renderKeeperFields);

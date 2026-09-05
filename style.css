@@ -30,6 +30,9 @@
   --mantova-gold: #c99a4b;
   --orange: var(--mantova-gold);
   --white: #ffffff;
+  /* Testo di errore su sfondo scuro: --red da solo non ha contrasto
+     sufficiente per un testo piccolo, serve una tinta più chiara. */
+  --red-bright: #ffb4b4;
   --mantova-logo: url("https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_Mantova_1911.svg");
 
   /* Spacing scale */
@@ -259,7 +262,8 @@ textarea:focus { border-color: var(--red); }
 .exercise-list,
 .history-list,
 .measure-grid,
-.training-list { display: grid; gap: var(--sp-3); margin-top: var(--sp-4); }
+.training-list,
+.planner-list { display: grid; gap: var(--sp-3); margin-top: var(--sp-4); }
 .exercise-card { width: 100%; color: var(--text); text-align: left; padding: 14px 16px; }
 .exercise-card:active { border-color: var(--line-strong); }
 .exercise-card h3 { font-size: 16px; margin-bottom: 4px; }
@@ -299,7 +303,10 @@ textarea:focus { border-color: var(--red); }
 .calendar-day.first-team-match-day.selected { background: var(--red); }
 .calendar-day-number { font-size: 13px; font-weight: 600; }
 .calendar-dot { width: 6px; height: 6px; border-radius: var(--radius-pill); background: var(--red); }
-.calendar-dot.planned { background: var(--mantova-gold) !important; box-shadow: none !important; }
+/* !important necessario: .calendar-day.selected .calendar-dot ha
+   specificità più alta e altrimenti vincerebbe su un giorno selezionato
+   che ha anche un allenamento programmato (pallino tornerebbe bianco). */
+.calendar-dot.planned { background: var(--mantova-gold) !important; }
 .calendar-day.selected .calendar-dot { background: #fff; }
 .calendar-match-badge { position: absolute; top: 2px; right: 2px; min-width: 15px; height: 15px; padding: 0 3px; border-radius: var(--radius-pill); display: grid; place-items: center; background: var(--white); color: var(--red); font-size: 8px; font-weight: 700; line-height: 1; }
 
@@ -320,7 +327,10 @@ textarea:focus { border-color: var(--red); }
 .planner-actions,
 .physical-chart-controls,
 .physical-kpis { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: var(--sp-2) !important; }
-.planner-item { display: grid !important; grid-template-columns: minmax(0,1fr) !important; gap: var(--sp-2) !important; padding: var(--sp-3) !important; border-radius: var(--radius-sm) !important; border: 1px solid var(--line) !important; background: var(--panel-2) !important; overflow: hidden; }
+.planner-grid label { font-size: 12px; }
+.planner-toolbar { align-items: end; }
+.planner-summary { margin-top: var(--sp-3); }
+.planner-item { display: grid !important; grid-template-columns: minmax(0,1fr) !important; gap: var(--sp-2) !important; align-items: center; padding: var(--sp-3) !important; border-radius: var(--radius-sm) !important; border: 1px solid var(--line) !important; background: var(--panel-2) !important; overflow: hidden; }
 .planner-item h3,
 .planner-item .muted,
 .planner-item .eyebrow { overflow-wrap: anywhere; }
