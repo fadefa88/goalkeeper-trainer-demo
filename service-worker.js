@@ -1,4 +1,4 @@
-const CACHE_NAME = "gk-trainer-first-team-calendar-v4";
+const CACHE_NAME = "gk-trainer-shell-v6";
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,8 +9,7 @@ const ASSETS = [
   "./cloudflare-client.js",
   "./calendar-keepers.js",
   "./manifest.json",
-  "./icon.svg",
-  "./gk-home-hero.png"
+  "./icon.svg"
 ];
 
 self.addEventListener("install", event => {
@@ -51,10 +50,27 @@ self.addEventListener("fetch", event => {
             headers
           });
         })
-        .catch(() => caches.match(event.request))
+        // Gli asset precaricati sono salvati senza "?v=...": senza ignoreSearch
+        // questo fallback offline non trovava mai corrispondenza per una
+        // richiesta con query string, anche a cache piena.
+        .catch(() => caches.match(event.request, { ignoreSearch: true }))
     );
     return;
   }
 
-  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request)));
+  event.respondWith(
+    caches.match(event.request, { ignoreSearch: true }).then(cached => {
+      if (cached) return cached;
+      return fetch(event.request).then(response => {
+        // gk-home-hero.png (~2MB) non è più nel precache eager dell'install:
+        // la prima richiesta reale lo scarica e lo mette qui in cache, così le
+        // successive (offline incluso) lo trovano senza riscaricarlo.
+        if (response && response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        }
+        return response;
+      });
+    })
+  );
 });

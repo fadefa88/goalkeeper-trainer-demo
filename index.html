@@ -6,53 +6,7 @@
   <meta name="theme-color" content="#020604" />
   <title>GK Trainer</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css?v=account-source-v5" />
-  <style id="gkAccountSourceStyleV5">
-    body:not(.gk-authenticated) .topbar,
-    body:not(.gk-authenticated) .page-heading,
-    body:not(.gk-authenticated) #bottomNav{display:none!important}
-    body:not(.gk-authenticated) .app-shell{padding-top:24px!important;padding-bottom:24px!important}
-    .page-heading .eyebrow{display:none!important}
-    .hero-card::before,.exercise-card::before,.progress-card::before,.calendar-list-card::before,.training-plan::before{content:none!important;display:none!important}
-    #homeTopBtn.icon-btn::before,#settingsBtn.icon-btn::before,.topbar .icon-btn::before{content:none!important;display:none!important}
-    .topbar .icon-btn{display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;line-height:0!important;text-align:center!important}
-    .top-svg{width:23px;height:23px;display:block;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-    #settingsBtn .top-svg{width:22px;height:22px}
-    .landing-home{display:grid;gap:16px}
-    .landing-hero{min-height:360px;border-radius:30px;padding:22px;display:flex;align-items:flex-end;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(2,6,4,.06),rgba(2,6,4,.88) 74%),linear-gradient(120deg,rgba(32,224,108,.24),transparent 52%),url("gk-home-hero.png") center/cover no-repeat;border:1px solid var(--line);box-shadow:var(--shadow)}
-    .landing-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 22% 12%,rgba(32,224,108,.18),transparent 28rem);pointer-events:none}
-    .landing-copy{position:relative;z-index:1;display:grid;gap:10px;max-width:360px}
-    .landing-copy h2{font-size:clamp(34px,8vw,46px);letter-spacing:-.07em;line-height:.98}
-    .landing-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-    .landing-placeholder{padding:18px;border:1px dashed var(--line);border-radius:24px;background:rgba(255,255,255,.035);color:var(--muted);line-height:1.45}
-    body.gk-authenticated:has(#landingView.active) #bottomNav,body.gk-authenticated:has(#landingView.active) #bottomNav.hidden{display:grid!important}
-    .training-card{display:grid!important;gap:14px!important}
-    .training-card>.eyebrow{display:none!important}
-    .training-filter{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;margin:12px 0 0!important;align-items:end!important}
-    .training-filter label{margin:0}.training-filter .ghost-btn{height:58px;white-space:nowrap}
-    .training-sync-status{margin-top:0!important}.training-list{display:grid!important;gap:11px!important;margin-top:10px!important}
-    .training-session-meta{display:grid;gap:5px;padding:8px 0 4px;background:transparent;border:0}.training-session-meta h3{font-size:20px;line-height:1.1;margin:0}
-    .training-item{display:grid!important;gap:11px!important;padding:14px!important;border-radius:20px!important;background:rgba(255,255,255,.045)!important;border:1px solid var(--line)!important}
-    .training-item.is-done{opacity:.68;background:rgba(32,224,108,.07)!important}.training-item.is-done h4{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:rgba(32,224,108,.8)}
-    .training-item-top{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important}.training-item h4{margin:0;font-size:16px;line-height:1.2}.training-item-actions{display:flex;gap:10px;align-items:center;justify-content:flex-start}.training-done{display:flex!important;align-items:center;gap:9px;font-weight:900;color:var(--text);width:auto!important}.training-done input{width:22px!important;height:22px!important;accent-color:var(--green);padding:0!important}.training-empty strong{color:var(--text)}
-    .training-all-title{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:950}
-    .training-saved-card{display:grid;gap:8px;padding:14px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
-    .training-saved-card.is-current{border-color:rgba(32,224,108,.45);background:rgba(32,224,108,.08)}
-    .training-saved-card h4{margin:0;font-size:16px}.training-saved-card .primary-btn{margin-top:4px}
-    #calendarView,#calendarView *{scroll-behavior:auto!important;overflow-anchor:none!important}
-    #selectedDateSessions .planner-card,#calendarView .planner-item,#calendarView .planner-actions,#calendarView .planner-summary,#calendarView .planner-save-row{transition:none!important;animation:none!important;overflow-anchor:none!important}
-    .planner-save-row{min-height:112px!important}
-    #calendarSaveStatus{display:block!important;min-height:44px!important;margin-top:8px!important;padding:12px 13px!important;border-radius:16px!important;color:#d9ffe2!important;background:rgba(32,224,108,.08)!important;border:1px solid rgba(32,224,108,.22)!important;font-weight:850!important;line-height:1.35!important}
-    #calendarSaveStatus.gk-ok{background:rgba(32,224,108,.14)!important;border-color:rgba(32,224,108,.42)!important;color:#effff2!important}
-    #calendarSaveStatus.gk-error{background:rgba(239,68,68,.14)!important;border-color:rgba(239,68,68,.38)!important;color:#ffecec!important}
-    #saveCalendarPlanBtn{position:relative!important;overflow:hidden!important;min-height:58px!important;transition:transform .14s ease,filter .18s ease,box-shadow .18s ease!important}
-    #saveCalendarPlanBtn.gk-saving{transform:scale(.985)!important;filter:brightness(1.12) saturate(1.08)!important;box-shadow:0 0 0 5px rgba(32,224,108,.16),0 16px 36px rgba(32,224,108,.24)!important}
-    #saveCalendarPlanBtn.gk-saved{filter:brightness(1.18) saturate(1.12)!important;box-shadow:0 0 0 6px rgba(32,224,108,.2),0 20px 44px rgba(32,224,108,.3)!important}
-    #saveCalendarPlanBtn.gk-error{filter:brightness(.95) saturate(.9)!important;box-shadow:0 0 0 5px rgba(239,68,68,.16)!important}
-    #saveCalendarPlanBtn.gk-saving::after,#saveCalendarPlanBtn.gk-saved::after{content:"";position:absolute;inset:-45% auto -45% -40%;width:36%;transform:skewX(-18deg) translateX(-140%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);animation:gkSaveSweep .75s ease forwards;pointer-events:none}
-    @keyframes gkSaveSweep{0%{transform:skewX(-18deg) translateX(-140%);opacity:0}18%{opacity:1}100%{transform:skewX(-18deg) translateX(520%);opacity:0}}
-    @media(max-width:430px){.landing-hero{min-height:330px;border-radius:28px}.landing-actions,.training-filter,.training-item-top{grid-template-columns:1fr!important}.training-filter .ghost-btn,.training-item-top .primary-btn{width:100%}}
-  </style>
+  <link rel="stylesheet" href="style.css?v=account-source-v6" />
 </head>
 <body>
   <div class="app-shell">
@@ -89,8 +43,8 @@
     <nav id="bottomNav" class="bottom-nav hidden"><button data-tab="home" class="nav-btn active">Esercizi</button><button data-tab="calendar" class="nav-btn">Calendario</button><button data-tab="training" class="nav-btn">Allenamento</button><button data-tab="progress" class="nav-btn">Progressi</button></nav>
   </div>
 
-  <script src="app.js?v=account-source-v5"></script>
-  <script src="cloudflare-client.js?v=account-source-v5"></script>
-  <script src="calendar-keepers.js?v=account-source-v5"></script>
+  <script src="app.js?v=account-source-v6"></script>
+  <script src="cloudflare-client.js?v=account-source-v6"></script>
+  <script src="calendar-keepers.js?v=account-source-v6"></script>
 </body>
 </html>
