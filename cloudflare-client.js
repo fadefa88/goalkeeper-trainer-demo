@@ -153,7 +153,6 @@
     const style = document.createElement("style");
     style.id = "calendarPlannerStyles";
     style.textContent = `
-      .bottom-nav{grid-template-columns:repeat(3,1fr)!important}
       .planner-card{display:grid;gap:14px;margin-top:14px}
       .planner-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
       .planner-grid label{font-size:12px}
@@ -171,18 +170,6 @@
       @media(max-width:390px){.planner-grid,.planner-toolbar,.planner-summary,.planner-actions{grid-template-columns:1fr}.planner-item{grid-template-columns:1fr}.planner-item .ghost-btn,.planner-item .danger-btn{width:100%}}
     `;
     document.head.appendChild(style);
-  }
-
-  // I tab "Motore"/"Profilo" e la sezione #performanceView duplicata (form
-  // test fisici, fusa dentro #progressView) sono già stati tolti da
-  // index.html, quindi qui non resta più nessun nodo da rimuovere a runtime.
-  // Il forzare 3 colonne su una barra con 4 pulsanti reali (home/calendario/
-  // allenamento/progressi) è comportamento preesistente invariato, duplicato
-  // anche nello stylesheet iniettato da ensurePlannerStyles() qui sotto — un
-  // secondo layer CSS ridondante che tocca a un'altra fase del refactor
-  // (consolidamento CSS) rimuovere in sicurezza.
-  function trimBottomNav() {
-    q("bottomNav")?.style.setProperty("grid-template-columns", "repeat(3,1fr)", "important");
   }
 
   renderKeeperFields = function () {
@@ -772,7 +759,6 @@
     if (view === "auth") return showAuth();
     const target = view === "performance" || view === "history" ? "progress" : view;
     baseShowView(target);
-    trimBottomNav();
     if (q("screenTitle") && VIEW_TITLES[target]) q("screenTitle").textContent = VIEW_TITLES[target];
     if (target === "calendar") {
       renderCalendar();
@@ -855,7 +841,6 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     ensurePlannerStyles();
-    trimBottomNav();
     localStorage.removeItem("gk_profile");
     localStorage.removeItem("gk_history");
     q("keepersCount")?.addEventListener("change", renderKeeperFields);
