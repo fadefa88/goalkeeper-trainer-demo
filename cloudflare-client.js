@@ -385,7 +385,7 @@
                 <p class="muted small-note">${esc(ex?.ambito || "")} · durata consigliata ${ex?.durationMin || item.minutes}'</p>
               </div>
               <input class="plan-item-minutes" type="number" inputmode="numeric" min="1" step="1" value="${esc(item.minutes)}" />
-              <button class="ghost-btn" data-plan-start="${index}" type="button">Avvia</button>
+              <button class="accent-btn" data-plan-start="${index}" type="button">Avvia</button>
               <button class="danger-btn" data-plan-remove="${index}" type="button">×</button>
             </div>`;
           }).join("") : `<div class="planner-empty">Nessun esercizio programmato. Imposta durata, poi aggiungi manualmente o usa Auto programma.</div>`}
@@ -610,7 +610,7 @@
       const ex = exerciseById(item.exerciseId);
       const card = document.createElement("div");
       card.className = "training-item" + (item.done ? " is-done" : "");
-      card.innerHTML = `<div class="training-item-top"><div><p class="eyebrow">${esc(ex?.ambito || "Esercizio")} · ${Number(item.minutes || ex?.durationMin || 0)} min</p><h4>${esc(ex?.name || "Esercizio")}</h4></div><button class="ghost-btn" type="button" data-training-start="1" data-plan-date="${esc(row.date)}" data-plan-index="${index}">Avvia</button></div><div class="training-item-actions"><label class="training-done"><input type="checkbox" data-training-done="1" data-plan-date="${esc(row.date)}" data-plan-index="${index}"${item.done ? " checked" : ""} /> Fatto</label></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-date="${esc(row.date)}" data-plan-index="${index}" placeholder="Note operative, varianti, focus tecnico...">${esc(item.note || "")}</textarea></label>`;
+      card.innerHTML = `<div class="training-item-top"><div><p class="eyebrow">${esc(ex?.ambito || "Esercizio")} · ${Number(item.minutes || ex?.durationMin || 0)} min</p><h4>${esc(ex?.name || "Esercizio")}</h4></div><button class="accent-btn" type="button" data-training-start="1" data-plan-date="${esc(row.date)}" data-plan-index="${index}">Avvia</button></div><div class="training-item-actions"><label class="training-done"><input type="checkbox" data-training-done="1" data-plan-date="${esc(row.date)}" data-plan-index="${index}"${item.done ? " checked" : ""} /> Fatto</label></div><label class="small-note">Note esercizio<textarea data-training-note="1" data-plan-date="${esc(row.date)}" data-plan-index="${index}" placeholder="Note operative, varianti, focus tecnico...">${esc(item.note || "")}</textarea></label>`;
       list.appendChild(card);
     });
   }
