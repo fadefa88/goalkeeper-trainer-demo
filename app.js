@@ -889,6 +889,11 @@ const exercises = [
 
 let selectedExercise = null;
 let activeFilter = "recommended";
+// Stato reale del timer allenamento: conta in avanti da 0, non alla rovescia
+// (comportamento visibile in produzione). timer/timeRemaining/running restano
+// come alias di sola lettura sincronizzati da paintTimer(), per compatibilità
+// con qualunque altro punto del codice che li legga ancora direttamente.
+const timerState = { elapsed: 0, running: false, interval: null };
 let timer = null;
 let timeRemaining = 0;
 let running = false;
@@ -913,8 +918,13 @@ function setHistory(history) {
 }
 
 function showView(view) {
+  const target = $(view + "View");
+  if (!target) {
+    console.warn(`[GK Trainer] Vista sconosciuta: "${view}"`);
+    return;
+  }
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  $(view + "View").classList.add("active");
+  target.classList.add("active");
 
   const titleMap = {
     setup: "Setup allenamento",
@@ -1120,13 +1130,8 @@ function renderDetail() {
 
 function startWorkoutScreen() {
   stats = { saves: 0, mistakes: 0, reactions: 0 };
-  timeRemaining = selectedExercise.durationMin * 60;
-  running = false;
-  clearInterval(timer);
-  timer = null;
-
+  resetTimerState();
   updateStats();
-  updateTimer();
   $("workoutName").textContent = selectedExercise.name;
   $("workoutCategory").textContent = `${selectedExercise.docCategory} · ${selectedExercise.ambito}`;
   $("phaseLabel").textContent = "Pronto";
@@ -1383,10 +1388,36 @@ function renderActiveKeeperSelect() {
   }).join("");
 }
 
+// Timer allenamento: conta in avanti da 0 (Start/Pausa manuali, nessuna fine
+// automatica). timerState è l'unica fonte di verità; timer/timeRemaining/running
+// restano sincronizzati per compatibilità con altro codice che li legga.
+function timerText(seconds) {
+  const value = Math.max(0, Number(seconds || 0));
+  return `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`;
+}
+
+function paintTimer() {
+  const display = $("timerDisplay");
+  if (display) display.textContent = timerText(timerState.elapsed);
+  const phase = $("phaseLabel");
+  if (phase) phase.textContent = timerState.running ? "Lavoro in corso" : timerState.elapsed ? "In pausa" : "Pronto";
+  const start = $("startPauseBtn");
+  if (start) start.textContent = timerState.running ? "Pausa" : "Start";
+  timeRemaining = timerState.elapsed;
+  running = timerState.running;
+  timer = timerState.interval;
+}
+
 function updateTimer() {
-  const minutes = Math.floor(timeRemaining / 60);
-  const seconds = timeRemaining % 60;
-  $("timerDisplay").textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  paintTimer();
+}
+
+function resetTimerState() {
+  if (timerState.interval) clearInterval(timerState.interval);
+  timerState.elapsed = 0;
+  timerState.running = false;
+  timerState.interval = null;
+  paintTimer();
 }
 
 function updateStats() {
@@ -1396,29 +1427,26 @@ function updateStats() {
 }
 
 function toggleTimer() {
-  running = !running;
-  $("startPauseBtn").textContent = running ? "Pausa" : "Start";
-  $("phaseLabel").textContent = running ? "Lavoro in corso" : "In pausa";
-
-  if (running && !timer) {
-    timer = setInterval(() => {
-      if (!running) return;
-      timeRemaining -= 1;
-      updateTimer();
-
-      if (timeRemaining <= 0) {
-        finishWorkout();
-      }
-    }, 1000);
+  if (timerState.running) {
+    timerState.running = false;
+    if (timerState.interval) clearInterval(timerState.interval);
+    timerState.interval = null;
+    paintTimer();
+    return;
   }
+  timerState.running = true;
+  timerState.interval = setInterval(() => {
+    if (!timerState.running) return;
+    timerState.elapsed += 1;
+    paintTimer();
+  }, 1000);
+  paintTimer();
 }
 
 function finishWorkout() {
   if (!selectedExercise) return;
 
-  running = false;
-  clearInterval(timer);
-  timer = null;
+  resetTimerState();
 
   const profile = getProfile();
   const activeKeeper = $("activeKeeper")?.value || "Portiere";
