@@ -95,43 +95,22 @@ return new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString("it-IT", { 
 function toNumber(value) {
 return value === "" || value === null || value === undefined || Number.isNaN(Number(value)) ? null : Number(value);
 }
-function cleanProgressCards() {
-const progress = $("progressView");
-if (!progress) return null;
-Array.from(progress.querySelectorAll(".progress-card")).forEach((card) => {
-if (card.querySelector("#performanceForm") || card.id === "physicalProgressHistoryCard") return;
-if (card.querySelector("#progressKpis") || card.querySelector("#monthlyChart") || card.querySelector("#keeperMeasures") || card.querySelector("#exerciseQualityList") || card.querySelector("#historyList")) card.remove();
-});
-const form = $("performanceForm");
-const formCard = form?.closest(".progress-card");
-if (!formCard) return null;
-formCard.classList.add("physical-main-card");
-const eyebrow = formCard.querySelector(".eyebrow");
-const title = formCard.querySelector("h2");
-const note = formCard.querySelector(".muted");
-if (eyebrow) eyebrow.textContent = "Parte fisica";
-if (title) title.textContent = "Motore del portiere";
-if (note) note.textContent = "Inserisci la data e aggiorna le misure: ogni salvataggio crea uno storico confrontabile durante l’anno.";
-return formCard;
+// Il form dei test fisici, la card del grafico storico e il campo data sono
+// markup statico in index.html adesso (prima venivano creati qui e la card
+// "Miglioramenti fisici"/"Storico" duplicate di cloudflare-client.js
+// venivano tolte subito dopo essere state renderizzate). Qui restano solo il
+// valore di default del campo data e il binding dei due selettori.
+function ensurePhysicalDate() {
+const input = $("physicalSaveDate");
+if (input && !input.value) input.value = localDateKey();
 }
-function ensureDateInput() {
-const form = $("performanceForm");
-const fields = $("performanceFields");
-if (!form || !fields || $("physicalSaveDate")) return;
-const meta = document.createElement("div");
-meta.className = "physical-save-meta";
-meta.innerHTML = `<label>Data salvataggio misure<input id="physicalSaveDate" type="date" value="${localDateKey()}" /></label><p id="physicalSaveStatus" class="muted small-note">Scegli la data del test. Il salvataggio resta nello storico fisico.</p>`;
-form.insertBefore(meta, fields);
-}
-function ensureGraphCard(formCard) {
-if (!formCard || $("physicalProgressHistoryCard")) return;
-const card = document.createElement("div");
-card.id = "physicalProgressHistoryCard";
-card.className = "progress-card physical-progress-card";
-card.innerHTML = `<p class="eyebrow">Miglioramenti fisici</p><h2>Andamento misure</h2><p class="muted">Grafico basato sui salvataggi fisici registrati durante l’anno.</p><div class="physical-chart-controls"><label>Portiere<select id="physicalChartKeeper"></select></label><label>Misura<select id="physicalChartMetric"></select></label></div><div id="physicalKpis" class="physical-kpis"></div><div id="physicalChartBox" class="physical-chart-box"></div><div id="physicalHistoryList" class="physical-history-list"></div>`;
-formCard.insertAdjacentElement("afterend", card);
-$("physicalChartKeeper")?.addEventListener("change", () => renderPhysicalHistory(true));
-$("physicalChartMetric")?.addEventListener("change", () => renderPhysicalHistory(true));
+function bindPhysicalSelectors() {
+const keeperSelect = $("physicalChartKeeper");
+const metricSelect = $("physicalChartMetric");
+if (!keeperSelect || keeperSelect.dataset.physicalSelectorsBound === "1") return;
+keeperSelect.dataset.physicalSelectorsBound = "1";
+keeperSelect.addEventListener("change", () => renderPhysicalHistory(true));
+metricSelect?.addEventListener("change", () => renderPhysicalHistory(true));
 }
 function normalizedHistory(raw) {
 const list = Array.isArray(raw?.physicalHistory) ? raw.physicalHistory : Array.isArray(raw?.physical_history) ? raw.physical_history : [];
@@ -275,12 +254,13 @@ if (status) status.textContent = `Errore: ${error.message}`;
 }
 function ensurePhysicalUi() {
 if (!$("progressView")?.classList.contains("active")) return;
-const formCard = cleanProgressCards();
-if (!formCard) return;
-ensureDateInput();
-ensureGraphCard(formCard);
+ensurePhysicalDate();
+bindPhysicalSelectors();
 bindPhysicalSubmit();
-renderPhysicalHistory(false);
+// Sempre un render fresco quando si entra nella vista: prima questo era
+// garantito da un flag resettato al click sulla tab, che spariva insieme al
+// resto del meccanismo a retry (vedi cloudflare-client.js, showView).
+renderPhysicalHistory(true);
 }
 function ensureStyles() {
 if ($("gkFirstTeamCalendarStyles")) return;
@@ -445,7 +425,9 @@ const old = next.get(matchId);
 if (!old || String(session.date || "") >= String(old.date || "")) next.set(matchId, { ...session, meta });
 });
 reports = next;
-} catch {}
+} catch (error) {
+console.warn("[GK Trainer] Rapporti partita non caricati:", error);
+}
 }
 function cachedMatches() {
 try {
@@ -675,11 +657,6 @@ markSelectedPlanExplicit();
 setTimeout(markSelectedPlanExplicit, 120);
 setTimeout(renderTrainingEmptyIfNeeded, 700);
 }
-if (target.closest("[data-tab='progress']")) {
-physicalRenderDone = false;
-setTimeout(() => ensurePhysicalUi(), 120);
-setTimeout(() => ensurePhysicalUi(), 500);
-}
 if (target.closest("[data-tab='training'],[data-quick-go='training']")) {
 setTimeout(renderTrainingEmptyIfNeeded, 120);
 setTimeout(renderTrainingEmptyIfNeeded, 600);
@@ -698,7 +675,8 @@ window.gkCalendarExtras = {
 matchForDate,
 ensureMatchesLoaded: (force) => loadMatches(force),
 renderMatchCard,
-renderKeeperAttendance
+renderKeeperAttendance,
+ensurePhysicalProgressUi: ensurePhysicalUi
 };
 function boot() {
 ensureStyles();

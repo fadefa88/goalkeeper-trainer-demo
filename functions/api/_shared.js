@@ -150,6 +150,12 @@ async function loadExtra(env, userId, key) {
   }
 }
 
+function extraInsertStatement(env, userId, key, value, now) {
+  const def = EXTRAS[key];
+  return env.DB.prepare("insert into training_sessions (id, user_id, exercise_id, exercise_name, session_date, category, notes, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    .bind(crypto.randomUUID(), userId, def.exerciseId, def.label, now.slice(0, 10), def.category, JSON.stringify(value), now, now);
+}
+
 // Prepara (senza eseguire) l'upsert di una riga "extra". Va sempre incluso in un
 // batch insieme alle altre scritture del profilo per restare atomico.
 async function extraStatement(env, userId, key, value) {
@@ -157,12 +163,10 @@ async function extraStatement(env, userId, key, value) {
   const now = new Date().toISOString();
   const existing = await env.DB.prepare("select id from training_sessions where user_id = ? and category = ? and exercise_id = ? limit 1")
     .bind(userId, def.category, def.exerciseId).first();
-  const notes = JSON.stringify(value);
   if (existing) {
-    return env.DB.prepare("update training_sessions set notes = ?, updated_at = ? where id = ?").bind(notes, now, existing.id);
+    return env.DB.prepare("update training_sessions set notes = ?, updated_at = ? where id = ?").bind(JSON.stringify(value), now, existing.id);
   }
-  return env.DB.prepare("insert into training_sessions (id, user_id, exercise_id, exercise_name, session_date, category, notes, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
-    .bind(crypto.randomUUID(), userId, def.exerciseId, def.label, now.slice(0, 10), def.category, notes, now, now);
+  return extraInsertStatement(env, userId, key, value, now);
 }
 
 export async function loadProfileExtras(env, userId) {
@@ -187,6 +191,23 @@ export async function buildProfileExtraStatements(env, userId, profile) {
   const trainingPlans = profile.trainingPlans ?? profile.training_plans;
   if (trainingPlans && typeof trainingPlans === "object" && !Array.isArray(trainingPlans)) {
     statements.push(await extraStatement(env, userId, "trainingPlans", trainingPlans));
+  }
+  return statements;
+}
+
+// Variante sempre-insert, sincrona, per un utente le cui training_sessions
+// sono appena state svuotate nello stesso batch (import.js): lì il controllo
+// "esiste già una riga?" di extraStatement() interrogherebbe lo stato PRIMA
+// che il batch esegua il DELETE che lo precede, trovando una riga che sta per
+// sparire e producendo un UPDATE che non aggiorna nulla.
+export function buildProfileExtraInsertStatements(env, userId, profile) {
+  const statements = [];
+  const now = new Date().toISOString();
+  const physicalHistory = profile.physicalHistory ?? profile.physical_history;
+  if (Array.isArray(physicalHistory)) statements.push(extraInsertStatement(env, userId, "physicalHistory", physicalHistory, now));
+  const trainingPlans = profile.trainingPlans ?? profile.training_plans;
+  if (trainingPlans && typeof trainingPlans === "object" && !Array.isArray(trainingPlans)) {
+    statements.push(extraInsertStatement(env, userId, "trainingPlans", trainingPlans, now));
   }
   return statements;
 }

@@ -1,8 +1,5 @@
 import { assertSameOrigin, createSession, error, hashPassword, json, loadProfile, normalizeEmail, PASSWORD_ITERATIONS, randomToken, readJson, sessionCookie } from "./_shared.js";
 
-const REVIEW_EMAIL = "review@gktrainer.app";
-const REVIEW_PASSWORD = "AppleReview2026!";
-
 function dbGuard(env) {
   if (!env?.DB || typeof env.DB.prepare !== "function") {
     return error("Binding D1 mancante: collega il database gk-trainer-db con nome variabile DB.", 500);
@@ -15,8 +12,19 @@ function exceptionError(err) {
   return error(`Errore login: ${message}`, 500);
 }
 
-function isReviewLogin(email, secret) {
-  return email === REVIEW_EMAIL && secret === REVIEW_PASSWORD;
+// Credenziali dell'account demo per la revisione App Store: prima erano una
+// stringa fissa nel sorgente (visibile per sempre nella cronologia git, e
+// chiunque conoscesse l'email poteva "reimpostarla" tentando quel login).
+// Vanno impostate come variabili d'ambiente su Cloudflare Pages (Settings >
+// Environment variables): REVIEW_EMAIL, REVIEW_PASSWORD. Se non configurate,
+// il login di revisione è semplicemente disattivato.
+function reviewCredentials(env) {
+  return { email: env?.REVIEW_EMAIL || "", password: env?.REVIEW_PASSWORD || "" };
+}
+
+function isReviewLogin(env, email, secret) {
+  const { email: reviewEmail, password: reviewPassword } = reviewCredentials(env);
+  return Boolean(reviewEmail) && Boolean(reviewPassword) && email === reviewEmail && secret === reviewPassword;
 }
 
 async function ensureReviewProfile(env, userId) {
@@ -56,10 +64,11 @@ async function ensureReviewProfile(env, userId) {
 }
 
 async function createOrRepairReviewUser(env) {
+  const { email: reviewEmail, password: reviewPassword } = reviewCredentials(env);
   const salt = randomToken(16);
-  const passwordHash = await hashPassword(REVIEW_PASSWORD, salt, PASSWORD_ITERATIONS);
+  const passwordHash = await hashPassword(reviewPassword, salt, PASSWORD_ITERATIONS);
   const now = new Date().toISOString();
-  const existing = await env.DB.prepare("select * from users where email = ? limit 1").bind(REVIEW_EMAIL).first();
+  const existing = await env.DB.prepare("select * from users where email = ? limit 1").bind(reviewEmail).first();
 
   if (existing) {
     await env.DB.prepare("update users set password_hash = ?, salt = ?, iterations = ?, updated_at = ? where id = ?")
@@ -70,9 +79,9 @@ async function createOrRepairReviewUser(env) {
 
   const userId = crypto.randomUUID();
   await env.DB.prepare("insert into users (id, email, password_hash, salt, iterations, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?)")
-    .bind(userId, REVIEW_EMAIL, passwordHash, salt, PASSWORD_ITERATIONS, now, now).run();
+    .bind(userId, reviewEmail, passwordHash, salt, PASSWORD_ITERATIONS, now, now).run();
   await ensureReviewProfile(env, userId);
-  return { id: userId, email: REVIEW_EMAIL, password_hash: passwordHash, salt, iterations: PASSWORD_ITERATIONS };
+  return { id: userId, email: reviewEmail, password_hash: passwordHash, salt, iterations: PASSWORD_ITERATIONS };
 }
 
 export async function onRequestPost({ request, env }) {
@@ -88,21 +97,21 @@ export async function onRequestPost({ request, env }) {
     const secret = String(body.password || "");
     let user = await env.DB.prepare("select * from users where email = ? limit 1").bind(email).first();
 
-    if (!user && isReviewLogin(email, secret)) {
+    if (!user && isReviewLogin(env, email, secret)) {
       user = await createOrRepairReviewUser(env);
     }
 
     if (!user) return error("Credenziali non valide", 401);
 
     let candidate = await hashPassword(secret, user.salt, user.iterations);
-    if (candidate !== user.password_hash && isReviewLogin(email, secret)) {
+    if (candidate !== user.password_hash && isReviewLogin(env, email, secret)) {
       user = await createOrRepairReviewUser(env);
       candidate = await hashPassword(secret, user.salt, user.iterations);
     }
 
     if (candidate !== user.password_hash) return error("Credenziali non valide", 401);
 
-    if (isReviewLogin(email, secret)) {
+    if (isReviewLogin(env, email, secret)) {
       await ensureReviewProfile(env, user.id);
     }
 

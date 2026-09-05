@@ -1,4 +1,4 @@
-import { assertSameOrigin, buildProfileExtraStatements, error, json, readJson, requireAuth } from "./_shared.js";
+import { assertSameOrigin, buildProfileExtraInsertStatements, error, json, readJson, requireAuth } from "./_shared.js";
 
 export async function onRequestPost({ request, env }) {
   const originError = assertSameOrigin(request);
@@ -12,16 +12,19 @@ export async function onRequestPost({ request, env }) {
   const history = Array.isArray(body.history) ? body.history : [];
   if (!profile) return error("JSON senza profilo", 400);
 
-  await env.DB.prepare("delete from training_sessions where user_id = ?").bind(user.id).run();
-  await env.DB.prepare("delete from keepers where user_id = ?").bind(user.id).run();
-  await env.DB.prepare("delete from user_settings where user_id = ?").bind(user.id).run();
-
   const sport = profile.sportType || profile.sport || "calcio";
   const level = profile.level || "medio";
   const now = new Date().toISOString();
 
-  await env.DB.prepare("insert into user_settings (user_id, keepers_count, sport, level, sessions_per_week, session_duration, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?)")
-    .bind(user.id, Number(profile.keepersCount || 3), sport, level, Number(profile.sessionsPerWeek || 2), Number(profile.sessionDuration || 60), now, now).run();
+  // Tutte le scritture in un solo env.DB.batch(): un errore a metà non lascia
+  // più l'account con dati cancellati ma non ancora reimportati.
+  const statements = [
+    env.DB.prepare("delete from training_sessions where user_id = ?").bind(user.id),
+    env.DB.prepare("delete from keepers where user_id = ?").bind(user.id),
+    env.DB.prepare("delete from user_settings where user_id = ?").bind(user.id),
+    env.DB.prepare("insert into user_settings (user_id, keepers_count, sport, level, sessions_per_week, session_duration, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(user.id, Number(profile.keepersCount || 3), sport, level, Number(profile.sessionsPerWeek || 2), Number(profile.sessionDuration || 60), now, now)
+  ];
 
   const keeperNameToId = new Map();
   const keepers = Array.isArray(profile.keepers) ? profile.keepers : [];
@@ -30,12 +33,12 @@ export async function onRequestPost({ request, env }) {
     const id = crypto.randomUUID();
     const name = keeper.name || `Portiere ${i + 1}`;
     keeperNameToId.set(name, id);
-    await env.DB.prepare("insert into keepers (id, user_id, name, height_cm, weight_kg, sport, level, standing_broad_jump_cm, standing_vertical_jump_cm, standing_half_height_jump_cm, two_posts_test_sec, display_order, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-      .bind(id, user.id, name, keeper.height ?? keeper.height_cm ?? null, keeper.weight ?? keeper.weight_kg ?? null, sport, level, keeper.broadJump ?? keeper.standing_broad_jump_cm ?? null, keeper.verticalJump ?? keeper.standing_vertical_jump_cm ?? null, keeper.halfHeightJump ?? keeper.standing_half_height_jump_cm ?? null, keeper.twoPostsTest ?? keeper.two_posts_test_sec ?? null, i, now, now).run();
+    statements.push(env.DB.prepare("insert into keepers (id, user_id, name, height_cm, weight_kg, sport, level, standing_broad_jump_cm, standing_vertical_jump_cm, standing_half_height_jump_cm, two_posts_test_sec, display_order, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(id, user.id, name, keeper.height ?? keeper.height_cm ?? null, keeper.weight ?? keeper.weight_kg ?? null, sport, level, keeper.broadJump ?? keeper.standing_broad_jump_cm ?? null, keeper.verticalJump ?? keeper.standing_vertical_jump_cm ?? null, keeper.halfHeightJump ?? keeper.standing_half_height_jump_cm ?? null, keeper.twoPostsTest ?? keeper.two_posts_test_sec ?? null, i, now, now));
   }
 
   for (const item of history) {
-    await env.DB.prepare("insert into training_sessions (id, user_id, keeper_id, keeper_name, exercise_id, exercise_name, session_date, planned_minutes, saves, mistakes, reactions, category, source_page, sport, level, notes, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    statements.push(env.DB.prepare("insert into training_sessions (id, user_id, keeper_id, keeper_name, exercise_id, exercise_name, session_date, planned_minutes, saves, mistakes, reactions, category, source_page, sport, level, notes, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
       .bind(
         crypto.randomUUID(),
         user.id,
@@ -55,15 +58,16 @@ export async function onRequestPost({ request, env }) {
         item.notes || null,
         item.date || item.created_at || now,
         now
-      ).run();
+      ));
   }
 
-  // Il delete-all di training_sessions sopra cancella anche le righe "extra"
-  // (storico fisico, allenamenti salvati). Il JSON esportato da questa stessa
-  // app le include già dentro "profile": vanno riscritte oppure vengono perse
-  // a ogni importazione.
-  const extraStatements = await buildProfileExtraStatements(env, user.id, profile);
-  for (const statement of extraStatements) await statement.run();
+  // Variante sempre-insert (non buildProfileExtraStatements, che farebbe un
+  // controllo di esistenza contro lo stato ATTUALE del DB, prima che il
+  // delete-all sopra sia stato eseguito dal batch, producendo un UPDATE su
+  // una riga che nel frattempo il batch stesso ha cancellato).
+  statements.push(...buildProfileExtraInsertStatements(env, user.id, profile));
+
+  await env.DB.batch(statements);
 
   return json({ ok: true });
 }
