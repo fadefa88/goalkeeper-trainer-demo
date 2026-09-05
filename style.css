@@ -547,3 +547,24 @@ body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !importan
 .training-saved-card { display: grid; gap: var(--sp-2); padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line); }
 .training-saved-card.is-current { border-color: rgba(220, 6, 25, .4); }
 .training-saved-card h4 { margin: 0; font-size: 15px; font-weight: 600; } .training-saved-card .primary-btn { margin-top: 4px; }
+
+/* ============================================================
+   Onboarding wizard — setupView riusato in due modalità (vedi
+   cloudflare-client.js: setSetupMode). In modalità "onboarding" gli
+   step vengono mostrati uno alla volta (attributo [hidden] nativo,
+   niente stepper grafico); in modalità "edit" ("Modifica impostazioni
+   base") tutti gli step restano visibili insieme, come prima.
+   ============================================================ */
+.setup-step-indicator { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 2px; }
+.setup-step { display: grid; gap: var(--sp-4); }
+.setup-step[hidden] { display: none; }
+.setup-error { color: var(--red-bright); font-size: 13px; line-height: 1.4; }
+.setup-actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-1); }
+
+/* Primo accesso: nessun profilo ancora configurato. Topbar e bottom
+   nav restano nascoste finché il wizard non è completato, così non si
+   può raggiungere Calendario/Allenamento/Progressi a metà configurazione. */
+body.gk-onboarding .topbar,
+body.gk-onboarding .page-heading,
+body.gk-onboarding #bottomNav { display: none !important; }
+body.gk-onboarding .app-shell { padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(28px + env(safe-area-inset-bottom, 0px)) !important; }

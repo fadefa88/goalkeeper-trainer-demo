@@ -1524,7 +1524,10 @@ function escapeHtml(value) {
 
 document.addEventListener("DOMContentLoaded", () => {
   $("keepersCount").addEventListener("change", renderKeeperFields);
-  $("setupForm").addEventListener("submit", saveProfileFromForm);
+  // Il submit di #setupForm è gestito da cloudflare-client.js
+  // (handleSetupSubmit, che gestisce anche gli step del wizard di
+  // onboarding): un secondo binding qui su saveProfileFromForm duplicherebbe
+  // il submit e salterebbe la validazione a step.
 
   document.querySelectorAll(".nav-btn").forEach(btn => {
     btn.addEventListener("click", () => showView(btn.dataset.tab));

@@ -10,6 +10,15 @@
   let selectedCalendarDate = todayKey();
   let calendarMonthDate = new Date();
 
+  // --- Wizard di onboarding (setupView riusato, vedi setSetupMode) -------
+  // "onboarding" = primo accesso, un passo alla volta, non si può uscire
+  // finché non si completa; "edit" = "Modifica impostazioni base" da
+  // Profilo, tutti i campi visibili insieme come sempre.
+  let setupMode = "edit";
+  let setupStep = 1;
+  let setupSaving = false;
+  const SETUP_TOTAL_STEPS = 3;
+
   const q = (id) => document.getElementById(id);
   const esc = (v) => escapeHtml(String(v ?? ""));
   const cleanNum = (v) => v === "" || v === null || v === undefined ? null : Number(v);
@@ -58,7 +67,8 @@
   }
 
   function showAuth(message = "") {
-    document.body.classList.remove("gk-authenticated");
+    document.body.classList.remove("gk-authenticated", "gk-onboarding");
+    setupMode = "edit";
     document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
     q("authView")?.classList.add("active");
     q("bottomNav")?.classList.add("hidden");
@@ -118,12 +128,21 @@
   async function loadData(render = true) {
     localStorage.removeItem("gk_profile");
     localStorage.removeItem("gk_history");
+    let needsOnboarding = false;
     try {
       const me = await api("/api/me");
       cloudUser = me.user;
       const profileRes = await api("/api/profile");
       const sessionsRes = await api("/api/sessions");
-      cloudProfile = normalizeProfile(profileRes.profile);
+      const rawProfile = profileRes.profile;
+      // Fonte di verità unica per "il gruppo portieri non è ancora
+      // configurato": i dati account tornati da GET /api/profile, non
+      // localStorage. loadProfile (functions/api/_shared.js) torna null se
+      // non esiste ancora una riga user_settings per l'utente; altrimenti
+      // "non configurato" vuol dire nessun portiere inserito. Nessun nuovo
+      // flag introdotto in D1.
+      needsOnboarding = !rawProfile || !Array.isArray(rawProfile.keepers) || rawProfile.keepers.length === 0;
+      cloudProfile = normalizeProfile(rawProfile);
       cloudHistory = (sessionsRes.sessions || []).filter((s) => s.category !== MATCH_CATEGORY).map(normalizeSession);
       if (q("cloudUserLabel")) q("cloudUserLabel").textContent = `Connesso come ${cloudUser.email}`;
       // Unico punto in cui lo stato "autenticato" viene deciso: la topbar, il
@@ -133,19 +152,31 @@
       cloudUser = null;
       cloudProfile = null;
       cloudHistory = [];
-      document.body.classList.remove("gk-authenticated");
+      document.body.classList.remove("gk-authenticated", "gk-onboarding");
       if (render) showAuth(e.status === 401 ? "" : e.message);
       return;
     }
     if (!render) return;
-    // "home" e non "landing": calendar-keepers.js intercetta la primissima
-    // chiamata con view === "home" per mostrare la Home reale al posto della
-    // lista esercizi (vedi hookLanding in calendar-keepers.js). Chiamare
-    // "landing" direttamente qui salterebbe quel meccanismo one-shot e
-    // lascerebbe il flag "pending" attivo, dirottando su Home anche il
-    // successivo click sulla tab "Esercizi".
-    if (cloudProfile) showView("home");
-    else { loadProfileIntoForm(); showView("setup"); }
+    if (needsOnboarding) {
+      // Primo accesso (dopo login o dopo signup): niente profilo o nessun
+      // portiere configurato. Il wizard riusa setupView in modalità
+      // "onboarding" — vedi setSetupMode più sotto.
+      document.body.classList.add("gk-onboarding");
+      setSetupMode("onboarding");
+      loadProfileIntoForm();
+      showView("setup");
+    } else {
+      document.body.classList.remove("gk-onboarding");
+      setSetupMode("edit");
+      // "home" e non "landing": calendar-keepers.js intercetta la primissima
+      // chiamata con view === "home" per mostrare la Home reale al posto della
+      // lista esercizi (vedi hookLanding in calendar-keepers.js). Chiamare
+      // "landing" direttamente qui salterebbe quel meccanismo one-shot e
+      // lascerebbe il flag "pending" attivo, dirottando su Home anche il
+      // successivo click sulla tab "Esercizi". Vale anche subito dopo aver
+      // completato il wizard: è la prima "home" della sessione.
+      showView("home");
+    }
   }
 
   // ensurePlannerStyles() è stato rimosso: ogni regola che era ancora viva
@@ -196,11 +227,118 @@
         };
       })
     };
+    clearSetupError();
     try {
+      // Stessa PUT /api/profile di sempre, nessuna seconda API: il wizard
+      // riusa saveCloudProfile così com'è, per gli step 1-2 e per la modalità
+      // "edit". Al successo si ricarica il profilo dal backend, si chiude il
+      // wizard e si entra nella Home reale.
       await api("/api/profile", { method: "PUT", body: { profile } });
       await loadData(false);
+      document.body.classList.remove("gk-onboarding");
+      setSetupMode("edit");
       showView("home");
-    } catch (e) { alert(e.message); }
+    } catch (e) {
+      // In caso di errore si resta sul wizard/setup senza perdere i valori
+      // inseriti (il form non viene toccato) e si mostra un messaggio leggibile.
+      showSetupError(e.message || "Errore durante il salvataggio. Riprova.");
+    }
+  }
+
+  function setSetupMode(mode) {
+    setupMode = mode;
+    setupStep = 1;
+    clearSetupError();
+    renderSetupStep();
+  }
+
+  function renderSetupStep() {
+    const isOnboarding = setupMode === "onboarding";
+    const indicator = q("setupStepIndicator");
+    if (indicator) {
+      indicator.hidden = !isOnboarding;
+      indicator.textContent = `${setupStep} di ${SETUP_TOTAL_STEPS}`;
+    }
+    const intro = q("setupIntro");
+    if (intro) intro.hidden = isOnboarding;
+    const title = q("setupTitle");
+    if (title) {
+      const stepTitles = { 1: "Configura il gruppo portieri", 2: "Allenamento", 3: "Portieri" };
+      title.textContent = isOnboarding ? (stepTitles[setupStep] || stepTitles[1]) : "Configura il gruppo portieri";
+    }
+    document.querySelectorAll(".setup-step").forEach((el) => {
+      el.hidden = isOnboarding && Number(el.dataset.step) !== setupStep;
+    });
+    const backBtn = q("setupBackBtn");
+    if (backBtn) backBtn.hidden = !isOnboarding || setupStep === 1;
+    const submitBtn = q("setupSubmitBtn");
+    if (submitBtn && !setupSaving) {
+      submitBtn.textContent = !isOnboarding ? "Salva profilo" : (setupStep < SETUP_TOTAL_STEPS ? "Continua" : "Completa configurazione");
+    }
+    // Rientrando nello step "Portieri" i blocchi devono riflettere il numero
+    // di portieri scelto nello step 1, anche se cambiato dopo un "Indietro".
+    if (isOnboarding && setupStep === SETUP_TOTAL_STEPS) renderKeeperFields();
+  }
+
+  function validateSetupStep(step) {
+    if (step === 1) {
+      if (!q("keepersCount")?.value) return "Seleziona il numero di portieri.";
+      if (!q("sportType")?.value) return "Seleziona lo sport.";
+      if (!q("level")?.value) return "Seleziona il livello.";
+    }
+    if (step === 2) {
+      if (!q("sessionsPerWeek")?.value) return "Seleziona gli allenamenti a settimana.";
+      if (!q("sessionDuration")?.value) return "Seleziona la durata dell'allenamento.";
+    }
+    if (step === 3) {
+      const rows = Array.from(document.querySelectorAll(".keeper-row"));
+      if (!rows.length) return "Configura almeno un portiere.";
+      if (rows.some((row) => !val(row, ".keeper-name"))) return "Inserisci il nome di ogni portiere.";
+    }
+    return "";
+  }
+
+  function showSetupError(message) {
+    const el = q("setupFormError");
+    if (!el) return;
+    el.textContent = message || "";
+    el.hidden = !message;
+  }
+
+  function clearSetupError() { showSetupError(""); }
+
+  function setSetupBusy(busy) {
+    setupSaving = busy;
+    const submitBtn = q("setupSubmitBtn"), backBtn = q("setupBackBtn");
+    if (submitBtn) {
+      submitBtn.disabled = busy;
+      if (busy) submitBtn.textContent = "Salvataggio...";
+    }
+    if (backBtn) backBtn.disabled = busy;
+  }
+
+  async function handleSetupSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation?.();
+    if (setupSaving) return; // impedisce il doppio submit sul pulsante finale
+    if (setupMode !== "onboarding") {
+      setSetupBusy(true);
+      try { await saveCloudProfile(event); }
+      finally { setSetupBusy(false); renderSetupStep(); }
+      return;
+    }
+    const err = validateSetupStep(setupStep);
+    if (err) { showSetupError(err); return; }
+    clearSetupError();
+    if (setupStep < SETUP_TOTAL_STEPS) {
+      setupStep += 1;
+      renderSetupStep();
+      return;
+    }
+    setSetupBusy(true);
+    try { await saveCloudProfile(event); }
+    finally { setSetupBusy(false); renderSetupStep(); }
   }
 
   async function login() {
@@ -767,6 +905,9 @@
   showView = function (view) {
     if (!cloudUser && view !== "auth") return showAuth();
     if (view === "auth") return showAuth();
+    // First-run: nessun accesso a Calendario/Allenamento/Progressi/Home
+    // finché il wizard non è stato completato con successo.
+    if (setupMode === "onboarding" && view !== "setup") return baseShowView("setup");
     const target = view === "performance" || view === "history" ? "progress" : view;
     baseShowView(target);
     if (q("screenTitle") && VIEW_TITLES[target]) q("screenTitle").textContent = VIEW_TITLES[target];
@@ -853,7 +994,16 @@
     localStorage.removeItem("gk_profile");
     localStorage.removeItem("gk_history");
     q("keepersCount")?.addEventListener("change", renderKeeperFields);
-    q("setupForm")?.addEventListener("submit", saveCloudProfile, true);
+    q("setupForm")?.addEventListener("submit", handleSetupSubmit, true);
+    q("setupBackBtn")?.addEventListener("click", () => {
+      if (setupMode !== "onboarding" || setupStep <= 1) return;
+      setupStep -= 1;
+      clearSetupError();
+      renderSetupStep();
+    });
+    // "Modifica impostazioni base" da Profilo: sempre modalità edit (tutti i
+    // campi visibili insieme), mai come se fosse il primo accesso.
+    q("editSetupBtn")?.addEventListener("click", () => setSetupMode("edit"));
     q("authForm")?.addEventListener("submit", (e) => { e.preventDefault(); login(); });
     q("loginBtn")?.addEventListener("click", login);
     q("signupBtn")?.addEventListener("click", signup);
@@ -886,8 +1036,10 @@
       btn.addEventListener("click", async () => {
         if (!confirm("Cancellare profilo, portieri e sessioni?")) return;
         await api("/api/all-data", { method: "DELETE" });
-        await loadData(false);
-        showView("setup");
+        // Senza più portieri configurati, il profilo torna "non configurato":
+        // loadData(true) lo rileva da sé e riparte dal wizard di onboarding
+        // (stessa logica del primo accesso, nessuna route separata).
+        await loadData(true);
       });
     }
     q("prevMonthBtn")?.addEventListener("click", () => { calendarMonthDate = new Date(calendarMonthDate.getFullYear(), calendarMonthDate.getMonth() - 1, 1); renderCalendar(); });

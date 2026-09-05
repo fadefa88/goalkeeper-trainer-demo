@@ -21,7 +21,32 @@
     <main>
       <section id="authView" class="view active"><div class="auth-card"><div class="auth-logo"><h2>Entra nel tuo gruppo</h2></div><form id="authForm" class="form-grid"><label>Email<input id="authEmail" type="email" autocomplete="email" placeholder="email" required /></label><label>Password<input id="authPassword" type="password" autocomplete="current-password" placeholder="minimo 8 caratteri" required /></label><div class="auth-actions"><button id="loginBtn" class="primary-btn full" type="button">Login</button><button id="signupBtn" class="dark-btn full" type="button">Crea account</button></div></form><p id="authStatus" class="muted auth-status"></p></div></section>
 
-      <section id="setupView" class="view"><div class="setup-card"><h2>Configura il gruppo portieri</h2><p class="muted">Imposta gruppo, livello e durata sedute.</p><form id="setupForm" class="form-grid"><label>Numero portieri<select id="keepersCount"><option value="1">1 portiere</option><option value="2">2 portieri</option><option value="3" selected>3 portieri</option><option value="4">4 portieri</option><option value="5">5+ portieri</option></select></label><label>Sport<select id="sportType"><option value="calcio">Calcio</option><option value="futsal">Futsal</option></select></label><label>Livello<select id="level"><option value="base">Base</option><option value="medio" selected>Medio</option><option value="pro">Pro</option></select></label><label>Allenamenti a settimana<select id="sessionsPerWeek"><option value="1">1 a settimana</option><option value="2" selected>2 a settimana</option><option value="3">3 a settimana</option></select></label><label>Durata allenamento<select id="sessionDuration"><option value="60" selected>1 ora</option><option value="120">2 ore</option></select></label><div class="keepers-box"><div class="keepers-header"><h3>Portieri</h3><span class="pill">profilo base</span></div><div id="keepersFields" class="keepers-fields"></div></div><button class="primary-btn full" type="submit">Salva profilo</button></form></div></section>
+      <section id="setupView" class="view">
+        <div class="setup-card">
+          <p id="setupStepIndicator" class="setup-step-indicator" hidden>1 di 3</p>
+          <h2 id="setupTitle">Configura il gruppo portieri</h2>
+          <p id="setupIntro" class="muted">Imposta gruppo, livello e durata sedute.</p>
+          <form id="setupForm" class="form-grid">
+            <div class="setup-step" data-step="1">
+              <label>Numero portieri<select id="keepersCount"><option value="1">1 portiere</option><option value="2">2 portieri</option><option value="3" selected>3 portieri</option><option value="4">4 portieri</option><option value="5">5+ portieri</option></select></label>
+              <label>Sport<select id="sportType"><option value="calcio">Calcio</option><option value="futsal">Futsal</option></select></label>
+              <label>Livello<select id="level"><option value="base">Base</option><option value="medio" selected>Medio</option><option value="pro">Pro</option></select></label>
+            </div>
+            <div class="setup-step" data-step="2">
+              <label>Allenamenti a settimana<select id="sessionsPerWeek"><option value="1">1 a settimana</option><option value="2" selected>2 a settimana</option><option value="3">3 a settimana</option></select></label>
+              <label>Durata allenamento<select id="sessionDuration"><option value="60" selected>1 ora</option><option value="120">2 ore</option></select></label>
+            </div>
+            <div class="setup-step" data-step="3">
+              <div class="keepers-box"><div class="keepers-header"><h3>Portieri</h3><span class="pill">profilo base</span></div><div id="keepersFields" class="keepers-fields"></div></div>
+            </div>
+            <p id="setupFormError" class="setup-error" hidden></p>
+            <div class="setup-actions">
+              <button id="setupSubmitBtn" class="primary-btn full" type="submit">Salva profilo</button>
+              <button id="setupBackBtn" class="ghost-btn full" type="button" hidden>Indietro</button>
+            </div>
+          </form>
+        </div>
+      </section>
 
       <section id="landingView" class="view"><div class="landing-home"><div class="landing-hero"><div class="landing-copy"><h2>Campo pronto.</h2><p class="muted">Da qui riparti verso esercizi, calendario, sedute salvate e progressi.</p><div class="landing-actions"><button class="primary-btn full" type="button" data-quick-go="calendar">Calendario</button><button class="dark-btn full" type="button" data-quick-go="training">Allenamento</button></div></div></div></div></section>
 
