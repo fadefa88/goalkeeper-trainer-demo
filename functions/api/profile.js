@@ -7,6 +7,19 @@ export async function onRequestGet({ request, env }) {
 }
 
 export async function onRequestPut({ request, env }) {
+  try {
+    return await savePut(request, env);
+  } catch (err) {
+    // Senza questo try/catch, un'eccezione qui (es. un mismatch tra
+    // placeholder SQL e valori bindati) risale non gestita e Cloudflare
+    // restituisce una pagina HTML di errore generica invece di JSON: il
+    // client la interpreta come testo d'errore e la mostra per intero.
+    console.error("profile PUT failed", err);
+    return error(`Errore salvataggio profilo: ${err?.message || String(err || "errore sconosciuto")}`, 500);
+  }
+}
+
+async function savePut(request, env) {
   const originError = assertSameOrigin(request);
   if (originError) return originError;
 
@@ -50,7 +63,7 @@ export async function onRequestPut({ request, env }) {
       statements.push(env.DB.prepare("update keepers set name = ?, height_cm = ?, weight_kg = ?, sport = ?, level = ?, standing_broad_jump_cm = ?, standing_vertical_jump_cm = ?, standing_half_height_jump_cm = ?, two_posts_test_sec = ?, display_order = ?, updated_at = ? where id = ? and user_id = ?")
         .bind(name, height, weight, sport, level, broadJump, verticalJump, halfHeightJump, twoPostsTest, i, now, id, user.id));
     } else {
-      statements.push(env.DB.prepare("insert into keepers (id, user_id, name, height_cm, weight_kg, sport, level, standing_broad_jump_cm, standing_vertical_jump_cm, standing_half_height_jump_cm, two_posts_test_sec, display_order, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      statements.push(env.DB.prepare("insert into keepers (id, user_id, name, height_cm, weight_kg, sport, level, standing_broad_jump_cm, standing_vertical_jump_cm, standing_half_height_jump_cm, two_posts_test_sec, display_order, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
         .bind(id, user.id, name, height, weight, sport, level, broadJump, verticalJump, halfHeightJump, twoPostsTest, i, now, now));
     }
   });

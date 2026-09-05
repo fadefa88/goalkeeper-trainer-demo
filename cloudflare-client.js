@@ -440,13 +440,40 @@
     };
   }
 
+  async function deleteCalendarPlan(date) {
+    if (!confirm("Eliminare l'allenamento salvato per questa data?")) return;
+    setSaveButtonState("gk-saving", "Eliminazione...");
+    try {
+      const nextPlans = { ...readPlans() };
+      delete nextPlans[date];
+      await api("/api/profile", { method: "PUT", body: { profile: { ...cloudProfile, trainingPlans: nextPlans, training_plans: nextPlans } } });
+      writePlans(nextPlans);
+      await loadData(false);
+      renderTrainingView();
+      window.dispatchEvent(new CustomEvent("gk-training-plans-updated", { detail: { date } }));
+      setSaveButtonState("gk-saved", "Eliminato");
+    } catch (e) {
+      setSaveButtonState("gk-error", `Errore eliminazione: ${e.message}`);
+    } finally {
+      setTimeout(() => setSaveButtonState("", "Salva allenamento"), 1800);
+    }
+  }
+
   async function saveCalendarPlan() {
     persistPlannerInputs();
     const date = selectedCalendarDate;
     const plan = getDayPlan(date);
     if (!plan.items.length) {
-      setSaveButtonState("gk-error", "Aggiungi almeno un esercizio");
-      setTimeout(() => setSaveButtonState("", ""), 1800);
+      // Svuotare la giornata e premere "Salva allenamento" è il modo per
+      // togliere una seduta già salvata (es. programmata per sbaglio nel
+      // giorno sbagliato) — non solo un errore da mostrare. Se non c'era
+      // nulla di salvato per questa data, resta un errore come prima.
+      if (cloudProfile?.trainingPlans?.[date]?.items?.length) {
+        await deleteCalendarPlan(date);
+      } else {
+        setSaveButtonState("gk-error", "Aggiungi almeno un esercizio");
+        setTimeout(() => setSaveButtonState("", ""), 1800);
+      }
       return;
     }
     setSaveButtonState("gk-saving", "Salvataggio...");
