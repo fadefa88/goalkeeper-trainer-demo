@@ -1,0 +1,38 @@
+name: Scrape Italian clubs
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: Starting year of the season
+        required: true
+        default: '2026'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run scraper
+        run: node scripts/scrape-diretta-clubs.mjs --season=${{ inputs.season }}
+
+      - name: Upload generated files
+        uses: actions/upload-artifact@v4
+        with:
+          name: italian-clubs-${{ inputs.season }}
+          path: |
+            scripts/import-serie-abc-${{ inputs.season }}.json
+            assets/club-logos/
