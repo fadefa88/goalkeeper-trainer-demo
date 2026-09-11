@@ -1215,6 +1215,161 @@ function exerciseVisualStyles() {
   `;
 }
 
+// --- Renderer SVG per diagram_scene_json (esercizi personali) -------------
+// Deterministico: stessa scena in ingresso, stesso SVG in uscita (stessi
+// keyTimes/values ad ogni chiamata). La scena è già stata sanitizzata
+// server-side (functions/api/_diagram-scene.js): qui non si valida più
+// nulla, solo si disegna. Namespace CSS ".diagram-scene" separato da
+// ".exercise-visual" (i visual builtin sopra) per non toccarne lo stile:
+// palette dark neutral + rosso Mantova invece del verde campo.
+//
+// Il movimento è vera interpolazione SVG (<animate> su cx/cy con
+// keyTimes), non una sequenza di immagini AI indipendenti: per questo è
+// sempre fluido e sempre identico a sé stesso, indipendentemente da cosa
+// il modello abbia generato come dati (coordinate), che qui vengono solo
+// interpolate, mai "immaginate" di nuovo ad ogni fotogramma.
+const DIAGRAM_STEP_SECONDS = 1.6;
+
+function diagramSceneStyles() {
+  return `
+    <style>
+      .diagram-scene-wrap{display:grid;gap:8px}
+      .diagram-scene{width:100%;height:auto;display:block;border-radius:var(--radius-md);background:var(--panel-2);border:1px solid var(--line)}
+      .diagram-scene .field-line{fill:none;stroke:var(--line-strong);stroke-width:.6}
+      .diagram-scene .zone{fill:rgba(255,255,255,.05);stroke:var(--line-strong);stroke-width:.5;stroke-dasharray:2 2}
+      .diagram-scene .zone-label{fill:var(--muted);font-size:3px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+      .diagram-scene .ball-path{fill:none;stroke:var(--red);stroke-width:.5;stroke-linecap:round;stroke-dasharray:1.5 1.5;opacity:.55}
+      .diagram-scene .ball-path.air{stroke-dasharray:.5 1.5}
+      .diagram-scene .actor{stroke-width:.5}
+      .diagram-scene .actor.goalkeeper{fill:var(--text);stroke:var(--bg)}
+      .diagram-scene .actor.coach{fill:var(--mantova-gold);stroke:var(--bg)}
+      .diagram-scene .actor.player{fill:var(--panel);stroke:var(--line-strong)}
+      .diagram-scene .actor-label{fill:var(--bg);font-size:2.6px;font-weight:700;text-anchor:middle;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+      .diagram-scene .object-ball{fill:var(--red);stroke:var(--bg);stroke-width:.3}
+      .diagram-scene .object-cone{fill:var(--mantova-gold)}
+      .diagram-scene .object-dummy,.diagram-scene .object-obstacle{fill:none;stroke:var(--muted);stroke-width:.6}
+      .diagram-scene .free-label{fill:var(--muted);font-size:2.6px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    </style>
+  `;
+}
+
+// Rettangoli schematici in coordinate 0-100: rappresentazioni indicative,
+// non misure di campo reali.
+function diagramFieldMarkup(type) {
+  const goal = `<rect class="field-line" x="42" y="0" width="16" height="3" />`;
+  if (type === "goal-area") return `${goal}<rect class="field-line" x="30" y="0" width="40" height="22" />`;
+  if (type === "half-pitch") return `${goal}<rect class="field-line" x="10" y="0" width="80" height="60" /><circle class="field-line" cx="50" cy="60" r="9" />`;
+  if (type === "full-pitch") return `<rect class="field-line" x="4" y="2" width="92" height="96" /><line class="field-line" x1="4" y1="50" x2="96" y2="50" /><circle class="field-line" cx="50" cy="50" r="9" />`;
+  return `${goal}<rect class="field-line" x="18" y="0" width="64" height="38" />`; // penalty-area, default
+}
+
+// Costruisce il "binario" (keyTimes/values) di un punto che deve stare
+// fermo in staticPos, muoversi durante ciascun segmento (in ordine di
+// sequence) verso segment.to, e restare fermo lì fino al prossimo
+// segmento o fino alla fine del loop. totalSeq*stepDur è la durata totale
+// del loop, condivisa da tutti gli elementi animati della stessa scena
+// (così restano sincronizzati anche se hanno segmenti diversi).
+function diagramBuildTrack(staticPos, segments, totalSeq, stepDur) {
+  if (!segments.length) return null;
+  const total = totalSeq * stepDur;
+  const keyTimes = [0];
+  const xs = [staticPos[0]];
+  const ys = [staticPos[1]];
+  let cursor = staticPos;
+  segments.forEach((seg) => {
+    const beginFrac = Math.max(0, Math.min(1, (seg.sequence - 1) / totalSeq));
+    const endFrac = Math.max(0, Math.min(1, seg.sequence / totalSeq));
+    if (beginFrac > keyTimes[keyTimes.length - 1] + 1e-6) {
+      keyTimes.push(beginFrac); xs.push(cursor[0]); ys.push(cursor[1]);
+    }
+    keyTimes.push(Math.max(endFrac, keyTimes[keyTimes.length - 1] + 1e-6));
+    xs.push(seg.to[0]); ys.push(seg.to[1]);
+    cursor = seg.to;
+  });
+  if (keyTimes[keyTimes.length - 1] < 1 - 1e-6) {
+    keyTimes.push(1); xs.push(cursor[0]); ys.push(cursor[1]);
+  }
+  return { keyTimes, xs, ys, dur: total };
+}
+
+function diagramAnimateTag(attr, values, keyTimes, dur) {
+  const vals = values.map((v) => Math.round(v * 10) / 10).join(";");
+  const kt = keyTimes.map((t) => t.toFixed(4)).join(";");
+  return `<animate attributeName="${attr}" values="${vals}" keyTimes="${kt}" dur="${dur.toFixed(2)}s" repeatCount="indefinite" calcMode="linear" />`;
+}
+
+function renderDiagramScene(scene) {
+  if (!scene || !Array.isArray(scene.actors) || !scene.actors.length) return "";
+  const totalSeq = Math.max(1,
+    ...(scene.movements || []).map((m) => m.sequence || 0),
+    ...(scene.ballPaths || []).map((p) => p.sequence || 0)
+  );
+  const parts = [diagramFieldMarkup(scene.field?.type)];
+
+  (scene.zones || []).forEach((z) => {
+    parts.push(`<rect class="zone" x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" />`);
+    if (z.label) parts.push(`<text class="zone-label" x="${z.x + 1}" y="${z.y + 3}">${escapeHtml(z.label)}</text>`);
+  });
+
+  // Traiettoria pallone: una linea guida tratteggiata per ogni tratto (resta
+  // visibile per tutto il loop) più il pallone vero che ci si muove sopra
+  // in sincrono con l'ordine "sequence".
+  const ballSegments = (scene.ballPaths || []).slice().sort((a, b) => a.sequence - b.sequence);
+  ballSegments.forEach((seg) => {
+    parts.push(`<path class="ball-path ${seg.style === "air" ? "air" : ""}" d="M${seg.from[0]} ${seg.from[1]} L${seg.to[0]} ${seg.to[1]}" />`);
+  });
+  const ballStaticObject = (scene.objects || []).find((o) => o.type === "ball");
+  if (ballSegments.length) {
+    const start = ballSegments[0].from;
+    const track = diagramBuildTrack(start, ballSegments, totalSeq, DIAGRAM_STEP_SECONDS);
+    parts.push(`<circle class="object-ball" cx="${start[0]}" cy="${start[1]}" r="1.6">
+      ${diagramAnimateTag("cx", track.xs, track.keyTimes, track.dur)}
+      ${diagramAnimateTag("cy", track.ys, track.keyTimes, track.dur)}
+    </circle>`);
+  } else if (ballStaticObject) {
+    parts.push(`<circle class="object-ball" cx="${ballStaticObject.x}" cy="${ballStaticObject.y}" r="1.6" />`);
+  }
+
+  (scene.objects || []).forEach((o) => {
+    if (o.type === "ball") return; // già disegnato sopra (animato o statico)
+    if (o.type === "cone") parts.push(`<polygon class="object-cone" points="${o.x},${o.y - 1.6} ${o.x - 1.4},${o.y + 1.4} ${o.x + 1.4},${o.y + 1.4}" />`);
+    else parts.push(`<rect class="object-${o.type}" x="${o.x - 1.5}" y="${o.y - 1.5}" width="3" height="3" />`);
+  });
+
+  scene.actors.forEach((actor) => {
+    const segments = (scene.movements || [])
+      .filter((m) => m.actorId === actor.id)
+      .sort((a, b) => a.sequence - b.sequence);
+    const track = diagramBuildTrack([actor.x, actor.y], segments, totalSeq, DIAGRAM_STEP_SECONDS);
+    const label = escapeHtml(actor.label || actor.id || "");
+    if (track) {
+      parts.push(`<circle class="actor ${actor.type}" cx="${actor.x}" cy="${actor.y}" r="3">
+        ${diagramAnimateTag("cx", track.xs, track.keyTimes, track.dur)}
+        ${diagramAnimateTag("cy", track.ys, track.keyTimes, track.dur)}
+      </circle>`);
+      parts.push(`<text class="actor-label" x="${actor.x}" y="${actor.y + 1}">${label}
+        ${diagramAnimateTag("x", track.xs, track.keyTimes, track.dur)}
+        ${diagramAnimateTag("y", track.ys.map((y) => y + 1), track.keyTimes, track.dur)}
+      </text>`);
+    } else {
+      parts.push(`<circle class="actor ${actor.type}" cx="${actor.x}" cy="${actor.y}" r="3" />`);
+      parts.push(`<text class="actor-label" x="${actor.x}" y="${actor.y + 1}">${label}</text>`);
+    }
+  });
+
+  (scene.labels || []).forEach((l) => {
+    parts.push(`<text class="free-label" x="${l.x}" y="${l.y}">${escapeHtml(l.text)}</text>`);
+  });
+
+  return `
+    <div class="diagram-scene-wrap">
+      ${diagramSceneStyles()}
+      <svg class="diagram-scene" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schema animato esercizio">
+        ${parts.join("")}
+      </svg>
+    </div>`;
+}
+
 function svgShell(inner, viewBox = "0 0 420 240") {
   return `<svg class="exercise-visual" viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Visual esercizio">
     <defs>

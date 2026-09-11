@@ -257,6 +257,10 @@ export const CUSTOM_EXERCISE_CATEGORIES = ["Tecnico", "Difesa spazio", "Finalizz
 // il frontend usa sempre GET /api/custom-exercises/:id/video come URL
 // stabile, mai un percorso R2 diretto.
 export function mapCustomExercise(row) {
+  let diagramSceneJson = null;
+  if (row.diagram_scene_json) {
+    try { diagramSceneJson = JSON.parse(row.diagram_scene_json); } catch { diagramSceneJson = null; }
+  }
   return {
     id: row.id,
     name: row.name,
@@ -267,6 +271,12 @@ export function mapCustomExercise(row) {
     keepersCount: row.keepers_count,
     equipment: row.equipment || "",
     notes: row.notes || "",
+    // Schema animato (gratuito, generato dal modello testuale): default
+    // per ogni esercizio custom.
+    diagramSceneJson,
+    diagramSourceHash: row.diagram_source_hash || null,
+    // Video AI vero (costoso, terze parti): opzione premium esplicita,
+    // separata dallo schema.
     videoStatus: row.video_status || "none",
     videoSourceHash: row.video_source_hash || null,
     videoModel: row.video_model || null,

@@ -91,6 +91,15 @@
     return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
   }
 
+  // Controparte client di hashText() in functions/api/_diagram-scene.js: lo
+  // schema dipende solo dalla descrizione (non da obiettivo/materiale/ecc.),
+  // stesso algoritmo di hashVideoSource ma senza il wrapper JSON.
+  async function hashDiagramSource(description) {
+    const bytes = new TextEncoder().encode(String(description ?? "").trim());
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+
   function showAuth(message = "") {
     document.body.classList.remove("gk-authenticated", "gk-onboarding");
     setupMode = "edit";
@@ -171,6 +180,8 @@
       keepersCount: row.keepersCount ?? null,
       equipment: row.equipment || "",
       notes: row.notes || "",
+      diagramSceneJson: row.diagramSceneJson || null,
+      diagramSourceHash: row.diagramSourceHash || null,
       videoStatus: row.videoStatus || "none",
       videoSourceHash: row.videoSourceHash || null,
       videoModel: row.videoModel || null,
@@ -1078,9 +1089,10 @@
   // --- Form creazione/modifica esercizio personale ------------------------
   // Unico form, riusato da "+ Nuovo esercizio" (pagina Esercizi), dal planner
   // del Calendario e da "Duplica" (custom o builtin). Gestisce solo i campi
-  // testuali: il video si genera sempre dopo il salvataggio, dal dettaglio
-  // (vedi startVideoGeneration più sotto), mai durante la compilazione del
-  // form — evita di pagare una generazione per un esercizio non salvato.
+  // testuali: sia lo schema animato (gratuito) sia il video (premium, a
+  // pagamento) si generano sempre dopo il salvataggio, dal dettaglio — mai
+  // durante la compilazione del form, per non pagare/generare per un
+  // esercizio che non viene nemmeno salvato.
   function openExerciseForm({ editing = null, prefillFrom = null, returnTo = { view: "home" } } = {}) {
     const base = editing || prefillFrom;
     const category = base && CUSTOM_EXERCISE_CATEGORIES.includes(base.category) ? base.category
@@ -1099,10 +1111,16 @@
         notes: base?.notes || ""
       },
       // Usati solo in modifica, per rilevare "la descrizione è cambiata da
-      // quando ho generato il video" (vedi handleExerciseFormSubmit).
+      // quando ho generato lo schema/il video" (vedi runFormChecksAndSave).
+      // Lo schema (gratuito) si eredita anche duplicando, il video
+      // (premium) no: va sempre rigenerato esplicitamente per una copia.
+      diagramSceneJson: base?.diagramSceneJson || null,
+      diagramSourceHash: base?.diagramSourceHash || null,
+      diagramAcknowledged: false,
+      autoRegenerateDiagram: false,
       videoStatus: editing?.videoStatus || "none",
       videoSourceHash: editing?.videoSourceHash || null,
-      changeAcknowledged: false,
+      videoAcknowledged: false,
       autoRegenerateVideo: false,
       error: ""
     };
@@ -1138,6 +1156,13 @@
           <label>Materiale<input id="exEquipment" type="text" maxlength="300" placeholder="es. palloni, coni, sagome" value="${esc(v.equipment)}" /></label>
           <label>Note<textarea id="exNotes" maxlength="2000" rows="3">${esc(v.notes)}</textarea></label>
           <p id="exerciseFormError" class="setup-error" ${exerciseFormState.error ? "" : "hidden"}>${esc(exerciseFormState.error)}</p>
+          <div id="diagramChangedBanner" class="state-changed-banner" hidden>
+            <p class="muted small-note">Lo schema non corrisponde più alla descrizione aggiornata.</p>
+            <div class="button-row">
+              <button type="button" class="ghost-btn" data-exercise-keep-diagram>Mantieni schema</button>
+              <button type="button" class="accent-btn" data-exercise-regenerate-diagram-inline>Rigenera schema</button>
+            </div>
+          </div>
           <div id="videoChangedBanner" class="state-changed-banner" hidden>
             <p class="muted small-note">Il video non corrisponde più alla descrizione aggiornata.</p>
             <div class="button-row">
@@ -1156,9 +1181,12 @@
 
   function bindExerciseFormEvents() {
     q("exerciseForm")?.addEventListener("submit", handleExerciseFormSubmit);
-    const banner = q("videoChangedBanner");
-    banner?.querySelector("[data-exercise-keep-video]")?.addEventListener("click", confirmKeepVideo);
-    banner?.querySelector("[data-exercise-regenerate-video-inline]")?.addEventListener("click", confirmRegenerateVideoFromForm);
+    const diagramBanner = q("diagramChangedBanner");
+    diagramBanner?.querySelector("[data-exercise-keep-diagram]")?.addEventListener("click", confirmKeepDiagram);
+    diagramBanner?.querySelector("[data-exercise-regenerate-diagram-inline]")?.addEventListener("click", confirmRegenerateDiagramFromForm);
+    const videoBanner = q("videoChangedBanner");
+    videoBanner?.querySelector("[data-exercise-keep-video]")?.addEventListener("click", confirmKeepVideo);
+    videoBanner?.querySelector("[data-exercise-regenerate-video-inline]")?.addEventListener("click", confirmRegenerateVideoFromForm);
   }
 
   function readExerciseFormValues() {
@@ -1187,22 +1215,35 @@
     if (el) { el.textContent = exerciseFormState.error; el.hidden = !exerciseFormState.error; }
   }
 
-  function hideVideoChangedBanner() {
-    const el = q("videoChangedBanner");
+  function hideChangedBanner(id) {
+    const el = q(id);
     if (el) el.hidden = true;
   }
 
+  async function confirmKeepDiagram() {
+    exerciseFormState.diagramAcknowledged = true;
+    hideChangedBanner("diagramChangedBanner");
+    if (exerciseFormState.pendingValues) await runFormChecksAndSave(exerciseFormState.pendingValues);
+  }
+
+  async function confirmRegenerateDiagramFromForm() {
+    exerciseFormState.diagramAcknowledged = true;
+    exerciseFormState.autoRegenerateDiagram = true;
+    hideChangedBanner("diagramChangedBanner");
+    if (exerciseFormState.pendingValues) await runFormChecksAndSave(exerciseFormState.pendingValues);
+  }
+
   async function confirmKeepVideo() {
-    exerciseFormState.changeAcknowledged = true;
-    hideVideoChangedBanner();
-    if (exerciseFormState.pendingValues) await persistExercise(exerciseFormState.pendingValues);
+    exerciseFormState.videoAcknowledged = true;
+    hideChangedBanner("videoChangedBanner");
+    if (exerciseFormState.pendingValues) await runFormChecksAndSave(exerciseFormState.pendingValues);
   }
 
   async function confirmRegenerateVideoFromForm() {
-    exerciseFormState.changeAcknowledged = true;
+    exerciseFormState.videoAcknowledged = true;
     exerciseFormState.autoRegenerateVideo = true;
-    hideVideoChangedBanner();
-    if (exerciseFormState.pendingValues) await persistExercise(exerciseFormState.pendingValues);
+    hideChangedBanner("videoChangedBanner");
+    if (exerciseFormState.pendingValues) await runFormChecksAndSave(exerciseFormState.pendingValues);
   }
 
   async function handleExerciseFormSubmit(event) {
@@ -1211,18 +1252,34 @@
     const validationError = validateExerciseFormValues(values);
     if (validationError) { showExerciseFormError(validationError); return; }
     showExerciseFormError("");
+    await runFormChecksAndSave(values);
+  }
 
-    // Solo in modifica di un esercizio con un video pronto: se la
-    // descrizione (o gli altri campi che incidono sul video) sono cambiati
-    // da quando è stato generato, si chiede prima di salvare invece di
-    // rigenerare in automatico o di lasciare un video ormai disallineato.
-    if (exerciseFormState.id && exerciseFormState.videoStatus === "ready" && exerciseFormState.videoSourceHash && !exerciseFormState.changeAcknowledged) {
-      const currentHash = await hashVideoSource(values);
-      if (currentHash !== exerciseFormState.videoSourceHash) {
-        exerciseFormState.pendingValues = values;
-        const banner = q("videoChangedBanner");
-        if (banner) banner.hidden = false;
-        return;
+  // In modifica di un esercizio con uno schema e/o un video già pronti: se i
+  // campi che li influenzano sono cambiati da quando sono stati generati, si
+  // chiede prima di salvare (uno alla volta, schema poi video) invece di
+  // rigenerare in automatico o di lasciare un visual ormai disallineato.
+  // Richiamata anche dai pulsanti dei banner dopo ogni scelta, per
+  // proseguire al controllo successivo invece di salvare subito.
+  async function runFormChecksAndSave(values) {
+    if (exerciseFormState.id) {
+      if (exerciseFormState.diagramSceneJson && exerciseFormState.diagramSourceHash && !exerciseFormState.diagramAcknowledged) {
+        const currentHash = await hashDiagramSource(values.description);
+        if (currentHash !== exerciseFormState.diagramSourceHash) {
+          exerciseFormState.pendingValues = values;
+          const banner = q("diagramChangedBanner");
+          if (banner) banner.hidden = false;
+          return;
+        }
+      }
+      if (exerciseFormState.videoStatus === "ready" && exerciseFormState.videoSourceHash && !exerciseFormState.videoAcknowledged) {
+        const currentHash = await hashVideoSource(values);
+        if (currentHash !== exerciseFormState.videoSourceHash) {
+          exerciseFormState.pendingValues = values;
+          const banner = q("videoChangedBanner");
+          if (banner) banner.hidden = false;
+          return;
+        }
       }
     }
     await persistExercise(values);
@@ -1238,9 +1295,14 @@
         : await api("/api/custom-exercises", { method: "POST", body: values });
       await loadCustomExercises();
       const saved = normalizeCustomExercise(res.exercise);
-      const autoRegenerate = exerciseFormState.autoRegenerateVideo;
+      const autoDiagram = exerciseFormState.autoRegenerateDiagram;
+      const autoVideo = exerciseFormState.autoRegenerateVideo;
       returnFromExerciseForm(saved);
-      if (autoRegenerate) startVideoGeneration(saved.id);
+      // Lo schema è rapido/economico: lo si aspetta prima di eventualmente
+      // avviare anche il video, così il dettaglio non mostra due
+      // generazioni contemporaneamente in corso.
+      if (autoDiagram) await startDiagramGeneration(saved.id);
+      if (autoVideo) startVideoGeneration(saved.id);
     } catch (e) {
       showExerciseFormError(e.message || "Errore durante il salvataggio.");
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Salva esercizio"; }
@@ -1299,7 +1361,32 @@
     startVideoGeneration(id);
   }
 
+  // --- Schema animato esercizio personale (functions/api/exercise-diagram.js) --
+  // Default gratuito: solo il modello testuale (già usato per lo storyboard
+  // video), nessuna terza parte. Veloce, quindi nessuno stato "generating"
+  // persistito su D1 — la richiesta resta aperta pochi secondi, come le
+  // altre chiamate sincrone già in uso.
+  async function startDiagramGeneration(id) {
+    try {
+      const res = await api("/api/exercise-diagram", { method: "POST", body: { customExerciseId: id } });
+      await loadCustomExercises();
+      const updated = customExercises.find((e) => e.id === id);
+      if (selectedExercise?.id === id && updated) { selectedExercise = updated; renderDetail(); }
+      if (!res.diagramSceneJson) alert("Generazione schema non riuscita: schema non disponibile al momento. L'esercizio resta invariato.");
+    } catch (e) {
+      alert(`Generazione schema non riuscita: ${e.message}`);
+    }
+  }
+
   // --- Dettaglio esercizio personale ---------------------------------------
+  function diagramSectionHtml(ex) {
+    if (ex.diagramSceneJson) {
+      return `${renderDiagramScene(ex.diagramSceneJson)}
+        <button class="dark-btn full" type="button" data-exercise-diagram-regenerate="${esc(ex.id)}" style="margin-top:var(--sp-3)">Rigenera schema</button>`;
+    }
+    return `<button class="dark-btn full" type="button" data-exercise-diagram-generate="${esc(ex.id)}">Genera schema</button>`;
+  }
+
   function videoSectionHtml(ex) {
     if (ex.videoStatus === "ready") {
       return `<video class="exercise-video" controls playsinline muted preload="metadata" src="/api/custom-exercises/${esc(ex.id)}/video"></video>
@@ -1320,7 +1407,7 @@
       <div class="detail-card">
         <p class="eyebrow">Personale · ${esc(ex.ambito)}</p>
         <h2>${esc(ex.name)}</h2>
-        <div class="detail-block">${videoSectionHtml(ex)}</div>
+        <div class="detail-block"><h3>Schema</h3>${diagramSectionHtml(ex)}</div>
         ${ex.objective ? `<p class="muted" style="margin-top:10px">${esc(ex.objective)}</p>` : ""}
         <div class="detail-grid">
           <div class="mini-metric"><strong>${esc(ex.durationMin)}'</strong><span>Durata</span></div>
@@ -1330,6 +1417,7 @@
         <div class="detail-block"><h3>Descrizione</h3><p class="muted">${esc(ex.description)}</p></div>
         ${ex.equipment ? `<div class="detail-block"><h3>Materiale</h3><p class="muted">${esc(ex.equipment)}</p></div>` : ""}
         ${ex.notes ? `<div class="detail-block"><h3>Note</h3><p class="muted">${esc(ex.notes)}</p></div>` : ""}
+        <div class="detail-block"><h3>Video (premium)</h3>${videoSectionHtml(ex)}</div>
         <div class="setup-actions">
           <button class="primary-btn full" type="button" data-exercise-add-session="${esc(ex.id)}">Aggiungi a seduta</button>
           <button class="dark-btn full" type="button" data-exercise-edit="${esc(ex.id)}">Modifica</button>
@@ -1450,6 +1538,10 @@
       if (deleteBtn) { deleteCustomExercise(deleteBtn.dataset.exerciseDelete); return; }
       const addSessionBtn = event.target.closest?.("[data-exercise-add-session]");
       if (addSessionBtn) { addCustomExerciseToSession(addSessionBtn.dataset.exerciseAddSession); return; }
+      const diagramGenBtn = event.target.closest?.("[data-exercise-diagram-generate]");
+      if (diagramGenBtn) { startDiagramGeneration(diagramGenBtn.dataset.exerciseDiagramGenerate); return; }
+      const diagramRegenBtn = event.target.closest?.("[data-exercise-diagram-regenerate]");
+      if (diagramRegenBtn) { startDiagramGeneration(diagramRegenBtn.dataset.exerciseDiagramRegenerate); return; }
       const videoGenBtn = event.target.closest?.("[data-exercise-video-generate]");
       if (videoGenBtn) { startVideoGeneration(videoGenBtn.dataset.exerciseVideoGenerate); return; }
       const videoRegenBtn = event.target.closest?.("[data-exercise-video-regenerate]");

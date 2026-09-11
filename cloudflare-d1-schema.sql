@@ -75,12 +75,14 @@ CREATE TABLE IF NOT EXISTS training_sessions (
 
 -- Esercizi personalizzati creati dall'account (catalogo builtin in app.js
 -- resta separato: questa tabella copre solo gli esercizi custom, vedi
--- functions/api/custom-exercises/). Il video è generato da Workers AI
--- (alibaba/hh1.1-t2v via AI Gateway/Unified Billing) e persistito su R2:
--- video_storage_key punta all'oggetto R2, mai un URL del provider (temporaneo).
--- Può restare "none"/null: la feature non dipende dal video per salvare
--- l'esercizio testuale. Architettura precedente (diagram_scene_json/SVG)
--- abbandonata, vedi migrazione dedicata per il DB già in produzione.
+-- functions/api/custom-exercises/). Due visual indipendenti e opzionali:
+-- - diagram_scene_json: schema animato gratuito (solo modello testuale,
+--   nessuna terza parte), generato/rigenerato a piacere, default per ogni
+--   esercizio custom;
+-- - video_*: video AI vero (alibaba/hh1.1-t2v via AI Gateway/Unified
+--   Billing, costoso), persistito su R2, opzione premium esplicita.
+-- Entrambi possono restare null/"none": la feature non dipende da nessuno
+-- dei due per salvare l'esercizio testuale.
 CREATE TABLE IF NOT EXISTS custom_exercises (
   id TEXT PRIMARY KEY,
   user_id TEXT NOT NULL,
@@ -92,6 +94,11 @@ CREATE TABLE IF NOT EXISTS custom_exercises (
   keepers_count INTEGER,
   equipment TEXT,
   notes TEXT,
+  diagram_scene_json TEXT,
+  -- Hash della descrizione al momento dell'ultima generazione schema:
+  -- permette di rilevare "la descrizione è cambiata" senza richiamare
+  -- Workers AI solo per un confronto.
+  diagram_source_hash TEXT,
   video_status TEXT NOT NULL DEFAULT 'none' CHECK (video_status IN ('none', 'generating', 'ready', 'failed')),
   video_storage_key TEXT,
   -- Hash dei campi che influenzano il video (description/objective/equipment/
