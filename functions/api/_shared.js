@@ -253,11 +253,10 @@ export function mapSession(row) {
 // cloudflare-d1-schema.sql e alle opzioni del select "Ambito" nel form.
 export const CUSTOM_EXERCISE_CATEGORIES = ["Tecnico", "Difesa spazio", "Finalizzazione", "Motorio", "Conoscenza del gioco", "Altro"];
 
+// video_storage_key non è esposta al client: è un dettaglio interno di R2,
+// il frontend usa sempre GET /api/custom-exercises/:id/video come URL
+// stabile, mai un percorso R2 diretto.
 export function mapCustomExercise(row) {
-  let diagramSceneJson = null;
-  if (row.diagram_scene_json) {
-    try { diagramSceneJson = JSON.parse(row.diagram_scene_json); } catch { diagramSceneJson = null; }
-  }
   return {
     id: row.id,
     name: row.name,
@@ -268,16 +267,18 @@ export function mapCustomExercise(row) {
     keepersCount: row.keepers_count,
     equipment: row.equipment || "",
     notes: row.notes || "",
-    diagramSceneJson,
-    diagramVersion: row.diagram_version,
-    diagramSourceHash: row.diagram_source_hash || null,
+    videoStatus: row.video_status || "none",
+    videoSourceHash: row.video_source_hash || null,
+    videoModel: row.video_model || null,
+    videoCreatedAt: row.video_created_at || null,
+    videoError: row.video_error || null,
     createdAt: row.created_at,
     updatedAt: row.updated_at
   };
 }
 
 // Valida e normalizza i campi "piatti" di un custom exercise (non i campi
-// diagramma, sanitizzati a parte in _diagram-scene.js). Ritorna { value }
+// video, gestiti a parte da exercise-video.js). Ritorna { value }
 // oppure { error } con un messaggio pronto per error().
 export function validateCustomExercisePayload(body) {
   const name = String(body?.name || "").trim().slice(0, 120);

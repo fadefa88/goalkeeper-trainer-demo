@@ -9,3 +9,10 @@ database_id = "d3c6f892-b70a-48cb-81a3-a5b3a40423df"
 
 [ai]
 binding = "AI"
+
+[[r2_buckets]]
+binding = "EXERCISE_VIDEOS"
+bucket_name = "gk-trainer-exercise-videos"
+
+[vars]
+AI_GATEWAY_ID = "gk-trainer-gateway"

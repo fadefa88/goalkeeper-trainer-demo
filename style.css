@@ -567,8 +567,16 @@ body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !importan
    stessi token del resto del design system. */
 .exercise-search { margin: 0 0 var(--sp-3); }
 .tag-personal { display: inline-block; vertical-align: middle; font-size: 10px; font-weight: 700; letter-spacing: .03em; color: var(--red); background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .3); border-radius: var(--radius-pill); padding: 2px 8px; }
-.diagram-changed-banner { margin-top: var(--sp-2); padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line-strong); }
-.diagram-changed-banner .button-row { margin-top: var(--sp-2); }
+.state-changed-banner { margin-top: var(--sp-2); padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line-strong); }
+.state-changed-banner .button-row { margin-top: var(--sp-2); }
+
+/* Video esercizio personale (custom_exercises.video_*): player 16:9 nel
+   dettaglio, indicatore sobrio durante la generazione (nessuno spinner/
+   libreria, solo un punto che pulsa sul colore d'accento). */
+.exercise-video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius-md); background: var(--panel-2); border: 1px solid var(--line); }
+.video-generating { display: flex; align-items: center; gap: var(--sp-2); }
+.video-generating::before { content: ""; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--red); animation: gk-video-pulse 1.4s ease-in-out infinite; flex-shrink: 0; }
+@keyframes gk-video-pulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
 
 /* Primo accesso: nessun profilo ancora configurato. Topbar e bottom
    nav restano nascoste finché il wizard non è completato, così non si

@@ -1,7 +1,4 @@
-import { sanitizeScene } from "../_diagram-scene.js";
 import { assertSameOrigin, error, json, mapCustomExercise, readJson, requireAuth, validateCustomExercisePayload } from "../_shared.js";
-
-const HASH_RE = /^[0-9a-f]{64}$/;
 
 // user_id sempre nella WHERE: un id di un altro account non produce mai una
 // riga, quindi PUT/DELETE rispondono 404 identico sia per "non esiste" sia
@@ -33,27 +30,15 @@ async function update(request, env, params) {
   const { value, error: validationError } = validateCustomExercisePayload(body);
   if (validationError) return error(validationError, 400);
 
-  // Il campo diagramSceneJson viene toccato solo se il client lo include
-  // esplicitamente nel body: un salvataggio che non lo manda (l'utente ha
-  // scelto "Mantieni schema", o sta modificando solo un altro campo) lascia
-  // lo schema esistente intatto invece di cancellarlo.
-  let diagramSceneJson = existing.diagram_scene_json;
-  let diagramVersion = existing.diagram_version;
-  let diagramSourceHash = existing.diagram_source_hash;
-  if (Object.prototype.hasOwnProperty.call(body, "diagramSceneJson")) {
-    const scene = body.diagramSceneJson ? sanitizeScene(body.diagramSceneJson) : null;
-    diagramSceneJson = scene ? JSON.stringify(scene) : null;
-    diagramVersion = scene ? scene.version : existing.diagram_version;
-    diagramSourceHash = scene && HASH_RE.test(String(body.diagramSourceHash || "")) ? body.diagramSourceHash : null;
-  }
-
+  // I campi video (video_status/video_storage_key/...) non sono toccati qui:
+  // li gestisce esclusivamente exercise-video.js. Una modifica testuale non
+  // cancella né altera mai lo stato del video esistente.
   const now = new Date().toISOString();
   await env.DB.prepare(
-    "update custom_exercises set name = ?, objective = ?, description = ?, category = ?, duration_minutes = ?, keepers_count = ?, equipment = ?, notes = ?, diagram_scene_json = ?, diagram_version = ?, diagram_source_hash = ?, updated_at = ? where id = ? and user_id = ?"
+    "update custom_exercises set name = ?, objective = ?, description = ?, category = ?, duration_minutes = ?, keepers_count = ?, equipment = ?, notes = ?, updated_at = ? where id = ? and user_id = ?"
   ).bind(
     value.name, value.objective, value.description, value.category, value.durationMinutes,
     value.keepersCount, value.equipment, value.notes,
-    diagramSceneJson, diagramVersion, diagramSourceHash,
     now, params.id, user.id
   ).run();
 
@@ -72,5 +57,12 @@ export async function onRequestDelete({ request, env, params }) {
   if (!existing) return error("Esercizio non trovato", 404);
 
   await env.DB.prepare("delete from custom_exercises where id = ? and user_id = ?").bind(params.id, user.id).run();
+  // Best-effort: se il video R2 non si cancella (bucket non configurato,
+  // key già assente, errore di rete) la riga D1 è comunque già stata
+  // rimossa, non blocchiamo la risposta per questo.
+  if (existing.video_storage_key) {
+    try { await env.EXERCISE_VIDEOS?.delete(existing.video_storage_key); }
+    catch (err) { console.warn("Cancellazione video R2 non riuscita", existing.video_storage_key, err); }
+  }
   return json({ ok: true });
 }
