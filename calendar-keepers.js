@@ -2,7 +2,6 @@
 if (window.__gkCalendarKeepersMantovaV2) return;
 window.__gkCalendarKeepersMantovaV2 = true;
 const MATCH_CATEGORY = "__match__";
-const MATCH_CACHE_KEY = "gk_mantova_matches_v1";
 const MATCH_CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 const MATCH_REFRESH_AGE = 5 * 60 * 1000;
 const PHANTOM_ID = "conduzione-palla-uscita-bassa";
@@ -12,6 +11,18 @@ const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
 }[char]));
 const keeperKey = (keeper, index) => String(keeper?.id || keeper?.name || `keeper-${index}`);
 const profile = () => { try { return typeof getProfile === "function" ? getProfile() : null; } catch { return null; } };
+const cloudUser = () => { try { return typeof getCloudUser === "function" ? getCloudUser() : null; } catch { return null; } };
+// Il calendario partite dipende ormai dalla formazione scelta dall'account
+// (functions/api/health.js risolve il provider dalla preferenza squadra),
+// quindi anche la cache locale deve essere per-account: altrimenti, sullo
+// stesso dispositivo, un cambio account potrebbe mostrare per qualche
+// istante le partite dell'account precedente prima che la fetch fresca
+// arrivi. Stesso schema di plannerStorageKey() in cloudflare-client.js.
+function matchCacheKey() {
+  const user = cloudUser();
+  return `gk_matches_${user?.id || user?.email || "local"}`;
+}
+let currentTeamLabel = "Squadra";
 let matches = [];
 let reports = new Map();
 let matchesFetchedAt = 0;
@@ -275,7 +286,7 @@ style.textContent = `
 .keeper-attendance-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.keeper-attendance-head h3{margin:0;font-size:15px;font-weight:600}
 .keeper-attendance-list{display:grid;gap:6px}.keeper-attendance-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel)}
 .keeper-attendance-row span{font-weight:600;color:var(--text)}.keeper-attendance-row small{display:block;margin-top:2px;color:var(--muted);font-size:11px}.keeper-attendance-row input{width:20px!important;height:20px!important;accent-color:var(--red);padding:0!important}.keeper-attendance-summary{color:var(--muted);font-size:12px;line-height:1.35}
-.calendar-match-badge{position:absolute;top:2px;right:2px;min-width:15px;height:15px;padding:0 3px;border-radius:999px;display:grid;place-items:center;background:var(--white);color:var(--red);font-size:8px;font-weight:700;line-height:1}
+.calendar-match-badge{position:absolute;top:2px;right:2px;min-width:15px;height:15px;padding:0 3px;border-radius:999px;display:grid;place-items:center;background:var(--white);color:var(--red-on-light);font-size:8px;font-weight:700;line-height:1}
 .first-team-match-card{display:grid;gap:14px;padding:16px;border-radius:16px;border:1px solid var(--line);background:var(--panel)}
 .match-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.match-card-head h3{font-size:17px;font-weight:600;margin:0}
 .match-scoreboard{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;padding:14px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2)}
@@ -428,8 +439,8 @@ console.warn("[GK Trainer] Rapporti partita non caricati:", error);
 }
 function cachedMatches() {
 try {
-const cache = JSON.parse(localStorage.getItem(MATCH_CACHE_KEY) || "{}");
-if (!Array.isArray(cache.matches) || !cache.matches.length) return null;
+const cache = JSON.parse(localStorage.getItem(matchCacheKey()) || "{}");
+if (!Array.isArray(cache.matches)) return null;
 return cache;
 } catch { return null; }
 }
@@ -442,13 +453,21 @@ const response = await fetch("/api/health?matches=1", { credentials: "same-origi
 if (!response.ok) throw new Error(`Partite non disponibili (${response.status})`);
 const data = await response.json();
 if (!Array.isArray(data?.matches)) throw new Error("Calendario partite non valido");
-matches = data.matches.filter((match) => match?.id && match?.startTimestamp);
+// available:false è una risposta valida del server ("questa formazione
+// non ha un calendario automatico"), non un errore: sovrascrive sempre
+// la cache (anche azzerandola) invece di lasciare partite di un'altra
+// formazione/account visibili offline dopo un cambio squadra.
+matches = data.available === false ? [] : data.matches.filter((match) => match?.id && match?.startTimestamp);
+currentTeamLabel = data.team?.name || "Squadra";
 matchesFetchedAt = Date.now();
-localStorage.setItem(MATCH_CACHE_KEY, JSON.stringify({ fetchedAt: matchesFetchedAt, matches }));
+localStorage.setItem(matchCacheKey(), JSON.stringify({ fetchedAt: matchesFetchedAt, matches, teamLabel: currentTeamLabel }));
 } catch (error) {
+// Qui invece è un vero errore di rete/server: si preserva l'ultimo
+// calendario noto per lo STESSO account invece di svuotare la vista.
 const cache = cachedMatches();
-if (cache && Date.now() - Number(cache.fetchedAt || 0) <= MATCH_CACHE_MAX_AGE) {
+if (cache && cache.matches.length && Date.now() - Number(cache.fetchedAt || 0) <= MATCH_CACHE_MAX_AGE) {
 matches = cache.matches;
+currentTeamLabel = cache.teamLabel || currentTeamLabel;
 matchesFetchedAt = Number(cache.fetchedAt || 0);
 } else {
 matches = [];
@@ -510,7 +529,7 @@ box.innerHTML = `
 <div class="match-meta-grid">
 <div class="match-meta"><span>Calcio d'inizio</span><strong>${esc(matchTime(match))}</strong></div>
 ${isSerieB ? "" : `<div class="match-meta"><span>Turno</span><strong>${esc(round)}</strong></div>`}
-<div class="match-meta"><span>Mantova</span><strong>${match.isHome ? "Casa" : "Trasferta"}</strong></div>
+<div class="match-meta"><span>${esc(currentTeamLabel)}</span><strong>${match.isHome ? "Casa" : "Trasferta"}</strong></div>
 </div>
 <div class="match-report">
 <p class="eyebrow">Rapporto portiere</p>
@@ -672,6 +691,11 @@ window.gkCalendarExtras = {
 matchForDate,
 ensureMatchesLoaded: (force) => loadMatches(force),
 renderMatchCard,
+// Chiamato da logout()/cambio account in cloudflare-client.js: pulisce lo
+// stato partite in memoria (la cache localStorage resta, è già per-account
+// tramite matchCacheKey()) così l'account successivo non vede per un
+// istante il calendario di quello precedente prima della fetch fresca.
+resetInMemoryState: () => { matches = []; reports = new Map(); matchesFetchedAt = 0; currentTeamLabel = "Squadra"; },
 renderKeeperAttendance,
 ensurePhysicalProgressUi: ensurePhysicalUi
 };

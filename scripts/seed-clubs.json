@@ -1,0 +1,201 @@
+[
+  {
+    "id": "juventus-fc", "officialName": "Juventus FC", "shortName": "Juventus", "aliases": ["Juve"],
+    "city": "Torino", "region": "Piemonte", "province": "TO",
+    "colorPrimary": "#101010", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "fc-internazionale-milano", "officialName": "FC Internazionale Milano", "shortName": "Inter", "aliases": ["Inter Milano"],
+    "city": "Milano", "region": "Lombardia", "province": "MI",
+    "colorPrimary": "#0c2c73", "colorSecondary": "#0d0d0d", "colorsSource": "adapted",
+    "colorsNote": "Nerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "ac-milan", "officialName": "AC Milan", "shortName": "Milan", "aliases": [],
+    "city": "Milano", "region": "Lombardia", "province": "MI",
+    "colorPrimary": "#fb0016", "colorSecondary": "#000000", "colorsSource": "adapted",
+    "colorsNote": "Rossonero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "ssc-napoli", "officialName": "SSC Napoli", "shortName": "Napoli", "aliases": [],
+    "city": "Napoli", "region": "Campania", "province": "NA",
+    "colorPrimary": "#1d59ba", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Azzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "as-roma", "officialName": "AS Roma", "shortName": "Roma", "aliases": [],
+    "city": "Roma", "region": "Lazio", "province": "RM",
+    "colorPrimary": "#8e1f2f", "colorSecondary": "#f0bc42", "colorsSource": "adapted",
+    "colorsNote": "Giallorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "ss-lazio", "officialName": "SS Lazio", "shortName": "Lazio", "aliases": [],
+    "city": "Roma", "region": "Lazio", "province": "RM",
+    "colorPrimary": "#87d0f2", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Biancoceleste: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "acf-fiorentina", "officialName": "ACF Fiorentina", "shortName": "Fiorentina", "aliases": ["Viola"],
+    "city": "Firenze", "region": "Toscana", "province": "FI",
+    "colorPrimary": "#5c2d91", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Viola: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "atalanta-bc", "officialName": "Atalanta BC", "shortName": "Atalanta", "aliases": [],
+    "city": "Bergamo", "region": "Lombardia", "province": "BG",
+    "colorPrimary": "#14213d", "colorSecondary": "#1560bd", "colorsSource": "adapted",
+    "colorsNote": "Nerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "torino-fc", "officialName": "Torino FC", "shortName": "Torino", "aliases": [],
+    "city": "Torino", "region": "Piemonte", "province": "TO",
+    "colorPrimary": "#7b1e3a", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Granata: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "genoa-cfc", "officialName": "Genoa CFC", "shortName": "Genoa", "aliases": [],
+    "city": "Genova", "region": "Liguria", "province": "GE",
+    "colorPrimary": "#b3151c", "colorSecondary": "#17245c", "colorsSource": "adapted",
+    "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "uc-sampdoria", "officialName": "UC Sampdoria", "shortName": "Sampdoria", "aliases": ["Samp"],
+    "city": "Genova", "region": "Liguria", "province": "GE",
+    "colorPrimary": "#16255e", "colorSecondary": "#b3151c", "colorsSource": "adapted",
+    "colorsNote": "Blucerchiato: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "bologna-fc-1909", "officialName": "Bologna FC 1909", "shortName": "Bologna", "aliases": [],
+    "city": "Bologna", "region": "Emilia-Romagna", "province": "BO",
+    "colorPrimary": "#8b1d2c", "colorSecondary": "#16255e", "colorsSource": "adapted",
+    "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "udinese-calcio", "officialName": "Udinese Calcio", "shortName": "Udinese", "aliases": [],
+    "city": "Udine", "region": "Friuli-Venezia Giulia", "province": "UD",
+    "colorPrimary": "#050505", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "cagliari-calcio", "officialName": "Cagliari Calcio", "shortName": "Cagliari", "aliases": [],
+    "city": "Cagliari", "region": "Sardegna", "province": "CA",
+    "colorPrimary": "#b71234", "colorSecondary": "#14213d", "colorsSource": "adapted",
+    "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "hellas-verona-fc", "officialName": "Hellas Verona FC", "shortName": "Hellas Verona", "aliases": ["Verona"],
+    "city": "Verona", "region": "Veneto", "province": "VR",
+    "colorPrimary": "#f2c230", "colorSecondary": "#1c3f94", "colorsSource": "adapted",
+    "colorsNote": "Gialloblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "us-sassuolo-calcio", "officialName": "US Sassuolo Calcio", "shortName": "Sassuolo", "aliases": [],
+    "city": "Sassuolo", "region": "Emilia-Romagna", "province": "MO",
+    "colorPrimary": "#1b7a3d", "colorSecondary": "#0a0a0a", "colorsSource": "adapted",
+    "colorsNote": "Neroverde: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "empoli-fc", "officialName": "Empoli FC", "shortName": "Empoli", "aliases": [],
+    "city": "Empoli", "region": "Toscana", "province": "FI",
+    "colorPrimary": "#1f4e8c", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Azzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "parma-calcio-1913", "officialName": "Parma Calcio 1913", "shortName": "Parma", "aliases": [],
+    "city": "Parma", "region": "Emilia-Romagna", "province": "PR",
+    "colorPrimary": "#f4d03f", "colorSecondary": "#1a2b6d", "colorsSource": "adapted",
+    "colorsNote": "Crociato (giallo/blu): identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "como-1907", "officialName": "Como 1907", "shortName": "Como", "aliases": [],
+    "city": "Como", "region": "Lombardia", "province": "CO",
+    "colorPrimary": "#1560bd", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Biancoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "venezia-fc", "officialName": "Venezia FC", "shortName": "Venezia", "aliases": [],
+    "city": "Venezia", "region": "Veneto", "province": "VE",
+    "colorPrimary": "#ff7f11", "colorSecondary": "#0a0a0a", "colorsSource": "adapted",
+    "colorsNote": "Arancionerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "mantova-1911", "officialName": "Mantova 1911", "shortName": "Mantova", "aliases": ["Virgiliani"],
+    "city": "Mantova", "region": "Lombardia", "province": "MN",
+    "colorPrimary": "#dc0619", "colorSecondary": "#c99a4b", "colorsSource": "adapted",
+    "colorsNote": "Biancorosso: identità di club già in uso nell'app prima di questa funzione.",
+    "dataSource": "seed manuale (identità nota + calendario già presente nel repo), 2026-09",
+    "providerIds": [{ "provider": "espn", "providerId": "3991" }],
+    "teams": [
+      {
+        "id": "mantova-1911-prima-squadra-calcio11-m", "teamType": "prima_squadra", "discipline": "calcio11", "gender": "maschile",
+        "seasons": [
+          { "season": "2026-27", "competition": "Serie B", "dataSource": "calendario integrato nel repo (functions/api/health.js) + ESPN live", "verifiedAt": "2026-09-11" }
+        ],
+        "calendarSources": [{ "provider": "espn", "providerTeamId": "3991", "active": true }]
+      }
+    ]
+  },
+  {
+    "id": "palermo-fc", "officialName": "Palermo FC", "shortName": "Palermo", "aliases": [],
+    "city": "Palermo", "region": "Sicilia", "province": "PA",
+    "colorPrimary": "#e0116f", "colorSecondary": "#0a0a0a", "colorsSource": "adapted",
+    "colorsNote": "Rosanero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "ssc-bari", "officialName": "SSC Bari", "shortName": "Bari", "aliases": [],
+    "city": "Bari", "region": "Puglia", "province": "BA",
+    "colorPrimary": "#cc092f", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Biancorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "brescia-calcio", "officialName": "Brescia Calcio", "shortName": "Brescia", "aliases": [],
+    "city": "Brescia", "region": "Lombardia", "province": "BS",
+    "colorPrimary": "#1c6fd1", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Biancazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "ternana-calcio", "officialName": "Ternana Calcio", "shortName": "Ternana", "aliases": [],
+    "city": "Terni", "region": "Umbria", "province": "TR",
+    "colorPrimary": "#b3151c", "colorSecondary": "#1b7a3d", "colorsSource": "adapted",
+    "colorsNote": "Rossoverde: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "ac-perugia-calcio", "officialName": "AC Perugia Calcio", "shortName": "Perugia", "aliases": [],
+    "city": "Perugia", "region": "Umbria", "province": "PG",
+    "colorPrimary": "#cc092f", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Biancorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  },
+  {
+    "id": "cesena-fc", "officialName": "Cesena FC", "shortName": "Cesena", "aliases": [],
+    "city": "Cesena", "region": "Emilia-Romagna", "province": "FC",
+    "colorPrimary": "#0a0a0a", "colorSecondary": "#ffffff", "colorsSource": "adapted",
+    "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "dataSource": "seed manuale (identità nota), 2026-09"
+  }
+]

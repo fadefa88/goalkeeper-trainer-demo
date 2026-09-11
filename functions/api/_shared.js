@@ -316,6 +316,134 @@ export function validateCustomExercisePayload(body) {
   };
 }
 
+// --- Personalizzazione squadra/tema (clubs, club_teams, user_club_preferences) ---
+// Vedi cloudflare-d1-schema.sql per lo schema completo. Helper condivisi tra
+// functions/api/clubs.js, functions/api/club-preference.js,
+// functions/api/admin/clubs-import.js e functions/api/health.js.
+
+export function isValidHexColor(value) {
+  return typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value.trim());
+}
+
+export function normalizeHexColor(value) {
+  return isValidHexColor(value) ? value.trim().toLowerCase() : null;
+}
+
+// Minuscolo, senza accenti/diacritici: stessa normalizzazione va applicata
+// sia ai record importati (search_key salvato in D1) sia al termine cercato
+// dal client (vedi functions/api/clubs.js), altrimenti "Perugia" non
+// troverebbe mai "perugia" con un accento diverso o maiuscole diverse.
+export function normalizeSearchText(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+export function slugify(value) {
+  return normalizeSearchText(value)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80) || crypto.randomUUID();
+}
+
+export function buildClubSearchKey({ officialName, shortName, aliases, city }) {
+  const parts = [officialName, shortName, city, ...(Array.isArray(aliases) ? aliases : [])].filter(Boolean);
+  return normalizeSearchText(parts.join(" "));
+}
+
+export function mapClub(row) {
+  let aliases = [];
+  try { aliases = row.aliases ? JSON.parse(row.aliases) : []; } catch { aliases = []; }
+  return {
+    id: row.id,
+    officialName: row.official_name,
+    shortName: row.short_name || null,
+    aliases,
+    city: row.city || null,
+    region: row.region || null,
+    province: row.province || null,
+    colorPrimary: row.color_primary || null,
+    colorSecondary: row.color_secondary || null,
+    colorsSource: row.colors_source || "unknown",
+    colorsNote: row.colors_note || null,
+    colorsVerifiedAt: row.colors_verified_at || null,
+    dataSource: row.data_source || null
+  };
+}
+
+export function mapClubTeam(row) {
+  return {
+    id: row.id,
+    clubId: row.club_id,
+    teamType: row.team_type,
+    discipline: row.discipline,
+    gender: row.gender || null,
+    ageGroup: row.age_group || null,
+    label: row.label || null
+  };
+}
+
+export function mapClubTeamSeason(row) {
+  return {
+    season: row.season,
+    competition: row.competition || null,
+    groupName: row.group_name || null,
+    territory: row.territory || null,
+    dataSource: row.data_source || null,
+    verifiedAt: row.verified_at || null
+  };
+}
+
+// Carica la preferenza squadra/tema dell'account, con i dati del club/della
+// formazione già uniti (se scelti dal catalogo). Nessuna riga ancora
+// salvata (mai passato dal nuovo step del wizard) => null: lo step va
+// mostrato, non un tema "vuoto" indistinguibile da un errore di rete.
+export async function loadClubPreference(env, userId) {
+  const pref = await env.DB.prepare("select * from user_club_preferences where user_id = ?").bind(userId).first();
+  if (!pref) return null;
+
+  let club = null;
+  let clubTeam = null;
+  let season = null;
+  let calendarSource = null;
+  if (pref.club_id) {
+    const clubRow = await env.DB.prepare("select * from clubs where id = ?").bind(pref.club_id).first();
+    if (clubRow) club = mapClub(clubRow);
+  }
+  if (pref.club_team_id) {
+    const teamRow = await env.DB.prepare("select * from club_teams where id = ?").bind(pref.club_team_id).first();
+    if (teamRow) {
+      clubTeam = mapClubTeam(teamRow);
+      const seasonRow = await env.DB
+        .prepare("select * from club_team_seasons where club_team_id = ? order by season desc limit 1")
+        .bind(pref.club_team_id).first();
+      if (seasonRow) season = mapClubTeamSeason(seasonRow);
+      const calRow = await env.DB
+        .prepare("select * from club_calendar_sources where club_team_id = ? and active = 1 limit 1")
+        .bind(pref.club_team_id).first();
+      if (calRow) calendarSource = { provider: calRow.provider, providerTeamId: calRow.provider_team_id };
+    }
+  }
+
+  return {
+    club,
+    clubTeam,
+    season,
+    calendarAvailable: Boolean(calendarSource),
+    customClubName: pref.custom_club_name || null,
+    customCity: pref.custom_city || null,
+    customTeamLabel: pref.custom_team_label || null,
+    colorPrimary: pref.color_primary || null,
+    colorSecondary: pref.color_secondary || null,
+    useCustomColors: Boolean(pref.use_custom_colors),
+    themeMode: pref.theme_mode || "neutral",
+    teamStepDone: Boolean(pref.team_step_done),
+    updatedAt: pref.updated_at
+  };
+}
+
 export async function loadSessions(env, userId) {
   // Le righe "__physical__"/"__plan__" sono storage per il profilo (vedi
   // buildProfileExtraStatements), non sedute: non devono mai comparire come

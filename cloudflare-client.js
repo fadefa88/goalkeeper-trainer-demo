@@ -24,10 +24,22 @@
   // "onboarding" = primo accesso, un passo alla volta, non si può uscire
   // finché non si completa; "edit" = "Modifica impostazioni base" da
   // Profilo, tutti i campi visibili insieme come sempre.
+  // "team-edit" = "Cambia squadra" da Impostazioni: riusa lo stesso step 1
+  // del wizard ma da solo (nessun avanzamento ai passi successivi), torna a
+  // "profile" al termine invece di proseguire.
   let setupMode = "edit";
   let setupStep = 1;
   let setupSaving = false;
-  const SETUP_TOTAL_STEPS = 3;
+  const SETUP_TOTAL_STEPS = 4;
+
+  // --- Personalizzazione squadra/tema ------------------------------------
+  // (functions/api/club-preference.js, functions/api/clubs.js, theme-engine.js)
+  let clubPreference = null;      // ultima preferenza confermata dal server (fonte di verità)
+  let teamDraft;                  // scelta in corso nello step "Scegli la tua squadra"; undefined = non ancora inizializzata per questa visita dello step
+  let teamSearchResults = [];
+  let teamSearchToken = 0;        // scarta risposte di ricerca arrivate fuori ordine/obsolete
+  let teamSearchDebounceTimer = null;
+  let teamSettingsSaving = false;
 
   const q = (id) => document.getElementById(id);
   const esc = (v) => escapeHtml(String(v ?? ""));
@@ -103,6 +115,12 @@
   function showAuth(message = "") {
     document.body.classList.remove("gk-authenticated", "gk-onboarding");
     setupMode = "edit";
+    // Copre sia il logout esplicito sia una sessione scaduta scoperta qui:
+    // in entrambi i casi la schermata di accesso deve tornare neutra, mai
+    // mostrare per un istante i colori dell'account precedente.
+    window.gkTheme?.resetVisual();
+    window.gkCalendarExtras?.resetInMemoryState();
+    clubPreference = null;
     document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
     q("authView")?.classList.add("active");
     q("bottomNav")?.classList.add("hidden");
@@ -213,10 +231,16 @@
   async function loadData(render = true) {
     localStorage.removeItem("gk_profile");
     localStorage.removeItem("gk_history");
-    let needsOnboarding = false;
+    let needsKeepersStep = false;
     try {
       const me = await api("/api/me");
       cloudUser = me.user;
+      // Pre-carica subito il tema noto per questo account (se già in cache
+      // locale): non blocca il resto del caricamento, ed evita che l'utente
+      // veda ancora il tema neutro/di un altro account mentre le fetch qui
+      // sotto sono in corso. Riconciliato con la risposta reale del server
+      // più sotto (loadClubPreferenceInto).
+      window.gkTheme?.hydrateAccount(cloudUser.id);
       const profileRes = await api("/api/profile");
       const sessionsRes = await api("/api/sessions");
       await loadCustomExercises();
@@ -227,7 +251,7 @@
       // non esiste ancora una riga user_settings per l'utente; altrimenti
       // "non configurato" vuol dire nessun portiere inserito. Nessun nuovo
       // flag introdotto in D1.
-      needsOnboarding = !rawProfile || !Array.isArray(rawProfile.keepers) || rawProfile.keepers.length === 0;
+      needsKeepersStep = !rawProfile || !Array.isArray(rawProfile.keepers) || rawProfile.keepers.length === 0;
       cloudProfile = normalizeProfile(rawProfile);
       cloudHistory = (sessionsRes.sessions || []).filter((s) => s.category !== MATCH_CATEGORY).map(normalizeSession);
       if (q("cloudUserLabel")) q("cloudUserLabel").textContent = `Connesso come ${cloudUser.email}`;
@@ -243,13 +267,44 @@
       if (render) showAuth(e.status === 401 ? "" : e.message);
       return;
     }
+    // Preferenza squadra/tema: fetch separata e SEPARATAMENTE tollerante ai
+    // fallimenti rispetto al blocco sopra. Un errore di rete qui non deve
+    // sloggare l'utente né essere interpretato come "nessuna preferenza":
+    // si conserva quella già nota (cache locale già applicata sopra,
+    // oppure clubPreference dal giro precedente) e si continua.
+    const requestedForUser = cloudUser.id;
+    try {
+      const prefRes = await api("/api/club-preference");
+      // L'account potrebbe essere cambiato (logout + nuovo login) mentre
+      // questa fetch era in volo: una risposta arrivata per l'account
+      // sbagliato non deve mai essere applicata.
+      if (cloudUser?.id !== requestedForUser) return;
+      clubPreference = prefRes.preference || null;
+      window.gkTheme?.setForAccount(cloudUser.id, clubPreference);
+    } catch (e) {
+      console.warn("Preferenza squadra non caricata (si mantiene quella nota):", e.message);
+    }
     if (!render) return;
+    // Lo step "Scegli la tua squadra" va mostrato una sola volta: se
+    // l'account non ha mai risposto (nessuna riga, o team_step_done=0),
+    // indipendentemente da quanti portieri ha già configurato (utenti
+    // esistenti pre-migrazione inclusi). Non si assegna mai una squadra di
+    // default: assente = wizard da mostrare, non "nessuna preferenza" già
+    // decisa. Un errore di rete su /api/club-preference invece NON forza
+    // questo step: clubPreference resta quella dell'ultimo giro riuscito.
+    const needsTeamStep = !clubPreference || !clubPreference.teamStepDone;
+    const needsOnboarding = needsTeamStep || needsKeepersStep;
     if (needsOnboarding) {
-      // Primo accesso (dopo login o dopo signup): niente profilo o nessun
-      // portiere configurato. Il wizard riusa setupView in modalità
-      // "onboarding" — vedi setSetupMode più sotto.
+      // Primo accesso (dopo login o dopo signup), oppure un utente
+      // esistente che non ha ancora risposto al nuovo step: il wizard
+      // riusa setupView in modalità "onboarding" — vedi setSetupMode più
+      // sotto. Riparte dallo step "Portieri" (2) se la squadra è già
+      // decisa, cosa che evita di riproporla a chi l'ha già scelta ma non
+      // ha ancora finito la configurazione base.
       document.body.classList.add("gk-onboarding");
       setSetupMode("onboarding");
+      if (!needsTeamStep) setupStep = 2;
+      renderSetupStep();
       loadProfileIntoForm();
       showView("setup");
     } else {
@@ -335,26 +390,31 @@
   function setSetupMode(mode) {
     setupMode = mode;
     setupStep = 1;
+    teamDraft = undefined; // ri-derivata da clubPreference alla prossima renderSetupStep() sullo step 1
     clearSetupError();
     renderSetupStep();
   }
 
   function renderSetupStep() {
     const isOnboarding = setupMode === "onboarding";
+    const isTeamEdit = setupMode === "team-edit";
+    const isStepped = isOnboarding || isTeamEdit;
     const indicator = q("setupStepIndicator");
     if (indicator) {
       indicator.hidden = !isOnboarding;
       indicator.textContent = `${setupStep} di ${SETUP_TOTAL_STEPS}`;
     }
+    const genericActions = q("setupGenericActions");
+    if (genericActions) genericActions.hidden = isTeamEdit || (isOnboarding && setupStep === 1);
     const intro = q("setupIntro");
-    if (intro) intro.hidden = isOnboarding;
+    if (intro) intro.hidden = isStepped;
     const title = q("setupTitle");
     if (title) {
-      const stepTitles = { 1: "Configura il gruppo portieri", 2: "Allenamento", 3: "Portieri" };
-      title.textContent = isOnboarding ? (stepTitles[setupStep] || stepTitles[1]) : "Configura il gruppo portieri";
+      const stepTitles = { 1: "Scegli la tua squadra", 2: "Configura il gruppo portieri", 3: "Allenamento", 4: "Portieri" };
+      title.textContent = isTeamEdit ? "Cambia squadra" : (isOnboarding ? (stepTitles[setupStep] || stepTitles[1]) : "Configura il gruppo portieri");
     }
     document.querySelectorAll(".setup-step").forEach((el) => {
-      el.hidden = isOnboarding && Number(el.dataset.step) !== setupStep;
+      el.hidden = isStepped && Number(el.dataset.step) !== setupStep;
     });
     const backBtn = q("setupBackBtn");
     if (backBtn) backBtn.hidden = !isOnboarding || setupStep === 1;
@@ -363,21 +423,24 @@
       submitBtn.textContent = !isOnboarding ? "Salva profilo" : (setupStep < SETUP_TOTAL_STEPS ? "Continua" : "Completa configurazione");
     }
     // Rientrando nello step "Portieri" i blocchi devono riflettere il numero
-    // di portieri scelto nello step 1, anche se cambiato dopo un "Indietro".
+    // di portieri scelto nello step precedente, anche se cambiato dopo un "Indietro".
     if (isOnboarding && setupStep === SETUP_TOTAL_STEPS) renderKeeperFields();
+    if (isStepped && setupStep === 1) renderTeamStep();
   }
 
   function validateSetupStep(step) {
-    if (step === 1) {
+    // Step 1 ("Scegli la tua squadra") non passa da qui: ha i suoi bottoni
+    // dedicati (conferma/salta/custom) che salvano e avanzano da soli.
+    if (step === 2) {
       if (!q("keepersCount")?.value) return "Seleziona il numero di portieri.";
       if (!q("sportType")?.value) return "Seleziona lo sport.";
       if (!q("level")?.value) return "Seleziona il livello.";
     }
-    if (step === 2) {
+    if (step === 3) {
       if (!q("sessionsPerWeek")?.value) return "Seleziona gli allenamenti a settimana.";
       if (!q("sessionDuration")?.value) return "Seleziona la durata dell'allenamento.";
     }
-    if (step === 3) {
+    if (step === 4) {
       const rows = Array.from(document.querySelectorAll(".keeper-row"));
       if (!rows.length) return "Configura almeno un portiere.";
       if (rows.some((row) => !val(row, ".keeper-name"))) return "Inserisci il nome di ogni portiere.";
@@ -409,6 +472,12 @@
     event.stopPropagation();
     event.stopImmediatePropagation?.();
     if (setupSaving) return; // impedisce il doppio submit sul pulsante finale
+    // Lo step "Scegli la tua squadra" (1) ha bottoni dedicati non-submit:
+    // un Invio premuto in un campo testuale al suo interno (es. la ricerca)
+    // non deve avanzare/salvare nulla qui, altrimenti a validateSetupStep(1)
+    // "senza errori" (nessun caso previsto per lo step 1) salterebbe lo step
+    // senza aver salvato alcuna scelta.
+    if (setupStep === 1 && (setupMode === "onboarding" || setupMode === "team-edit")) return;
     if (setupMode !== "onboarding") {
       setSetupBusy(true);
       try { await saveCloudProfile(event); }
@@ -426,6 +495,418 @@
     setSetupBusy(true);
     try { await saveCloudProfile(event); }
     finally { setSetupBusy(false); renderSetupStep(); }
+  }
+
+  // === Step "Scegli la tua squadra" + sezione Impostazioni "Squadra e colori" ===
+  // (functions/api/clubs.js, functions/api/club-preference.js, theme-engine.js)
+
+  function teamTypeLabel(team) {
+    if (!team) return "";
+    if (team.teamType === "prima_squadra") return "Prima squadra";
+    if (team.teamType === "giovanile") return team.ageGroup ? `Giovanile ${team.ageGroup}` : "Giovanile";
+    return team.label || "Altra formazione";
+  }
+
+  function colorsSourceLabel(source) {
+    return {
+      official: "Colori ufficiali documentati.",
+      documented: "Colori documentati dalla fonte, adattati per l'interfaccia.",
+      adapted: "Colori adattati dall'identità nota della società (non tonalità HEX ufficiali).",
+      unknown: "Colori non ancora verificati."
+    }[source] || "";
+  }
+
+  // Ricostruisce lo stato "da inviare in PUT" a partire dall'ultima
+  // preferenza confermata dal server, con override puntuali: usata da ogni
+  // azione delle Impostazioni (colori personali, ripristini) che deve
+  // riscrivere l'intera riga senza perdere i campi che non sta cambiando.
+  function buildPreferencePayload(overrides = {}) {
+    const base = {
+      themeMode: clubPreference?.themeMode || "neutral",
+      clubId: clubPreference?.club?.id || null,
+      clubTeamId: clubPreference?.clubTeam?.id || null,
+      customClubName: clubPreference?.customClubName || null,
+      customCity: clubPreference?.customCity || null,
+      customTeamLabel: clubPreference?.customTeamLabel || null,
+      colorPrimary: clubPreference?.colorPrimary || null,
+      colorSecondary: clubPreference?.colorSecondary || null,
+      useCustomColors: Boolean(clubPreference?.useCustomColors),
+      teamStepDone: Boolean(clubPreference?.teamStepDone)
+    };
+    return { ...base, ...overrides };
+  }
+
+  // Salva sul server, applica il tema con la risposta AUTORITATIVA (mai in
+  // modo ottimistico) e aggiorna la cache locale per questo account.
+  async function saveClubPreference(payload) {
+    const res = await api("/api/club-preference", { method: "PUT", body: payload });
+    clubPreference = res.preference || null;
+    if (cloudUser) window.gkTheme?.setForAccount(cloudUser.id, clubPreference);
+    return clubPreference;
+  }
+
+  function showTeamStepError(message) {
+    const el = q("teamStepError");
+    if (!el) return;
+    el.textContent = message || "";
+    el.hidden = !message;
+  }
+
+  function teamDraftFromPreference(pref) {
+    if (!pref) return null;
+    if (pref.club) {
+      return {
+        mode: "club", club: pref.club, team: pref.clubTeam, season: pref.season,
+        calendarAvailable: pref.calendarAvailable,
+        colorPrimary: pref.useCustomColors ? pref.colorPrimary : pref.club.colorPrimary,
+        colorSecondary: pref.useCustomColors ? pref.colorSecondary : pref.club.colorSecondary,
+        useCustomColors: pref.useCustomColors
+      };
+    }
+    if (pref.themeMode === "custom") {
+      return {
+        mode: "custom",
+        customName: pref.customClubName || "", customCity: pref.customCity || "", customLabel: pref.customTeamLabel || "",
+        colorPrimary: pref.colorPrimary || window.gkTheme?.NEUTRAL?.primary, colorSecondary: pref.colorSecondary || window.gkTheme?.NEUTRAL?.secondary
+      };
+    }
+    return null; // neutro
+  }
+
+  function hideTeamCustomForm() {
+    const form = q("teamCustomForm");
+    if (form) form.hidden = true;
+  }
+
+  function hideTeamPreview() {
+    const card = q("teamPreviewCard");
+    if (card) card.hidden = true;
+    const picker = q("teamPreviewColorPicker");
+    if (picker) picker.hidden = true;
+    const pickBtn = q("teamPreviewPickColorsBtn");
+    if (pickBtn) pickBtn.hidden = true;
+  }
+
+  function showTeamPreview() {
+    const card = q("teamPreviewCard");
+    if (!card) return;
+    if (!teamDraft) { hideTeamPreview(); return; }
+    const hasColors = Boolean(teamDraft.colorPrimary);
+    const tokens = window.gkTheme?.buildTokens(teamDraft.colorPrimary, teamDraft.colorSecondary) || {};
+    Object.entries(tokens).forEach(([name, value]) => card.style.setProperty(name, value));
+    card.hidden = false;
+    const name = teamDraft.mode === "club" ? teamDraft.club.officialName : (teamDraft.customName || "Squadra personalizzata");
+    const metaParts = teamDraft.mode === "club"
+      ? [teamDraft.club.city, teamTypeLabel(teamDraft.team)].filter(Boolean)
+      : [teamDraft.customCity, teamDraft.customLabel].filter(Boolean);
+    if (q("teamPreviewName")) q("teamPreviewName").textContent = name;
+    if (q("teamPreviewMeta")) q("teamPreviewMeta").textContent = metaParts.join(" · ") || "Nessuna informazione aggiuntiva disponibile.";
+    const status = q("teamPreviewStatus");
+    const pickBtn = q("teamPreviewPickColorsBtn");
+    if (!hasColors) {
+      if (status) status.textContent = "Nessun colore disponibile per questa società: puoi confermarla con il tema neutro o scegliere due colori tuoi.";
+      if (pickBtn) pickBtn.hidden = teamDraft.mode !== "club";
+    } else {
+      if (status) status.textContent = (teamDraft.mode === "club" && !teamDraft.useCustomColors) ? colorsSourceLabel(teamDraft.club.colorsSource) : "Colori scelti da te.";
+      if (pickBtn) pickBtn.hidden = true;
+      q("teamPreviewColorPicker") && (q("teamPreviewColorPicker").hidden = true);
+    }
+  }
+
+  function selectTeamResult(index) {
+    const r = teamSearchResults[index];
+    if (!r) return;
+    teamDraft = {
+      mode: "club", club: r.club, team: r.team, season: r.season, calendarAvailable: r.calendarAvailable,
+      colorPrimary: r.club.colorPrimary, colorSecondary: r.club.colorSecondary, useCustomColors: false
+    };
+    document.querySelectorAll(".team-result-card").forEach((el) => el.classList.toggle("selected", Number(el.dataset.resultIndex) === index));
+    hideTeamCustomForm();
+    showTeamStepError("");
+    showTeamPreview();
+  }
+
+  function renderTeamResults(results) {
+    const list = q("teamResultsList");
+    if (!list) return;
+    teamSearchResults = results;
+    if (!results.length) {
+      list.innerHTML = `<div class="team-results-empty">Nessuna società trovata. Prova un altro nome o usa "Non trovo la mia squadra" qui sotto.</div>`;
+      return;
+    }
+    list.innerHTML = results.map((r, i) => {
+      const metaParts = [r.club.city, teamTypeLabel(r.team), r.season?.competition].filter(Boolean);
+      return `<button type="button" class="team-result-card" data-result-index="${i}"><span class="team-result-name">${esc(r.club.officialName)}</span><span class="team-result-meta">${esc(metaParts.join(" · ") || "Nessuna informazione aggiuntiva disponibile")}</span></button>`;
+    }).join("");
+  }
+
+  async function runTeamSearch() {
+    const list = q("teamResultsList");
+    const status = q("teamSearchStatus");
+    if (!list) return;
+    const token = ++teamSearchToken;
+    list.innerHTML = `<div class="team-results-loading">Ricerca in corso...</div>`;
+    try {
+      const params = new URLSearchParams();
+      const query = q("teamSearchInput")?.value.trim() || "";
+      const region = q("teamFilterRegion")?.value || "";
+      const discipline = q("teamFilterDiscipline")?.value || "";
+      const category = q("teamFilterCategory")?.value.trim() || "";
+      if (query) params.set("q", query);
+      if (region) params.set("region", region);
+      if (discipline) params.set("discipline", discipline);
+      if (category) params.set("category", category);
+      params.set("limit", "20");
+      const res = await api(`/api/clubs?${params.toString()}`);
+      if (token !== teamSearchToken) return; // risposta obsoleta (nuova ricerca già in corso)
+      const results = res.results || [];
+      renderTeamResults(results);
+      if (status) status.textContent = results.length ? `${results.length} risultat${results.length === 1 ? "o" : "i"}.` : "Nessuna società trovata con questi filtri.";
+    } catch (e) {
+      if (token !== teamSearchToken) return;
+      list.innerHTML = `<div class="team-results-empty">Ricerca momentaneamente non disponibile: ${esc(e.message)}</div>`;
+      if (status) status.textContent = "";
+    }
+  }
+
+  function debounceTeamSearch() {
+    clearTimeout(teamSearchDebounceTimer);
+    teamSearchDebounceTimer = setTimeout(runTeamSearch, 300);
+  }
+
+  // Dopo il salvataggio riuscito: in onboarding avanza allo step successivo,
+  // da Impostazioni ("Cambia squadra") torna semplicemente al profilo.
+  function afterTeamStepSaved() {
+    if (setupMode === "team-edit") {
+      setSetupMode("edit");
+      renderTeamSettings();
+      showView("profile");
+      return;
+    }
+    // Utente migrato (portieri già configurati prima di questa funzione):
+    // lo step squadra era l'unica cosa mancante, non lo si fa proseguire
+    // attraverso gli step 2-4 già completati in passato. cloudProfile è
+    // già quello caricato dall'ultima loadData(), nessuna nuova fetch qui.
+    const alreadyHasKeepers = Array.isArray(cloudProfile?.keepers) && cloudProfile.keepers.length > 0;
+    if (alreadyHasKeepers) {
+      document.body.classList.remove("gk-onboarding");
+      setSetupMode("edit");
+      showView("home");
+      return;
+    }
+    setupStep += 1;
+    renderSetupStep();
+  }
+
+  async function confirmTeamSelection() {
+    if (!teamDraft || teamDraft.mode !== "club") return;
+    const btn = q("teamConfirmBtn");
+    if (btn) { btn.disabled = true; btn.textContent = "Salvataggio..."; }
+    showTeamStepError("");
+    try {
+      await saveClubPreference({
+        themeMode: "club",
+        clubId: teamDraft.club.id,
+        clubTeamId: teamDraft.team?.id || null,
+        colorPrimary: teamDraft.useCustomColors ? teamDraft.colorPrimary : null,
+        colorSecondary: teamDraft.useCustomColors ? teamDraft.colorSecondary : null,
+        useCustomColors: Boolean(teamDraft.useCustomColors),
+        teamStepDone: true
+      });
+      afterTeamStepSaved();
+    } catch (e) {
+      showTeamStepError(e.message || "Errore durante il salvataggio. Riprova.");
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = "Conferma squadra"; }
+    }
+  }
+
+  async function confirmCustomTeam() {
+    const name = q("teamCustomName")?.value.trim() || "";
+    if (!name) { showTeamStepError("Inserisci il nome della squadra."); return; }
+    const btn = q("teamCustomConfirmBtn");
+    if (btn) { btn.disabled = true; btn.textContent = "Salvataggio..."; }
+    showTeamStepError("");
+    try {
+      const colorPrimary = q("teamCustomColor1")?.value || null;
+      const colorSecondary = q("teamCustomColor2")?.value || null;
+      await saveClubPreference({
+        themeMode: "custom",
+        customClubName: name,
+        customCity: q("teamCustomCity")?.value.trim() || null,
+        customTeamLabel: q("teamCustomLabel")?.value.trim() || null,
+        colorPrimary, colorSecondary, useCustomColors: true,
+        teamStepDone: true
+      });
+      teamDraft = { mode: "custom", customName: name, customCity: q("teamCustomCity")?.value.trim() || "", customLabel: q("teamCustomLabel")?.value.trim() || "", colorPrimary, colorSecondary };
+      hideTeamCustomForm();
+      showTeamPreview();
+      afterTeamStepSaved();
+    } catch (e) {
+      showTeamStepError(e.message || "Errore durante il salvataggio. Riprova.");
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = "Usa questi colori"; }
+    }
+  }
+
+  async function skipTeamStep() {
+    const btn = q("teamSkipBtn");
+    if (btn) { btn.disabled = true; }
+    showTeamStepError("");
+    try {
+      await saveClubPreference({
+        themeMode: "neutral", clubId: null, clubTeamId: null,
+        customClubName: null, customCity: null, customTeamLabel: null,
+        colorPrimary: null, colorSecondary: null, useCustomColors: false,
+        teamStepDone: true
+      });
+      teamDraft = null;
+      afterTeamStepSaved();
+    } catch (e) {
+      showTeamStepError(e.message || "Errore durante il salvataggio. Riprova.");
+    } finally {
+      if (btn) { btn.disabled = false; }
+    }
+  }
+
+  // Renderizza lo step 1 (chiamata da renderSetupStep quando diventa
+  // visibile). Solo la PRIMA volta per "visita" dello step ricava lo stato
+  // da clubPreference (teamDraft === undefined): le interazioni successive
+  // dell'utente non vengono mai sovrascritte da qui.
+  function renderTeamStep() {
+    bindTeamStepEventsOnce();
+    if (teamDraft === undefined) {
+      teamDraft = teamDraftFromPreference(clubPreference);
+      if (teamDraft) { showTeamPreview(); return; }
+    }
+    if (teamDraft) { showTeamPreview(); return; }
+    hideTeamPreview();
+    if (!teamSearchResults.length && q("teamResultsList") && !q("teamResultsList").innerHTML) runTeamSearch();
+  }
+
+  function bindTeamStepEventsOnce() {
+    const input = q("teamSearchInput");
+    if (!input || input.dataset.teamStepBound === "1") return;
+    input.dataset.teamStepBound = "1";
+    input.addEventListener("input", debounceTeamSearch);
+    q("teamFilterRegion")?.addEventListener("change", runTeamSearch);
+    q("teamFilterDiscipline")?.addEventListener("change", runTeamSearch);
+    q("teamFilterCategory")?.addEventListener("input", debounceTeamSearch);
+    q("teamResultsList")?.addEventListener("click", (event) => {
+      const card = event.target.closest?.(".team-result-card");
+      if (card) selectTeamResult(Number(card.dataset.resultIndex));
+    });
+    q("teamNotFoundBtn")?.addEventListener("click", () => {
+      hideTeamPreview();
+      document.querySelectorAll(".team-result-card").forEach((el) => el.classList.remove("selected"));
+      const form = q("teamCustomForm");
+      if (form) form.hidden = false;
+    });
+    q("teamCustomCancelBtn")?.addEventListener("click", hideTeamCustomForm);
+    q("teamCustomConfirmBtn")?.addEventListener("click", confirmCustomTeam);
+    q("teamConfirmBtn")?.addEventListener("click", confirmTeamSelection);
+    q("teamChangeBtn")?.addEventListener("click", () => {
+      teamDraft = null;
+      hideTeamPreview();
+      document.querySelectorAll(".team-result-card").forEach((el) => el.classList.remove("selected"));
+    });
+    q("teamSkipBtn")?.addEventListener("click", skipTeamStep);
+    q("teamPreviewPickColorsBtn")?.addEventListener("click", () => {
+      const picker = q("teamPreviewColorPicker");
+      if (picker) picker.hidden = false;
+      const btn = q("teamPreviewPickColorsBtn");
+      if (btn) btn.hidden = true;
+    });
+    q("teamPreviewColor1")?.addEventListener("input", () => {
+      if (!teamDraft) return;
+      teamDraft.colorPrimary = q("teamPreviewColor1").value;
+      teamDraft.useCustomColors = true;
+      showTeamPreview();
+    });
+    q("teamPreviewColor2")?.addEventListener("input", () => {
+      if (!teamDraft) return;
+      teamDraft.colorSecondary = q("teamPreviewColor2").value;
+      teamDraft.useCustomColors = true;
+      showTeamPreview();
+    });
+  }
+
+  // --- Sezione Impostazioni "Squadra e colori" (profileView) -------------
+
+  function teamSummaryHtml() {
+    if (!clubPreference || (!clubPreference.club && clubPreference.themeMode !== "custom")) {
+      return "Tema neutro: nessuna squadra selezionata.";
+    }
+    if (clubPreference.club) {
+      const meta = [clubPreference.club.city, teamTypeLabel(clubPreference.clubTeam)].filter(Boolean).join(" · ");
+      return `Squadra: <strong>${esc(clubPreference.club.officialName)}</strong>${meta ? ` <span class="muted">(${esc(meta)})</span>` : ""}${clubPreference.useCustomColors ? " — colori personalizzati" : ""}`;
+    }
+    const meta = [clubPreference.customCity, clubPreference.customTeamLabel].filter(Boolean).join(" · ");
+    return `Squadra personalizzata: <strong>${esc(clubPreference.customClubName || "—")}</strong>${meta ? ` <span class="muted">(${esc(meta)})</span>` : ""}`;
+  }
+
+  function renderTeamSettings() {
+    const summary = q("teamSettingsSummary");
+    if (summary) summary.innerHTML = teamSummaryHtml();
+    const resetClubBtn = q("teamSettingsResetClubBtn");
+    if (resetClubBtn) resetClubBtn.hidden = !(clubPreference?.club && clubPreference?.useCustomColors);
+    const colorsForm = q("teamColorsForm");
+    if (colorsForm) colorsForm.hidden = true;
+  }
+
+  function bindTeamSettingsEventsOnce() {
+    const btn = q("teamSettingsChangeBtn");
+    if (!btn || btn.dataset.teamSettingsBound === "1") return;
+    btn.dataset.teamSettingsBound = "1";
+    btn.addEventListener("click", () => {
+      document.body.classList.remove("gk-onboarding"); // "Cambia squadra" non è un blocco onboarding
+      setSetupMode("team-edit");
+      showView("setup");
+    });
+    const statusEl = q("teamSettingsStatus");
+    const setStatus = (msg, isError = false) => { if (statusEl) { statusEl.textContent = msg || ""; statusEl.style.color = isError ? "var(--danger)" : ""; } };
+    async function runSettingsSave(overrides, busyBtn, busyLabel) {
+      if (teamSettingsSaving) return;
+      teamSettingsSaving = true;
+      if (busyBtn) { busyBtn.disabled = true; if (busyLabel) busyBtn.textContent = busyLabel; }
+      setStatus("Salvataggio...");
+      try {
+        await saveClubPreference(buildPreferencePayload(overrides));
+        renderTeamSettings();
+        setStatus("Salvato ✓");
+      } catch (e) {
+        setStatus(`Errore: ${e.message}`, true);
+      } finally {
+        teamSettingsSaving = false;
+        if (busyBtn) busyBtn.disabled = false;
+      }
+    }
+    q("teamSettingsColorsBtn")?.addEventListener("click", () => {
+      const form = q("teamColorsForm");
+      if (!form) return;
+      form.hidden = !form.hidden;
+      if (!form.hidden) {
+        if (q("teamColorsInput1")) q("teamColorsInput1").value = clubPreference?.colorPrimary || clubPreference?.club?.colorPrimary || window.gkTheme?.NEUTRAL?.primary || "#5b6f9e";
+        if (q("teamColorsInput2")) q("teamColorsInput2").value = clubPreference?.colorSecondary || clubPreference?.club?.colorSecondary || window.gkTheme?.NEUTRAL?.secondary || "#8792a6";
+      }
+    });
+    q("teamColorsCancelBtn")?.addEventListener("click", () => { const form = q("teamColorsForm"); if (form) form.hidden = true; });
+    q("teamColorsSaveBtn")?.addEventListener("click", () => runSettingsSave({
+      useCustomColors: true,
+      colorPrimary: q("teamColorsInput1")?.value || null,
+      colorSecondary: q("teamColorsInput2")?.value || null,
+      // Scegliere colori personali senza aver mai scelto una squadra resta
+      // un tema valido (neutro + colori propri): non forza themeMode a "club".
+      themeMode: clubPreference?.themeMode === "neutral" ? "neutral" : clubPreference?.themeMode || "neutral"
+    }, q("teamColorsSaveBtn"), "Salvataggio..."));
+    q("teamSettingsResetClubBtn")?.addEventListener("click", () => runSettingsSave({
+      useCustomColors: false, colorPrimary: null, colorSecondary: null
+    }, q("teamSettingsResetClubBtn")));
+    q("teamSettingsResetNeutralBtn")?.addEventListener("click", () => runSettingsSave({
+      themeMode: "neutral", clubId: null, clubTeamId: null,
+      customClubName: null, customCity: null, customTeamLabel: null,
+      useCustomColors: false, colorPrimary: null, colorSecondary: null
+    }, q("teamSettingsResetNeutralBtn")));
   }
 
   async function login() {
@@ -1028,10 +1509,12 @@
     if (target === "home") { renderProfileSummary(); renderExercises(); }
     if (target === "training") renderTrainingView();
     if (target === "exerciseForm") renderExerciseForm();
+    if (target === "profile") { bindTeamSettingsEventsOnce(); renderTeamSettings(); }
   };
 
   getProfile = () => cloudProfile;
   getHistory = () => cloudHistory;
+  getCloudUser = () => cloudUser;
   setProfile = () => {};
   setHistory = () => {};
   saveProfileFromForm = saveCloudProfile;

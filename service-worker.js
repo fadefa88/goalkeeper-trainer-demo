@@ -1,10 +1,11 @@
-const CACHE_NAME = "gk-trainer-shell-v7";
+const CACHE_NAME = "gk-trainer-shell-v8";
 const ASSETS = [
   "./",
   "./index.html",
   "./privacy.html",
   "./support.html",
   "./style.css",
+  "./theme-engine.js",
   "./app.js",
   "./cloudflare-client.js",
   "./calendar-keepers.js",
@@ -33,6 +34,7 @@ self.addEventListener("fetch", event => {
     url.pathname === "/" ||
     url.pathname.endsWith("/index.html") ||
     url.pathname.endsWith("/style.css") ||
+    url.pathname.endsWith("/theme-engine.js") ||
     url.pathname.endsWith("/app.js") ||
     url.pathname.endsWith("/cloudflare-client.js") ||
     url.pathname.endsWith("/calendar-keepers.js");

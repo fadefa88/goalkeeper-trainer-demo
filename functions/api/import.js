@@ -1,4 +1,4 @@
-import { assertSameOrigin, buildProfileExtraInsertStatements, error, json, readJson, requireAuth } from "./_shared.js";
+import { assertSameOrigin, buildProfileExtraInsertStatements, error, isValidHexColor, json, normalizeHexColor, readJson, requireAuth } from "./_shared.js";
 
 export async function onRequestPost({ request, env }) {
   const originError = assertSameOrigin(request);
@@ -66,6 +66,43 @@ export async function onRequestPost({ request, env }) {
   // delete-all sopra sia stato eseguito dal batch, producendo un UPDATE su
   // una riga che nel frattempo il batch stesso ha cancellato).
   statements.push(...buildProfileExtraInsertStatements(env, user.id, profile));
+
+  // Preferenza squadra/tema: passthrough best-effort da export.js. Assente
+  // (JSON esportato prima di questa funzione) -> nessuna statement, la riga
+  // esistente (se c'è) resta intatta. clubId/clubTeamId non più presenti nel
+  // catalogo (es. import su un ambiente diverso) -> ignorati silenziosamente
+  // invece di far fallire l'intero import per una violazione di foreign key.
+  const clubPref = body.clubPreference;
+  if (clubPref && typeof clubPref === "object") {
+    let clubId = clubPref.club?.id || null;
+    let clubTeamId = clubPref.clubTeam?.id || null;
+    if (clubId) {
+      const club = await env.DB.prepare("select id from clubs where id = ?").bind(clubId).first();
+      if (!club) { clubId = null; clubTeamId = null; }
+    }
+    if (clubTeamId) {
+      const team = await env.DB.prepare("select id from club_teams where id = ? and club_id = ?").bind(clubTeamId, clubId).first();
+      if (!team) clubTeamId = null;
+    }
+    const colorPrimary = isValidHexColor(clubPref.colorPrimary) ? normalizeHexColor(clubPref.colorPrimary) : null;
+    const colorSecondary = isValidHexColor(clubPref.colorSecondary) ? normalizeHexColor(clubPref.colorSecondary) : null;
+    const themeMode = ["club", "custom", "neutral"].includes(clubPref.themeMode) ? clubPref.themeMode : "neutral";
+    statements.push(env.DB.prepare(`
+      insert into user_club_preferences (
+        user_id, club_id, club_team_id, custom_club_name, custom_city, custom_team_label,
+        color_primary, color_secondary, use_custom_colors, theme_mode, team_step_done, updated_at
+      ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      on conflict(user_id) do update set
+        club_id = excluded.club_id, club_team_id = excluded.club_team_id,
+        custom_club_name = excluded.custom_club_name, custom_city = excluded.custom_city, custom_team_label = excluded.custom_team_label,
+        color_primary = excluded.color_primary, color_secondary = excluded.color_secondary, use_custom_colors = excluded.use_custom_colors,
+        theme_mode = excluded.theme_mode, team_step_done = excluded.team_step_done, updated_at = excluded.updated_at
+    `).bind(
+      user.id, clubId, clubTeamId,
+      clubPref.customClubName || null, clubPref.customCity || null, clubPref.customTeamLabel || null,
+      colorPrimary, colorSecondary, clubPref.useCustomColors ? 1 : 0, themeMode, clubPref.teamStepDone ? 1 : 0, now
+    ));
+  }
 
   await env.DB.batch(statements);
 
