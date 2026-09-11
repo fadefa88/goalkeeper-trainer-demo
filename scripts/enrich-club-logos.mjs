@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-import './enrich-wikimedia-test10.mjs';
+import './enrich-multisource-logos-test.mjs';
