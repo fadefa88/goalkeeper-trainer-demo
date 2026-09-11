@@ -921,6 +921,13 @@ function setHistory(history) {
   localStorage.setItem("gk_history", JSON.stringify(history));
 }
 
+// Riassegnata da cloudflare-client.js (stesso schema di getProfile sopra):
+// espone l'utente cloud autenticato a calendar-keepers.js, che la usa per
+// namespacizzare per account la cache locale del calendario partite.
+function getCloudUser() {
+  return null;
+}
+
 function showView(view) {
   const target = $(view + "View");
   if (!target) {

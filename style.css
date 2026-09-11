@@ -1,12 +1,17 @@
 /* ============================================================
-   GK Trainer — Mantova 1911
-   Design tokens: one dark neutral surface system, one red accent
-   used deliberately (primary action / active state / brand), no
-   gradients-as-decoration, no glow, no per-card watermark.
+   GK Trainer
+   Design tokens: one dark neutral surface system, one accent color
+   family (--red/--red-text/--red-fill/... + --mantova-gold) driven
+   dinamicamente da theme-engine.js in base alla società scelta dal
+   cliente (palette neutra di default, prima di qualunque scelta).
+   Nessuna riga qui sotto contiene più "Mantova" a parte i nomi delle
+   variabili (mantenuti per compatibilità con app.js/calendar-keepers.js,
+   il valore di default è la palette neutra, non più rosso Mantova).
    ============================================================ */
 
 :root {
-  /* Surfaces — flat neutral dark, not red-tinted */
+  /* Surfaces — flat neutral dark, non tematizzate: restano identiche
+     qualunque sia la società scelta (vedi motivazione in theme-engine.js). */
   --bg: #0b0b0c;
   --panel: #16171a;
   --panel-2: #1c1e21;
@@ -18,22 +23,52 @@
   --muted: #9a9a9d;
   --faint: #6b6b6e;
 
-  /* Accent — Mantova red, used deliberately, not as a wash.
-     --green/--mantova-red kept as aliases: calendar-keepers.js's
-     injected styles (match card, physical chart, keeper attendance)
-     still reference these names directly. */
-  --red: #dc0619;
-  --red-deep: #8c0510;
-  --red-soft: rgba(220, 6, 25, .14);
+  /* Accent — valori di default = palette NEUTRA (nessuna società),
+     sovrascritti a runtime da theme-engine.js (window.gkTheme) in base
+     alla preferenza del cliente. Non toccare questi valori per
+     "impostare" una società: si fa da wizard/impostazioni, non da CSS.
+     --red = colore grezzo (bordi/puntini/accent-color nativi, non testo).
+     --red-text = variante leggibile SOLO quando il colore è testo su
+       card scura (>=4.5:1 su --panel-2).
+     --red-fill = sfondo pieno di bottoni/celle selezionate (fedele al
+       colore sociale, quasi mai alterato).
+     --red-fill-deep = --red-fill scurito, stato :active/premuto.
+     --red-on-light = variante leggibile come testo su sfondo bianco
+       fisso (badge giorno partita).
+     --on-accent = testo (chiaro o scuro, scelto per contrasto reale— non
+       sempre bianco: giallo/celeste richiedono testo scuro) sopra --red-fill.
+     --mantova-gold = colore secondario della società (decorativo, non testo).
+     --green/--mantova-red/--orange restano alias per compatibilità con
+     stili già scritti altrove (calendar-keepers.js), nessun nuovo utilizzo. */
+  --red: #5b6f9e;
+  --red-text: #7385af;
+  --red-fill: #576a98;
+  --red-fill-deep: #3d4a6b;
+  --red-on-light: #5b6f9e;
+  --red-soft: rgba(91, 111, 158, .14);
+  --red-soft-strong: rgba(91, 111, 158, .28);
+  --on-accent: #f2f2f0;
+  --red-deep: var(--red-fill-deep);
   --green: var(--red);
   --mantova-red: var(--red);
-  --mantova-gold: #c99a4b;
+  --mantova-gold: #8792a6;
   --orange: var(--mantova-gold);
   --white: #ffffff;
-  /* Testo di errore su sfondo scuro: --red da solo non ha contrasto
-     sufficiente per un testo piccolo, serve una tinta più chiara. */
+  /* Colori semantici FISSI, mai sovrascritti da theme-engine.js: un
+     errore/avviso deve restare riconoscibile indipendentemente dalla
+     società scelta (vedi .danger-btn, .progress-kpi.over, .setup-error). */
+  --danger: #e5484d;
+  --danger-soft: rgba(229, 72, 77, .16);
+  --danger-border: rgba(229, 72, 77, .42);
+  /* Testo di errore su sfondo scuro, fisso (non il rosso del brand):
+     --danger da solo non ha contrasto sufficiente per un testo piccolo,
+     serve una tinta più chiara, sempre rossa indipendentemente dal tema. */
   --red-bright: #ffb4b4;
-  --mantova-logo: url("https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_Mantova_1911.svg");
+  /* Logo generico dell'app (icon.svg, nessuno stemma di società): usato
+     come placeholder in topbar e schermata di login. Le società nel
+     catalogo non hanno un logo proprio in questa funzione (facoltativo,
+     vedi riepilogo) — l'identità del cliente passa dai colori, non da qui. */
+  --app-logo: url("icon.svg");
 
   /* Spacing scale */
   --sp-1: 4px;
@@ -115,7 +150,7 @@ h3 { font-size: 16px; font-weight: 600; line-height: 1.25; }
 .app-brand::before {
   content: "";
   width: 22px; height: 26px; flex: 0 0 22px;
-  background: var(--mantova-logo) center/contain no-repeat;
+  background: var(--app-logo) center/contain no-repeat;
 }
 
 .page-heading { margin: 2px 0 var(--sp-5); }
@@ -176,7 +211,7 @@ h3 { font-size: 16px; font-weight: 600; line-height: 1.25; }
 }
 
 .auth-logo { margin-bottom: var(--sp-4); display: grid; justify-items: center; gap: var(--sp-2); text-align: center; }
-.auth-logo::before { content: ""; display: block; width: 56px; height: 66px; background: var(--mantova-logo) center/contain no-repeat; }
+.auth-logo::before { content: ""; display: block; width: 56px; height: 66px; background: var(--app-logo) center/contain no-repeat; }
 .auth-logo h2 { display: none; }
 .auth-actions,
 .backup-actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-4); }
@@ -225,17 +260,19 @@ textarea:focus { border-color: var(--red); }
 .accent-btn,
 .danger-btn,
 .icon-btn { padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 600; }
-.primary-btn { color: #fff; background: var(--red); }
-.primary-btn:active { background: var(--red-deep); }
+.primary-btn { color: var(--on-accent); background: var(--red-fill); }
+.primary-btn:active { background: var(--red-fill-deep); }
 .dark-btn,
 .ghost-btn,
 .icon-btn { color: var(--text); background: var(--panel-2); border: 1px solid var(--line); }
 /* Accento tenue: per un'azione ripetuta per riga (es. "Avvia" su ogni
    esercizio) che deve leggersi come cliccabile e legata al brand, ma
    senza competere con l'unico bottone primario pieno della schermata. */
-.accent-btn { color: var(--red); background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .3); }
-.accent-btn:active { background: rgba(220, 6, 25, .22); }
-.danger-btn { color: var(--text); background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .3); }
+.accent-btn { color: var(--red-text); background: var(--red-soft); border: 1px solid var(--red-soft-strong); }
+.accent-btn:active { background: var(--red-soft-strong); }
+/* .danger-btn è un'azione distruttiva ("Cancella dati"), non un accento di
+   brand: resta rossa allarme fissa qualunque sia la società scelta. */
+.danger-btn { color: var(--text); background: var(--danger-soft); border: 1px solid var(--danger-border); }
 .full { width: 100%; }
 
 .icon-btn { width: 48px; height: 48px; min-width: 48px; min-height: 48px; display: grid; place-items: center; padding: 0; line-height: 1; border-radius: var(--radius-sm); }
@@ -243,7 +280,7 @@ textarea:focus { border-color: var(--red); }
 .top-svg { width: 22px; height: 22px; display: block; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 
 .hero-card { padding: var(--sp-4); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-4); align-items: center; }
-.score-ring { min-width: 60px; padding: var(--sp-2) var(--sp-3); border-radius: var(--radius-sm); display: grid; justify-items: center; background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .28); }
+.score-ring { min-width: 60px; padding: var(--sp-2) var(--sp-3); border-radius: var(--radius-sm); display: grid; justify-items: center; background: var(--red-soft); border: 1px solid var(--red-soft-strong); }
 .score-ring span { font-size: 20px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .score-ring small { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .03em; }
 
@@ -298,17 +335,17 @@ textarea:focus { border-color: var(--red); }
 .calendar-day { position: relative; min-height: 48px; border-radius: var(--radius-sm); padding: 6px 4px; color: var(--text); background: var(--panel-2); border: 1px solid var(--line); display: grid; align-content: space-between; justify-items: center; }
 .calendar-day.empty { opacity: .25; pointer-events: none; }
 .calendar-day.today { border-color: var(--line-strong); }
-.calendar-day.selected { color: #fff; background: var(--red); border-color: var(--red); }
-.calendar-day.first-team-match-day { border-color: rgba(220, 6, 25, .5); }
-.calendar-day.first-team-match-day.selected { background: var(--red); }
+.calendar-day.selected { color: var(--on-accent); background: var(--red-fill); border-color: var(--red-fill); }
+.calendar-day.first-team-match-day { border-color: var(--red); }
+.calendar-day.first-team-match-day.selected { background: var(--red-fill); }
 .calendar-day-number { font-size: 13px; font-weight: 600; }
 .calendar-dot { width: 6px; height: 6px; border-radius: var(--radius-pill); background: var(--red); }
 /* !important necessario: .calendar-day.selected .calendar-dot ha
    specificità più alta e altrimenti vincerebbe su un giorno selezionato
    che ha anche un allenamento programmato (pallino tornerebbe bianco). */
 .calendar-dot.planned { background: var(--mantova-gold) !important; }
-.calendar-day.selected .calendar-dot { background: #fff; }
-.calendar-match-badge { position: absolute; top: 2px; right: 2px; min-width: 15px; height: 15px; padding: 0 3px; border-radius: var(--radius-pill); display: grid; place-items: center; background: var(--white); color: var(--red); font-size: 8px; font-weight: 700; line-height: 1; }
+.calendar-day.selected .calendar-dot { background: var(--on-accent); }
+.calendar-match-badge { position: absolute; top: 2px; right: 2px; min-width: 15px; height: 15px; padding: 0 3px; border-radius: var(--radius-pill); display: grid; place-items: center; background: var(--white); color: var(--red-on-light); font-size: 8px; font-weight: 700; line-height: 1; }
 
 .planner-card,
 .planner-card *,
@@ -358,7 +395,8 @@ textarea:focus { border-color: var(--red); }
 .physical-kpi strong { display: block; margin-top: 4px; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .progress-kpi small,
 .physical-kpi small { display: block; margin-top: 2px; color: var(--muted); line-height: 1.35; font-size: 11px; }
-.progress-kpi.over { border-color: rgba(220, 6, 25, .45); background: var(--red-soft); }
+/* "Sforo" tempo pianificato: avviso, fisso, non il colore della società. */
+.progress-kpi.over { border-color: var(--danger-border); background: var(--danger-soft); }
 .metric-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-2); }
 .metric-tag { border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 5px 9px; font-size: 12px; color: var(--muted); background: var(--panel-2); }
 .no-data { margin-top: var(--sp-4); padding: var(--sp-4); border: 1px dashed var(--line); border-radius: var(--radius-sm); color: var(--muted); }
@@ -393,7 +431,7 @@ textarea:focus { border-color: var(--red); }
 .bottom-nav.hidden { display: none !important; }
 .nav-btn { min-width: 0 !important; width: 100% !important; max-width: 100% !important; color: var(--muted); background: transparent; border-radius: var(--radius-sm); padding: 9px 2px !important; font-size: clamp(10px, 2.75vw, 12px) !important; line-height: 1.1; white-space: nowrap; overflow: hidden; text-align: center; font-weight: 600; }
 .nav-btn[data-tab="training"] { font-size: clamp(9.4px, 2.45vw, 11px) !important; }
-.nav-btn.active { color: var(--red); background: var(--red-soft); }
+.nav-btn.active { color: var(--red-text); background: var(--red-soft); }
 
 button,
 .primary-btn,
@@ -456,12 +494,14 @@ html:has(#calendarView.active),
 
 #saveCalendarPlanBtn { min-height: 58px; }
 .calendar-save-status { min-height: 42px; margin-top: 0 !important; padding: 11px 12px; border-radius: var(--radius-sm); color: var(--text) !important; background: var(--panel-2); border: 1px solid var(--line); font-weight: 600; line-height: 1.35; }
-.calendar-save-status:not(:empty)::before { content: "✓"; display: inline-grid; place-items: center; width: 16px; height: 16px; margin-right: var(--sp-2); border-radius: var(--radius-pill); color: #fff; background: var(--red); font-size: 11px; font-weight: 700; vertical-align: -2px; }
+.calendar-save-status:not(:empty)::before { content: "✓"; display: inline-grid; place-items: center; width: 16px; height: 16px; margin-right: var(--sp-2); border-radius: var(--radius-pill); color: var(--on-accent); background: var(--red-fill); font-size: 11px; font-weight: 700; vertical-align: -2px; }
 #saveCalendarPlanBtn.gk-saving { opacity: .75; }
-#saveCalendarPlanBtn.gk-saved { background: var(--red-deep); }
-#saveCalendarPlanBtn.gk-error { background: var(--panel-2); color: var(--text); border: 1px solid rgba(220, 6, 25, .4); }
-#calendarSaveStatus.gk-ok { border-color: rgba(220, 6, 25, .35); }
-#calendarSaveStatus.gk-error { border-color: rgba(220, 6, 25, .4); color: #ffdede !important; }
+#saveCalendarPlanBtn.gk-saved { background: var(--red-fill-deep); }
+/* .gk-error è un fallimento del salvataggio: avviso fisso, non il colore
+   della società (altrimenti un tema chiaro renderebbe l'errore invisibile). */
+#saveCalendarPlanBtn.gk-error { background: var(--panel-2); color: var(--text); border: 1px solid var(--danger-border); }
+#calendarSaveStatus.gk-ok { border-color: var(--red-soft-strong); }
+#calendarSaveStatus.gk-error { border-color: var(--danger-border); color: #ffdede !important; }
 
 /* Chrome hidden before authentication; the login screen locked full-
    height, centered, non-scrollable on iPhone. */
@@ -545,7 +585,7 @@ body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !importan
 .training-empty strong { color: var(--text); }
 .training-all-title { margin-top: var(--sp-4); padding-top: var(--sp-4); border-top: 1px solid var(--line); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); font-weight: 600; }
 .training-saved-card { display: grid; gap: var(--sp-2); padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line); }
-.training-saved-card.is-current { border-color: rgba(220, 6, 25, .4); }
+.training-saved-card.is-current { border-color: var(--red); }
 .training-saved-card h4 { margin: 0; font-size: 15px; font-weight: 600; } .training-saved-card .primary-btn { margin-top: 4px; }
 
 /* ============================================================
@@ -560,13 +600,43 @@ body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !importan
 .setup-step[hidden] { display: none; }
 .setup-error { color: var(--red-bright); font-size: 13px; line-height: 1.4; }
 .setup-actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-1); }
+.setup-actions[hidden] { display: none; }
+
+/* --- Step "Scegli la tua squadra" (wizard) + sezione impostazioni ------ */
+.team-step { display: grid; gap: var(--sp-3); }
+.team-filters { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+.team-filters #teamFilterCategory { grid-column: 1 / -1; }
+.team-results-list { display: grid; gap: var(--sp-2); max-height: 340px; overflow-y: auto; }
+.team-result-card { display: grid; gap: 4px; text-align: left; padding: var(--sp-3); background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--text); }
+.team-result-card:active { border-color: var(--red-soft-strong); }
+.team-result-card.selected { border-color: var(--red); background: var(--red-soft); }
+.team-result-name { font-weight: 700; font-size: 14px; }
+.team-result-meta { color: var(--muted); font-size: 12px; }
+.team-results-empty,
+.team-results-loading { padding: var(--sp-3); color: var(--muted); font-size: 13px; text-align: center; }
+.team-custom-form { display: grid; gap: var(--sp-3); padding: var(--sp-3); background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.team-custom-form[hidden],
+.team-preview-card[hidden],
+.team-color-pickers[hidden] { display: none; }
+.team-custom-form h3 { margin: 0; }
+.team-color-pickers { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.team-color-pickers input[type="color"] { min-height: 48px; padding: 4px; cursor: pointer; }
+.team-preview-card { display: grid; gap: var(--sp-3); padding: var(--sp-3); background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.team-preview-demo { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; }
+.team-preview-mini-card { padding: var(--sp-2) var(--sp-3); border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--panel); display: grid; gap: 2px; }
+.team-preview-demo .primary-btn { pointer-events: none; }
+.team-step-footer { display: grid; gap: var(--sp-2); margin-top: var(--sp-1); }
+
+.team-settings-card { margin-bottom: var(--sp-4); }
+.team-settings-summary { margin-top: var(--sp-2); line-height: 1.5; }
+.team-settings-summary strong { color: var(--text); }
 
 /* Esercizi personali (custom_exercises): ricerca sopra la lista, badge
    discreto sulla card, banner di conferma quando lo schema potrebbe non
    riflettere più la descrizione modificata. Nessun colore/card a parte:
    stessi token del resto del design system. */
 .exercise-search { margin: 0 0 var(--sp-3); }
-.tag-personal { display: inline-block; vertical-align: middle; font-size: 10px; font-weight: 700; letter-spacing: .03em; color: var(--red); background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .3); border-radius: var(--radius-pill); padding: 2px 8px; }
+.tag-personal { display: inline-block; vertical-align: middle; font-size: 10px; font-weight: 700; letter-spacing: .03em; color: var(--red-text); background: var(--red-soft); border: 1px solid var(--red-soft-strong); border-radius: var(--radius-pill); padding: 2px 8px; }
 .state-changed-banner { margin-top: var(--sp-2); padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line-strong); }
 .state-changed-banner .button-row { margin-top: var(--sp-2); }
 

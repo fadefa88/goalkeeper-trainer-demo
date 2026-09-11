@@ -1,5 +1,13 @@
-import { json, requireAuth } from "./_shared.js";
+import { json, loadClubPreference, requireAuth } from "./_shared.js";
 
+// Calendario prima squadra integrato (offline-friendly) per il Mantova
+// 1911, stagione 2026/27: dato curato a mano, non generato. Resta legato
+// SOLO al club_team_id il cui club_calendar_sources punta a questo esatto
+// provider_team_id ESPN — nessun'altra formazione lo eredita mai, anche se
+// sceglie un provider "espn" diverso. Per qualunque altra formazione con
+// una fonte calendario verificata, l'app serve solo i dati live del
+// provider (nessun fallback imbustato): aggiungere un calendario integrato
+// per un altro club è un lavoro separato, non automatico.
 const MANTOVA_ESPN_ID = "3991";
 const ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer";
 
@@ -28,7 +36,7 @@ function fixture(id, iso, homeTeam, awayTeam, competition = "Serie B", homeScore
   };
 }
 
-const BUNDLED_MATCHES = [
+const MANTOVA_BUNDLED_MATCHES = [
   fixture("72336422", "2026-08-16T21:15:00+02:00", "Lazio", "Mantova 1911", "Coppa Italia", 0, 2, "Trentaduesimi"),
   fixture("73092856", "2026-08-22T19:00:00+02:00", "Carrarese", "Mantova 1911", "Serie B", 1, 2),
   fixture("73092884", "2026-08-30T19:00:00+02:00", "Mantova 1911", "Empoli", "Serie B", 3, 1),
@@ -85,7 +93,7 @@ function espnTeamName(competitor, fallback) {
   return team.displayName || team.shortDisplayName || team.name || team.location || fallback;
 }
 
-function normalizeEspnMatch(event, leagueName) {
+function normalizeEspnMatch(event, leagueName, teamEspnId) {
   const competition = event?.competitions?.[0] || {};
   const competitors = Array.isArray(competition?.competitors) ? competition.competitors : [];
   const home = competitors.find((item) => item?.homeAway === "home") || competitors[0] || {};
@@ -116,18 +124,18 @@ function normalizeEspnMatch(event, leagueName) {
     homeScore: started ? numericScore(home?.score) : null,
     awayScore: started ? numericScore(away?.score) : null,
     venue: competition?.venue?.fullName || competition?.venue?.address?.city || "",
-    isHome: homeId === MANTOVA_ESPN_ID
+    isHome: homeId === teamEspnId
   };
 }
 
-async function fetchEspnSchedule(league, name, season = 2026) {
-  const response = await fetch(`${ESPN_BASE}/${league}/teams/${MANTOVA_ESPN_ID}/schedule?season=${season}`, {
+async function fetchEspnSchedule(league, name, teamEspnId, season) {
+  const response = await fetch(`${ESPN_BASE}/${league}/teams/${teamEspnId}/schedule?season=${season}`, {
     headers: { "Accept": "application/json" },
     cf: { cacheTtl: 300, cacheEverything: true }
   });
   if (!response.ok) throw new Error(`ESPN ${league} ${response.status}`);
   const data = await response.json();
-  return (Array.isArray(data?.events) ? data.events : []).map((event) => normalizeEspnMatch(event, name)).filter(Boolean);
+  return (Array.isArray(data?.events) ? data.events : []).map((event) => normalizeEspnMatch(event, name, teamEspnId)).filter(Boolean);
 }
 
 function romeDateKey(timestamp) {
@@ -141,18 +149,12 @@ function romeDateKey(timestamp) {
   return `${get("year")}-${get("month")}-${get("day")}`;
 }
 
-async function loadMantovaMatches() {
-  const remoteResults = await Promise.allSettled([
-    fetchEspnSchedule("ita.2", "Serie B"),
-    fetchEspnSchedule("ita.coppa_italia", "Coppa Italia")
-  ]);
-  const remote = remoteResults.flatMap((result) => result.status === "fulfilled" ? result.value : []);
-
-  // Unione per data E per id partita: un merge per sola data lascia un
-  // duplicato (vecchia data dal fixture imbustato + nuova data da ESPN) ogni
-  // volta che una partita viene rinviata. Se ESPN restituisce lo stesso id di
-  // un fixture imbustato ma in una data diversa, lo slot alla vecchia data
-  // viene rimosso prima di scrivere quello nuovo.
+// Unione per data E per id partita: un merge per sola data lascia un
+// duplicato (vecchia data dal fixture imbustato + nuova data da ESPN) ogni
+// volta che una partita viene rinviata. Se ESPN restituisce lo stesso id di
+// un fixture imbustato ma in una data diversa, lo slot alla vecchia data
+// viene rimosso prima di scrivere quello nuovo.
+function mergeMatches(bundled, remote) {
   const byId = new Map();
   const byDate = new Map();
   const upsert = (match) => {
@@ -163,30 +165,89 @@ async function loadMantovaMatches() {
     byId.set(match.id, dateKey);
     byDate.set(dateKey, match);
   };
-  BUNDLED_MATCHES.forEach(upsert);
+  bundled.forEach(upsert);
   remote.forEach(upsert);
+  return Array.from(byDate.values()).sort((a, b) => a.startTimestamp - b.startTimestamp);
+}
+
+async function loadEspnMatches(teamEspnId, season) {
+  const isMantova = teamEspnId === MANTOVA_ESPN_ID;
+  const remoteResults = await Promise.allSettled([
+    fetchEspnSchedule("ita.2", "Serie B", teamEspnId, season),
+    fetchEspnSchedule("ita.coppa_italia", "Coppa Italia", teamEspnId, season)
+  ]);
+  const remote = remoteResults.flatMap((result) => result.status === "fulfilled" ? result.value : []);
+  const bundled = isMantova ? MANTOVA_BUNDLED_MATCHES : [];
 
   return {
-    source: remote.length ? "Calendario 2026/27 + ESPN live" : "Calendario 2026/27 integrato",
-    matches: Array.from(byDate.values()).sort((a, b) => a.startTimestamp - b.startTimestamp)
+    source: remote.length ? `Calendario ${season}/${String(Number(season) + 1).slice(2)} + ESPN live` : (bundled.length ? `Calendario ${season}/${String(Number(season) + 1).slice(2)} integrato` : "ESPN (nessun dato)"),
+    matches: mergeMatches(bundled, remote)
+  };
+}
+
+// Risolve la formazione scelta dall'account -> fonte calendario verificata
+// (club_calendar_sources). Nessuna deduzione dal tema o dalla categoria:
+// se non esiste una riga esplicita, il calendario automatico non è
+// disponibile per quella formazione, punto (stato vuoto lato client).
+async function resolveCalendarSource(env, userId) {
+  const pref = await loadClubPreference(env, userId);
+  if (!pref?.clubTeam || !pref.calendarAvailable) return null;
+  const row = await env.DB
+    .prepare("select cs.provider, cs.provider_team_id, c.official_name, c.short_name from club_calendar_sources cs join club_teams ct on ct.id = cs.club_team_id join clubs c on c.id = ct.club_id where cs.club_team_id = ? and cs.active = 1 limit 1")
+    .bind(pref.clubTeam.id).first();
+  if (!row) return null;
+  return {
+    provider: row.provider,
+    providerTeamId: row.provider_team_id,
+    teamName: row.short_name || row.official_name
   };
 }
 
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
+
   if (url.searchParams.get("matches") === "1") {
-    const result = await loadMantovaMatches();
-    return json({
-      ok: true,
-      team: { espnId: MANTOVA_ESPN_ID, name: "Mantova 1911" },
-      source: result.source,
-      fetchedAt: new Date().toISOString(),
-      matches: result.matches
-    }, 200, { "Cache-Control": "no-store, max-age=0" });
+    // Il calendario è ormai legato alla formazione scelta dall'account (non
+    // più un dato pubblico globale): richiede sessione valida, come il
+    // resto dei dati account.
+    const { response, user } = await requireAuth(env, request);
+    if (response) return response;
+
+    if (!env?.DB || typeof env.DB.prepare !== "function") {
+      return json({ ok: true, available: false, matches: [], reason: "Database non disponibile." }, 200, { "Cache-Control": "no-store, max-age=0" });
+    }
+
+    const source = await resolveCalendarSource(env, user.id);
+    if (!source) {
+      return json({
+        ok: true,
+        available: false,
+        matches: [],
+        reason: "Nessun calendario automatico disponibile per la formazione scelta."
+      }, 200, { "Cache-Control": "no-store, max-age=0" });
+    }
+
+    if (source.provider !== "espn") {
+      return json({ ok: true, available: false, matches: [], reason: `Provider calendario "${source.provider}" non ancora supportato.` }, 200, { "Cache-Control": "no-store, max-age=0" });
+    }
+
+    try {
+      const season = new Date().getUTCMonth() >= 6 ? new Date().getUTCFullYear() : new Date().getUTCFullYear() - 1;
+      const result = await loadEspnMatches(source.providerTeamId, season);
+      return json({
+        ok: true,
+        available: true,
+        team: { espnId: source.providerTeamId, name: source.teamName },
+        source: result.source,
+        fetchedAt: new Date().toISOString(),
+        matches: result.matches
+      }, 200, { "Cache-Control": "no-store, max-age=0" });
+    } catch (err) {
+      return json({ ok: true, available: false, matches: [], reason: `Calendario momentaneamente non disponibile: ${err?.message || err}` }, 200, { "Cache-Control": "no-store, max-age=0" });
+    }
   }
 
-  // Diagnostica D1 (elenco tabelle): non pubblica, a differenza del feed
-  // partite sopra. Richiede una sessione valida.
+  // Diagnostica D1 (elenco tabelle): non pubblica, richiede una sessione valida.
   const { response } = await requireAuth(env, request);
   if (response) return response;
 

@@ -7,6 +7,10 @@
   <title>GK Trainer</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css?v=design-v1" />
+  <!-- Deve caricare PRIMA di qualunque markup visibile: imposta subito il
+       tema (neutro o quello noto dell'ultimo account) per evitare un frame
+       coi colori sbagliati. Vedi theme-engine.js. -->
+  <script src="theme-engine.js?v=design-v1"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -23,24 +27,76 @@
 
       <section id="setupView" class="view">
         <div class="setup-card">
-          <p id="setupStepIndicator" class="setup-step-indicator" hidden>1 di 3</p>
+          <p id="setupStepIndicator" class="setup-step-indicator" hidden>1 di 4</p>
           <h2 id="setupTitle">Configura il gruppo portieri</h2>
           <p id="setupIntro" class="muted">Imposta gruppo, livello e durata sedute.</p>
           <form id="setupForm" class="form-grid">
             <div class="setup-step" data-step="1">
+              <div id="teamStep" class="team-step">
+                <label>Cerca la tua squadra<input id="teamSearchInput" type="search" placeholder="Nome squadra..." autocomplete="off" /></label>
+                <div class="team-filters">
+                  <select id="teamFilterRegion"><option value="">Tutte le regioni</option><option>Abruzzo</option><option>Basilicata</option><option>Calabria</option><option>Campania</option><option>Emilia-Romagna</option><option>Friuli-Venezia Giulia</option><option>Lazio</option><option>Liguria</option><option>Lombardia</option><option>Marche</option><option>Molise</option><option>Piemonte</option><option>Puglia</option><option>Sardegna</option><option>Sicilia</option><option>Toscana</option><option>Trentino-Alto Adige</option><option>Umbria</option><option>Valle d'Aosta</option><option>Veneto</option></select>
+                  <select id="teamFilterDiscipline"><option value="">Calcio 11 e 5</option><option value="calcio11">Calcio a 11</option><option value="calcio5">Calcio a 5</option></select>
+                  <input id="teamFilterCategory" type="text" placeholder="Categoria (facoltativo)" />
+                </div>
+                <p id="teamSearchStatus" class="muted small-note">Cerca il nome della tua società.</p>
+                <div id="teamResultsList" class="team-results-list"></div>
+
+                <div id="teamCustomForm" class="team-custom-form" hidden>
+                  <h3>Non trovo la mia squadra</h3>
+                  <p class="muted small-note">Questa scelta resta tua: non modifica il catalogo condiviso.</p>
+                  <label>Nome squadra<input id="teamCustomName" type="text" placeholder="Nome della tua squadra" maxlength="120" /></label>
+                  <label>Località<input id="teamCustomCity" type="text" placeholder="Città (facoltativo)" maxlength="120" /></label>
+                  <label>Formazione/categoria<input id="teamCustomLabel" type="text" placeholder="Es. Prima squadra, Under 17 (facoltativo)" maxlength="120" /></label>
+                  <div class="team-color-pickers">
+                    <label>Colore primario<input id="teamCustomColor1" type="color" value="#5b6f9e" /></label>
+                    <label>Colore secondario<input id="teamCustomColor2" type="color" value="#8792a6" /></label>
+                  </div>
+                  <div class="setup-actions">
+                    <button id="teamCustomConfirmBtn" class="primary-btn full" type="button">Usa questi colori</button>
+                    <button id="teamCustomCancelBtn" class="ghost-btn full" type="button">Annulla</button>
+                  </div>
+                </div>
+
+                <div id="teamPreviewCard" class="team-preview-card" hidden>
+                  <p class="eyebrow">Anteprima squadra</p>
+                  <div class="team-preview-demo">
+                    <div class="team-preview-mini-card"><strong id="teamPreviewName">—</strong><span id="teamPreviewMeta" class="muted small-note"></span></div>
+                    <button class="primary-btn" type="button" tabindex="-1">Esempio bottone</button>
+                  </div>
+                  <p id="teamPreviewStatus" class="muted small-note"></p>
+                  <button id="teamPreviewPickColorsBtn" class="ghost-btn full" type="button" hidden>Scegli due colori per questa squadra</button>
+                  <div id="teamPreviewColorPicker" class="team-color-pickers" hidden>
+                    <label>Colore primario<input id="teamPreviewColor1" type="color" value="#5b6f9e" /></label>
+                    <label>Colore secondario<input id="teamPreviewColor2" type="color" value="#8792a6" /></label>
+                  </div>
+                  <div class="setup-actions">
+                    <button id="teamConfirmBtn" class="primary-btn full" type="button">Conferma squadra</button>
+                    <button id="teamChangeBtn" class="ghost-btn full" type="button">Cambia scelta</button>
+                  </div>
+                </div>
+
+                <div class="team-step-footer">
+                  <button id="teamNotFoundBtn" class="ghost-btn full" type="button">Non trovo la mia squadra</button>
+                  <button id="teamSkipBtn" class="ghost-btn full" type="button">Continua senza squadra</button>
+                </div>
+                <p id="teamStepError" class="setup-error" hidden></p>
+              </div>
+            </div>
+            <div class="setup-step" data-step="2">
               <label>Numero portieri<select id="keepersCount"><option value="1">1 portiere</option><option value="2">2 portieri</option><option value="3" selected>3 portieri</option><option value="4">4 portieri</option><option value="5">5+ portieri</option></select></label>
               <label>Sport<select id="sportType"><option value="calcio">Calcio</option><option value="futsal">Futsal</option></select></label>
               <label>Livello<select id="level"><option value="base">Base</option><option value="medio" selected>Medio</option><option value="pro">Pro</option></select></label>
             </div>
-            <div class="setup-step" data-step="2">
+            <div class="setup-step" data-step="3">
               <label>Allenamenti a settimana<select id="sessionsPerWeek"><option value="1">1 a settimana</option><option value="2" selected>2 a settimana</option><option value="3">3 a settimana</option></select></label>
               <label>Durata allenamento<select id="sessionDuration"><option value="60" selected>1 ora</option><option value="120">2 ore</option></select></label>
             </div>
-            <div class="setup-step" data-step="3">
+            <div class="setup-step" data-step="4">
               <div class="keepers-box"><div class="keepers-header"><h3>Portieri</h3><span class="pill">profilo base</span></div><div id="keepersFields" class="keepers-fields"></div></div>
             </div>
             <p id="setupFormError" class="setup-error" hidden></p>
-            <div class="setup-actions">
+            <div id="setupGenericActions" class="setup-actions">
               <button id="setupSubmitBtn" class="primary-btn full" type="submit">Salva profilo</button>
               <button id="setupBackBtn" class="ghost-btn full" type="button" hidden>Indietro</button>
             </div>
@@ -64,7 +120,29 @@
 
       <section id="progressView" class="view"><div class="progress-card physical-main-card"><h2>Motore del portiere</h2><form id="performanceForm" class="form-grid"><div class="physical-save-meta"><label>Data salvataggio misure<input id="physicalSaveDate" type="date" /></label><p id="physicalSaveStatus" class="muted small-note"></p></div><div id="performanceFields" class="measure-grid"></div><button class="primary-btn full" type="submit">Salva test fisici</button></form></div><div id="physicalProgressHistoryCard" class="progress-card physical-progress-card"><h2>Andamento misure</h2><p class="muted">Grafico basato sui salvataggi fisici registrati durante l’anno.</p><div class="physical-chart-controls"><label>Portiere<select id="physicalChartKeeper"></select></label><label>Misura<select id="physicalChartMetric"></select></label></div><div id="physicalKpis" class="physical-kpis"></div><div id="physicalChartBox" class="physical-chart-box"></div><div id="physicalHistoryList" class="physical-history-list"></div></div></section>
 
-      <section id="profileView" class="view"><div class="setup-card"><h2>Profilo allenamento</h2><p id="cloudUserLabel" class="muted">Database Cloudflare D1</p><button id="editSetupBtn" class="primary-btn full" type="button">Modifica impostazioni base</button><div class="backup-actions"><button id="exportJsonBtn" class="dark-btn full" type="button">Esporta JSON</button><button id="importJsonBtn" class="dark-btn full" type="button">Importa JSON</button><a class="dark-btn full" href="privacy.html" target="_blank" rel="noopener">Privacy policy</a><input id="importJsonInput" class="hidden-file" type="file" accept="application/json,.json" /></div><p id="backupStatus" class="muted backup-status"></p><button id="resetBtn" class="danger-btn full" type="button">Cancella dati</button><button id="logoutBtn" class="ghost-btn full" type="button">Logout</button></div></section>
+      <section id="profileView" class="view">
+        <div class="setup-card team-settings-card">
+          <h2>Squadra e colori</h2>
+          <div id="teamSettingsSummary" class="team-settings-summary muted">Caricamento...</div>
+          <div class="backup-actions">
+            <button id="teamSettingsChangeBtn" class="dark-btn full" type="button">Cambia squadra</button>
+            <button id="teamSettingsColorsBtn" class="dark-btn full" type="button">Modifica colori personali</button>
+            <button id="teamSettingsResetClubBtn" class="ghost-btn full" type="button" hidden>Ripristina colori società</button>
+            <button id="teamSettingsResetNeutralBtn" class="ghost-btn full" type="button">Ripristina tema neutro</button>
+          </div>
+          <div id="teamColorsForm" class="team-custom-form" hidden>
+            <div class="team-color-pickers">
+              <label>Colore primario<input id="teamColorsInput1" type="color" value="#5b6f9e" /></label>
+              <label>Colore secondario<input id="teamColorsInput2" type="color" value="#8792a6" /></label>
+            </div>
+            <div class="setup-actions">
+              <button id="teamColorsSaveBtn" class="primary-btn full" type="button">Salva colori</button>
+              <button id="teamColorsCancelBtn" class="ghost-btn full" type="button">Annulla</button>
+            </div>
+          </div>
+          <p id="teamSettingsStatus" class="muted small-note"></p>
+        </div>
+        <div class="setup-card"><h2>Profilo allenamento</h2><p id="cloudUserLabel" class="muted">Database Cloudflare D1</p><button id="editSetupBtn" class="primary-btn full" type="button">Modifica impostazioni base</button><div class="backup-actions"><button id="exportJsonBtn" class="dark-btn full" type="button">Esporta JSON</button><button id="importJsonBtn" class="dark-btn full" type="button">Importa JSON</button><a class="dark-btn full" href="privacy.html" target="_blank" rel="noopener">Privacy policy</a><input id="importJsonInput" class="hidden-file" type="file" accept="application/json,.json" /></div><p id="backupStatus" class="muted backup-status"></p><button id="resetBtn" class="danger-btn full" type="button">Cancella dati</button><button id="logoutBtn" class="ghost-btn full" type="button">Logout</button></div></section>
     </main>
 
     <nav id="bottomNav" class="bottom-nav hidden"><button data-tab="home" class="nav-btn active">Esercizi</button><button data-tab="calendar" class="nav-btn">Calendario</button><button data-tab="training" class="nav-btn">Allenamento</button><button data-tab="progress" class="nav-btn">Progressi</button></nav>
