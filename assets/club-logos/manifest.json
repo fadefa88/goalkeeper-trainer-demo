@@ -1,142 +1,5897 @@
 {
-  "as-roma": {
-    "name": "Roma",
-    "competition": "Serie A",
-    "path": "/assets/club-logos/as-roma.webp",
-    "source": "Lega Serie A",
-    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/8ddc09c1aa73448da2dff953edd95d82_light.webp",
+  "arezzo": {
+    "name": "Arezzo",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/arezzo.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/arezzo.png",
     "providerTeamId": null,
-    "matchedName": "Roma",
-    "matchedFrom": "official-league",
+    "matchedName": "Logo Arezzo",
     "score": 191,
-    "colorPrimary": "#900020",
-    "colorSecondary": "#ffb000",
-    "scrapedAt": "2026-09-11T20:38:30.163Z"
+    "colorPrimary": "#603020",
+    "colorSecondary": "#001000",
+    "paletteCandidates": [
+      {
+        "color": "#603020",
+        "share": 0.2136,
+        "saturation": 0.667
+      },
+      {
+        "color": "#602020",
+        "share": 0.0425,
+        "saturation": 0.667
+      },
+      {
+        "color": "#001000",
+        "share": 0.033,
+        "saturation": 1
+      },
+      {
+        "color": "#102010",
+        "share": 0.027,
+        "saturation": 0.5
+      },
+      {
+        "color": "#502010",
+        "share": 0.0159,
+        "saturation": 0.8
+      },
+      {
+        "color": "#806050",
+        "share": 0.0197,
+        "saturation": 0.375
+      },
+      {
+        "color": "#603030",
+        "share": 0.0154,
+        "saturation": 0.5
+      },
+      {
+        "color": "#502020",
+        "share": 0.0127,
+        "saturation": 0.6
+      },
+      {
+        "color": "#503020",
+        "share": 0.0104,
+        "saturation": 0.6
+      },
+      {
+        "color": "#906060",
+        "share": 0.0139,
+        "saturation": 0.333
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.453Z"
+  },
+  "ascoli": {
+    "name": "Ascoli",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/ascoli.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/ascoli_2026.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Ascoli",
+    "score": 191,
+    "colorPrimary": "#e01030",
+    "colorSecondary": "#ffb020",
+    "paletteCandidates": [
+      {
+        "color": "#e01030",
+        "share": 0.1303,
+        "saturation": 0.929
+      },
+      {
+        "color": "#ffb020",
+        "share": 0.087,
+        "saturation": 0.875
+      },
+      {
+        "color": "#ffb010",
+        "share": 0.0616,
+        "saturation": 0.937
+      },
+      {
+        "color": "#e02030",
+        "share": 0.028,
+        "saturation": 0.857
+      },
+      {
+        "color": "#e01020",
+        "share": 0.0189,
+        "saturation": 0.929
+      },
+      {
+        "color": "#ffc010",
+        "share": 0.0147,
+        "saturation": 0.937
+      },
+      {
+        "color": "#000000",
+        "share": 0.2937,
+        "saturation": 0
+      },
+      {
+        "color": "#ffd060",
+        "share": 0.0137,
+        "saturation": 0.624
+      },
+      {
+        "color": "#ffc030",
+        "share": 0.0085,
+        "saturation": 0.812
+      },
+      {
+        "color": "#403010",
+        "share": 0.0089,
+        "saturation": 0.75
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.499Z"
+  },
+  "avellino": {
+    "name": "Avellino",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/avellino.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/avellino.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Avellino",
+    "score": 191,
+    "colorPrimary": "#008030",
+    "colorSecondary": "#b07020",
+    "paletteCandidates": [
+      {
+        "color": "#008030",
+        "share": 0.3635,
+        "saturation": 1
+      },
+      {
+        "color": "#008020",
+        "share": 0.0334,
+        "saturation": 1
+      },
+      {
+        "color": "#b07020",
+        "share": 0.0321,
+        "saturation": 0.818
+      },
+      {
+        "color": "#b07030",
+        "share": 0.028,
+        "saturation": 0.727
+      },
+      {
+        "color": "#b08030",
+        "share": 0.0267,
+        "saturation": 0.727
+      },
+      {
+        "color": "#009030",
+        "share": 0.0128,
+        "saturation": 1
+      },
+      {
+        "color": "#a07020",
+        "share": 0.0139,
+        "saturation": 0.8
+      },
+      {
+        "color": "#109040",
+        "share": 0.0114,
+        "saturation": 0.889
+      },
+      {
+        "color": "#b08040",
+        "share": 0.0117,
+        "saturation": 0.636
+      },
+      {
+        "color": "#c09050",
+        "share": 0.01,
+        "saturation": 0.583
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.534Z"
+  },
+  "benevento": {
+    "name": "Benevento",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/benevento.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/benevento.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Benevento",
+    "score": 191,
+    "colorPrimary": "#f00000",
+    "colorSecondary": "#fff030",
+    "paletteCandidates": [
+      {
+        "color": "#f00000",
+        "share": 0.2788,
+        "saturation": 1
+      },
+      {
+        "color": "#fff030",
+        "share": 0.1957,
+        "saturation": 0.812
+      },
+      {
+        "color": "#f01010",
+        "share": 0.0549,
+        "saturation": 0.933
+      },
+      {
+        "color": "#ff0000",
+        "share": 0.0345,
+        "saturation": 1
+      },
+      {
+        "color": "#ffff30",
+        "share": 0.0299,
+        "saturation": 0.812
+      },
+      {
+        "color": "#f01000",
+        "share": 0.018,
+        "saturation": 1
+      },
+      {
+        "color": "#e00000",
+        "share": 0.0146,
+        "saturation": 1
+      },
+      {
+        "color": "#d00000",
+        "share": 0.0111,
+        "saturation": 1
+      },
+      {
+        "color": "#f05010",
+        "share": 0.011,
+        "saturation": 0.933
+      },
+      {
+        "color": "#f07020",
+        "share": 0.0106,
+        "saturation": 0.867
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.560Z"
+  },
+  "bologna-fc-1909": {
+    "name": "Bologna",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/bologna-fc-1909.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/4af71b35aab34ad5a7d06148abe66ad6_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Bologna",
+    "score": 191,
+    "colorPrimary": "#103040",
+    "colorSecondary": "#902040",
+    "paletteCandidates": [
+      {
+        "color": "#103040",
+        "share": 0.338,
+        "saturation": 0.75
+      },
+      {
+        "color": "#902040",
+        "share": 0.2314,
+        "saturation": 0.778
+      },
+      {
+        "color": "#902030",
+        "share": 0.0521,
+        "saturation": 0.778
+      },
+      {
+        "color": "#203040",
+        "share": 0.0598,
+        "saturation": 0.5
+      },
+      {
+        "color": "#503040",
+        "share": 0.0228,
+        "saturation": 0.4
+      },
+      {
+        "color": "#c0c0c0",
+        "share": 0.1269,
+        "saturation": 0
+      },
+      {
+        "color": "#102040",
+        "share": 0.0114,
+        "saturation": 0.75
+      },
+      {
+        "color": "#102030",
+        "share": 0.0103,
+        "saturation": 0.667
+      },
+      {
+        "color": "#603040",
+        "share": 0.0115,
+        "saturation": 0.5
+      },
+      {
+        "color": "#602040",
+        "share": 0.0035,
+        "saturation": 0.667
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.609Z"
+  },
+  "cagliari-calcio": {
+    "name": "Cagliari",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/cagliari-calcio.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/25aecd0eda3e4453aabd9a9d5e7fba0d_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Cagliari",
+    "score": 191,
+    "colorPrimary": "#b01030",
+    "colorSecondary": "#102040",
+    "paletteCandidates": [
+      {
+        "color": "#b01030",
+        "share": 0.2797,
+        "saturation": 0.909
+      },
+      {
+        "color": "#102040",
+        "share": 0.315,
+        "saturation": 0.75
+      },
+      {
+        "color": "#b01020",
+        "share": 0.1188,
+        "saturation": 0.909
+      },
+      {
+        "color": "#002040",
+        "share": 0.0498,
+        "saturation": 1
+      },
+      {
+        "color": "#b02030",
+        "share": 0.0089,
+        "saturation": 0.818
+      },
+      {
+        "color": "#203050",
+        "share": 0.0082,
+        "saturation": 0.6
+      },
+      {
+        "color": "#c04050",
+        "share": 0.0055,
+        "saturation": 0.667
+      },
+      {
+        "color": "#b03040",
+        "share": 0.005,
+        "saturation": 0.727
+      },
+      {
+        "color": "#d06070",
+        "share": 0.0061,
+        "saturation": 0.538
+      },
+      {
+        "color": "#304060",
+        "share": 0.0058,
+        "saturation": 0.5
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.645Z"
+  },
+  "carrarese": {
+    "name": "Carrarese",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/carrarese.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/carrarese.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Carrarese",
+    "score": 191,
+    "colorPrimary": "#0080c0",
+    "colorSecondary": "#fff000",
+    "paletteCandidates": [
+      {
+        "color": "#0080c0",
+        "share": 0.3643,
+        "saturation": 1
+      },
+      {
+        "color": "#fff000",
+        "share": 0.3018,
+        "saturation": 1
+      },
+      {
+        "color": "#0070d0",
+        "share": 0.0619,
+        "saturation": 1
+      },
+      {
+        "color": "#ffff00",
+        "share": 0.0578,
+        "saturation": 1
+      },
+      {
+        "color": "#1080c0",
+        "share": 0.0153,
+        "saturation": 0.917
+      },
+      {
+        "color": "#f0f010",
+        "share": 0.015,
+        "saturation": 0.933
+      },
+      {
+        "color": "#0070c0",
+        "share": 0.0134,
+        "saturation": 1
+      },
+      {
+        "color": "#e0e020",
+        "share": 0.0136,
+        "saturation": 0.857
+      },
+      {
+        "color": "#d0e030",
+        "share": 0.0089,
+        "saturation": 0.786
+      },
+      {
+        "color": "#2080b0",
+        "share": 0.0079,
+        "saturation": 0.818
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.693Z"
+  },
+  "catanzaro": {
+    "name": "Catanzaro",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/catanzaro.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/catanzaro.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Catanzaro",
+    "score": 191,
+    "colorPrimary": "#c01020",
+    "colorSecondary": "#f0e040",
+    "paletteCandidates": [
+      {
+        "color": "#c01020",
+        "share": 0.1695,
+        "saturation": 0.917
+      },
+      {
+        "color": "#f0e040",
+        "share": 0.1543,
+        "saturation": 0.733
+      },
+      {
+        "color": "#203050",
+        "share": 0.037,
+        "saturation": 0.6
+      },
+      {
+        "color": "#ffe040",
+        "share": 0.0214,
+        "saturation": 0.749
+      },
+      {
+        "color": "#d01020",
+        "share": 0.016,
+        "saturation": 0.923
+      },
+      {
+        "color": "#a08050",
+        "share": 0.016,
+        "saturation": 0.5
+      },
+      {
+        "color": "#203040",
+        "share": 0.0133,
+        "saturation": 0.5
+      },
+      {
+        "color": "#c02020",
+        "share": 0.0079,
+        "saturation": 0.833
+      },
+      {
+        "color": "#907050",
+        "share": 0.0136,
+        "saturation": 0.444
+      },
+      {
+        "color": "#d01010",
+        "share": 0.0064,
+        "saturation": 0.923
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.718Z"
+  },
+  "cesena-fc": {
+    "name": "Cesena",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/cesena-fc.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/cesena-b.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Cesena",
+    "score": 191,
+    "colorPrimary": "#000000",
+    "colorSecondary": "#606060",
+    "paletteCandidates": [
+      {
+        "color": "#000000",
+        "share": 0.5942,
+        "saturation": 0
+      },
+      {
+        "color": "#606060",
+        "share": 0.043,
+        "saturation": 0
+      },
+      {
+        "color": "#404040",
+        "share": 0.0344,
+        "saturation": 0
+      },
+      {
+        "color": "#202020",
+        "share": 0.0309,
+        "saturation": 0
+      },
+      {
+        "color": "#909090",
+        "share": 0.0286,
+        "saturation": 0
+      },
+      {
+        "color": "#e0e0e0",
+        "share": 0.028,
+        "saturation": 0
+      },
+      {
+        "color": "#303030",
+        "share": 0.0268,
+        "saturation": 0
+      },
+      {
+        "color": "#505050",
+        "share": 0.0257,
+        "saturation": 0
+      },
+      {
+        "color": "#101010",
+        "share": 0.0432,
+        "saturation": 0
+      },
+      {
+        "color": "#d0d0d0",
+        "share": 0.0234,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.750Z"
+  },
+  "como-1907": {
+    "name": "Como",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/como-1907.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/367e70bf50b346209f8a0f16429850cb_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Como",
+    "score": 191,
+    "colorPrimary": "#104060",
+    "colorSecondary": "#507090",
+    "paletteCandidates": [
+      {
+        "color": "#104060",
+        "share": 0.595,
+        "saturation": 0.833
+      },
+      {
+        "color": "#103060",
+        "share": 0.0456,
+        "saturation": 0.833
+      },
+      {
+        "color": "#204070",
+        "share": 0.0275,
+        "saturation": 0.714
+      },
+      {
+        "color": "#204060",
+        "share": 0.0242,
+        "saturation": 0.667
+      },
+      {
+        "color": "#104070",
+        "share": 0.0178,
+        "saturation": 0.857
+      },
+      {
+        "color": "#305070",
+        "share": 0.0156,
+        "saturation": 0.571
+      },
+      {
+        "color": "#406080",
+        "share": 0.0174,
+        "saturation": 0.5
+      },
+      {
+        "color": "#507090",
+        "share": 0.0144,
+        "saturation": 0.444
+      },
+      {
+        "color": "#305080",
+        "share": 0.0093,
+        "saturation": 0.625
+      },
+      {
+        "color": "#205070",
+        "share": 0.0082,
+        "saturation": 0.714
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.779Z"
+  },
+  "cremonese": {
+    "name": "Cremonese",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/cremonese.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/cremonese.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Cremonese",
+    "score": 191,
+    "colorPrimary": "#e02020",
+    "colorSecondary": "#d0a050",
+    "paletteCandidates": [
+      {
+        "color": "#e02020",
+        "share": 0.1799,
+        "saturation": 0.857
+      },
+      {
+        "color": "#d0a050",
+        "share": 0.2425,
+        "saturation": 0.615
+      },
+      {
+        "color": "#0040a0",
+        "share": 0.0512,
+        "saturation": 1
+      },
+      {
+        "color": "#808090",
+        "share": 0.1089,
+        "saturation": 0.111
+      },
+      {
+        "color": "#f02020",
+        "share": 0.0202,
+        "saturation": 0.867
+      },
+      {
+        "color": "#0040b0",
+        "share": 0.0086,
+        "saturation": 1
+      },
+      {
+        "color": "#f02010",
+        "share": 0.0088,
+        "saturation": 0.933
+      },
+      {
+        "color": "#e02010",
+        "share": 0.0088,
+        "saturation": 0.929
+      },
+      {
+        "color": "#102020",
+        "share": 0.0153,
+        "saturation": 0.5
+      },
+      {
+        "color": "#d0b050",
+        "share": 0.0077,
+        "saturation": 0.615
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.804Z"
+  },
+  "empoli-fc": {
+    "name": "Empoli",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/empoli-fc.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/empoli.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Empoli",
+    "score": 191,
+    "colorPrimary": "#205090",
+    "colorSecondary": "#5080d0",
+    "paletteCandidates": [
+      {
+        "color": "#205090",
+        "share": 0.1579,
+        "saturation": 0.778
+      },
+      {
+        "color": "#3060a0",
+        "share": 0.1039,
+        "saturation": 0.7
+      },
+      {
+        "color": "#5080d0",
+        "share": 0.1016,
+        "saturation": 0.615
+      },
+      {
+        "color": "#3060b0",
+        "share": 0.0588,
+        "saturation": 0.727
+      },
+      {
+        "color": "#2050a0",
+        "share": 0.0521,
+        "saturation": 0.8
+      },
+      {
+        "color": "#4070b0",
+        "share": 0.0507,
+        "saturation": 0.636
+      },
+      {
+        "color": "#4070c0",
+        "share": 0.0457,
+        "saturation": 0.667
+      },
+      {
+        "color": "#4080c0",
+        "share": 0.0387,
+        "saturation": 0.667
+      },
+      {
+        "color": "#3070b0",
+        "share": 0.0326,
+        "saturation": 0.727
+      },
+      {
+        "color": "#5080c0",
+        "share": 0.0282,
+        "saturation": 0.583
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.827Z"
+  },
+  "entella": {
+    "name": "Entella",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/entella.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/virtusentella_2026.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Virtus Entella",
+    "score": 153,
+    "colorPrimary": "#70b0e0",
+    "colorSecondary": "#202010",
+    "paletteCandidates": [
+      {
+        "color": "#70b0e0",
+        "share": 0.3296,
+        "saturation": 0.5
+      },
+      {
+        "color": "#000000",
+        "share": 0.3306,
+        "saturation": 0
+      },
+      {
+        "color": "#60b0e0",
+        "share": 0.0144,
+        "saturation": 0.571
+      },
+      {
+        "color": "#70c0f0",
+        "share": 0.0089,
+        "saturation": 0.533
+      },
+      {
+        "color": "#202010",
+        "share": 0.0059,
+        "saturation": 0.5
+      },
+      {
+        "color": "#404040",
+        "share": 0.0432,
+        "saturation": 0
+      },
+      {
+        "color": "#202020",
+        "share": 0.04,
+        "saturation": 0
+      },
+      {
+        "color": "#70c0e0",
+        "share": 0.0051,
+        "saturation": 0.5
+      },
+      {
+        "color": "#b0d0f0",
+        "share": 0.0077,
+        "saturation": 0.267
+      },
+      {
+        "color": "#a0d0f0",
+        "share": 0.0053,
+        "saturation": 0.333
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.856Z"
+  },
+  "acf-fiorentina": {
+    "name": "Fiorentina",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/acf-fiorentina.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/5bce12d5bd864c2297695d970f92576d_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Fiorentina",
+    "score": 191,
+    "colorPrimary": "#603090",
+    "colorSecondary": "#e02020",
+    "paletteCandidates": [
+      {
+        "color": "#603090",
+        "share": 0.5872,
+        "saturation": 0.667
+      },
+      {
+        "color": "#e02020",
+        "share": 0.1286,
+        "saturation": 0.857
+      },
+      {
+        "color": "#e02010",
+        "share": 0.0275,
+        "saturation": 0.929
+      },
+      {
+        "color": "#604090",
+        "share": 0.036,
+        "saturation": 0.556
+      },
+      {
+        "color": "#503090",
+        "share": 0.0233,
+        "saturation": 0.667
+      },
+      {
+        "color": "#7050a0",
+        "share": 0.0143,
+        "saturation": 0.5
+      },
+      {
+        "color": "#705090",
+        "share": 0.0107,
+        "saturation": 0.444
+      },
+      {
+        "color": "#e03030",
+        "share": 0.0046,
+        "saturation": 0.786
+      },
+      {
+        "color": "#603080",
+        "share": 0.0053,
+        "saturation": 0.625
+      },
+      {
+        "color": "#e0d0f0",
+        "share": 0.0162,
+        "saturation": 0.133
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.884Z"
+  },
+  "frosinone": {
+    "name": "Frosinone",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/frosinone.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/b283fcc0aeda401bb081fcd764e290db_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Frosinone",
+    "score": 191,
+    "colorPrimary": "#004090",
+    "colorSecondary": "#ffe000",
+    "paletteCandidates": [
+      {
+        "color": "#004090",
+        "share": 0.3819,
+        "saturation": 1
+      },
+      {
+        "color": "#ffe000",
+        "share": 0.1896,
+        "saturation": 1
+      },
+      {
+        "color": "#0070b0",
+        "share": 0.0486,
+        "saturation": 1
+      },
+      {
+        "color": "#d0d0f0",
+        "share": 0.144,
+        "saturation": 0.133
+      },
+      {
+        "color": "#0040a0",
+        "share": 0.0125,
+        "saturation": 1
+      },
+      {
+        "color": "#104090",
+        "share": 0.0071,
+        "saturation": 0.889
+      },
+      {
+        "color": "#f0e010",
+        "share": 0.0067,
+        "saturation": 0.933
+      },
+      {
+        "color": "#e0d010",
+        "share": 0.0063,
+        "saturation": 0.929
+      },
+      {
+        "color": "#b0b030",
+        "share": 0.0071,
+        "saturation": 0.727
+      },
+      {
+        "color": "#004080",
+        "share": 0.0052,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.905Z"
+  },
+  "genoa-cfc": {
+    "name": "Genoa",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/genoa-cfc.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/8c7aa94d22f44738951748e2ccdf319a_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Genoa",
+    "score": 191,
+    "colorPrimary": "#002040",
+    "colorSecondary": "#b02020",
+    "paletteCandidates": [
+      {
+        "color": "#002040",
+        "share": 0.2938,
+        "saturation": 1
+      },
+      {
+        "color": "#b02020",
+        "share": 0.3025,
+        "saturation": 0.818
+      },
+      {
+        "color": "#ffd000",
+        "share": 0.1247,
+        "saturation": 1
+      },
+      {
+        "color": "#ffd010",
+        "share": 0.0489,
+        "saturation": 0.937
+      },
+      {
+        "color": "#b02010",
+        "share": 0.0446,
+        "saturation": 0.909
+      },
+      {
+        "color": "#ffe000",
+        "share": 0.0159,
+        "saturation": 1
+      },
+      {
+        "color": "#f0d030",
+        "share": 0.0092,
+        "saturation": 0.8
+      },
+      {
+        "color": "#ffe010",
+        "share": 0.0074,
+        "saturation": 0.937
+      },
+      {
+        "color": "#e0d020",
+        "share": 0.0071,
+        "saturation": 0.857
+      },
+      {
+        "color": "#d08010",
+        "share": 0.0066,
+        "saturation": 0.923
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.942Z"
+  },
+  "hellas-verona-fc": {
+    "name": "Hellas Verona",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/hellas-verona-fc.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/Verona.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Hellas Verona",
+    "score": 191,
+    "colorPrimary": "#ffd000",
+    "colorSecondary": "#ffffff",
+    "paletteCandidates": [
+      {
+        "color": "#ffd000",
+        "share": 0.8916,
+        "saturation": 1
+      },
+      {
+        "color": "#ffe000",
+        "share": 0.1052,
+        "saturation": 1
+      },
+      {
+        "color": "#fff000",
+        "share": 0.0032,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:49.970Z"
   },
   "fc-internazionale-milano": {
     "name": "Inter",
     "competition": "Serie A",
+    "groupName": null,
     "path": "/assets/club-logos/fc-internazionale-milano.webp",
     "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
     "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/b7421caff23448c49134fa4f9095ee09_light.webp",
     "providerTeamId": null,
     "matchedName": "Internazionale",
-    "matchedFrom": "official-league",
-    "score": 156,
+    "score": 153,
     "colorPrimary": "#0020a0",
-    "colorSecondary": "#000000",
-    "scrapedAt": "2026-09-11T20:38:30.241Z"
+    "colorSecondary": "#000010",
+    "paletteCandidates": [
+      {
+        "color": "#0020a0",
+        "share": 0.5085,
+        "saturation": 1
+      },
+      {
+        "color": "#000000",
+        "share": 0.3482,
+        "saturation": 0
+      },
+      {
+        "color": "#002090",
+        "share": 0.0101,
+        "saturation": 1
+      },
+      {
+        "color": "#1020a0",
+        "share": 0.0079,
+        "saturation": 0.9
+      },
+      {
+        "color": "#000010",
+        "share": 0.0094,
+        "saturation": 1
+      },
+      {
+        "color": "#7080c0",
+        "share": 0.0096,
+        "saturation": 0.417
+      },
+      {
+        "color": "#2030a0",
+        "share": 0.0044,
+        "saturation": 0.8
+      },
+      {
+        "color": "#7080d0",
+        "share": 0.0065,
+        "saturation": 0.462
+      },
+      {
+        "color": "#001050",
+        "share": 0.0029,
+        "saturation": 1
+      },
+      {
+        "color": "#001040",
+        "share": 0.0028,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.069Z"
+  },
+  "juventus-fc": {
+    "name": "Juventus",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/juventus-fc.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/0ae9210dce6f4f9b9d50aeeb19b0d371_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Juventus",
+    "score": 191,
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "paletteCandidates": [
+      {
+        "color": "#111111",
+        "share": 1,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.088Z"
+  },
+  "l-r-vicenza": {
+    "name": "L.R. Vicenza",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/l-r-vicenza.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/vicenza-b.png",
+    "providerTeamId": null,
+    "matchedName": "Logo L.R. Vicenza",
+    "score": 191,
+    "colorPrimary": "#f02020",
+    "colorSecondary": "#f06060",
+    "paletteCandidates": [
+      {
+        "color": "#f02020",
+        "share": 0.404,
+        "saturation": 0.867
+      },
+      {
+        "color": "#f01020",
+        "share": 0.1068,
+        "saturation": 0.933
+      },
+      {
+        "color": "#f01010",
+        "share": 0.0419,
+        "saturation": 0.933
+      },
+      {
+        "color": "#f02030",
+        "share": 0.0288,
+        "saturation": 0.867
+      },
+      {
+        "color": "#f03030",
+        "share": 0.0227,
+        "saturation": 0.8
+      },
+      {
+        "color": "#f05050",
+        "share": 0.0188,
+        "saturation": 0.667
+      },
+      {
+        "color": "#f04040",
+        "share": 0.0171,
+        "saturation": 0.733
+      },
+      {
+        "color": "#f06060",
+        "share": 0.0161,
+        "saturation": 0.6
+      },
+      {
+        "color": "#f07070",
+        "share": 0.0166,
+        "saturation": 0.533
+      },
+      {
+        "color": "#f08080",
+        "share": 0.0175,
+        "saturation": 0.467
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.124Z"
+  },
+  "ss-lazio": {
+    "name": "Lazio",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/ss-lazio.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/fe6490f2b16e45be9956a1cd04aaf3a2_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Lazio",
+    "score": 191,
+    "colorPrimary": "#d0a030",
+    "colorSecondary": "#70d0f0",
+    "paletteCandidates": [
+      {
+        "color": "#d0a030",
+        "share": 0.1507,
+        "saturation": 0.769
+      },
+      {
+        "color": "#70d0f0",
+        "share": 0.1696,
+        "saturation": 0.533
+      },
+      {
+        "color": "#004070",
+        "share": 0.0231,
+        "saturation": 1
+      },
+      {
+        "color": "#e0a030",
+        "share": 0.027,
+        "saturation": 0.786
+      },
+      {
+        "color": "#e0b060",
+        "share": 0.0291,
+        "saturation": 0.571
+      },
+      {
+        "color": "#d0a040",
+        "share": 0.0245,
+        "saturation": 0.692
+      },
+      {
+        "color": "#e0a040",
+        "share": 0.021,
+        "saturation": 0.714
+      },
+      {
+        "color": "#e0c080",
+        "share": 0.0284,
+        "saturation": 0.429
+      },
+      {
+        "color": "#e0b050",
+        "share": 0.0194,
+        "saturation": 0.643
+      },
+      {
+        "color": "#e0c070",
+        "share": 0.0217,
+        "saturation": 0.5
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.143Z"
+  },
+  "lecce": {
+    "name": "Lecce",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/lecce.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/ced7bf0df3a140dfa48138311122133b_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Lecce",
+    "score": 191,
+    "colorPrimary": "#002050",
+    "colorSecondary": "#b0a060",
+    "paletteCandidates": [
+      {
+        "color": "#002050",
+        "share": 0.611,
+        "saturation": 1
+      },
+      {
+        "color": "#b0a060",
+        "share": 0.0947,
+        "saturation": 0.455
+      },
+      {
+        "color": "#fff000",
+        "share": 0.0122,
+        "saturation": 1
+      },
+      {
+        "color": "#002040",
+        "share": 0.0118,
+        "saturation": 1
+      },
+      {
+        "color": "#b0a070",
+        "share": 0.0277,
+        "saturation": 0.364
+      },
+      {
+        "color": "#e03030",
+        "share": 0.0137,
+        "saturation": 0.786
+      },
+      {
+        "color": "#102050",
+        "share": 0.0115,
+        "saturation": 0.8
+      },
+      {
+        "color": "#203050",
+        "share": 0.0147,
+        "saturation": 0.6
+      },
+      {
+        "color": "#103050",
+        "share": 0.0085,
+        "saturation": 0.8
+      },
+      {
+        "color": "#102040",
+        "share": 0.0075,
+        "saturation": 0.75
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.163Z"
+  },
+  "mantova-1911": {
+    "name": "Mantova",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/mantova-1911.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/mantova.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Mantova",
+    "score": 191,
+    "colorPrimary": "#ff0010",
+    "colorSecondary": "#00b0f0",
+    "paletteCandidates": [
+      {
+        "color": "#ff0010",
+        "share": 0.4052,
+        "saturation": 1
+      },
+      {
+        "color": "#00b0f0",
+        "share": 0.0802,
+        "saturation": 1
+      },
+      {
+        "color": "#ff0000",
+        "share": 0.0583,
+        "saturation": 1
+      },
+      {
+        "color": "#ffc000",
+        "share": 0.0378,
+        "saturation": 1
+      },
+      {
+        "color": "#ffd000",
+        "share": 0.0162,
+        "saturation": 1
+      },
+      {
+        "color": "#b00000",
+        "share": 0.0152,
+        "saturation": 1
+      },
+      {
+        "color": "#c00000",
+        "share": 0.0151,
+        "saturation": 1
+      },
+      {
+        "color": "#e00000",
+        "share": 0.0068,
+        "saturation": 1
+      },
+      {
+        "color": "#00c0ff",
+        "share": 0.0055,
+        "saturation": 1
+      },
+      {
+        "color": "#ff2030",
+        "share": 0.006,
+        "saturation": 0.875
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.192Z"
+  },
+  "ac-milan": {
+    "name": "Milan",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/ac-milan.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/d0867ddf777c41789ca282b8276002b0_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Milan",
+    "score": 191,
+    "colorPrimary": "#e00030",
+    "colorSecondary": "#102020",
+    "paletteCandidates": [
+      {
+        "color": "#e00030",
+        "share": 0.2928,
+        "saturation": 1
+      },
+      {
+        "color": "#102020",
+        "share": 0.2138,
+        "saturation": 0.5
+      },
+      {
+        "color": "#101020",
+        "share": 0.1458,
+        "saturation": 0.5
+      },
+      {
+        "color": "#f00030",
+        "share": 0.0213,
+        "saturation": 1
+      },
+      {
+        "color": "#301020",
+        "share": 0.0208,
+        "saturation": 0.667
+      },
+      {
+        "color": "#201020",
+        "share": 0.0237,
+        "saturation": 0.5
+      },
+      {
+        "color": "#c00030",
+        "share": 0.0126,
+        "saturation": 1
+      },
+      {
+        "color": "#c01030",
+        "share": 0.0129,
+        "saturation": 0.917
+      },
+      {
+        "color": "#d00030",
+        "share": 0.0083,
+        "saturation": 1
+      },
+      {
+        "color": "#901030",
+        "share": 0.0088,
+        "saturation": 0.889
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.215Z"
+  },
+  "modena": {
+    "name": "Modena",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/modena.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/modena-notesto.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Modena",
+    "score": 191,
+    "colorPrimary": "#fff000",
+    "colorSecondary": "#000050",
+    "paletteCandidates": [
+      {
+        "color": "#fff000",
+        "share": 0.4983,
+        "saturation": 1
+      },
+      {
+        "color": "#000050",
+        "share": 0.2749,
+        "saturation": 1
+      },
+      {
+        "color": "#ffff00",
+        "share": 0.054,
+        "saturation": 1
+      },
+      {
+        "color": "#f0e000",
+        "share": 0.0147,
+        "saturation": 1
+      },
+      {
+        "color": "#101050",
+        "share": 0.0094,
+        "saturation": 0.8
+      },
+      {
+        "color": "#c0b010",
+        "share": 0.0081,
+        "saturation": 0.917
+      },
+      {
+        "color": "#d0c010",
+        "share": 0.0073,
+        "saturation": 0.923
+      },
+      {
+        "color": "#202040",
+        "share": 0.012,
+        "saturation": 0.5
+      },
+      {
+        "color": "#b0a010",
+        "share": 0.007,
+        "saturation": 0.909
+      },
+      {
+        "color": "#e0d000",
+        "share": 0.005,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.243Z"
+  },
+  "monza": {
+    "name": "Monza",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/monza.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/9ba470f39580450fac7654956ba574fa_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Monza",
+    "score": 191,
+    "colorPrimary": "#e00030",
+    "colorSecondary": "#f05070",
+    "paletteCandidates": [
+      {
+        "color": "#e00030",
+        "share": 0.7037,
+        "saturation": 1
+      },
+      {
+        "color": "#e01040",
+        "share": 0.0212,
+        "saturation": 0.929
+      },
+      {
+        "color": "#e01030",
+        "share": 0.019,
+        "saturation": 0.929
+      },
+      {
+        "color": "#e02040",
+        "share": 0.0182,
+        "saturation": 0.857
+      },
+      {
+        "color": "#f05070",
+        "share": 0.022,
+        "saturation": 0.667
+      },
+      {
+        "color": "#f04060",
+        "share": 0.0186,
+        "saturation": 0.733
+      },
+      {
+        "color": "#f090a0",
+        "share": 0.0239,
+        "saturation": 0.4
+      },
+      {
+        "color": "#f03050",
+        "share": 0.0128,
+        "saturation": 0.8
+      },
+      {
+        "color": "#f06080",
+        "share": 0.0132,
+        "saturation": 0.6
+      },
+      {
+        "color": "#f08090",
+        "share": 0.0143,
+        "saturation": 0.467
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.289Z"
   },
   "ssc-napoli": {
     "name": "Napoli",
     "competition": "Serie A",
+    "groupName": null,
     "path": "/assets/club-logos/ssc-napoli.webp",
     "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
     "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/f791dab8f0e4449e9884dd8dbd42dbcc_light.webp",
     "providerTeamId": null,
     "matchedName": "Napoli",
-    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#111111",
     "colorSecondary": "#ffffff",
-    "scrapedAt": "2026-09-11T20:38:30.354Z"
+    "paletteCandidates": [
+      {
+        "color": "#111111",
+        "share": 1,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.312Z"
   },
   "padova": {
     "name": "Padova",
     "competition": "Serie B",
+    "groupName": null,
     "path": "/assets/club-logos/padova.webp",
     "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
     "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/padova-b.png",
     "providerTeamId": null,
     "matchedName": "Logo Padova",
-    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#f02020",
-    "colorSecondary": "#ffc0c0",
-    "scrapedAt": "2026-09-11T20:38:30.457Z"
+    "colorSecondary": "#ffb0b0",
+    "paletteCandidates": [
+      {
+        "color": "#f02020",
+        "share": 0.7464,
+        "saturation": 0.867
+      },
+      {
+        "color": "#f01020",
+        "share": 0.0779,
+        "saturation": 0.933
+      },
+      {
+        "color": "#f02030",
+        "share": 0.0212,
+        "saturation": 0.867
+      },
+      {
+        "color": "#ffb0b0",
+        "share": 0.028,
+        "saturation": 0.31
+      },
+      {
+        "color": "#f04040",
+        "share": 0.0096,
+        "saturation": 0.733
+      },
+      {
+        "color": "#f09090",
+        "share": 0.0151,
+        "saturation": 0.4
+      },
+      {
+        "color": "#f05050",
+        "share": 0.0092,
+        "saturation": 0.667
+      },
+      {
+        "color": "#f01010",
+        "share": 0.0065,
+        "saturation": 0.933
+      },
+      {
+        "color": "#ffd0d0",
+        "share": 0.0172,
+        "saturation": 0.184
+      },
+      {
+        "color": "#f04050",
+        "share": 0.0053,
+        "saturation": 0.733
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.340Z"
   },
   "palermo-fc": {
     "name": "Palermo",
     "competition": "Serie B",
+    "groupName": null,
     "path": "/assets/club-logos/palermo-fc.webp",
     "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
     "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/palermo-nero.png",
     "providerTeamId": null,
     "matchedName": "Logo Palermo",
-    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#000000",
     "colorSecondary": "#ffffff",
-    "scrapedAt": "2026-09-11T20:38:30.514Z"
+    "paletteCandidates": [
+      {
+        "color": "#000000",
+        "share": 1,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.369Z"
+  },
+  "parma-calcio-1913": {
+    "name": "Parma",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/parma-calcio-1913.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/3294993c79b14d918ccdc78da0fb90c5_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Parma",
+    "score": 191,
+    "colorPrimary": "#203080",
+    "colorSecondary": "#ffd010",
+    "paletteCandidates": [
+      {
+        "color": "#203080",
+        "share": 0.3423,
+        "saturation": 0.75
+      },
+      {
+        "color": "#ffd010",
+        "share": 0.1725,
+        "saturation": 0.937
+      },
+      {
+        "color": "#ffd020",
+        "share": 0.0481,
+        "saturation": 0.875
+      },
+      {
+        "color": "#203070",
+        "share": 0.0191,
+        "saturation": 0.714
+      },
+      {
+        "color": "#f0d020",
+        "share": 0.0144,
+        "saturation": 0.867
+      },
+      {
+        "color": "#204080",
+        "share": 0.0152,
+        "saturation": 0.75
+      },
+      {
+        "color": "#304080",
+        "share": 0.0162,
+        "saturation": 0.625
+      },
+      {
+        "color": "#202020",
+        "share": 0.1264,
+        "saturation": 0
+      },
+      {
+        "color": "#ffe010",
+        "share": 0.0096,
+        "saturation": 0.937
+      },
+      {
+        "color": "#303080",
+        "share": 0.0137,
+        "saturation": 0.625
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.390Z"
+  },
+  "pisa": {
+    "name": "Pisa",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/pisa.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/pisa.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Pisa",
+    "score": 191,
+    "colorPrimary": "#0070b0",
+    "colorSecondary": "#e02020",
+    "paletteCandidates": [
+      {
+        "color": "#0070b0",
+        "share": 0.1568,
+        "saturation": 1
+      },
+      {
+        "color": "#202020",
+        "share": 0.4599,
+        "saturation": 0
+      },
+      {
+        "color": "#e02020",
+        "share": 0.0306,
+        "saturation": 0.857
+      },
+      {
+        "color": "#0070c0",
+        "share": 0.022,
+        "saturation": 1
+      },
+      {
+        "color": "#0060b0",
+        "share": 0.0211,
+        "saturation": 1
+      },
+      {
+        "color": "#202010",
+        "share": 0.0179,
+        "saturation": 0.5
+      },
+      {
+        "color": "#203030",
+        "share": 0.0196,
+        "saturation": 0.333
+      },
+      {
+        "color": "#102020",
+        "share": 0.0124,
+        "saturation": 0.5
+      },
+      {
+        "color": "#0060a0",
+        "share": 0.0051,
+        "saturation": 1
+      },
+      {
+        "color": "#0070d0",
+        "share": 0.0049,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.415Z"
+  },
+  "as-roma": {
+    "name": "Roma",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/as-roma.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/8ddc09c1aa73448da2dff953edd95d82_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Roma",
+    "score": 191,
+    "colorPrimary": "#900020",
+    "colorSecondary": "#ffb000",
+    "paletteCandidates": [
+      {
+        "color": "#900020",
+        "share": 0.2829,
+        "saturation": 1
+      },
+      {
+        "color": "#ffb000",
+        "share": 0.2683,
+        "saturation": 1
+      },
+      {
+        "color": "#800020",
+        "share": 0.0096,
+        "saturation": 1
+      },
+      {
+        "color": "#ffc000",
+        "share": 0.008,
+        "saturation": 1
+      },
+      {
+        "color": "#900010",
+        "share": 0.0079,
+        "saturation": 1
+      },
+      {
+        "color": "#600010",
+        "share": 0.0069,
+        "saturation": 1
+      },
+      {
+        "color": "#c0c0c0",
+        "share": 0.0801,
+        "saturation": 0
+      },
+      {
+        "color": "#f0b010",
+        "share": 0.0054,
+        "saturation": 0.933
+      },
+      {
+        "color": "#000000",
+        "share": 0.1157,
+        "saturation": 0
+      },
+      {
+        "color": "#e0b000",
+        "share": 0.0036,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.454Z"
   },
   "uc-sampdoria": {
     "name": "Sampdoria",
     "competition": "Serie B",
+    "groupName": null,
     "path": "/assets/club-logos/uc-sampdoria.webp",
     "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
     "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/sampdoria.png",
     "providerTeamId": null,
     "matchedName": "Logo Sampdoria",
-    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#0050a0",
-    "colorSecondary": "#000000",
-    "scrapedAt": "2026-09-11T20:38:30.571Z"
+    "colorSecondary": "#e03020",
+    "paletteCandidates": [
+      {
+        "color": "#0050a0",
+        "share": 0.2832,
+        "saturation": 1
+      },
+      {
+        "color": "#000000",
+        "share": 0.4496,
+        "saturation": 0
+      },
+      {
+        "color": "#e03020",
+        "share": 0.0204,
+        "saturation": 0.857
+      },
+      {
+        "color": "#005090",
+        "share": 0.0053,
+        "saturation": 1
+      },
+      {
+        "color": "#1060a0",
+        "share": 0.0055,
+        "saturation": 0.9
+      },
+      {
+        "color": "#e02010",
+        "share": 0.0044,
+        "saturation": 0.929
+      },
+      {
+        "color": "#0040a0",
+        "share": 0.0039,
+        "saturation": 1
+      },
+      {
+        "color": "#3070b0",
+        "share": 0.0032,
+        "saturation": 0.727
+      },
+      {
+        "color": "#1050a0",
+        "share": 0.0025,
+        "saturation": 0.9
+      },
+      {
+        "color": "#101010",
+        "share": 0.049,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.484Z"
+  },
+  "us-sassuolo-calcio": {
+    "name": "Sassuolo",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/us-sassuolo-calcio.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/b70390ba4e3c4bc2947a37617d53e8a3_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Sassuolo",
+    "score": 191,
+    "colorPrimary": "#00a040",
+    "colorSecondary": "#004020",
+    "paletteCandidates": [
+      {
+        "color": "#00a040",
+        "share": 0.201,
+        "saturation": 1
+      },
+      {
+        "color": "#000000",
+        "share": 0.4382,
+        "saturation": 0
+      },
+      {
+        "color": "#009040",
+        "share": 0.0119,
+        "saturation": 1
+      },
+      {
+        "color": "#004020",
+        "share": 0.0094,
+        "saturation": 1
+      },
+      {
+        "color": "#b0b0b0",
+        "share": 0.1297,
+        "saturation": 0
+      },
+      {
+        "color": "#001000",
+        "share": 0.0167,
+        "saturation": 1
+      },
+      {
+        "color": "#109040",
+        "share": 0.0087,
+        "saturation": 0.889
+      },
+      {
+        "color": "#008030",
+        "share": 0.006,
+        "saturation": 1
+      },
+      {
+        "color": "#002010",
+        "share": 0.0099,
+        "saturation": 1
+      },
+      {
+        "color": "#10a040",
+        "share": 0.0049,
+        "saturation": 0.9
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.522Z"
+  },
+  "sudtirol": {
+    "name": "Südtirol",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/sudtirol.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/sudtirol.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Südtirol",
+    "score": 191,
+    "colorPrimary": "#c01020",
+    "colorSecondary": "#d05060",
+    "paletteCandidates": [
+      {
+        "color": "#c01020",
+        "share": 0.2584,
+        "saturation": 0.917
+      },
+      {
+        "color": "#c00010",
+        "share": 0.0874,
+        "saturation": 1
+      },
+      {
+        "color": "#b00010",
+        "share": 0.0295,
+        "saturation": 1
+      },
+      {
+        "color": "#c02030",
+        "share": 0.0182,
+        "saturation": 0.833
+      },
+      {
+        "color": "#c00020",
+        "share": 0.0106,
+        "saturation": 1
+      },
+      {
+        "color": "#d04050",
+        "share": 0.0123,
+        "saturation": 0.692
+      },
+      {
+        "color": "#c03040",
+        "share": 0.0111,
+        "saturation": 0.75
+      },
+      {
+        "color": "#000000",
+        "share": 0.1883,
+        "saturation": 0
+      },
+      {
+        "color": "#b00000",
+        "share": 0.0067,
+        "saturation": 1
+      },
+      {
+        "color": "#d05060",
+        "share": 0.0087,
+        "saturation": 0.615
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.553Z"
+  },
+  "torino-fc": {
+    "name": "Torino",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/torino-fc.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/a55dcc2058e94976b572262fc564a74c_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Torino",
+    "score": 191,
+    "colorPrimary": "#903020",
+    "colorSecondary": "#f0b000",
+    "paletteCandidates": [
+      {
+        "color": "#903020",
+        "share": 0.5969,
+        "saturation": 0.778
+      },
+      {
+        "color": "#f0b000",
+        "share": 0.0939,
+        "saturation": 1
+      },
+      {
+        "color": "#902020",
+        "share": 0.017,
+        "saturation": 0.778
+      },
+      {
+        "color": "#c07010",
+        "share": 0.0101,
+        "saturation": 0.917
+      },
+      {
+        "color": "#b06010",
+        "share": 0.01,
+        "saturation": 0.909
+      },
+      {
+        "color": "#903010",
+        "share": 0.0101,
+        "saturation": 0.889
+      },
+      {
+        "color": "#e0a010",
+        "share": 0.0089,
+        "saturation": 0.929
+      },
+      {
+        "color": "#d08010",
+        "share": 0.0088,
+        "saturation": 0.923
+      },
+      {
+        "color": "#802020",
+        "share": 0.0093,
+        "saturation": 0.75
+      },
+      {
+        "color": "#803020",
+        "share": 0.0091,
+        "saturation": 0.75
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.576Z"
+  },
+  "udinese-calcio": {
+    "name": "Udinese",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/udinese-calcio.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/630b1e3631db42498d1b7bc94595c5e0_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Udinese",
+    "score": 191,
+    "colorPrimary": "#a08050",
+    "colorSecondary": "#303020",
+    "paletteCandidates": [
+      {
+        "color": "#a08050",
+        "share": 0.3717,
+        "saturation": 0.5
+      },
+      {
+        "color": "#b0b0b0",
+        "share": 0.4228,
+        "saturation": 0
+      },
+      {
+        "color": "#303020",
+        "share": 0.0569,
+        "saturation": 0.333
+      },
+      {
+        "color": "#a08040",
+        "share": 0.0145,
+        "saturation": 0.6
+      },
+      {
+        "color": "#c0c0c0",
+        "share": 0.0235,
+        "saturation": 0
+      },
+      {
+        "color": "#e0e0e0",
+        "share": 0.0215,
+        "saturation": 0
+      },
+      {
+        "color": "#d0d0d0",
+        "share": 0.0193,
+        "saturation": 0
+      },
+      {
+        "color": "#302020",
+        "share": 0.0028,
+        "saturation": 0.333
+      },
+      {
+        "color": "#f0f0f0",
+        "share": 0.0232,
+        "saturation": 0
+      },
+      {
+        "color": "#303030",
+        "share": 0.0114,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.600Z"
+  },
+  "venezia-fc": {
+    "name": "Venezia",
+    "competition": "Serie A",
+    "groupName": null,
+    "path": "/assets/club-logos/venezia-fc.webp",
+    "source": "Lega Serie A",
+    "sourcePage": "https://www.legaseriea.it/team",
+    "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/a28236708d214df3a2e2e04ceb7e5c54_light.webp",
+    "providerTeamId": null,
+    "matchedName": "Venezia",
+    "score": 191,
+    "colorPrimary": "#ff7000",
+    "colorSecondary": "#007030",
+    "paletteCandidates": [
+      {
+        "color": "#ff7000",
+        "share": 0.1195,
+        "saturation": 1
+      },
+      {
+        "color": "#007030",
+        "share": 0.1194,
+        "saturation": 1
+      },
+      {
+        "color": "#000000",
+        "share": 0.6195,
+        "saturation": 0
+      },
+      {
+        "color": "#ff7010",
+        "share": 0.006,
+        "saturation": 0.937
+      },
+      {
+        "color": "#107040",
+        "share": 0.0056,
+        "saturation": 0.857
+      },
+      {
+        "color": "#ffa060",
+        "share": 0.0057,
+        "saturation": 0.624
+      },
+      {
+        "color": "#60a080",
+        "share": 0.0053,
+        "saturation": 0.4
+      },
+      {
+        "color": "#ff6000",
+        "share": 0.0017,
+        "saturation": 1
+      },
+      {
+        "color": "#006030",
+        "share": 0.0017,
+        "saturation": 1
+      },
+      {
+        "color": "#e0e0e0",
+        "share": 0.0164,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:50.620Z"
   },
   "albinoleffe": {
     "name": "AlbinoLeffe",
     "competition": "Serie C",
+    "groupName": "Girone A",
     "path": "/assets/club-logos/albinoleffe.webp",
-    "source": "Sofascore",
-    "sourceUrl": "https://img.sofascore.com/api/v1/team/2732/image",
-    "providerTeamId": "2732",
-    "matchedName": "AlbinoLeffe",
-    "matchedFrom": "verified-fallback",
-    "score": 999,
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Albinoleffe.png",
+    "matchedName": "US Albinoleffe",
+    "score": 213,
     "colorPrimary": "#c0d0f0",
-    "colorSecondary": "#0070b0",
-    "scrapedAt": "2026-09-11T20:38:30.732Z"
+    "colorSecondary": "#0070c0",
+    "paletteCandidates": [
+      {
+        "color": "#c0d0f0",
+        "share": 0.2182,
+        "saturation": 0.2
+      },
+      {
+        "color": "#b0d0f0",
+        "share": 0.098,
+        "saturation": 0.267
+      },
+      {
+        "color": "#0070c0",
+        "share": 0.0278,
+        "saturation": 1
+      },
+      {
+        "color": "#0090d0",
+        "share": 0.0219,
+        "saturation": 1
+      },
+      {
+        "color": "#f02020",
+        "share": 0.0234,
+        "saturation": 0.867
+      },
+      {
+        "color": "#4090d0",
+        "share": 0.021,
+        "saturation": 0.692
+      },
+      {
+        "color": "#0080c0",
+        "share": 0.0149,
+        "saturation": 1
+      },
+      {
+        "color": "#5090d0",
+        "share": 0.0173,
+        "saturation": 0.615
+      },
+      {
+        "color": "#0080d0",
+        "share": 0.0106,
+        "saturation": 1
+      },
+      {
+        "color": "#0060a0",
+        "share": 0.0096,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:59.563Z"
   },
-  "trento": {
-    "name": "Trento",
+  "arzignano": {
+    "name": "Arzignano",
     "competition": "Serie C",
-    "path": "/assets/club-logos/trento.webp",
-    "source": "Sofascore",
-    "sourceUrl": "https://img.sofascore.com/api/v1/team/258972/image",
-    "providerTeamId": "258972",
-    "matchedName": "Trento",
-    "matchedFrom": "verified-fallback",
-    "score": 999,
-    "colorPrimary": "#ffd030",
-    "colorSecondary": "#202040",
-    "scrapedAt": "2026-09-11T20:38:30.767Z"
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/arzignano.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Arzignano%20Valchiampo.png",
+    "matchedName": "FC Arzignano Valchiampo",
+    "score": 168,
+    "colorPrimary": "#ffe020",
+    "colorSecondary": "#b0e0f0",
+    "paletteCandidates": [
+      {
+        "color": "#ffe020",
+        "share": 0.2918,
+        "saturation": 0.875
+      },
+      {
+        "color": "#b0e0f0",
+        "share": 0.2813,
+        "saturation": 0.267
+      },
+      {
+        "color": "#fff020",
+        "share": 0.0284,
+        "saturation": 0.875
+      },
+      {
+        "color": "#201010",
+        "share": 0.0401,
+        "saturation": 0.5
+      },
+      {
+        "color": "#ffe010",
+        "share": 0.0148,
+        "saturation": 0.937
+      },
+      {
+        "color": "#f0e020",
+        "share": 0.0138,
+        "saturation": 0.867
+      },
+      {
+        "color": "#101020",
+        "share": 0.0203,
+        "saturation": 0.5
+      },
+      {
+        "color": "#b0e0ff",
+        "share": 0.0251,
+        "saturation": 0.31
+      },
+      {
+        "color": "#e0d020",
+        "share": 0.0097,
+        "saturation": 0.857
+      },
+      {
+        "color": "#202010",
+        "share": 0.0151,
+        "saturation": 0.5
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:59.607Z"
+  },
+  "atalanta-bc": {
+    "name": "Atalanta",
+    "competition": "Serie A",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/atalanta-bc.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/logo-atalanta-RGB.png",
+    "matchedName": "Atalanta BC",
+    "score": 221,
+    "colorPrimary": "#1070b0",
+    "colorSecondary": "#5090c0",
+    "paletteCandidates": [
+      {
+        "color": "#1070b0",
+        "share": 0.3311,
+        "saturation": 0.909
+      },
+      {
+        "color": "#0060b0",
+        "share": 0.0397,
+        "saturation": 1
+      },
+      {
+        "color": "#1060b0",
+        "share": 0.0162,
+        "saturation": 0.909
+      },
+      {
+        "color": "#101010",
+        "share": 0.3159,
+        "saturation": 0
+      },
+      {
+        "color": "#202020",
+        "share": 0.0705,
+        "saturation": 0
+      },
+      {
+        "color": "#2070b0",
+        "share": 0.0057,
+        "saturation": 0.818
+      },
+      {
+        "color": "#4080c0",
+        "share": 0.0047,
+        "saturation": 0.667
+      },
+      {
+        "color": "#5090c0",
+        "share": 0.0042,
+        "saturation": 0.583
+      },
+      {
+        "color": "#000000",
+        "share": 0.0576,
+        "saturation": 0
+      },
+      {
+        "color": "#70a0d0",
+        "share": 0.0039,
+        "saturation": 0.462
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:59.820Z"
+  },
+  "audace-cerignola": {
+    "name": "Audace Cerignola",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/audace-cerignola.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Audace%20Cerignola.png",
+    "matchedName": "Audace Cerignola",
+    "score": 213,
+    "colorPrimary": "#005090",
+    "colorSecondary": "#ffd010",
+    "paletteCandidates": [
+      {
+        "color": "#005090",
+        "share": 0.2104,
+        "saturation": 1
+      },
+      {
+        "color": "#ffd010",
+        "share": 0.1168,
+        "saturation": 0.937
+      },
+      {
+        "color": "#004080",
+        "share": 0.0814,
+        "saturation": 1
+      },
+      {
+        "color": "#1060a0",
+        "share": 0.0626,
+        "saturation": 0.9
+      },
+      {
+        "color": "#ffe010",
+        "share": 0.0577,
+        "saturation": 0.937
+      },
+      {
+        "color": "#105090",
+        "share": 0.0456,
+        "saturation": 0.889
+      },
+      {
+        "color": "#004090",
+        "share": 0.0347,
+        "saturation": 1
+      },
+      {
+        "color": "#1070b0",
+        "share": 0.035,
+        "saturation": 0.909
+      },
+      {
+        "color": "#1060b0",
+        "share": 0.0208,
+        "saturation": 0.909
+      },
+      {
+        "color": "#1050a0",
+        "share": 0.0114,
+        "saturation": 0.9
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:59.861Z"
+  },
+  "ssc-bari": {
+    "name": "Bari",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/ssc-bari.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/Bari.png",
+    "matchedName": "SSC Bari",
+    "score": 213,
+    "colorPrimary": "#e00010",
+    "colorSecondary": "#e04050",
+    "paletteCandidates": [
+      {
+        "color": "#e00010",
+        "share": 0.4438,
+        "saturation": 1
+      },
+      {
+        "color": "#d00000",
+        "share": 0.0304,
+        "saturation": 1
+      },
+      {
+        "color": "#e00000",
+        "share": 0.0189,
+        "saturation": 1
+      },
+      {
+        "color": "#e03040",
+        "share": 0.0197,
+        "saturation": 0.786
+      },
+      {
+        "color": "#e01020",
+        "share": 0.0139,
+        "saturation": 0.929
+      },
+      {
+        "color": "#e02030",
+        "share": 0.0109,
+        "saturation": 0.857
+      },
+      {
+        "color": "#101010",
+        "share": 0.1379,
+        "saturation": 0
+      },
+      {
+        "color": "#e03030",
+        "share": 0.0065,
+        "saturation": 0.786
+      },
+      {
+        "color": "#e04050",
+        "share": 0.0062,
+        "saturation": 0.714
+      },
+      {
+        "color": "#e01010",
+        "share": 0.0047,
+        "saturation": 0.929
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:59.890Z"
+  },
+  "barletta": {
+    "name": "Barletta",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/barletta.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi%202627/ssbarletta.png",
+    "matchedName": "SS Barletta",
+    "score": 213,
+    "colorPrimary": "#e02010",
+    "colorSecondary": "#e05050",
+    "paletteCandidates": [
+      {
+        "color": "#e02010",
+        "share": 0.1822,
+        "saturation": 0.929
+      },
+      {
+        "color": "#e02020",
+        "share": 0.0642,
+        "saturation": 0.857
+      },
+      {
+        "color": "#e01010",
+        "share": 0.0349,
+        "saturation": 0.929
+      },
+      {
+        "color": "#e01000",
+        "share": 0.0143,
+        "saturation": 1
+      },
+      {
+        "color": "#e03020",
+        "share": 0.0128,
+        "saturation": 0.857
+      },
+      {
+        "color": "#e03030",
+        "share": 0.0107,
+        "saturation": 0.786
+      },
+      {
+        "color": "#b0b0b0",
+        "share": 0.1167,
+        "saturation": 0
+      },
+      {
+        "color": "#e05040",
+        "share": 0.0103,
+        "saturation": 0.714
+      },
+      {
+        "color": "#e05050",
+        "share": 0.0093,
+        "saturation": 0.643
+      },
+      {
+        "color": "#c0c0c0",
+        "share": 0.0734,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:59.940Z"
+  },
+  "brescia-calcio": {
+    "name": "Brescia",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/brescia-calcio.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/unionbrescia.png",
+    "matchedName": "Union Brescia",
+    "score": 168,
+    "colorPrimary": "#0030a0",
+    "colorSecondary": "#ffffff",
+    "paletteCandidates": [
+      {
+        "color": "#0030a0",
+        "share": 0.9526,
+        "saturation": 1
+      },
+      {
+        "color": "#0030b0",
+        "share": 0.0467,
+        "saturation": 1
+      },
+      {
+        "color": "#0040b0",
+        "share": 0.0006,
+        "saturation": 1
+      },
+      {
+        "color": "#0040c0",
+        "share": 0.0001,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:02:59.978Z"
+  },
+  "campobasso": {
+    "name": "Campobasso",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/campobasso.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/campobasso-trasp-logo.png",
+    "matchedName": "Campobasso FC",
+    "score": 221,
+    "colorPrimary": "#202050",
+    "colorSecondary": "#c02020",
+    "paletteCandidates": [
+      {
+        "color": "#202050",
+        "share": 0.4217,
+        "saturation": 0.6
+      },
+      {
+        "color": "#c02020",
+        "share": 0.3079,
+        "saturation": 0.833
+      },
+      {
+        "color": "#c02030",
+        "share": 0.0372,
+        "saturation": 0.833
+      },
+      {
+        "color": "#101050",
+        "share": 0.0162,
+        "saturation": 0.8
+      },
+      {
+        "color": "#201050",
+        "share": 0.0134,
+        "saturation": 0.8
+      },
+      {
+        "color": "#b01020",
+        "share": 0.0093,
+        "saturation": 0.909
+      },
+      {
+        "color": "#101040",
+        "share": 0.0111,
+        "saturation": 0.75
+      },
+      {
+        "color": "#b02030",
+        "share": 0.0074,
+        "saturation": 0.818
+      },
+      {
+        "color": "#302050",
+        "share": 0.0093,
+        "saturation": 0.6
+      },
+      {
+        "color": "#c01020",
+        "share": 0.0062,
+        "saturation": 0.917
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.216Z"
+  },
+  "carpi": {
+    "name": "Carpi",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/carpi.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Carpi.png",
+    "matchedName": "AC Carpi",
+    "score": 213,
+    "colorPrimary": "#d01030",
+    "colorSecondary": "#001010",
+    "paletteCandidates": [
+      {
+        "color": "#d01030",
+        "share": 0.1919,
+        "saturation": 0.923
+      },
+      {
+        "color": "#d02030",
+        "share": 0.0639,
+        "saturation": 0.846
+      },
+      {
+        "color": "#d00020",
+        "share": 0.0442,
+        "saturation": 1
+      },
+      {
+        "color": "#d01020",
+        "share": 0.0414,
+        "saturation": 0.923
+      },
+      {
+        "color": "#d02040",
+        "share": 0.0112,
+        "saturation": 0.846
+      },
+      {
+        "color": "#202020",
+        "share": 0.1217,
+        "saturation": 0
+      },
+      {
+        "color": "#d03040",
+        "share": 0.0109,
+        "saturation": 0.769
+      },
+      {
+        "color": "#001010",
+        "share": 0.0151,
+        "saturation": 1
+      },
+      {
+        "color": "#d04050",
+        "share": 0.0111,
+        "saturation": 0.692
+      },
+      {
+        "color": "#e01030",
+        "share": 0.0075,
+        "saturation": 0.929
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.418Z"
+  },
+  "casarano": {
+    "name": "Casarano",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/casarano.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/casarano.png",
+    "matchedName": "S.S.D. Casarano Calcio",
+    "score": 188,
+    "colorPrimary": "#b01030",
+    "colorSecondary": "#105090",
+    "paletteCandidates": [
+      {
+        "color": "#b01030",
+        "share": 0.3374,
+        "saturation": 0.909
+      },
+      {
+        "color": "#105090",
+        "share": 0.2733,
+        "saturation": 0.889
+      },
+      {
+        "color": "#104090",
+        "share": 0.0264,
+        "saturation": 0.889
+      },
+      {
+        "color": "#b02030",
+        "share": 0.019,
+        "saturation": 0.818
+      },
+      {
+        "color": "#004080",
+        "share": 0.0133,
+        "saturation": 1
+      },
+      {
+        "color": "#902040",
+        "share": 0.0144,
+        "saturation": 0.778
+      },
+      {
+        "color": "#802040",
+        "share": 0.0144,
+        "saturation": 0.75
+      },
+      {
+        "color": "#d0b080",
+        "share": 0.0251,
+        "saturation": 0.385
+      },
+      {
+        "color": "#d0b070",
+        "share": 0.0197,
+        "saturation": 0.462
+      },
+      {
+        "color": "#a01030",
+        "share": 0.0108,
+        "saturation": 0.9
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.451Z"
+  },
+  "casertana": {
+    "name": "Casertana",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/casertana.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Casertana.png",
+    "matchedName": "Casertana FC",
+    "score": 213,
+    "colorPrimary": "#102060",
+    "colorSecondary": "#f02020",
+    "paletteCandidates": [
+      {
+        "color": "#102060",
+        "share": 0.1088,
+        "saturation": 0.833
+      },
+      {
+        "color": "#f02020",
+        "share": 0.1029,
+        "saturation": 0.867
+      },
+      {
+        "color": "#e0a020",
+        "share": 0.0345,
+        "saturation": 0.857
+      },
+      {
+        "color": "#e0b020",
+        "share": 0.0308,
+        "saturation": 0.857
+      },
+      {
+        "color": "#d0a020",
+        "share": 0.0291,
+        "saturation": 0.846
+      },
+      {
+        "color": "#001060",
+        "share": 0.0239,
+        "saturation": 1
+      },
+      {
+        "color": "#c09020",
+        "share": 0.0222,
+        "saturation": 0.833
+      },
+      {
+        "color": "#b08020",
+        "share": 0.0202,
+        "saturation": 0.818
+      },
+      {
+        "color": "#a07020",
+        "share": 0.0171,
+        "saturation": 0.8
+      },
+      {
+        "color": "#907020",
+        "share": 0.0167,
+        "saturation": 0.778
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.489Z"
   },
   "catania": {
     "name": "Catania",
     "competition": "Serie C",
+    "groupName": "Girone C",
     "path": "/assets/club-logos/catania.webp",
-    "source": "Sofascore",
-    "sourceUrl": "https://img.sofascore.com/api/v1/team/2725/image",
-    "providerTeamId": "2725",
-    "matchedName": "Catania",
-    "matchedFrom": "verified-fallback",
-    "score": 999,
-    "colorPrimary": "#00a0e0",
-    "colorSecondary": "#e00010",
-    "scrapedAt": "2026-09-11T20:38:30.811Z"
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/CATANIA.png",
+    "matchedName": "Calcio Catania",
+    "score": 213,
+    "colorPrimary": "#00b0f0",
+    "colorSecondary": "#f02020",
+    "paletteCandidates": [
+      {
+        "color": "#00b0f0",
+        "share": 0.2033,
+        "saturation": 1
+      },
+      {
+        "color": "#f02020",
+        "share": 0.1953,
+        "saturation": 0.867
+      },
+      {
+        "color": "#202020",
+        "share": 0.3255,
+        "saturation": 0
+      },
+      {
+        "color": "#f02030",
+        "share": 0.0227,
+        "saturation": 0.867
+      },
+      {
+        "color": "#00c0ff",
+        "share": 0.0129,
+        "saturation": 1
+      },
+      {
+        "color": "#ff1010",
+        "share": 0.0121,
+        "saturation": 0.937
+      },
+      {
+        "color": "#f01010",
+        "share": 0.0109,
+        "saturation": 0.933
+      },
+      {
+        "color": "#ff1020",
+        "share": 0.0089,
+        "saturation": 0.937
+      },
+      {
+        "color": "#f01020",
+        "share": 0.0069,
+        "saturation": 0.933
+      },
+      {
+        "color": "#c04050",
+        "share": 0.0093,
+        "saturation": 0.667
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.523Z"
+  },
+  "cavese": {
+    "name": "Cavese",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/cavese.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/cavese.png",
+    "matchedName": "Cavese 1919",
+    "score": 188,
+    "colorPrimary": "#002060",
+    "colorSecondary": "#a08030",
+    "paletteCandidates": [
+      {
+        "color": "#002060",
+        "share": 0.5561,
+        "saturation": 1
+      },
+      {
+        "color": "#002050",
+        "share": 0.058,
+        "saturation": 1
+      },
+      {
+        "color": "#001050",
+        "share": 0.0465,
+        "saturation": 1
+      },
+      {
+        "color": "#a08030",
+        "share": 0.0234,
+        "saturation": 0.7
+      },
+      {
+        "color": "#b09040",
+        "share": 0.02,
+        "saturation": 0.636
+      },
+      {
+        "color": "#003060",
+        "share": 0.0114,
+        "saturation": 1
+      },
+      {
+        "color": "#103060",
+        "share": 0.0118,
+        "saturation": 0.833
+      },
+      {
+        "color": "#203060",
+        "share": 0.0119,
+        "saturation": 0.667
+      },
+      {
+        "color": "#a08040",
+        "share": 0.0129,
+        "saturation": 0.6
+      },
+      {
+        "color": "#b09050",
+        "share": 0.0108,
+        "saturation": 0.545
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.558Z"
+  },
+  "cittadella": {
+    "name": "Cittadella",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/cittadella.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/cittadella.png",
+    "matchedName": "AS Cittadella",
+    "score": 188,
+    "colorPrimary": "#a02030",
+    "colorSecondary": "#ffd000",
+    "paletteCandidates": [
+      {
+        "color": "#a02030",
+        "share": 0.618,
+        "saturation": 0.8
+      },
+      {
+        "color": "#a01030",
+        "share": 0.0832,
+        "saturation": 0.9
+      },
+      {
+        "color": "#ffd000",
+        "share": 0.0293,
+        "saturation": 1
+      },
+      {
+        "color": "#901020",
+        "share": 0.0325,
+        "saturation": 0.889
+      },
+      {
+        "color": "#901030",
+        "share": 0.0272,
+        "saturation": 0.889
+      },
+      {
+        "color": "#ffe000",
+        "share": 0.0228,
+        "saturation": 1
+      },
+      {
+        "color": "#a01020",
+        "share": 0.0109,
+        "saturation": 0.9
+      },
+      {
+        "color": "#f0c000",
+        "share": 0.0097,
+        "saturation": 1
+      },
+      {
+        "color": "#900020",
+        "share": 0.0085,
+        "saturation": 1
+      },
+      {
+        "color": "#a03040",
+        "share": 0.0108,
+        "saturation": 0.7
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.755Z"
+  },
+  "cosenza": {
+    "name": "Cosenza",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/cosenza.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/cosenza.png",
+    "matchedName": "Cosenza Calcio",
+    "score": 213,
+    "colorPrimary": "#104060",
+    "colorSecondary": "#d03030",
+    "paletteCandidates": [
+      {
+        "color": "#104060",
+        "share": 0.2898,
+        "saturation": 0.833
+      },
+      {
+        "color": "#d03030",
+        "share": 0.1181,
+        "saturation": 0.769
+      },
+      {
+        "color": "#004060",
+        "share": 0.0519,
+        "saturation": 1
+      },
+      {
+        "color": "#807040",
+        "share": 0.0804,
+        "saturation": 0.5
+      },
+      {
+        "color": "#e03030",
+        "share": 0.0433,
+        "saturation": 0.786
+      },
+      {
+        "color": "#003050",
+        "share": 0.0182,
+        "saturation": 1
+      },
+      {
+        "color": "#c04020",
+        "share": 0.016,
+        "saturation": 0.833
+      },
+      {
+        "color": "#206030",
+        "share": 0.019,
+        "saturation": 0.667
+      },
+      {
+        "color": "#808050",
+        "share": 0.0204,
+        "saturation": 0.375
+      },
+      {
+        "color": "#903040",
+        "share": 0.0115,
+        "saturation": 0.667
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.790Z"
+  },
+  "crotone": {
+    "name": "Crotone",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/crotone.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Crotone.png",
+    "matchedName": "FC Crotone",
+    "score": 213,
+    "colorPrimary": "#003060",
+    "colorSecondary": "#e02020",
+    "paletteCandidates": [
+      {
+        "color": "#003060",
+        "share": 0.3926,
+        "saturation": 1
+      },
+      {
+        "color": "#e02020",
+        "share": 0.1015,
+        "saturation": 0.857
+      },
+      {
+        "color": "#002050",
+        "share": 0.0826,
+        "saturation": 1
+      },
+      {
+        "color": "#103060",
+        "share": 0.0228,
+        "saturation": 0.833
+      },
+      {
+        "color": "#f02020",
+        "share": 0.0212,
+        "saturation": 0.867
+      },
+      {
+        "color": "#002060",
+        "share": 0.0175,
+        "saturation": 1
+      },
+      {
+        "color": "#e01010",
+        "share": 0.0099,
+        "saturation": 0.929
+      },
+      {
+        "color": "#001050",
+        "share": 0.0072,
+        "saturation": 1
+      },
+      {
+        "color": "#e02030",
+        "share": 0.0079,
+        "saturation": 0.857
+      },
+      {
+        "color": "#204070",
+        "share": 0.0093,
+        "saturation": 0.714
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.837Z"
+  },
+  "dolomiti-bellunesi": {
+    "name": "Dolomiti Bellunesi",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/dolomiti-bellunesi.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/dolomitibellunesi.png",
+    "matchedName": "Dolomiti Bellunesi",
+    "score": 213,
+    "colorPrimary": "#307050",
+    "colorSecondary": "#ffb0c0",
+    "paletteCandidates": [
+      {
+        "color": "#307050",
+        "share": 0.2709,
+        "saturation": 0.571
+      },
+      {
+        "color": "#ffb0c0",
+        "share": 0.2586,
+        "saturation": 0.31
+      },
+      {
+        "color": "#308050",
+        "share": 0.0723,
+        "saturation": 0.625
+      },
+      {
+        "color": "#202020",
+        "share": 0.3912,
+        "saturation": 0
+      },
+      {
+        "color": "#ffc0c0",
+        "share": 0.0066,
+        "saturation": 0.247
+      },
+      {
+        "color": "#ffc0d0",
+        "share": 0.0002,
+        "saturation": 0.247
+      },
+      {
+        "color": "#ffb0b0",
+        "share": 0.0001,
+        "saturation": 0.31
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.880Z"
   },
   "foggia": {
     "name": "Foggia",
     "competition": "Serie C",
+    "groupName": "Girone C",
     "path": "/assets/club-logos/foggia.webp",
-    "source": "Sofascore",
-    "sourceUrl": "https://img.sofascore.com/api/v1/team/2803/image",
-    "providerTeamId": "2803",
-    "matchedName": "Foggia",
-    "matchedFrom": "verified-fallback",
-    "score": 999,
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/girone-c/foggia-calcio.png",
+    "matchedName": "Calcio Foggia",
+    "score": 213,
     "colorPrimary": "#d02030",
-    "colorSecondary": "#202020",
-    "scrapedAt": "2026-09-11T20:38:30.847Z"
+    "colorSecondary": "#102020",
+    "paletteCandidates": [
+      {
+        "color": "#d02030",
+        "share": 0.2878,
+        "saturation": 0.846
+      },
+      {
+        "color": "#d02020",
+        "share": 0.0394,
+        "saturation": 0.846
+      },
+      {
+        "color": "#102020",
+        "share": 0.032,
+        "saturation": 0.5
+      },
+      {
+        "color": "#202020",
+        "share": 0.1813,
+        "saturation": 0
+      },
+      {
+        "color": "#e02030",
+        "share": 0.012,
+        "saturation": 0.857
+      },
+      {
+        "color": "#d03030",
+        "share": 0.0087,
+        "saturation": 0.769
+      },
+      {
+        "color": "#d0d0d0",
+        "share": 0.0938,
+        "saturation": 0
+      },
+      {
+        "color": "#101020",
+        "share": 0.0098,
+        "saturation": 0.5
+      },
+      {
+        "color": "#d04040",
+        "share": 0.0071,
+        "saturation": 0.692
+      },
+      {
+        "color": "#d01020",
+        "share": 0.0048,
+        "saturation": 0.923
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.916Z"
+  },
+  "folgore-caratese": {
+    "name": "Folgore Caratese",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/folgore-caratese.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/folgorecaratese-trasp-logo.png",
+    "matchedName": "US Folgore Caratese",
+    "score": 221,
+    "colorPrimary": "#0070ff",
+    "colorSecondary": "#e0c040",
+    "paletteCandidates": [
+      {
+        "color": "#0070ff",
+        "share": 0.2396,
+        "saturation": 1
+      },
+      {
+        "color": "#0060ff",
+        "share": 0.0728,
+        "saturation": 1
+      },
+      {
+        "color": "#1070f0",
+        "share": 0.0375,
+        "saturation": 0.933
+      },
+      {
+        "color": "#0070f0",
+        "share": 0.0338,
+        "saturation": 1
+      },
+      {
+        "color": "#0060f0",
+        "share": 0.0261,
+        "saturation": 1
+      },
+      {
+        "color": "#1070ff",
+        "share": 0.0274,
+        "saturation": 0.937
+      },
+      {
+        "color": "#e0c040",
+        "share": 0.0186,
+        "saturation": 0.714
+      },
+      {
+        "color": "#d0c040",
+        "share": 0.0182,
+        "saturation": 0.692
+      },
+      {
+        "color": "#f0d030",
+        "share": 0.0155,
+        "saturation": 0.8
+      },
+      {
+        "color": "#e0c030",
+        "share": 0.0153,
+        "saturation": 0.786
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.961Z"
+  },
+  "forli": {
+    "name": "Forlì",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/forli.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/FORLI'.png",
+    "matchedName": "Forli FC",
+    "score": 213,
+    "colorPrimary": "#e00000",
+    "colorSecondary": "#d04040",
+    "paletteCandidates": [
+      {
+        "color": "#e00000",
+        "share": 0.2217,
+        "saturation": 1
+      },
+      {
+        "color": "#d00000",
+        "share": 0.1493,
+        "saturation": 1
+      },
+      {
+        "color": "#c00000",
+        "share": 0.0911,
+        "saturation": 1
+      },
+      {
+        "color": "#b00000",
+        "share": 0.0812,
+        "saturation": 1
+      },
+      {
+        "color": "#d01010",
+        "share": 0.019,
+        "saturation": 0.923
+      },
+      {
+        "color": "#d02020",
+        "share": 0.0142,
+        "saturation": 0.846
+      },
+      {
+        "color": "#d03030",
+        "share": 0.0144,
+        "saturation": 0.769
+      },
+      {
+        "color": "#d04040",
+        "share": 0.0128,
+        "saturation": 0.692
+      },
+      {
+        "color": "#d05050",
+        "share": 0.0115,
+        "saturation": 0.615
+      },
+      {
+        "color": "#a00000",
+        "share": 0.007,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:00.997Z"
+  },
+  "giana-erminio": {
+    "name": "Giana Erminio",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/giana-erminio.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Giana%20Erminio.png",
+    "matchedName": "AS Giana Erminio",
+    "score": 188,
+    "colorPrimary": "#10b0d0",
+    "colorSecondary": "#201010",
+    "paletteCandidates": [
+      {
+        "color": "#10b0d0",
+        "share": 0.0903,
+        "saturation": 0.923
+      },
+      {
+        "color": "#202020",
+        "share": 0.5824,
+        "saturation": 0
+      },
+      {
+        "color": "#10b0e0",
+        "share": 0.0335,
+        "saturation": 0.929
+      },
+      {
+        "color": "#00b0e0",
+        "share": 0.0094,
+        "saturation": 1
+      },
+      {
+        "color": "#201010",
+        "share": 0.0164,
+        "saturation": 0.5
+      },
+      {
+        "color": "#00a0d0",
+        "share": 0.0067,
+        "saturation": 1
+      },
+      {
+        "color": "#20b0e0",
+        "share": 0.0073,
+        "saturation": 0.857
+      },
+      {
+        "color": "#20b0d0",
+        "share": 0.0057,
+        "saturation": 0.846
+      },
+      {
+        "color": "#1090b0",
+        "share": 0.0041,
+        "saturation": 0.909
+      },
+      {
+        "color": "#302020",
+        "share": 0.0093,
+        "saturation": 0.333
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.192Z"
+  },
+  "giugliano": {
+    "name": "Giugliano",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/giugliano.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Giugliano.png",
+    "matchedName": "Giugliano Calcio 1928",
+    "score": 188,
+    "colorPrimary": "#003070",
+    "colorSecondary": "#f0c020",
+    "paletteCandidates": [
+      {
+        "color": "#003070",
+        "share": 0.2721,
+        "saturation": 1
+      },
+      {
+        "color": "#f0c020",
+        "share": 0.1957,
+        "saturation": 0.867
+      },
+      {
+        "color": "#002070",
+        "share": 0.066,
+        "saturation": 1
+      },
+      {
+        "color": "#ffd010",
+        "share": 0.0583,
+        "saturation": 0.937
+      },
+      {
+        "color": "#002060",
+        "share": 0.0312,
+        "saturation": 1
+      },
+      {
+        "color": "#ffc010",
+        "share": 0.0262,
+        "saturation": 0.937
+      },
+      {
+        "color": "#103070",
+        "share": 0.0259,
+        "saturation": 0.857
+      },
+      {
+        "color": "#e0b020",
+        "share": 0.0148,
+        "saturation": 0.857
+      },
+      {
+        "color": "#d0b020",
+        "share": 0.0136,
+        "saturation": 0.846
+      },
+      {
+        "color": "#c0a030",
+        "share": 0.0144,
+        "saturation": 0.75
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.230Z"
+  },
+  "grosseto": {
+    "name": "Grosseto",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/grosseto.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/Grosseto.png",
+    "matchedName": "Grosseto",
+    "score": 213,
+    "colorPrimary": "#f02020",
+    "colorSecondary": "#e0b070",
+    "paletteCandidates": [
+      {
+        "color": "#f02020",
+        "share": 0.4173,
+        "saturation": 0.867
+      },
+      {
+        "color": "#f01020",
+        "share": 0.0332,
+        "saturation": 0.933
+      },
+      {
+        "color": "#e0b070",
+        "share": 0.0419,
+        "saturation": 0.5
+      },
+      {
+        "color": "#d0b070",
+        "share": 0.0422,
+        "saturation": 0.462
+      },
+      {
+        "color": "#e0c070",
+        "share": 0.0291,
+        "saturation": 0.5
+      },
+      {
+        "color": "#b08030",
+        "share": 0.0123,
+        "saturation": 0.727
+      },
+      {
+        "color": "#ff2020",
+        "share": 0.0077,
+        "saturation": 0.875
+      },
+      {
+        "color": "#e01020",
+        "share": 0.0065,
+        "saturation": 0.929
+      },
+      {
+        "color": "#f02030",
+        "share": 0.0061,
+        "saturation": 0.867
+      },
+      {
+        "color": "#d01020",
+        "share": 0.0053,
+        "saturation": 0.923
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.262Z"
+  },
+  "gubbio": {
+    "name": "Gubbio",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/gubbio.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/gubbio2.png",
+    "matchedName": "AS Gubbio",
+    "score": 188,
+    "colorPrimary": "#f0d010",
+    "colorSecondary": "#b02030",
+    "paletteCandidates": [
+      {
+        "color": "#f0d010",
+        "share": 0.2127,
+        "saturation": 0.933
+      },
+      {
+        "color": "#b02030",
+        "share": 0.0917,
+        "saturation": 0.818
+      },
+      {
+        "color": "#2080c0",
+        "share": 0.0449,
+        "saturation": 0.833
+      },
+      {
+        "color": "#fff0a0",
+        "share": 0.0761,
+        "saturation": 0.373
+      },
+      {
+        "color": "#ffd010",
+        "share": 0.031,
+        "saturation": 0.937
+      },
+      {
+        "color": "#ffe010",
+        "share": 0.0264,
+        "saturation": 0.937
+      },
+      {
+        "color": "#2090d0",
+        "share": 0.0269,
+        "saturation": 0.846
+      },
+      {
+        "color": "#f0c010",
+        "share": 0.0202,
+        "saturation": 0.933
+      },
+      {
+        "color": "#a02030",
+        "share": 0.0204,
+        "saturation": 0.8
+      },
+      {
+        "color": "#c02030",
+        "share": 0.0181,
+        "saturation": 0.833
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.303Z"
+  },
+  "guidonia": {
+    "name": "Guidonia",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/guidonia.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/guidonia-m.png",
+    "matchedName": "Guidonia Montecelio 1937 FC",
+    "score": 168,
+    "colorPrimary": "#c01020",
+    "colorSecondary": "#003070",
+    "paletteCandidates": [
+      {
+        "color": "#c01020",
+        "share": 0.2904,
+        "saturation": 0.917
+      },
+      {
+        "color": "#003070",
+        "share": 0.2508,
+        "saturation": 1
+      },
+      {
+        "color": "#fff000",
+        "share": 0.0244,
+        "saturation": 1
+      },
+      {
+        "color": "#002070",
+        "share": 0.023,
+        "saturation": 1
+      },
+      {
+        "color": "#002060",
+        "share": 0.0222,
+        "saturation": 1
+      },
+      {
+        "color": "#c00020",
+        "share": 0.0207,
+        "saturation": 1
+      },
+      {
+        "color": "#ffff00",
+        "share": 0.0205,
+        "saturation": 1
+      },
+      {
+        "color": "#b00020",
+        "share": 0.0189,
+        "saturation": 1
+      },
+      {
+        "color": "#b00010",
+        "share": 0.0113,
+        "saturation": 1
+      },
+      {
+        "color": "#c00010",
+        "share": 0.0113,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.504Z"
+  },
+  "latina": {
+    "name": "Latina",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/latina.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/cropped-images/LATINA-NEW-600.png",
+    "matchedName": "Latina Calcio",
+    "score": 213,
+    "colorPrimary": "#2060a0",
+    "colorSecondary": "#d0a060",
+    "paletteCandidates": [
+      {
+        "color": "#2060a0",
+        "share": 0.2033,
+        "saturation": 0.8
+      },
+      {
+        "color": "#2050a0",
+        "share": 0.0388,
+        "saturation": 0.8
+      },
+      {
+        "color": "#3060b0",
+        "share": 0.0335,
+        "saturation": 0.727
+      },
+      {
+        "color": "#202020",
+        "share": 0.2263,
+        "saturation": 0
+      },
+      {
+        "color": "#d0a060",
+        "share": 0.0228,
+        "saturation": 0.538
+      },
+      {
+        "color": "#2060b0",
+        "share": 0.0143,
+        "saturation": 0.818
+      },
+      {
+        "color": "#e0b060",
+        "share": 0.015,
+        "saturation": 0.571
+      },
+      {
+        "color": "#202010",
+        "share": 0.0163,
+        "saturation": 0.5
+      },
+      {
+        "color": "#3060a0",
+        "share": 0.0105,
+        "saturation": 0.7
+      },
+      {
+        "color": "#203050",
+        "share": 0.0112,
+        "saturation": 0.6
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.551Z"
+  },
+  "lecco": {
+    "name": "Lecco",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/lecco.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/lecco.png",
+    "matchedName": "Calcio Lecco 1912",
+    "score": 188,
+    "colorPrimary": "#0090f0",
+    "colorSecondary": "#203080",
+    "paletteCandidates": [
+      {
+        "color": "#0090f0",
+        "share": 0.0815,
+        "saturation": 1
+      },
+      {
+        "color": "#203080",
+        "share": 0.0784,
+        "saturation": 0.75
+      },
+      {
+        "color": "#204080",
+        "share": 0.0391,
+        "saturation": 0.75
+      },
+      {
+        "color": "#203090",
+        "share": 0.0333,
+        "saturation": 0.778
+      },
+      {
+        "color": "#0080f0",
+        "share": 0.023,
+        "saturation": 1
+      },
+      {
+        "color": "#1090f0",
+        "share": 0.0209,
+        "saturation": 0.933
+      },
+      {
+        "color": "#204090",
+        "share": 0.0191,
+        "saturation": 0.778
+      },
+      {
+        "color": "#0080e0",
+        "share": 0.0146,
+        "saturation": 1
+      },
+      {
+        "color": "#0090e0",
+        "share": 0.013,
+        "saturation": 1
+      },
+      {
+        "color": "#2090e0",
+        "share": 0.0115,
+        "saturation": 0.857
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.587Z"
+  },
+  "livorno": {
+    "name": "Livorno",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/livorno.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/livorno.png",
+    "matchedName": "US Livorno 1915",
+    "score": 188,
+    "colorPrimary": "#d02020",
+    "colorSecondary": "#d0a020",
+    "paletteCandidates": [
+      {
+        "color": "#d02020",
+        "share": 0.4041,
+        "saturation": 0.846
+      },
+      {
+        "color": "#d0a020",
+        "share": 0.1466,
+        "saturation": 0.846
+      },
+      {
+        "color": "#c09020",
+        "share": 0.0648,
+        "saturation": 0.833
+      },
+      {
+        "color": "#b09020",
+        "share": 0.0463,
+        "saturation": 0.818
+      },
+      {
+        "color": "#e02020",
+        "share": 0.0438,
+        "saturation": 0.857
+      },
+      {
+        "color": "#c0a020",
+        "share": 0.0422,
+        "saturation": 0.833
+      },
+      {
+        "color": "#b02020",
+        "share": 0.0216,
+        "saturation": 0.818
+      },
+      {
+        "color": "#0090d0",
+        "share": 0.0149,
+        "saturation": 1
+      },
+      {
+        "color": "#b08020",
+        "share": 0.0119,
+        "saturation": 0.818
+      },
+      {
+        "color": "#a08020",
+        "share": 0.0115,
+        "saturation": 0.8
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.619Z"
+  },
+  "lumezzane": {
+    "name": "Lumezzane",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/lumezzane.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Lumezzane.png",
+    "matchedName": "AC Lumezzane",
+    "score": 213,
+    "colorPrimary": "#f02020",
+    "colorSecondary": "#302060",
+    "paletteCandidates": [
+      {
+        "color": "#f02020",
+        "share": 0.149,
+        "saturation": 0.867
+      },
+      {
+        "color": "#302060",
+        "share": 0.1624,
+        "saturation": 0.667
+      },
+      {
+        "color": "#fff000",
+        "share": 0.0875,
+        "saturation": 1
+      },
+      {
+        "color": "#201050",
+        "share": 0.0377,
+        "saturation": 0.8
+      },
+      {
+        "color": "#ffff00",
+        "share": 0.0244,
+        "saturation": 1
+      },
+      {
+        "color": "#202060",
+        "share": 0.0281,
+        "saturation": 0.667
+      },
+      {
+        "color": "#202050",
+        "share": 0.03,
+        "saturation": 0.6
+      },
+      {
+        "color": "#302050",
+        "share": 0.0294,
+        "saturation": 0.6
+      },
+      {
+        "color": "#f01020",
+        "share": 0.0134,
+        "saturation": 0.933
+      },
+      {
+        "color": "#1070c0",
+        "share": 0.011,
+        "saturation": 0.917
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.658Z"
+  },
+  "monopoli": {
+    "name": "Monopoli",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/monopoli.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Monopoli.png",
+    "matchedName": "SS Monopoli",
+    "score": 213,
+    "colorPrimary": "#008050",
+    "colorSecondary": "#90d0b0",
+    "paletteCandidates": [
+      {
+        "color": "#008050",
+        "share": 0.2421,
+        "saturation": 1
+      },
+      {
+        "color": "#008040",
+        "share": 0.1104,
+        "saturation": 1
+      },
+      {
+        "color": "#90d0b0",
+        "share": 0.1519,
+        "saturation": 0.308
+      },
+      {
+        "color": "#f02020",
+        "share": 0.0441,
+        "saturation": 0.867
+      },
+      {
+        "color": "#108050",
+        "share": 0.0254,
+        "saturation": 0.875
+      },
+      {
+        "color": "#209060",
+        "share": 0.0198,
+        "saturation": 0.778
+      },
+      {
+        "color": "#f03030",
+        "share": 0.0176,
+        "saturation": 0.8
+      },
+      {
+        "color": "#40a070",
+        "share": 0.0152,
+        "saturation": 0.6
+      },
+      {
+        "color": "#309060",
+        "share": 0.0121,
+        "saturation": 0.667
+      },
+      {
+        "color": "#a0d0c0",
+        "share": 0.0239,
+        "saturation": 0.231
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.696Z"
+  },
+  "novara": {
+    "name": "Novara",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/novara.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Novara.png",
+    "matchedName": "Novara FC",
+    "score": 213,
+    "colorPrimary": "#005080",
+    "colorSecondary": "#c02020",
+    "paletteCandidates": [
+      {
+        "color": "#005080",
+        "share": 0.2861,
+        "saturation": 1
+      },
+      {
+        "color": "#006090",
+        "share": 0.0567,
+        "saturation": 1
+      },
+      {
+        "color": "#c02020",
+        "share": 0.053,
+        "saturation": 0.833
+      },
+      {
+        "color": "#0070a0",
+        "share": 0.0437,
+        "saturation": 1
+      },
+      {
+        "color": "#901010",
+        "share": 0.0466,
+        "saturation": 0.889
+      },
+      {
+        "color": "#a01010",
+        "share": 0.0394,
+        "saturation": 0.9
+      },
+      {
+        "color": "#006080",
+        "share": 0.0324,
+        "saturation": 1
+      },
+      {
+        "color": "#a01020",
+        "share": 0.0237,
+        "saturation": 0.9
+      },
+      {
+        "color": "#d02020",
+        "share": 0.0223,
+        "saturation": 0.846
+      },
+      {
+        "color": "#d0c080",
+        "share": 0.034,
+        "saturation": 0.385
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.734Z"
+  },
+  "ospitaletto": {
+    "name": "Ospitaletto",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/ospitaletto.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/ospitaletto.png",
+    "matchedName": "ACD Ospitaletto",
+    "score": 168,
+    "colorPrimary": "#c04030",
+    "colorSecondary": "#204080",
+    "paletteCandidates": [
+      {
+        "color": "#c04030",
+        "share": 0.3416,
+        "saturation": 0.75
+      },
+      {
+        "color": "#204080",
+        "share": 0.2246,
+        "saturation": 0.75
+      },
+      {
+        "color": "#d04030",
+        "share": 0.0721,
+        "saturation": 0.769
+      },
+      {
+        "color": "#f0c060",
+        "share": 0.0725,
+        "saturation": 0.6
+      },
+      {
+        "color": "#104080",
+        "share": 0.0467,
+        "saturation": 0.875
+      },
+      {
+        "color": "#b04040",
+        "share": 0.0141,
+        "saturation": 0.636
+      },
+      {
+        "color": "#a04040",
+        "share": 0.0132,
+        "saturation": 0.6
+      },
+      {
+        "color": "#e0c060",
+        "share": 0.0132,
+        "saturation": 0.571
+      },
+      {
+        "color": "#205080",
+        "share": 0.0094,
+        "saturation": 0.75
+      },
+      {
+        "color": "#f0d060",
+        "share": 0.0113,
+        "saturation": 0.6
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.776Z"
+  },
+  "ostiamare": {
+    "name": "Ostiamare",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/ostiamare.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/ostiamare-trasp-logo.png",
+    "matchedName": "AS Ostiamare Lido Calcio",
+    "score": 196,
+    "colorPrimary": "#502080",
+    "colorSecondary": "#8060a0",
+    "paletteCandidates": [
+      {
+        "color": "#502080",
+        "share": 0.5164,
+        "saturation": 0.75
+      },
+      {
+        "color": "#501080",
+        "share": 0.0911,
+        "saturation": 0.875
+      },
+      {
+        "color": "#602080",
+        "share": 0.0252,
+        "saturation": 0.75
+      },
+      {
+        "color": "#401070",
+        "share": 0.0189,
+        "saturation": 0.857
+      },
+      {
+        "color": "#400070",
+        "share": 0.0147,
+        "saturation": 1
+      },
+      {
+        "color": "#501070",
+        "share": 0.0166,
+        "saturation": 0.857
+      },
+      {
+        "color": "#704090",
+        "share": 0.0193,
+        "saturation": 0.556
+      },
+      {
+        "color": "#603080",
+        "share": 0.016,
+        "saturation": 0.625
+      },
+      {
+        "color": "#603090",
+        "share": 0.0133,
+        "saturation": 0.667
+      },
+      {
+        "color": "#602090",
+        "share": 0.0112,
+        "saturation": 0.778
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.840Z"
+  },
+  "pergolettese": {
+    "name": "Pergolettese",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/pergolettese.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Pergolettese.png",
+    "matchedName": "US Pergolettese Crema",
+    "score": 188,
+    "colorPrimary": "#f0e010",
+    "colorSecondary": "#105080",
+    "paletteCandidates": [
+      {
+        "color": "#f0e010",
+        "share": 0.5064,
+        "saturation": 0.933
+      },
+      {
+        "color": "#105080",
+        "share": 0.194,
+        "saturation": 0.875
+      },
+      {
+        "color": "#005080",
+        "share": 0.0293,
+        "saturation": 1
+      },
+      {
+        "color": "#fff000",
+        "share": 0.0268,
+        "saturation": 1
+      },
+      {
+        "color": "#004080",
+        "share": 0.0257,
+        "saturation": 1
+      },
+      {
+        "color": "#fff010",
+        "share": 0.0166,
+        "saturation": 0.937
+      },
+      {
+        "color": "#004070",
+        "share": 0.014,
+        "saturation": 1
+      },
+      {
+        "color": "#ffe010",
+        "share": 0.0133,
+        "saturation": 0.937
+      },
+      {
+        "color": "#105090",
+        "share": 0.0127,
+        "saturation": 0.889
+      },
+      {
+        "color": "#004090",
+        "share": 0.009,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.876Z"
+  },
+  "ac-perugia-calcio": {
+    "name": "Perugia",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/ac-perugia-calcio.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/Perugia.png",
+    "matchedName": "Perugia Calcio Spa",
+    "score": 188,
+    "colorPrimary": "#f02030",
+    "colorSecondary": "#102020",
+    "paletteCandidates": [
+      {
+        "color": "#f02030",
+        "share": 0.6393,
+        "saturation": 0.867
+      },
+      {
+        "color": "#ff2030",
+        "share": 0.0369,
+        "saturation": 0.875
+      },
+      {
+        "color": "#102020",
+        "share": 0.0171,
+        "saturation": 0.5
+      },
+      {
+        "color": "#302020",
+        "share": 0.0177,
+        "saturation": 0.333
+      },
+      {
+        "color": "#e02030",
+        "share": 0.0075,
+        "saturation": 0.857
+      },
+      {
+        "color": "#f01020",
+        "share": 0.0067,
+        "saturation": 0.933
+      },
+      {
+        "color": "#d01020",
+        "share": 0.0057,
+        "saturation": 0.923
+      },
+      {
+        "color": "#202020",
+        "share": 0.0721,
+        "saturation": 0
+      },
+      {
+        "color": "#e01020",
+        "share": 0.0051,
+        "saturation": 0.929
+      },
+      {
+        "color": "#d02030",
+        "share": 0.0044,
+        "saturation": 0.846
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:01.926Z"
+  },
+  "pescara": {
+    "name": "Pescara",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/pescara.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/Pescara_Calcio.png",
+    "matchedName": "Delfino Pescara",
+    "score": 188,
+    "colorPrimary": "#003060",
+    "colorSecondary": "#1070d0",
+    "paletteCandidates": [
+      {
+        "color": "#003060",
+        "share": 0.3838,
+        "saturation": 1
+      },
+      {
+        "color": "#1070d0",
+        "share": 0.3193,
+        "saturation": 0.923
+      },
+      {
+        "color": "#104070",
+        "share": 0.0376,
+        "saturation": 0.857
+      },
+      {
+        "color": "#004060",
+        "share": 0.0295,
+        "saturation": 1
+      },
+      {
+        "color": "#0070d0",
+        "share": 0.0198,
+        "saturation": 1
+      },
+      {
+        "color": "#306080",
+        "share": 0.0144,
+        "saturation": 0.625
+      },
+      {
+        "color": "#004070",
+        "share": 0.0063,
+        "saturation": 1
+      },
+      {
+        "color": "#80a0b0",
+        "share": 0.011,
+        "saturation": 0.273
+      },
+      {
+        "color": "#507090",
+        "share": 0.0062,
+        "saturation": 0.444
+      },
+      {
+        "color": "#1070c0",
+        "share": 0.0033,
+        "saturation": 0.917
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.115Z"
+  },
+  "pianese": {
+    "name": "Pianese",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/pianese.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/pianese.png",
+    "matchedName": "US Pianese",
+    "score": 213,
+    "colorPrimary": "#000000",
+    "colorSecondary": "#e0e0e0",
+    "paletteCandidates": [
+      {
+        "color": "#000000",
+        "share": 0.7134,
+        "saturation": 0
+      },
+      {
+        "color": "#202020",
+        "share": 0.0274,
+        "saturation": 0
+      },
+      {
+        "color": "#e0e0e0",
+        "share": 0.0274,
+        "saturation": 0
+      },
+      {
+        "color": "#101010",
+        "share": 0.0471,
+        "saturation": 0
+      },
+      {
+        "color": "#303030",
+        "share": 0.0231,
+        "saturation": 0
+      },
+      {
+        "color": "#b0b0b0",
+        "share": 0.0219,
+        "saturation": 0
+      },
+      {
+        "color": "#505050",
+        "share": 0.0189,
+        "saturation": 0
+      },
+      {
+        "color": "#d0d0d0",
+        "share": 0.0182,
+        "saturation": 0
+      },
+      {
+        "color": "#f0f0f0",
+        "share": 0.0327,
+        "saturation": 0
+      },
+      {
+        "color": "#707070",
+        "share": 0.0149,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.148Z"
+  },
+  "picerno": {
+    "name": "Picerno",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/picerno.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Az%20Picerno.png",
+    "matchedName": "AZ Picerno",
+    "score": 188,
+    "colorPrimary": "#f0c030",
+    "colorSecondary": "#103070",
+    "paletteCandidates": [
+      {
+        "color": "#f0c030",
+        "share": 0.1946,
+        "saturation": 0.8
+      },
+      {
+        "color": "#103070",
+        "share": 0.1742,
+        "saturation": 0.857
+      },
+      {
+        "color": "#c02020",
+        "share": 0.153,
+        "saturation": 0.833
+      },
+      {
+        "color": "#ffd030",
+        "share": 0.0712,
+        "saturation": 0.812
+      },
+      {
+        "color": "#f0d030",
+        "share": 0.0187,
+        "saturation": 0.8
+      },
+      {
+        "color": "#003070",
+        "share": 0.0149,
+        "saturation": 1
+      },
+      {
+        "color": "#203060",
+        "share": 0.0211,
+        "saturation": 0.667
+      },
+      {
+        "color": "#d02020",
+        "share": 0.0151,
+        "saturation": 0.846
+      },
+      {
+        "color": "#101020",
+        "share": 0.0236,
+        "saturation": 0.5
+      },
+      {
+        "color": "#002070",
+        "share": 0.0076,
+        "saturation": 1
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.186Z"
+  },
+  "pineto": {
+    "name": "Pineto",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/pineto.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Pineto.png",
+    "matchedName": "ASD Pineto Calcio",
+    "score": 213,
+    "colorPrimary": "#00b0f0",
+    "colorSecondary": "#40b050",
+    "paletteCandidates": [
+      {
+        "color": "#00b0f0",
+        "share": 0.1549,
+        "saturation": 1
+      },
+      {
+        "color": "#40b050",
+        "share": 0.0728,
+        "saturation": 0.636
+      },
+      {
+        "color": "#20c0f0",
+        "share": 0.0284,
+        "saturation": 0.867
+      },
+      {
+        "color": "#30c0f0",
+        "share": 0.0276,
+        "saturation": 0.8
+      },
+      {
+        "color": "#00c0f0",
+        "share": 0.0225,
+        "saturation": 1
+      },
+      {
+        "color": "#70d0f0",
+        "share": 0.0326,
+        "saturation": 0.533
+      },
+      {
+        "color": "#10c0f0",
+        "share": 0.0173,
+        "saturation": 0.933
+      },
+      {
+        "color": "#50d0f0",
+        "share": 0.0203,
+        "saturation": 0.667
+      },
+      {
+        "color": "#40c0f0",
+        "share": 0.0168,
+        "saturation": 0.733
+      },
+      {
+        "color": "#60d0f0",
+        "share": 0.0182,
+        "saturation": 0.6
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.218Z"
+  },
+  "potenza": {
+    "name": "Potenza",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/potenza.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Potenza.png",
+    "matchedName": "Potenza Calcio",
+    "score": 213,
+    "colorPrimary": "#c02030",
+    "colorSecondary": "#202050",
+    "paletteCandidates": [
+      {
+        "color": "#c02030",
+        "share": 0.2536,
+        "saturation": 0.833
+      },
+      {
+        "color": "#202050",
+        "share": 0.2521,
+        "saturation": 0.6
+      },
+      {
+        "color": "#f0c030",
+        "share": 0.1095,
+        "saturation": 0.8
+      },
+      {
+        "color": "#ffc030",
+        "share": 0.0478,
+        "saturation": 0.812
+      },
+      {
+        "color": "#f0b030",
+        "share": 0.0422,
+        "saturation": 0.8
+      },
+      {
+        "color": "#101050",
+        "share": 0.0191,
+        "saturation": 0.8
+      },
+      {
+        "color": "#e0b030",
+        "share": 0.0168,
+        "saturation": 0.786
+      },
+      {
+        "color": "#d02030",
+        "share": 0.0153,
+        "saturation": 0.846
+      },
+      {
+        "color": "#b02020",
+        "share": 0.0155,
+        "saturation": 0.818
+      },
+      {
+        "color": "#c01030",
+        "share": 0.011,
+        "saturation": 0.917
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.253Z"
+  },
+  "pro-vercelli": {
+    "name": "Pro Vercelli",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/pro-vercelli.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Pro%20Vercelli.png",
+    "matchedName": "Pro Vercelli 1892",
+    "score": 188,
+    "colorPrimary": "#c03030",
+    "colorSecondary": "#201020",
+    "paletteCandidates": [
+      {
+        "color": "#c03030",
+        "share": 0.1528,
+        "saturation": 0.75
+      },
+      {
+        "color": "#201020",
+        "share": 0.1014,
+        "saturation": 0.5
+      },
+      {
+        "color": "#101020",
+        "share": 0.084,
+        "saturation": 0.5
+      },
+      {
+        "color": "#b02020",
+        "share": 0.026,
+        "saturation": 0.818
+      },
+      {
+        "color": "#100010",
+        "share": 0.0278,
+        "saturation": 1
+      },
+      {
+        "color": "#000010",
+        "share": 0.0202,
+        "saturation": 1
+      },
+      {
+        "color": "#202020",
+        "share": 0.1357,
+        "saturation": 0
+      },
+      {
+        "color": "#101010",
+        "share": 0.1434,
+        "saturation": 0
+      },
+      {
+        "color": "#b03030",
+        "share": 0.0071,
+        "saturation": 0.727
+      },
+      {
+        "color": "#b02030",
+        "share": 0.0052,
+        "saturation": 0.818
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.284Z"
+  },
+  "ravenna": {
+    "name": "Ravenna",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/ravenna.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/ravenna.png",
+    "matchedName": "Ravenna FC 1913",
+    "score": 213,
+    "colorPrimary": "#f0a000",
+    "colorSecondary": "#901020",
+    "paletteCandidates": [
+      {
+        "color": "#f0a000",
+        "share": 0.3268,
+        "saturation": 1
+      },
+      {
+        "color": "#901020",
+        "share": 0.2582,
+        "saturation": 0.889
+      },
+      {
+        "color": "#801020",
+        "share": 0.0799,
+        "saturation": 0.875
+      },
+      {
+        "color": "#902020",
+        "share": 0.0848,
+        "saturation": 0.778
+      },
+      {
+        "color": "#f0b000",
+        "share": 0.0619,
+        "saturation": 1
+      },
+      {
+        "color": "#ffb000",
+        "share": 0.0559,
+        "saturation": 1
+      },
+      {
+        "color": "#e09000",
+        "share": 0.0207,
+        "saturation": 1
+      },
+      {
+        "color": "#b05010",
+        "share": 0.0148,
+        "saturation": 0.909
+      },
+      {
+        "color": "#c06010",
+        "share": 0.0144,
+        "saturation": 0.917
+      },
+      {
+        "color": "#d07010",
+        "share": 0.0126,
+        "saturation": 0.923
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.319Z"
+  },
+  "reggiana": {
+    "name": "Reggiana",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/reggiana.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/Reggiana.png",
+    "matchedName": "AC Reggiana",
+    "score": 213,
+    "colorPrimary": "#703030",
+    "colorSecondary": "#b09050",
+    "paletteCandidates": [
+      {
+        "color": "#703030",
+        "share": 0.3383,
+        "saturation": 0.571
+      },
+      {
+        "color": "#b09050",
+        "share": 0.2304,
+        "saturation": 0.545
+      },
+      {
+        "color": "#702020",
+        "share": 0.0489,
+        "saturation": 0.714
+      },
+      {
+        "color": "#b09040",
+        "share": 0.0293,
+        "saturation": 0.636
+      },
+      {
+        "color": "#c09050",
+        "share": 0.0235,
+        "saturation": 0.583
+      },
+      {
+        "color": "#804040",
+        "share": 0.0198,
+        "saturation": 0.5
+      },
+      {
+        "color": "#803030",
+        "share": 0.0147,
+        "saturation": 0.625
+      },
+      {
+        "color": "#804030",
+        "share": 0.0121,
+        "saturation": 0.625
+      },
+      {
+        "color": "#c0a060",
+        "share": 0.0134,
+        "saturation": 0.5
+      },
+      {
+        "color": "#906040",
+        "share": 0.012,
+        "saturation": 0.556
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.512Z"
+  },
+  "renate": {
+    "name": "Renate",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/renate.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Renate.png",
+    "matchedName": "AC Renate",
+    "score": 213,
+    "colorPrimary": "#004070",
+    "colorSecondary": "#c0a070",
+    "paletteCandidates": [
+      {
+        "color": "#004070",
+        "share": 0.2441,
+        "saturation": 1
+      },
+      {
+        "color": "#c0a070",
+        "share": 0.1169,
+        "saturation": 0.417
+      },
+      {
+        "color": "#d0a070",
+        "share": 0.1008,
+        "saturation": 0.462
+      },
+      {
+        "color": "#003070",
+        "share": 0.0154,
+        "saturation": 1
+      },
+      {
+        "color": "#202020",
+        "share": 0.1965,
+        "saturation": 0
+      },
+      {
+        "color": "#003060",
+        "share": 0.009,
+        "saturation": 1
+      },
+      {
+        "color": "#104070",
+        "share": 0.0086,
+        "saturation": 0.857
+      },
+      {
+        "color": "#103050",
+        "share": 0.0077,
+        "saturation": 0.8
+      },
+      {
+        "color": "#103040",
+        "share": 0.006,
+        "saturation": 0.75
+      },
+      {
+        "color": "#104060",
+        "share": 0.0044,
+        "saturation": 0.833
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.552Z"
+  },
+  "salernitana": {
+    "name": "Salernitana",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/salernitana.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/salernitana.png",
+    "matchedName": "US Salernitana",
+    "score": 213,
+    "colorPrimary": "#601010",
+    "colorSecondary": "#c09020",
+    "paletteCandidates": [
+      {
+        "color": "#601010",
+        "share": 0.6727,
+        "saturation": 0.833
+      },
+      {
+        "color": "#c09020",
+        "share": 0.0418,
+        "saturation": 0.833
+      },
+      {
+        "color": "#600010",
+        "share": 0.0316,
+        "saturation": 1
+      },
+      {
+        "color": "#c0a020",
+        "share": 0.0324,
+        "saturation": 0.833
+      },
+      {
+        "color": "#c0a030",
+        "share": 0.0344,
+        "saturation": 0.75
+      },
+      {
+        "color": "#500000",
+        "share": 0.0222,
+        "saturation": 1
+      },
+      {
+        "color": "#600000",
+        "share": 0.0168,
+        "saturation": 1
+      },
+      {
+        "color": "#d0a030",
+        "share": 0.0145,
+        "saturation": 0.769
+      },
+      {
+        "color": "#601020",
+        "share": 0.0084,
+        "saturation": 0.833
+      },
+      {
+        "color": "#702020",
+        "share": 0.0055,
+        "saturation": 0.714
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.589Z"
+  },
+  "sambenedettese": {
+    "name": "Sambenedettese",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/sambenedettese.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/sambenedettese-logo.png",
+    "matchedName": "US Sambenedettese",
+    "score": 221,
+    "colorPrimary": "#002030",
+    "colorSecondary": "#d02030",
+    "paletteCandidates": [
+      {
+        "color": "#002030",
+        "share": 0.2953,
+        "saturation": 1
+      },
+      {
+        "color": "#001030",
+        "share": 0.0814,
+        "saturation": 1
+      },
+      {
+        "color": "#d02030",
+        "share": 0.0623,
+        "saturation": 0.846
+      },
+      {
+        "color": "#e02030",
+        "share": 0.0414,
+        "saturation": 0.857
+      },
+      {
+        "color": "#102030",
+        "share": 0.0324,
+        "saturation": 0.667
+      },
+      {
+        "color": "#f02030",
+        "share": 0.0248,
+        "saturation": 0.867
+      },
+      {
+        "color": "#e01030",
+        "share": 0.0213,
+        "saturation": 0.929
+      },
+      {
+        "color": "#c02030",
+        "share": 0.017,
+        "saturation": 0.833
+      },
+      {
+        "color": "#000020",
+        "share": 0.0252,
+        "saturation": 1
+      },
+      {
+        "color": "#d01020",
+        "share": 0.0142,
+        "saturation": 0.923
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.629Z"
+  },
+  "savoia": {
+    "name": "Savoia",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/savoia.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/loghi-squadre/girone-c/savoia-trasp-logo.png",
+    "matchedName": "Savoia 1908",
+    "score": 221,
+    "colorPrimary": "#d02020",
+    "colorSecondary": "#101020",
+    "paletteCandidates": [
+      {
+        "color": "#d02020",
+        "share": 0.1794,
+        "saturation": 0.846
+      },
+      {
+        "color": "#202020",
+        "share": 0.2281,
+        "saturation": 0
+      },
+      {
+        "color": "#101020",
+        "share": 0.023,
+        "saturation": 0.5
+      },
+      {
+        "color": "#a09040",
+        "share": 0.0191,
+        "saturation": 0.6
+      },
+      {
+        "color": "#c0b050",
+        "share": 0.0162,
+        "saturation": 0.583
+      },
+      {
+        "color": "#c01010",
+        "share": 0.0106,
+        "saturation": 0.917
+      },
+      {
+        "color": "#b0a040",
+        "share": 0.0124,
+        "saturation": 0.636
+      },
+      {
+        "color": "#908040",
+        "share": 0.0135,
+        "saturation": 0.556
+      },
+      {
+        "color": "#c0b040",
+        "share": 0.0113,
+        "saturation": 0.667
+      },
+      {
+        "color": "#c02020",
+        "share": 0.0088,
+        "saturation": 0.833
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.676Z"
+  },
+  "scafatese": {
+    "name": "Scafatese",
+    "competition": "Serie C",
+    "groupName": "Girone C",
+    "path": "/assets/club-logos/scafatese.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/girone-c/scafatese-trasp-logo.png",
+    "matchedName": "FC Scafatese",
+    "score": 221,
+    "colorPrimary": "#f0e000",
+    "colorSecondary": "#005090",
+    "paletteCandidates": [
+      {
+        "color": "#f0e000",
+        "share": 0.4436,
+        "saturation": 1
+      },
+      {
+        "color": "#005090",
+        "share": 0.1999,
+        "saturation": 1
+      },
+      {
+        "color": "#0040a0",
+        "share": 0.0413,
+        "saturation": 1
+      },
+      {
+        "color": "#004090",
+        "share": 0.0275,
+        "saturation": 1
+      },
+      {
+        "color": "#fff000",
+        "share": 0.0227,
+        "saturation": 1
+      },
+      {
+        "color": "#f0f000",
+        "share": 0.022,
+        "saturation": 1
+      },
+      {
+        "color": "#e0e000",
+        "share": 0.0217,
+        "saturation": 1
+      },
+      {
+        "color": "#105090",
+        "share": 0.015,
+        "saturation": 0.889
+      },
+      {
+        "color": "#f0e010",
+        "share": 0.0111,
+        "saturation": 0.933
+      },
+      {
+        "color": "#e0e010",
+        "share": 0.0095,
+        "saturation": 0.929
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.723Z"
+  },
+  "spezia": {
+    "name": "Spezia",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/spezia.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/Spezia.png",
+    "matchedName": "Spezia Calcio",
+    "score": 213,
+    "colorPrimary": "#000000",
+    "colorSecondary": "#606060",
+    "paletteCandidates": [
+      {
+        "color": "#000000",
+        "share": 0.7799,
+        "saturation": 0
+      },
+      {
+        "color": "#303030",
+        "share": 0.0225,
+        "saturation": 0
+      },
+      {
+        "color": "#606060",
+        "share": 0.0157,
+        "saturation": 0
+      },
+      {
+        "color": "#b0b0b0",
+        "share": 0.0149,
+        "saturation": 0
+      },
+      {
+        "color": "#202020",
+        "share": 0.0147,
+        "saturation": 0
+      },
+      {
+        "color": "#707070",
+        "share": 0.0144,
+        "saturation": 0
+      },
+      {
+        "color": "#c0c0c0",
+        "share": 0.014,
+        "saturation": 0
+      },
+      {
+        "color": "#d0d0d0",
+        "share": 0.0136,
+        "saturation": 0
+      },
+      {
+        "color": "#f0f0f0",
+        "share": 0.0245,
+        "saturation": 0
+      },
+      {
+        "color": "#e0e0e0",
+        "share": 0.013,
+        "saturation": 0
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.759Z"
+  },
+  "torres": {
+    "name": "Torres",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/torres.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Torres.png",
+    "matchedName": "SEF Torres Sassari",
+    "score": 188,
+    "colorPrimary": "#000010",
+    "colorSecondary": "#ff1010",
+    "paletteCandidates": [
+      {
+        "color": "#000010",
+        "share": 0.2762,
+        "saturation": 1
+      },
+      {
+        "color": "#ff1010",
+        "share": 0.1353,
+        "saturation": 0.937
+      },
+      {
+        "color": "#ff2010",
+        "share": 0.0541,
+        "saturation": 0.937
+      },
+      {
+        "color": "#806040",
+        "share": 0.056,
+        "saturation": 0.5
+      },
+      {
+        "color": "#ff0000",
+        "share": 0.0253,
+        "saturation": 1
+      },
+      {
+        "color": "#805030",
+        "share": 0.0344,
+        "saturation": 0.625
+      },
+      {
+        "color": "#906040",
+        "share": 0.0362,
+        "saturation": 0.556
+      },
+      {
+        "color": "#ff1000",
+        "share": 0.0186,
+        "saturation": 1
+      },
+      {
+        "color": "#000020",
+        "share": 0.016,
+        "saturation": 1
+      },
+      {
+        "color": "#302020",
+        "share": 0.0208,
+        "saturation": 0.333
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.794Z"
+  },
+  "trento": {
+    "name": "Trento",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/trento.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/trento.png",
+    "matchedName": "AC Trento",
+    "score": 213,
+    "colorPrimary": "#ffd030",
+    "colorSecondary": "#202040",
+    "paletteCandidates": [
+      {
+        "color": "#ffd030",
+        "share": 0.1394,
+        "saturation": 0.812
+      },
+      {
+        "color": "#202040",
+        "share": 0.1751,
+        "saturation": 0.5
+      },
+      {
+        "color": "#202050",
+        "share": 0.1119,
+        "saturation": 0.6
+      },
+      {
+        "color": "#ffe030",
+        "share": 0.0503,
+        "saturation": 0.812
+      },
+      {
+        "color": "#f0d030",
+        "share": 0.0472,
+        "saturation": 0.8
+      },
+      {
+        "color": "#e0c030",
+        "share": 0.0277,
+        "saturation": 0.786
+      },
+      {
+        "color": "#101040",
+        "share": 0.0228,
+        "saturation": 0.75
+      },
+      {
+        "color": "#d0b030",
+        "share": 0.0203,
+        "saturation": 0.769
+      },
+      {
+        "color": "#c0a030",
+        "share": 0.0119,
+        "saturation": 0.75
+      },
+      {
+        "color": "#201010",
+        "share": 0.0167,
+        "saturation": 0.5
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.829Z"
+  },
+  "treviso": {
+    "name": "Treviso",
+    "competition": "Serie C",
+    "groupName": "Girone A",
+    "path": "/assets/club-logos/treviso.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/r2-backup/STORICO/SQUADRE_PASSATE/treviso.png",
+    "matchedName": "Treviso",
+    "score": 213,
+    "colorPrimary": "#e03030",
+    "colorSecondary": "#e0c040",
+    "paletteCandidates": [
+      {
+        "color": "#e03030",
+        "share": 0.063,
+        "saturation": 0.786
+      },
+      {
+        "color": "#e04030",
+        "share": 0.0516,
+        "saturation": 0.786
+      },
+      {
+        "color": "#e03020",
+        "share": 0.0307,
+        "saturation": 0.857
+      },
+      {
+        "color": "#f03030",
+        "share": 0.0258,
+        "saturation": 0.8
+      },
+      {
+        "color": "#e04020",
+        "share": 0.022,
+        "saturation": 0.857
+      },
+      {
+        "color": "#e0c040",
+        "share": 0.0243,
+        "saturation": 0.714
+      },
+      {
+        "color": "#e0c030",
+        "share": 0.0173,
+        "saturation": 0.786
+      },
+      {
+        "color": "#b03030",
+        "share": 0.0177,
+        "saturation": 0.727
+      },
+      {
+        "color": "#d0c040",
+        "share": 0.0166,
+        "saturation": 0.692
+      },
+      {
+        "color": "#e0c050",
+        "share": 0.0177,
+        "saturation": 0.643
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:02.864Z"
+  },
+  "vado": {
+    "name": "Vado",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/vado.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/loghi-squadre/girone-b/vado-trasp-logo.png",
+    "matchedName": "Vado FC 1913",
+    "score": 221,
+    "colorPrimary": "#e00010",
+    "colorSecondary": "#203080",
+    "paletteCandidates": [
+      {
+        "color": "#e00010",
+        "share": 0.353,
+        "saturation": 1
+      },
+      {
+        "color": "#203080",
+        "share": 0.3045,
+        "saturation": 0.75
+      },
+      {
+        "color": "#203070",
+        "share": 0.0376,
+        "saturation": 0.714
+      },
+      {
+        "color": "#e01010",
+        "share": 0.0275,
+        "saturation": 0.929
+      },
+      {
+        "color": "#303080",
+        "share": 0.0276,
+        "saturation": 0.625
+      },
+      {
+        "color": "#e01020",
+        "share": 0.0145,
+        "saturation": 0.929
+      },
+      {
+        "color": "#303070",
+        "share": 0.0181,
+        "saturation": 0.571
+      },
+      {
+        "color": "#f00010",
+        "share": 0.0103,
+        "saturation": 1
+      },
+      {
+        "color": "#e00000",
+        "share": 0.0101,
+        "saturation": 1
+      },
+      {
+        "color": "#304080",
+        "share": 0.0138,
+        "saturation": 0.625
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:03.073Z"
+  },
+  "vis-pesaro": {
+    "name": "Vis Pesaro",
+    "competition": "Serie C",
+    "groupName": "Girone B",
+    "path": "/assets/club-logos/vis-pesaro.webp",
+    "source": "SerieC.com",
+    "sourcePage": "https://www.seriec.com/clubs",
+    "sourceUrl": "https://www.seriec.com/storage/app/media/2025-2026/loghi-societ%C3%A0/Vis%20Pesaro.png",
+    "matchedName": "Vis Pesaro 1898",
+    "score": 188,
+    "colorPrimary": "#f03030",
+    "colorSecondary": "#906040",
+    "paletteCandidates": [
+      {
+        "color": "#f03030",
+        "share": 0.5223,
+        "saturation": 0.8
+      },
+      {
+        "color": "#f02020",
+        "share": 0.1321,
+        "saturation": 0.867
+      },
+      {
+        "color": "#f04040",
+        "share": 0.0235,
+        "saturation": 0.733
+      },
+      {
+        "color": "#906040",
+        "share": 0.029,
+        "saturation": 0.556
+      },
+      {
+        "color": "#905030",
+        "share": 0.02,
+        "saturation": 0.667
+      },
+      {
+        "color": "#f05050",
+        "share": 0.0186,
+        "saturation": 0.667
+      },
+      {
+        "color": "#a06040",
+        "share": 0.0189,
+        "saturation": 0.6
+      },
+      {
+        "color": "#f06060",
+        "share": 0.0164,
+        "saturation": 0.6
+      },
+      {
+        "color": "#f07070",
+        "share": 0.0164,
+        "saturation": 0.533
+      },
+      {
+        "color": "#f03020",
+        "share": 0.0081,
+        "saturation": 0.867
+      }
+    ],
+    "scrapedAt": "2026-09-11T21:03:03.116Z"
   }
 }
