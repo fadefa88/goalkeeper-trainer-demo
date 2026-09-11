@@ -27,7 +27,7 @@ function parseArgs(argv) {
 
 function providerIdFromHref(href) {
   try {
-    const url = new URL(href);
+    const url = new URL(href, "https://www.diretta.it");
     const parts = url.pathname.split("/").filter(Boolean);
     const teamPos = parts.findIndex(p => p === "squadra");
     if (teamPos >= 0) return parts[teamPos + 2] || parts[teamPos + 1] || null;
@@ -189,7 +189,6 @@ async function captureLogoNearAnchor(page, anchor) {
       const horizontalGap = anchorBox.x - (info.x + info.width);
       const verticalGap = Math.abs(centerY - anchorCenterY);
 
-      // Lo stemma nella classifica è normalmente immediatamente a sinistra del nome.
       if (horizontalGap < -15 || horizontalGap > 95 || verticalGap > 35) continue;
 
       let score = Math.abs(horizontalGap - 8) + verticalGap * 2;
@@ -211,8 +210,6 @@ async function captureLogoNearAnchor(page, anchor) {
     } catch {}
   }
 
-  // Fallback indipendente dal DOM: cattura la piccola area immediatamente
-  // a sinistra del testo della squadra, dove Diretta renderizza lo stemma.
   const clip = {
     x: Math.max(0, anchorBox.x - 46),
     y: Math.max(0, anchorBox.y + anchorBox.height / 2 - 20),
@@ -238,8 +235,6 @@ async function main() {
 
   await mkdir(logoDir, { recursive: true });
 
-  // provider team id -> società. Se una società ha prima squadra + U23,
-  // Serie A/B vengono processate prima della C e il primo stemma trovato vince.
   const clubByProviderId = new Map();
   for (const club of clubs) {
     for (const p of club.providerIds || []) {
