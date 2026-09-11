@@ -889,6 +889,10 @@ const exercises = [
 
 let selectedExercise = null;
 let activeFilter = "recommended";
+// Letta da filteredExercises() qui, scritta dal listener su #exerciseSearchInput
+// in cloudflare-client.js (stesso meccanismo di condivisione globale già usato
+// per getProfile/exercises tra i due file).
+let exerciseSearchQuery = "";
 // Stato reale del timer allenamento: conta in avanti da 0, non alla rovescia
 // (comportamento visibile in produzione). timer/timeRemaining/running restano
 // come alias di sola lettura sincronizzati da paintTimer(), per compatibilità
@@ -1028,7 +1032,14 @@ function renderProfileSummary() {
 
 function filteredExercises() {
   const profile = getProfile();
-  return exercises.filter(ex => {
+  // Esercizi personali dell'account (functions/api/custom-exercises), esposti
+  // da cloudflare-client.js: sempre inclusi, indipendentemente dai filtri
+  // sport/livello dei builtin, perché il coach li ha creati apposta per il
+  // proprio gruppo.
+  const custom = window.gkCustomExercises?.all?.() || [];
+  const pool = [...custom, ...exercises];
+  let items = pool.filter(ex => {
+    if (ex.source === "custom") return true;
     if (activeFilter === "recommended") {
       return !profile || (ex.sport === profile.sportType && ex.levels.includes(profile.level));
     }
@@ -1039,6 +1050,11 @@ function filteredExercises() {
     if (activeFilter === "integrata") return ex.mode.toLowerCase() === "integrata";
     return true;
   });
+  const term = exerciseSearchQuery.trim().toLowerCase();
+  if (term) {
+    items = items.filter(ex => [ex.name, ex.objective, ex.description, ex.ambito].some(v => String(v || "").toLowerCase().includes(term)));
+  }
+  return items;
 }
 
 function renderExercises() {
@@ -1056,7 +1072,7 @@ function renderExercises() {
   // vista di dettaglio, aperta al tocco.
   list.innerHTML = items.map(ex => `
     <button class="exercise-card" data-id="${ex.id}">
-      <h3>${escapeHtml(ex.name)}</h3>
+      <h3>${escapeHtml(ex.name)}${ex.source === "custom" ? ' <span class="tag-personal">PERSONALE</span>' : ""}</h3>
       <p class="muted">${escapeHtml(ex.description)}</p>
       <p class="exercise-list-meta">${escapeHtml(ex.docCategory)} · ${escapeHtml(ex.ambito)} · ${ex.durationMin} min</p>
     </button>
@@ -1064,7 +1080,9 @@ function renderExercises() {
 
   document.querySelectorAll(".exercise-card").forEach(card => {
     card.addEventListener("click", () => {
-      selectedExercise = exercises.find(e => e.id === card.dataset.id);
+      const id = card.dataset.id;
+      selectedExercise = exercises.find(e => e.id === id) || (window.gkCustomExercises?.all?.() || []).find(e => e.id === id);
+      if (!selectedExercise) return;
       renderDetail();
       showView("detail");
     });
@@ -1073,6 +1091,13 @@ function renderExercises() {
 
 function renderDetail() {
   const ex = selectedExercise;
+  // Gli esercizi personali hanno una struttura dati diversa (nessun
+  // organization/rules/coachPoints): template dedicato invece di forzarli
+  // dentro lo schema ricco dei builtin, vedi window.gkCustomExercises.
+  if (ex.source === "custom") {
+    $("exerciseDetail").innerHTML = window.gkCustomExercises.detailHtml(ex);
+    return;
+  }
   const visualHtml = renderExerciseVisual(ex);
   const hasVisual = Boolean(visualHtml);
 
@@ -1120,6 +1145,10 @@ function renderDetail() {
       </div>
 
       <p class="source-note">Fonte: “Il portiere dentro il gioco - eserciziario attività giovanile”, pag. ${ex.sourcePage}.</p>
+
+      <div class="setup-actions">
+        <button class="dark-btn full" type="button" data-exercise-duplicate="1">Duplica come personale</button>
+      </div>
     </div>
   `;
 }
@@ -1184,6 +1213,96 @@ function exerciseVisualStyles() {
       .exercise-visual .badge{fill:rgba(0,0,0,.35);stroke:rgba(255,255,255,.12);stroke-width:1}
     </style>
   `;
+}
+
+// --- Renderer SVG per diagram_scene_json (esercizi personali) -------------
+// Deterministico: stessa scena in ingresso, stesso SVG in uscita. La scena è
+// già stata sanitizzata server-side (functions/api/_diagram-scene.js): qui
+// non si valida più nulla, solo si disegna. Namespace CSS ".diagram-scene"
+// separato da ".exercise-visual" (i visual builtin sopra) per non toccarne
+// lo stile: palette dark neutral + rosso Mantova invece del verde campo.
+
+function diagramSceneStyles() {
+  return `
+    <style>
+      .diagram-scene-wrap{display:grid;gap:8px}
+      .diagram-scene{width:100%;height:auto;display:block;border-radius:var(--radius-md);background:var(--panel-2);border:1px solid var(--line)}
+      .diagram-scene .field-line{fill:none;stroke:var(--line-strong);stroke-width:.6}
+      .diagram-scene .zone{fill:rgba(255,255,255,.05);stroke:var(--line-strong);stroke-width:.5;stroke-dasharray:2 2}
+      .diagram-scene .zone-label{fill:var(--muted);font-size:3px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+      .diagram-scene .ball-path{fill:none;stroke:var(--red);stroke-width:1;stroke-linecap:round;marker-end:url(#diagramArrowRed)}
+      .diagram-scene .ball-path.air{stroke-dasharray:2.2 1.4}
+      .diagram-scene .movement{fill:none;stroke:var(--mantova-gold);stroke-width:.9;stroke-linecap:round;stroke-dasharray:2 1.5;marker-end:url(#diagramArrowGold)}
+      .diagram-scene .actor{stroke-width:.5}
+      .diagram-scene .actor.goalkeeper{fill:var(--text);stroke:var(--bg)}
+      .diagram-scene .actor.coach{fill:var(--mantova-gold);stroke:var(--bg)}
+      .diagram-scene .actor.player{fill:var(--panel);stroke:var(--line-strong)}
+      .diagram-scene .actor-label{fill:var(--bg);font-size:2.6px;font-weight:700;text-anchor:middle;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+      .diagram-scene .object-ball{fill:var(--red);stroke:var(--bg);stroke-width:.3}
+      .diagram-scene .object-cone{fill:var(--mantova-gold)}
+      .diagram-scene .object-dummy,.diagram-scene .object-obstacle{fill:none;stroke:var(--muted);stroke-width:.6}
+      .diagram-scene .sequence-badge{fill:var(--bg);stroke:var(--line-strong);stroke-width:.3}
+      .diagram-scene .sequence-num{fill:var(--text);font-size:2.4px;text-anchor:middle;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+      .diagram-scene .free-label{fill:var(--muted);font-size:2.6px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    </style>
+  `;
+}
+
+// Rettangoli schematici in coordinate 0-100: rappresentazioni indicative,
+// non misure di campo reali.
+function diagramFieldMarkup(type) {
+  const goal = `<rect class="field-line" x="42" y="0" width="16" height="3" />`;
+  if (type === "goal-area") return `${goal}<rect class="field-line" x="30" y="0" width="40" height="22" />`;
+  if (type === "half-pitch") return `${goal}<rect class="field-line" x="10" y="0" width="80" height="60" /><circle class="field-line" cx="50" cy="60" r="9" />`;
+  if (type === "full-pitch") return `<rect class="field-line" x="4" y="2" width="92" height="96" /><line class="field-line" x1="4" y1="50" x2="96" y2="50" /><circle class="field-line" cx="50" cy="50" r="9" />`;
+  return `${goal}<rect class="field-line" x="18" y="0" width="64" height="38" />`; // penalty-area, default
+}
+
+function diagramSequenceBadge(x, y, n) {
+  if (!n) return "";
+  return `<circle class="sequence-badge" cx="${x}" cy="${y}" r="2.2" /><text class="sequence-num" x="${x}" y="${y + .8}">${n}</text>`;
+}
+
+function renderDiagramScene(scene) {
+  if (!scene || !Array.isArray(scene.actors) || !scene.actors.length) return "";
+  const parts = [diagramFieldMarkup(scene.field?.type)];
+
+  (scene.zones || []).forEach(z => {
+    parts.push(`<rect class="zone" x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" />`);
+    if (z.label) parts.push(`<text class="zone-label" x="${z.x + 1}" y="${z.y + 3}">${escapeHtml(z.label)}</text>`);
+  });
+  (scene.ballPaths || []).forEach(p => {
+    parts.push(`<path class="ball-path ${p.style === "air" ? "air" : ""}" d="M${p.from[0]} ${p.from[1]} L${p.to[0]} ${p.to[1]}" />`);
+    parts.push(diagramSequenceBadge((p.from[0] + p.to[0]) / 2, (p.from[1] + p.to[1]) / 2, p.sequence));
+  });
+  (scene.movements || []).forEach(m => {
+    parts.push(`<path class="movement" d="M${m.from[0]} ${m.from[1]} L${m.to[0]} ${m.to[1]}" />`);
+    parts.push(diagramSequenceBadge((m.from[0] + m.to[0]) / 2, (m.from[1] + m.to[1]) / 2, m.sequence));
+  });
+  (scene.objects || []).forEach(o => {
+    if (o.type === "ball") parts.push(`<circle class="object-ball" cx="${o.x}" cy="${o.y}" r="1.6" />`);
+    else if (o.type === "cone") parts.push(`<polygon class="object-cone" points="${o.x},${o.y - 1.6} ${o.x - 1.4},${o.y + 1.4} ${o.x + 1.4},${o.y + 1.4}" />`);
+    else parts.push(`<rect class="object-${o.type}" x="${o.x - 1.5}" y="${o.y - 1.5}" width="3" height="3" />`);
+  });
+  scene.actors.forEach(actor => {
+    parts.push(`<circle class="actor ${actor.type}" cx="${actor.x}" cy="${actor.y}" r="3" />`);
+    parts.push(`<text class="actor-label" x="${actor.x}" y="${actor.y + 1}">${escapeHtml(actor.label || actor.id || "")}</text>`);
+  });
+  (scene.labels || []).forEach(l => {
+    parts.push(`<text class="free-label" x="${l.x}" y="${l.y}">${escapeHtml(l.text)}</text>`);
+  });
+
+  return `
+    <div class="diagram-scene-wrap">
+      ${diagramSceneStyles()}
+      <svg class="diagram-scene" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schema esercizio">
+        <defs>
+          <marker id="diagramArrowRed" markerWidth="6" markerHeight="6" refX="4" refY="2" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,4 L5,2 z" fill="#dc0619" /></marker>
+          <marker id="diagramArrowGold" markerWidth="6" markerHeight="6" refX="4" refY="2" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,4 L5,2 z" fill="#c99a4b" /></marker>
+        </defs>
+        ${parts.join("")}
+      </svg>
+    </div>`;
 }
 
 function svgShell(inner, viewBox = "0 0 420 240") {
@@ -1535,8 +1654,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".back-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      if (btn.dataset.go === "home") showView("home");
-      if (btn.dataset.go === "detail") showView("detail");
+      // Generico invece di un if per valore: serve anche a exerciseFormView,
+      // il cui data-go è impostato dinamicamente (home/calendar/detail) da
+      // cloudflare-client.js a seconda da dove si è aperto il form.
+      if (btn.dataset.go) showView(btn.dataset.go);
     });
   });
 

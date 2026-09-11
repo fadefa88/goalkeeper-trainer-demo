@@ -10,5 +10,6 @@ export async function onRequestDelete({ request, env }) {
   await env.DB.prepare("delete from training_sessions where user_id = ?").bind(user.id).run();
   await env.DB.prepare("delete from keepers where user_id = ?").bind(user.id).run();
   await env.DB.prepare("delete from user_settings where user_id = ?").bind(user.id).run();
+  await env.DB.prepare("delete from custom_exercises where user_id = ?").bind(user.id).run();
   return json({ ok: true });
 }

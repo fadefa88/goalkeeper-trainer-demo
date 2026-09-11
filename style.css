@@ -561,6 +561,15 @@ body:not(.gk-authenticated) .auth-card { width: 100%; max-width: 420px !importan
 .setup-error { color: var(--red-bright); font-size: 13px; line-height: 1.4; }
 .setup-actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-1); }
 
+/* Esercizi personali (custom_exercises): ricerca sopra la lista, badge
+   discreto sulla card, banner di conferma quando lo schema potrebbe non
+   riflettere più la descrizione modificata. Nessun colore/card a parte:
+   stessi token del resto del design system. */
+.exercise-search { margin: 0 0 var(--sp-3); }
+.tag-personal { display: inline-block; vertical-align: middle; font-size: 10px; font-weight: 700; letter-spacing: .03em; color: var(--red); background: var(--red-soft); border: 1px solid rgba(220, 6, 25, .3); border-radius: var(--radius-pill); padding: 2px 8px; }
+.diagram-changed-banner { margin-top: var(--sp-2); padding: var(--sp-3); border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line-strong); }
+.diagram-changed-banner .button-row { margin-top: var(--sp-2); }
+
 /* Primo accesso: nessun profilo ancora configurato. Topbar e bottom
    nav restano nascoste finché il wizard non è completato, così non si
    può raggiungere Calendario/Allenamento/Progressi a metà configurazione. */

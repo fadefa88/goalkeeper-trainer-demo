@@ -10,6 +10,16 @@
   let selectedCalendarDate = todayKey();
   let calendarMonthDate = new Date();
 
+  // --- Esercizi personalizzati (functions/api/custom-exercises) ----------
+  // Deve restare identico a CUSTOM_EXERCISE_CATEGORIES in functions/api/_shared.js
+  // e al CHECK(category IN (...)) di cloudflare-d1-schema.sql.
+  const CUSTOM_EXERCISE_CATEGORIES = ["Tecnico", "Difesa spazio", "Finalizzazione", "Motorio", "Conoscenza del gioco", "Altro"];
+  let customExercises = []; // già normalizzati, vedi normalizeCustomExercise
+  // Stato del form di creazione/modifica (unico, riusato da pagina Esercizi
+  // e planner del Calendario, vedi openExerciseForm). Null quando il form
+  // non è aperto.
+  let exerciseFormState = null;
+
   // --- Wizard di onboarding (setupView riusato, vedi setSetupMode) -------
   // "onboarding" = primo accesso, un passo alla volta, non si può uscire
   // finché non si completa; "edit" = "Modifica impostazioni base" da
@@ -64,6 +74,16 @@
       throw err;
     }
     return data;
+  }
+
+  // Controparte client di hashText() in functions/api/_diagram-scene.js
+  // (stesso algoritmo: SHA-256 esadecimale del testo normalizzato). Non
+  // importabile da lì: le Pages Functions sono moduli ESM, questo script no.
+  // Usata solo per confrontare hash, mai per verificarne la sicurezza.
+  async function hashDescription(text) {
+    const bytes = new TextEncoder().encode(String(text ?? "").trim());
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
   }
 
   function showAuth(message = "") {
@@ -125,6 +145,53 @@
     };
   }
 
+  // Adatta una riga di /api/custom-exercises alla forma generica che il
+  // resto dell'app già legge per qualunque esercizio (name/ambito/durationMin/
+  // docCategory...), così exerciseById/plannerExercisePool/filteredExercises
+  // non devono sapere se un esercizio è builtin o custom. I campi custom
+  // originali (objective/category/keepersCount/equipment/notes/diagram*)
+  // restano comunque disponibili per il dettaglio e il form di modifica.
+  function normalizeCustomExercise(row) {
+    return {
+      id: row.id,
+      name: row.name,
+      docCategory: "Personale",
+      ambito: row.category,
+      durationMin: row.durationMinutes,
+      description: row.description,
+      source: "custom",
+      objective: row.objective || "",
+      category: row.category,
+      durationMinutes: row.durationMinutes,
+      keepersCount: row.keepersCount ?? null,
+      equipment: row.equipment || "",
+      notes: row.notes || "",
+      diagramSceneJson: row.diagramSceneJson || null,
+      diagramVersion: row.diagramVersion || 1,
+      diagramSourceHash: row.diagramSourceHash || null,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt
+    };
+  }
+
+  async function loadCustomExercises() {
+    try {
+      const res = await api("/api/custom-exercises");
+      customExercises = (res.exercises || []).map(normalizeCustomExercise);
+    } catch (e) {
+      // Non bloccante: un account senza esercizi personali (o una richiesta
+      // fallita) non deve impedire login/uso del resto dell'app.
+      console.warn("Esercizi personali non caricati:", e.message);
+      customExercises = [];
+    }
+  }
+
+  window.gkCustomExercises = {
+    all: () => customExercises,
+    detailHtml: customExerciseDetailHtml,
+    openForm: openExerciseForm
+  };
+
   async function loadData(render = true) {
     localStorage.removeItem("gk_profile");
     localStorage.removeItem("gk_history");
@@ -134,6 +201,7 @@
       cloudUser = me.user;
       const profileRes = await api("/api/profile");
       const sessionsRes = await api("/api/sessions");
+      await loadCustomExercises();
       const rawProfile = profileRes.profile;
       // Fonte di verità unica per "il gruppo portieri non è ancora
       // configurato": i dati account tornati da GET /api/profile, non
@@ -152,6 +220,7 @@
       cloudUser = null;
       cloudProfile = null;
       cloudHistory = [];
+      customExercises = [];
       document.body.classList.remove("gk-authenticated", "gk-onboarding");
       if (render) showAuth(e.status === 401 ? "" : e.message);
       return;
@@ -359,7 +428,7 @@
 
   async function logout() {
     await api("/api/logout", { method: "POST" }).catch((e) => console.warn("Logout API non riuscita:", e.message));
-    cloudUser = null; cloudProfile = null; cloudHistory = [];
+    cloudUser = null; cloudProfile = null; cloudHistory = []; customExercises = [];
     showAuth("Logout effettuato.");
   }
 
@@ -401,15 +470,21 @@
     writePlans(plans);
   }
 
+  // Chokepoint unico: builtin (app.js) + personali (customExercises), letto
+  // da planner, vista Allenamento e avvio workout. Nessuno di questi punti
+  // deve sapere se un id è builtin o custom.
   function exerciseById(id) {
-    return exercises.find((ex) => ex.id === id) || null;
+    return exercises.find((ex) => ex.id === id) || customExercises.find((ex) => ex.id === id) || null;
   }
 
   function plannerExercisePool() {
     const sport = cloudProfile?.sportType || "calcio";
     const level = cloudProfile?.level || "medio";
     const recommended = exercises.filter((ex) => ex.sport === sport && ex.levels.includes(level));
-    return recommended.length ? recommended : exercises;
+    const builtinPool = recommended.length ? recommended : exercises;
+    // I personali vanno sempre in cima al selettore, indipendentemente da
+    // sport/livello: il coach li ha scritti apposta per il proprio gruppo.
+    return [...customExercises, ...builtinPool];
   }
 
   function planUsedMinutes(plan) {
@@ -485,6 +560,7 @@
           </label>
           <button id="addPlanExerciseBtn" class="primary-btn" type="button">Aggiungi</button>
         </div>
+        <button class="ghost-btn full" type="button" data-exercise-new="calendar">+ Nuovo esercizio</button>
         <div class="planner-actions">
           <button id="autoPlanBtn" class="dark-btn" type="button">Auto programma</button>
           <button id="clearPlanBtn" class="danger-btn" type="button">Svuota giornata</button>
@@ -898,7 +974,8 @@
     training: "Allenamento",
     progress: "Progressi",
     setup: "Setup allenamento",
-    profile: "Profilo"
+    profile: "Profilo",
+    exerciseForm: "Nuovo esercizio"
   };
 
   const baseShowView = showView;
@@ -932,6 +1009,7 @@
     }
     if (target === "home") { renderProfileSummary(); renderExercises(); }
     if (target === "training") renderTrainingView();
+    if (target === "exerciseForm") renderExerciseForm();
   };
 
   getProfile = () => cloudProfile;
@@ -989,6 +1067,336 @@
     const d = q("sessionDateInput");
     if (d) d.value = selectedCalendarDate || todayKey();
   };
+
+  // --- Form creazione/modifica esercizio personale ------------------------
+  // Unico form, riusato da "+ Nuovo esercizio" (pagina Esercizi), dal planner
+  // del Calendario e da "Duplica (come personale)". editing = riga esistente
+  // da modificare; prefillFrom = esercizio (builtin o personale) da cui
+  // precompilare senza modificarlo (duplicazione); returnTo decide dove si
+  // torna dopo il salvataggio.
+  function openExerciseForm({ editing = null, prefillFrom = null, returnTo = { view: "home" } } = {}) {
+    const base = editing || prefillFrom;
+    const carryDiagram = Boolean(base?.diagramSceneJson);
+    const category = base && CUSTOM_EXERCISE_CATEGORIES.includes(base.category) ? base.category
+      : (base && CUSTOM_EXERCISE_CATEGORIES.includes(base.ambito) ? base.ambito : "Tecnico");
+    exerciseFormState = {
+      id: editing?.id || null,
+      returnTo,
+      values: {
+        name: editing ? (base?.name || "") : (base ? `${base.name || ""} (copia)`.trim() : ""),
+        objective: base?.objective || "",
+        description: base?.description || "",
+        category,
+        durationMinutes: base?.durationMinutes ?? base?.durationMin ?? 30,
+        keepersCount: base?.keepersCount ?? "",
+        equipment: base?.equipment || "",
+        notes: base?.notes || ""
+      },
+      diagram: carryDiagram ? { scene: base.diagramSceneJson, sourceHash: base.diagramSourceHash } : null,
+      diagramSourceHash: editing ? (base?.diagramSourceHash || null) : null,
+      // Duplicare porta lo schema esistente da salvare subito (stessa
+      // descrizione al momento della copia); modificare no, finché non si
+      // rigenera esplicitamente.
+      diagramDirty: Boolean(prefillFrom && carryDiagram),
+      changeAcknowledged: false,
+      generating: false,
+      error: ""
+    };
+    showView("exerciseForm");
+  }
+
+  function exerciseFormCategoryOptions(selected) {
+    return CUSTOM_EXERCISE_CATEGORIES.map((c) => `<option value="${esc(c)}"${c === selected ? " selected" : ""}>${esc(c)}</option>`).join("");
+  }
+
+  function exerciseDiagramSectionHtml() {
+    const diagram = exerciseFormState.diagram;
+    if (exerciseFormState.generating) return `<p class="muted small-note">Generazione schema in corso...</p>`;
+    if (diagram?.scene) return renderDiagramScene(diagram.scene);
+    return `<p class="muted small-note">Schema non disponibile.</p>`;
+  }
+
+  function renderExerciseForm() {
+    const box = q("exerciseFormBox");
+    if (!box || !exerciseFormState) return;
+    const isEdit = Boolean(exerciseFormState.id);
+    const v = exerciseFormState.values;
+    const backBtn = q("exerciseFormBackBtn");
+    if (backBtn) {
+      backBtn.dataset.go = exerciseFormState.returnTo?.view || "home";
+      backBtn.textContent = exerciseFormState.returnTo?.view === "calendar" ? "← Calendario" : "← Esercizi";
+    }
+    if (q("screenTitle")) q("screenTitle").textContent = isEdit ? "Modifica esercizio" : "Nuovo esercizio";
+
+    box.innerHTML = `
+      <div class="setup-card exercise-form-card">
+        <h2>${isEdit ? "Modifica esercizio" : "Nuovo esercizio"}</h2>
+        <form id="exerciseForm" class="form-grid">
+          <label>Nome<input id="exName" type="text" required maxlength="120" value="${esc(v.name)}" /></label>
+          <label>Obiettivo<input id="exObjective" type="text" maxlength="160" placeholder="es. reattività sulla seconda palla" value="${esc(v.objective)}" /></label>
+          <label>Descrizione<textarea id="exDescription" required maxlength="4000" rows="6" placeholder="Descrivi liberamente l'esercizio: posizione di partenza, movimento, azione dei compagni/allenatore, ordine delle fasi...">${esc(v.description)}</textarea></label>
+          <label>Ambito<select id="exCategory">${exerciseFormCategoryOptions(v.category)}</select></label>
+          <label>Durata indicativa (minuti)<input id="exDuration" type="number" inputmode="numeric" min="1" max="240" required value="${esc(v.durationMinutes)}" /></label>
+          <label>Numero portieri<input id="exKeepersCount" type="number" inputmode="numeric" min="1" max="20" value="${esc(v.keepersCount)}" /></label>
+          <label>Materiale<input id="exEquipment" type="text" maxlength="300" placeholder="es. palloni, coni, sagome" value="${esc(v.equipment)}" /></label>
+          <label>Note<textarea id="exNotes" maxlength="2000" rows="3">${esc(v.notes)}</textarea></label>
+          <p id="exerciseFormError" class="setup-error" ${exerciseFormState.error ? "" : "hidden"}>${esc(exerciseFormState.error)}</p>
+          <div id="diagramChangedBanner" class="diagram-changed-banner" hidden>
+            <p class="muted small-note">La descrizione è cambiata. Vuoi aggiornare lo schema?</p>
+            <div class="button-row">
+              <button type="button" class="ghost-btn" data-exercise-keep-diagram>Mantieni schema</button>
+              <button type="button" class="accent-btn" data-exercise-regenerate-inline>Rigenera</button>
+            </div>
+          </div>
+          <div class="detail-block">
+            <h3>Schema tattico</h3>
+            <div id="exerciseDiagramPreview">${exerciseDiagramSectionHtml()}</div>
+            <button type="button" id="generateDiagramBtn" class="dark-btn full" style="margin-top:var(--sp-3)" ${exerciseFormState.generating ? "disabled" : ""}>${exerciseFormState.generating ? "Generazione in corso..." : "Genera schema con AI"}</button>
+          </div>
+          <div class="setup-actions">
+            <button type="submit" class="primary-btn full">Salva esercizio</button>
+          </div>
+        </form>
+      </div>`;
+
+    bindExerciseFormEvents();
+  }
+
+  function bindExerciseFormEvents() {
+    q("exerciseForm")?.addEventListener("submit", handleExerciseFormSubmit);
+    q("generateDiagramBtn")?.addEventListener("click", generateDiagramForForm);
+    const banner = q("diagramChangedBanner");
+    banner?.querySelector("[data-exercise-keep-diagram]")?.addEventListener("click", confirmKeepDiagram);
+    banner?.querySelector("[data-exercise-regenerate-inline]")?.addEventListener("click", confirmRegenerateDiagram);
+  }
+
+  function readExerciseFormValues() {
+    return {
+      name: q("exName")?.value?.trim() || "",
+      objective: q("exObjective")?.value?.trim() || "",
+      description: q("exDescription")?.value?.trim() || "",
+      category: q("exCategory")?.value || "Tecnico",
+      durationMinutes: Number(q("exDuration")?.value || 0),
+      keepersCount: q("exKeepersCount")?.value ? Number(q("exKeepersCount").value) : null,
+      equipment: q("exEquipment")?.value?.trim() || "",
+      notes: q("exNotes")?.value?.trim() || ""
+    };
+  }
+
+  function validateExerciseFormValues(v) {
+    if (!v.name) return "Il nome è obbligatorio.";
+    if (!v.description) return "La descrizione è obbligatoria.";
+    if (!v.durationMinutes || v.durationMinutes <= 0) return "Inserisci una durata valida.";
+    return "";
+  }
+
+  function showExerciseFormError(message) {
+    exerciseFormState.error = message || "";
+    const el = q("exerciseFormError");
+    if (el) { el.textContent = exerciseFormState.error; el.hidden = !exerciseFormState.error; }
+  }
+
+  function setDiagramGenerating(busy) {
+    exerciseFormState.generating = busy;
+    const btn = q("generateDiagramBtn");
+    if (btn) { btn.disabled = busy; btn.textContent = busy ? "Generazione in corso..." : "Genera schema con AI"; }
+  }
+
+  async function generateDiagramForForm() {
+    const description = q("exDescription")?.value?.trim() || "";
+    if (description.length < 10) { showExerciseFormError("Scrivi una descrizione più dettagliata prima di generare lo schema."); return; }
+    showExerciseFormError("");
+    setDiagramGenerating(true);
+    try {
+      const res = await api("/api/exercise-diagram", {
+        method: "POST",
+        body: { description, objective: q("exObjective")?.value || "", category: q("exCategory")?.value || "" }
+      });
+      exerciseFormState.generating = false;
+      if (res.scene) {
+        exerciseFormState.diagram = { scene: res.scene, sourceHash: res.sourceHash };
+        exerciseFormState.diagramSourceHash = res.sourceHash;
+        exerciseFormState.diagramDirty = true;
+        exerciseFormState.changeAcknowledged = true;
+      } else {
+        // env.AI assente/quota/timeout/output non valido: mai un errore
+        // bloccante, solo "schema non disponibile" (vedi reason in res).
+        exerciseFormState.diagram = null;
+      }
+    } catch (e) {
+      exerciseFormState.generating = false;
+      exerciseFormState.diagram = null;
+      showExerciseFormError(`Generazione schema non riuscita: ${e.message}`);
+    }
+    const preview = q("exerciseDiagramPreview");
+    if (preview) preview.innerHTML = exerciseDiagramSectionHtml();
+    const btn = q("generateDiagramBtn");
+    if (btn) { btn.disabled = false; btn.textContent = "Genera schema con AI"; }
+  }
+
+  function hideDiagramChangedBanner() {
+    const el = q("diagramChangedBanner");
+    if (el) el.hidden = true;
+  }
+
+  async function confirmKeepDiagram() {
+    exerciseFormState.changeAcknowledged = true;
+    hideDiagramChangedBanner();
+    if (exerciseFormState.pendingValues) await persistExercise(exerciseFormState.pendingValues);
+  }
+
+  async function confirmRegenerateDiagram() {
+    hideDiagramChangedBanner();
+    await generateDiagramForForm();
+    exerciseFormState.changeAcknowledged = true;
+    if (exerciseFormState.pendingValues) await persistExercise(exerciseFormState.pendingValues);
+  }
+
+  async function handleExerciseFormSubmit(event) {
+    event.preventDefault();
+    const values = readExerciseFormValues();
+    const validationError = validateExerciseFormValues(values);
+    if (validationError) { showExerciseFormError(validationError); return; }
+    showExerciseFormError("");
+
+    // Modifica di un esercizio che ha già uno schema: se la descrizione è
+    // cambiata da quando è stato generato, si chiede prima di salvare invece
+    // di rigenerare in automatico o di salvare uno schema ormai disallineato.
+    if (exerciseFormState.id && exerciseFormState.diagram?.scene && !exerciseFormState.changeAcknowledged) {
+      const currentHash = await hashDescription(values.description);
+      if (currentHash !== exerciseFormState.diagramSourceHash) {
+        exerciseFormState.pendingValues = values;
+        const banner = q("diagramChangedBanner");
+        if (banner) banner.hidden = false;
+        return;
+      }
+    }
+    await persistExercise(values);
+  }
+
+  async function persistExercise(values) {
+    const payload = { ...values };
+    if (exerciseFormState.diagramDirty) {
+      payload.diagramSceneJson = exerciseFormState.diagram?.scene || null;
+      payload.diagramSourceHash = exerciseFormState.diagram?.sourceHash || null;
+    }
+    const submitBtn = q("exerciseForm")?.querySelector('button[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Salvataggio..."; }
+    try {
+      const isEdit = Boolean(exerciseFormState.id);
+      const res = isEdit
+        ? await api(`/api/custom-exercises/${exerciseFormState.id}`, { method: "PUT", body: payload })
+        : await api("/api/custom-exercises", { method: "POST", body: payload });
+      await loadCustomExercises();
+      returnFromExerciseForm(normalizeCustomExercise(res.exercise));
+    } catch (e) {
+      showExerciseFormError(e.message || "Errore durante il salvataggio.");
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Salva esercizio"; }
+    }
+  }
+
+  function returnFromExerciseForm(saved) {
+    const returnTo = exerciseFormState?.returnTo || { view: "home" };
+    exerciseFormState = null;
+    if (returnTo.view === "calendar") {
+      if (returnTo.date) { selectedCalendarDate = returnTo.date; calendarMonthDate = parseDateKey(returnTo.date); }
+      showView("calendar");
+      // Preseleziona il nuovo esercizio nel picker "Aggiungi esercizio":
+      // renderDayPlanner() (chiamato da showView) ha appena ricostruito il
+      // <select>, il nuovo esercizio è già tra le opzioni (in cima, vedi
+      // plannerExercisePool).
+      const select = q("dayPlanExercise");
+      if (select && saved) select.value = saved.id;
+    } else {
+      selectedExercise = saved;
+      renderDetail();
+      showView("detail");
+    }
+  }
+
+  // --- Dettaglio esercizio personale ---------------------------------------
+  function customExerciseDetailHtml(ex) {
+    const diagramHtml = ex.diagramSceneJson
+      ? renderDiagramScene(ex.diagramSceneJson)
+      : `<p class="muted small-note">Schema non disponibile.</p>`;
+    return `
+      <div class="detail-card">
+        <p class="eyebrow">Personale · ${esc(ex.ambito)}</p>
+        <h2>${esc(ex.name)}</h2>
+        ${ex.objective ? `<p class="muted" style="margin-top:10px">${esc(ex.objective)}</p>` : ""}
+        <div class="detail-grid">
+          <div class="mini-metric"><strong>${esc(ex.durationMin)}'</strong><span>Durata</span></div>
+          <div class="mini-metric"><strong>${esc(ex.ambito)}</strong><span>Ambito</span></div>
+          <div class="mini-metric"><strong>${ex.keepersCount ?? "-"}</strong><span>Portieri</span></div>
+        </div>
+        <div class="detail-block"><h3>Descrizione</h3><p class="muted">${esc(ex.description)}</p></div>
+        ${ex.equipment ? `<div class="detail-block"><h3>Materiale</h3><p class="muted">${esc(ex.equipment)}</p></div>` : ""}
+        ${ex.notes ? `<div class="detail-block"><h3>Note</h3><p class="muted">${esc(ex.notes)}</p></div>` : ""}
+        <div class="detail-block"><h3>Schema</h3>${diagramHtml}</div>
+        <div class="setup-actions">
+          <button class="primary-btn full" type="button" data-exercise-add-session="${esc(ex.id)}">Aggiungi a seduta</button>
+          <button class="dark-btn full" type="button" data-exercise-edit="${esc(ex.id)}">Modifica</button>
+          <button class="dark-btn full" type="button" data-exercise-duplicate="1">Duplica</button>
+          <button class="dark-btn full" type="button" data-exercise-regenerate="${esc(ex.id)}">Rigenera schema</button>
+          <button class="danger-btn full" type="button" data-exercise-delete="${esc(ex.id)}">Elimina</button>
+        </div>
+      </div>`;
+  }
+
+  function addCustomExerciseToSession(id) {
+    const ex = customExercises.find((e) => e.id === id);
+    if (!ex) return;
+    // Stessa meccanica di addExerciseToPlan() nel planner: aggiunge alla
+    // giornata attualmente selezionata (oggi, se non se n'è mai scelta una).
+    const date = selectedCalendarDate || todayKey();
+    const plan = getDayPlan(date);
+    plan.items.push({ exerciseId: ex.id, minutes: ex.durationMin });
+    saveDayPlan(date, plan);
+    selectedCalendarDate = date;
+    calendarMonthDate = parseDateKey(date);
+    showView("calendar");
+  }
+
+  async function deleteCustomExercise(id) {
+    if (!confirm("Eliminare questo esercizio personale? L'operazione non è reversibile.")) return;
+    try {
+      await api(`/api/custom-exercises/${id}`, { method: "DELETE" });
+      await loadCustomExercises();
+      showView("home");
+    } catch (e) {
+      alert(`Eliminazione non riuscita: ${e.message}`);
+    }
+  }
+
+  async function regenerateDiagramForExisting(id) {
+    const ex = customExercises.find((e) => e.id === id);
+    if (!ex) return;
+    try {
+      const genRes = await api("/api/exercise-diagram", {
+        method: "POST",
+        body: { description: ex.description, objective: ex.objective, category: ex.category }
+      });
+      if (!genRes.scene) {
+        // AI non disponibile/output non valido questa volta: nessuna PUT, lo
+        // schema esistente (se c'era) resta quello che era, non viene svuotato.
+        alert("Rigenerazione non riuscita: schema non disponibile al momento. L'esercizio resta invariato.");
+        return;
+      }
+      const res = await api(`/api/custom-exercises/${id}`, {
+        method: "PUT",
+        body: {
+          name: ex.name, objective: ex.objective, description: ex.description, category: ex.category,
+          durationMinutes: ex.durationMinutes, keepersCount: ex.keepersCount, equipment: ex.equipment, notes: ex.notes,
+          diagramSceneJson: genRes.scene, diagramSourceHash: genRes.sourceHash
+        }
+      });
+      await loadCustomExercises();
+      selectedExercise = normalizeCustomExercise(res.exercise);
+      renderDetail();
+    } catch (e) {
+      alert(`Rigenerazione non riuscita: ${e.message}`);
+    }
+  }
 
   document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("gk_profile");
@@ -1057,7 +1465,27 @@
       const start = event.target.closest?.("[data-training-start]");
       if (start) { startTrainingExercise(start.dataset.planDate, Number(start.dataset.planIndex)); return; }
       const open = event.target.closest?.("[data-training-open-date]");
-      if (open) { localStorage.setItem(TRAINING_FILTER_KEY, open.dataset.trainingOpenDate); renderTrainingView(); }
+      if (open) { localStorage.setItem(TRAINING_FILTER_KEY, open.dataset.trainingOpenDate); renderTrainingView(); return; }
+
+      const newExercise = event.target.closest?.("[data-exercise-new]");
+      if (newExercise) {
+        openExerciseForm({ returnTo: { view: newExercise.dataset.exerciseNew || "home", date: selectedCalendarDate } });
+        return;
+      }
+      const duplicateBtn = event.target.closest?.("[data-exercise-duplicate]");
+      if (duplicateBtn) { openExerciseForm({ prefillFrom: selectedExercise, returnTo: { view: "home" } }); return; }
+      const editBtn = event.target.closest?.("[data-exercise-edit]");
+      if (editBtn) {
+        const editing = customExercises.find((e) => e.id === editBtn.dataset.exerciseEdit);
+        if (editing) openExerciseForm({ editing, returnTo: { view: "home" } });
+        return;
+      }
+      const deleteBtn = event.target.closest?.("[data-exercise-delete]");
+      if (deleteBtn) { deleteCustomExercise(deleteBtn.dataset.exerciseDelete); return; }
+      const regenBtn = event.target.closest?.("[data-exercise-regenerate]");
+      if (regenBtn) { regenerateDiagramForExisting(regenBtn.dataset.exerciseRegenerate); return; }
+      const addSessionBtn = event.target.closest?.("[data-exercise-add-session]");
+      if (addSessionBtn) { addCustomExerciseToSession(addSessionBtn.dataset.exerciseAddSession); return; }
     });
     document.addEventListener("change", (event) => {
       const target = event.target;
@@ -1069,7 +1497,8 @@
       }
     });
     document.addEventListener("input", (event) => {
-      if (event.target.matches?.("[data-training-note]")) updateTrainingItem(event.target.dataset.planDate, Number(event.target.dataset.planIndex), { note: event.target.value }, { immediate: false });
+      if (event.target.matches?.("[data-training-note]")) { updateTrainingItem(event.target.dataset.planDate, Number(event.target.dataset.planIndex), { note: event.target.value }, { immediate: false }); return; }
+      if (event.target.matches?.("#exerciseSearchInput")) { exerciseSearchQuery = event.target.value; renderExercises(); }
     });
     await loadData(true);
   });
