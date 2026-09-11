@@ -1,0 +1,12 @@
+{
+  "name": "goalkeeper-trainer-demo-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrape:clubs": "node scripts/scrape-diretta-clubs.mjs --season=2026"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0",
+    "sharp": "^0.34.3"
+  }
+}
