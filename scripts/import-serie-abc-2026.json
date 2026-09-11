@@ -8,7 +8,7 @@
     "colorSecondary": "#0070c0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:59.562Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:13.297Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -76,7 +76,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -101,7 +101,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T21:02:41.142Z",
+    "colorsVerifiedAt": "2026-09-11T21:44:55.255Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -118,7 +118,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -139,7 +139,7 @@
     "colorSecondary": "#001000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.453Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.197Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -207,7 +207,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -233,7 +233,7 @@
     "colorSecondary": "#b0e0f0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:59.607Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:13.374Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -301,7 +301,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -326,7 +326,7 @@
     "colorSecondary": "#ffb020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.499Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.261Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -394,7 +394,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -423,7 +423,7 @@
     "colorSecondary": "#5090c0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:59.820Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:13.563Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -491,7 +491,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       },
@@ -508,7 +508,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.143Z"
+            "verifiedAt": "2026-09-11T21:44:55.256Z"
           }
         ]
       }
@@ -537,7 +537,7 @@
     "colorSecondary": "#ffd010",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:59.861Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:13.771Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -605,7 +605,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -630,7 +630,7 @@
     "colorSecondary": "#b07020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.534Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.314Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -698,7 +698,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -727,7 +727,7 @@
     "colorSecondary": "#e04050",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:59.890Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:13.936Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -795,7 +795,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -820,7 +820,7 @@
     "colorSecondary": "#e05050",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:59.940Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:14.115Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -888,7 +888,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -913,7 +913,7 @@
     "colorSecondary": "#fff030",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.560Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.353Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -981,7 +981,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -1010,7 +1010,7 @@
     "colorSecondary": "#902040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.609Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.394Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1078,7 +1078,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -1107,7 +1107,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:59.978Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:14.285Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1145,7 +1145,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -1173,7 +1173,7 @@
     "colorSecondary": "#102040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.645Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.443Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1241,7 +1241,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -1267,7 +1267,7 @@
     "colorSecondary": "#c02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.216Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:14.475Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1335,7 +1335,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -1360,7 +1360,7 @@
     "colorSecondary": "#001010",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.417Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:14.643Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1428,7 +1428,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -1453,7 +1453,7 @@
     "colorSecondary": "#fff000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.693Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.497Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1521,7 +1521,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -1547,7 +1547,7 @@
     "colorSecondary": "#105090",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.451Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:14.819Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1615,7 +1615,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -1640,7 +1640,7 @@
     "colorSecondary": "#f02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.489Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:14.877Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1708,7 +1708,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -1733,7 +1733,7 @@
     "colorSecondary": "#f02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.523Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:14.910Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1801,7 +1801,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -1826,7 +1826,7 @@
     "colorSecondary": "#f0e040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.718Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.531Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1894,7 +1894,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -1920,7 +1920,7 @@
     "colorSecondary": "#a08030",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.558Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.083Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1988,7 +1988,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -2016,7 +2016,7 @@
     "colorSecondary": "#606060",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.750Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.579Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2084,7 +2084,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -2110,7 +2110,7 @@
     "colorSecondary": "#ffd000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.755Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.256Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2178,7 +2178,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -2206,7 +2206,7 @@
     "colorSecondary": "#507090",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.779Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.637Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2274,7 +2274,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.140Z"
+            "verifiedAt": "2026-09-11T21:44:55.252Z"
           }
         ]
       }
@@ -2300,7 +2300,7 @@
     "colorSecondary": "#d03030",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.790Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.296Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2368,7 +2368,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -2393,7 +2393,7 @@
     "colorSecondary": "#d0a050",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.804Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.674Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2461,7 +2461,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -2487,7 +2487,7 @@
     "colorSecondary": "#e02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.837Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.352Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2555,7 +2555,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -2580,7 +2580,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T21:02:41.141Z",
+    "colorsVerifiedAt": "2026-09-11T21:44:55.254Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2597,7 +2597,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -2618,7 +2618,7 @@
     "colorSecondary": "#ffb0c0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.880Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.513Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2671,7 +2671,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -2699,7 +2699,7 @@
     "colorSecondary": "#5080d0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.827Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.705Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2767,7 +2767,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -2793,7 +2793,7 @@
     "colorSecondary": "#202010",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.856Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.749Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2861,7 +2861,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -2892,7 +2892,7 @@
     "colorSecondary": "#e02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.884Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.778Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2960,7 +2960,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -2986,7 +2986,7 @@
     "colorSecondary": "#102020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.916Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.681Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3054,7 +3054,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -3079,7 +3079,7 @@
     "colorSecondary": "#e0c040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.961Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.836Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3147,7 +3147,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -3172,7 +3172,7 @@
     "colorSecondary": "#d04040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:00.997Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:15.895Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3240,7 +3240,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -3265,7 +3265,7 @@
     "colorSecondary": "#ffe000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.905Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.833Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3333,7 +3333,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.252Z"
           }
         ]
       }
@@ -3362,7 +3362,7 @@
     "colorSecondary": "#b02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.942Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.956Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3430,7 +3430,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -3456,7 +3456,7 @@
     "colorSecondary": "#201010",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.192Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:16.058Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3524,7 +3524,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -3549,7 +3549,7 @@
     "colorSecondary": "#f0c020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.230Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:16.266Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3617,7 +3617,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -3642,7 +3642,7 @@
     "colorSecondary": "#e0b070",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.262Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:16.485Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3710,7 +3710,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -3735,7 +3735,7 @@
     "colorSecondary": "#b02030",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.303Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:16.528Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3803,7 +3803,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -3828,7 +3828,7 @@
     "colorSecondary": "#003070",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.504Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:16.587Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3896,7 +3896,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -3926,7 +3926,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:49.970Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:03.997Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3959,7 +3959,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -3990,7 +3990,7 @@
     "colorSecondary": "#000010",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.069Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.120Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4058,7 +4058,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.140Z"
+            "verifiedAt": "2026-09-11T21:44:55.252Z"
           }
         ]
       },
@@ -4075,7 +4075,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.143Z"
+            "verifiedAt": "2026-09-11T21:44:55.256Z"
           }
         ]
       }
@@ -4110,7 +4110,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.088Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.203Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4133,7 +4133,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.140Z"
+            "verifiedAt": "2026-09-11T21:44:55.252Z"
           },
           {
             "season": "2026/2027",
@@ -4141,7 +4141,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       },
@@ -4158,7 +4158,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.143Z"
+            "verifiedAt": "2026-09-11T21:44:55.256Z"
           }
         ]
       }
@@ -4192,7 +4192,7 @@
     "colorSecondary": "#f06060",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.124Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.256Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4260,7 +4260,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -4286,7 +4286,7 @@
     "colorSecondary": "#d0a060",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.551Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:16.775Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4354,7 +4354,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -4382,7 +4382,7 @@
     "colorSecondary": "#70d0f0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.143Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.284Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4450,7 +4450,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.140Z"
+            "verifiedAt": "2026-09-11T21:44:55.252Z"
           }
         ]
       }
@@ -4476,7 +4476,7 @@
     "colorSecondary": "#b0a060",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.163Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.313Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4544,7 +4544,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -4570,7 +4570,7 @@
     "colorSecondary": "#203080",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.587Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:16.943Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4638,7 +4638,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -4663,7 +4663,7 @@
     "colorSecondary": "#d0a020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.619Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:17.100Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4731,7 +4731,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -4756,7 +4756,7 @@
     "colorSecondary": "#302060",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.658Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:17.160Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4824,7 +4824,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -4854,7 +4854,7 @@
     "colorSecondary": "#00b0f0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.192Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.360Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -4922,7 +4922,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -4951,7 +4951,7 @@
     "colorSecondary": "#102020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.215Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.399Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5019,7 +5019,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.140Z"
+            "verifiedAt": "2026-09-11T21:44:55.252Z"
           },
           {
             "season": "2026/2027",
@@ -5027,7 +5027,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -5057,7 +5057,7 @@
     "colorSecondary": "#000050",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.243Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.434Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5125,7 +5125,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -5151,7 +5151,7 @@
     "colorSecondary": "#90d0b0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.696Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:17.233Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5219,7 +5219,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -5240,62 +5240,62 @@
     "officialName": "Monza",
     "shortName": "Monza",
     "aliases": [],
-    "colorPrimary": "#e00030",
+    "colorPrimary": "#f01040",
     "colorSecondary": "#f05070",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.289Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.465Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
-        "color": "#e00030",
-        "share": 0.7037,
-        "saturation": 1
+        "color": "#f01040",
+        "share": 0.6293,
+        "saturation": 0.933
       },
       {
-        "color": "#e01040",
-        "share": 0.0212,
-        "saturation": 0.929
+        "color": "#f02040",
+        "share": 0.0479,
+        "saturation": 0.867
       },
       {
-        "color": "#e01030",
-        "share": 0.019,
-        "saturation": 0.929
+        "color": "#f01030",
+        "share": 0.0394,
+        "saturation": 0.933
       },
       {
         "color": "#e02040",
-        "share": 0.0182,
+        "share": 0.0181,
         "saturation": 0.857
       },
       {
-        "color": "#f05070",
-        "share": 0.022,
-        "saturation": 0.667
-      },
-      {
-        "color": "#f04060",
-        "share": 0.0186,
-        "saturation": 0.733
-      },
-      {
-        "color": "#f090a0",
-        "share": 0.0239,
-        "saturation": 0.4
-      },
-      {
         "color": "#f03050",
-        "share": 0.0128,
+        "share": 0.0171,
         "saturation": 0.8
       },
       {
-        "color": "#f06080",
-        "share": 0.0132,
-        "saturation": 0.6
+        "color": "#f04060",
+        "share": 0.0146,
+        "saturation": 0.733
       },
       {
-        "color": "#f08090",
-        "share": 0.0143,
-        "saturation": 0.467
+        "color": "#e03050",
+        "share": 0.0086,
+        "saturation": 0.786
+      },
+      {
+        "color": "#f05070",
+        "share": 0.01,
+        "saturation": 0.667
+      },
+      {
+        "color": "#ffa0b0",
+        "share": 0.0141,
+        "saturation": 0.373
+      },
+      {
+        "color": "#f06070",
+        "share": 0.0091,
+        "saturation": 0.6
       }
     ],
     "teams": [
@@ -5312,7 +5312,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -5341,7 +5341,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.312Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.492Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5364,7 +5364,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -5390,7 +5390,7 @@
     "colorSecondary": "#c02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.734Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:17.400Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5458,7 +5458,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -5483,7 +5483,7 @@
     "colorSecondary": "#204080",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.776Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:17.570Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5551,7 +5551,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -5576,7 +5576,7 @@
     "colorSecondary": "#8060a0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.840Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:17.800Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5644,7 +5644,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -5669,7 +5669,7 @@
     "colorSecondary": "#ffb0b0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.340Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.535Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5737,7 +5737,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -5766,7 +5766,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.369Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.580Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5789,7 +5789,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -5818,7 +5818,7 @@
     "colorSecondary": "#ffd010",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.390Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5886,7 +5886,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -5912,7 +5912,7 @@
     "colorSecondary": "#105080",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.876Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:17.975Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -5980,7 +5980,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -6008,7 +6008,7 @@
     "colorSecondary": "#102020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:01.926Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:18.178Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6076,7 +6076,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -6101,7 +6101,7 @@
     "colorSecondary": "#1070d0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.115Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:18.226Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6169,7 +6169,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -6194,7 +6194,7 @@
     "colorSecondary": "#e0e0e0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.148Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:18.406Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6262,7 +6262,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -6287,7 +6287,7 @@
     "colorSecondary": "#103070",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.186Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:18.559Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6355,7 +6355,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -6380,7 +6380,7 @@
     "colorSecondary": "#40b050",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.218Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:18.728Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6448,7 +6448,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -6473,7 +6473,7 @@
     "colorSecondary": "#e02020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.415Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.645Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6541,7 +6541,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -6567,7 +6567,7 @@
     "colorSecondary": "#202050",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.253Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:18.785Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6635,7 +6635,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -6660,7 +6660,7 @@
     "colorSecondary": "#201020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.284Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:18.941Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6728,7 +6728,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -6753,7 +6753,7 @@
     "colorSecondary": "#901020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.319Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:19.023Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6821,7 +6821,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -6846,7 +6846,7 @@
     "colorSecondary": "#b09050",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.512Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:19.166Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -6914,7 +6914,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -6939,7 +6939,7 @@
     "colorSecondary": "#c0a070",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.552Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:19.334Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7007,7 +7007,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -7035,7 +7035,7 @@
     "colorSecondary": "#ffb000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.454Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.674Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7103,7 +7103,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.140Z"
+            "verifiedAt": "2026-09-11T21:44:55.252Z"
           }
         ]
       }
@@ -7129,7 +7129,7 @@
     "colorSecondary": "#c09020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.589Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:19.525Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7197,7 +7197,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -7222,7 +7222,7 @@
     "colorSecondary": "#d02030",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.629Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:19.724Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7290,7 +7290,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -7320,7 +7320,7 @@
     "colorSecondary": "#e03020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.484Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.720Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7388,7 +7388,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -7417,7 +7417,7 @@
     "colorSecondary": "#004020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.522Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.757Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7485,7 +7485,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -7511,7 +7511,7 @@
     "colorSecondary": "#101020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.676Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:19.912Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7579,7 +7579,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -7604,7 +7604,7 @@
     "colorSecondary": "#005090",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.723Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:20.092Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7672,7 +7672,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -7697,7 +7697,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T21:02:41.142Z",
+    "colorsVerifiedAt": "2026-09-11T21:44:55.255Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -7714,7 +7714,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -7735,7 +7735,7 @@
     "colorSecondary": "#606060",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.759Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:20.143Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7803,7 +7803,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -7828,7 +7828,7 @@
     "colorSecondary": "#d05060",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega B; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.553Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.801Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7896,7 +7896,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -7925,7 +7925,7 @@
     "colorSecondary": "#f0b000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.576Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.831Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -7993,7 +7993,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -8019,7 +8019,7 @@
     "colorSecondary": "#ff1010",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.794Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:20.311Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -8087,7 +8087,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
@@ -8112,7 +8112,7 @@
     "colorSecondary": "#202040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.829Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:20.481Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -8180,7 +8180,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -8205,7 +8205,7 @@
     "colorSecondary": "#e0c040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:02.864Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:20.645Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -8273,7 +8273,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -8301,7 +8301,7 @@
     "colorSecondary": "#303020",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.600Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.876Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -8369,7 +8369,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -8395,7 +8395,7 @@
     "colorSecondary": "#203080",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:03.073Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:20.829Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -8463,7 +8463,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.254Z"
           }
         ]
       }
@@ -8491,7 +8491,7 @@
     "colorSecondary": "#007030",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma Lega Serie A; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:02:50.620Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:04.904Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -8559,7 +8559,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.141Z"
+            "verifiedAt": "2026-09-11T21:44:55.253Z"
           }
         ]
       }
@@ -8585,7 +8585,7 @@
     "colorSecondary": "#906040",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ufficiale Serie C; tema UI adattato dal client per contrasto.",
-    "colorsVerifiedAt": "2026-09-11T21:03:03.116Z",
+    "colorsVerifiedAt": "2026-09-11T21:45:20.944Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -8653,7 +8653,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T21:02:41.142Z"
+            "verifiedAt": "2026-09-11T21:44:55.255Z"
           }
         ]
       }
