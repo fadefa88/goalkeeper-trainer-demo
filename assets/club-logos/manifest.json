@@ -7,10 +7,11 @@
     "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/8ddc09c1aa73448da2dff953edd95d82_light.webp",
     "providerTeamId": null,
     "matchedName": "Roma",
+    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#900020",
     "colorSecondary": "#ffb000",
-    "scrapedAt": "2026-09-11T20:28:24.158Z"
+    "scrapedAt": "2026-09-11T20:38:30.163Z"
   },
   "fc-internazionale-milano": {
     "name": "Inter",
@@ -20,10 +21,11 @@
     "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/b7421caff23448c49134fa4f9095ee09_light.webp",
     "providerTeamId": null,
     "matchedName": "Internazionale",
+    "matchedFrom": "official-league",
     "score": 156,
     "colorPrimary": "#0020a0",
     "colorSecondary": "#000000",
-    "scrapedAt": "2026-09-11T20:28:24.206Z"
+    "scrapedAt": "2026-09-11T20:38:30.241Z"
   },
   "ssc-napoli": {
     "name": "Napoli",
@@ -33,10 +35,11 @@
     "sourceUrl": "https://media-sdp.legaseriea.it/clubLogos/f791dab8f0e4449e9884dd8dbd42dbcc_light.webp",
     "providerTeamId": null,
     "matchedName": "Napoli",
+    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#111111",
     "colorSecondary": "#ffffff",
-    "scrapedAt": "2026-09-11T20:28:24.235Z"
+    "scrapedAt": "2026-09-11T20:38:30.354Z"
   },
   "padova": {
     "name": "Padova",
@@ -46,10 +49,11 @@
     "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/padova-b.png",
     "providerTeamId": null,
     "matchedName": "Logo Padova",
+    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#f02020",
     "colorSecondary": "#ffc0c0",
-    "scrapedAt": "2026-09-11T20:28:24.306Z"
+    "scrapedAt": "2026-09-11T20:38:30.457Z"
   },
   "palermo-fc": {
     "name": "Palermo",
@@ -59,10 +63,11 @@
     "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/palermo-nero.png",
     "providerTeamId": null,
     "matchedName": "Logo Palermo",
+    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#000000",
     "colorSecondary": "#ffffff",
-    "scrapedAt": "2026-09-11T20:28:24.355Z"
+    "scrapedAt": "2026-09-11T20:38:30.514Z"
   },
   "uc-sampdoria": {
     "name": "Sampdoria",
@@ -72,61 +77,66 @@
     "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/sampdoria.png",
     "providerTeamId": null,
     "matchedName": "Logo Sampdoria",
+    "matchedFrom": "official-league",
     "score": 191,
     "colorPrimary": "#0050a0",
     "colorSecondary": "#000000",
-    "scrapedAt": "2026-09-11T20:28:24.400Z"
+    "scrapedAt": "2026-09-11T20:38:30.571Z"
   },
   "albinoleffe": {
     "name": "AlbinoLeffe",
     "competition": "Serie C",
     "path": "/assets/club-logos/albinoleffe.webp",
-    "source": "Lega Pro A",
-    "sourceUrl": "https://www.seriec.com/storage/app/media/youtube-thumbs/jQLXt-ogoPo.jpg",
-    "providerTeamId": null,
-    "matchedName": "Albinoleffe - AC Carpi 0-1 | Gli Highlights | 3ª giornata di Serie C Sky Wifi 2026/2027",
-    "score": 138,
-    "colorPrimary": "#300050",
-    "colorSecondary": "#000000",
-    "scrapedAt": "2026-09-11T20:28:24.495Z"
+    "source": "Sofascore",
+    "sourceUrl": "https://img.sofascore.com/api/v1/team/2732/image",
+    "providerTeamId": "2732",
+    "matchedName": "AlbinoLeffe",
+    "matchedFrom": "verified-fallback",
+    "score": 999,
+    "colorPrimary": "#c0d0f0",
+    "colorSecondary": "#0070b0",
+    "scrapedAt": "2026-09-11T20:38:30.732Z"
   },
   "trento": {
     "name": "Trento",
     "competition": "Serie C",
     "path": "/assets/club-logos/trento.webp",
-    "source": "Lega Pro A",
-    "sourceUrl": "https://www.seriec.com/storage/app/media/tv-logos/Now.png",
-    "providerTeamId": null,
-    "matchedName": "NOW",
-    "score": 103,
-    "colorPrimary": "#003030",
-    "colorSecondary": "#006070",
-    "scrapedAt": "2026-09-11T20:28:24.543Z"
+    "source": "Sofascore",
+    "sourceUrl": "https://img.sofascore.com/api/v1/team/258972/image",
+    "providerTeamId": "258972",
+    "matchedName": "Trento",
+    "matchedFrom": "verified-fallback",
+    "score": 999,
+    "colorPrimary": "#ffd030",
+    "colorSecondary": "#202040",
+    "scrapedAt": "2026-09-11T20:38:30.767Z"
   },
   "catania": {
     "name": "Catania",
     "competition": "Serie C",
     "path": "/assets/club-logos/catania.webp",
-    "source": "Lega Pro A",
-    "sourceUrl": "https://www.seriec.com/storage/app/media/youtube-thumbs/ZSJSeKBuKJ4.jpg",
-    "providerTeamId": null,
-    "matchedName": "Catania - Cosenza 4-0 | Gli Highlights | 3ª giornata di Serie C Sky Wifi 2026/2027",
-    "score": 138,
-    "colorPrimary": "#300050",
-    "colorSecondary": "#000000",
-    "scrapedAt": "2026-09-11T20:28:24.585Z"
+    "source": "Sofascore",
+    "sourceUrl": "https://img.sofascore.com/api/v1/team/2725/image",
+    "providerTeamId": "2725",
+    "matchedName": "Catania",
+    "matchedFrom": "verified-fallback",
+    "score": 999,
+    "colorPrimary": "#00a0e0",
+    "colorSecondary": "#e00010",
+    "scrapedAt": "2026-09-11T20:38:30.811Z"
   },
   "foggia": {
     "name": "Foggia",
     "competition": "Serie C",
     "path": "/assets/club-logos/foggia.webp",
-    "source": "Lega Pro A",
-    "sourceUrl": "https://www.seriec.com/storage/app/media/youtube-thumbs/fAm3il0azuM.jpg",
-    "providerTeamId": null,
-    "matchedName": "Foggia - Audace Cerignola 0-2 | Gli Highlights | 3ª giornata di Serie C Sky Wifi 2026/2027",
-    "score": 138,
-    "colorPrimary": "#300050",
-    "colorSecondary": "#000000",
-    "scrapedAt": "2026-09-11T20:28:24.630Z"
+    "source": "Sofascore",
+    "sourceUrl": "https://img.sofascore.com/api/v1/team/2803/image",
+    "providerTeamId": "2803",
+    "matchedName": "Foggia",
+    "matchedFrom": "verified-fallback",
+    "score": 999,
+    "colorPrimary": "#d02030",
+    "colorSecondary": "#202020",
+    "scrapedAt": "2026-09-11T20:38:30.847Z"
   }
 }

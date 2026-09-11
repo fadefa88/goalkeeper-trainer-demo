@@ -4,44 +4,44 @@
     "officialName": "AlbinoLeffe",
     "shortName": "AlbinoLeffe",
     "aliases": [],
-    "colorPrimary": "#300050",
-    "colorSecondary": "#000000",
+    "colorPrimary": "#c0d0f0",
+    "colorSecondary": "#0070b0",
     "colorsSource": "adapted",
-    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega Pro A.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.495Z",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Sofascore.",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.732Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
-        "color": "#300050",
-        "count": 2059
+        "color": "#c0d0f0",
+        "count": 1324
       },
       {
-        "color": "#200040",
-        "count": 1196
+        "color": "#d0e0f0",
+        "count": 995
       },
       {
-        "color": "#000000",
-        "count": 2837
+        "color": "#c0e0f0",
+        "count": 720
       },
       {
-        "color": "#400060",
-        "count": 515
+        "color": "#0070b0",
+        "count": 175
       },
       {
-        "color": "#300040",
-        "count": 481
+        "color": "#e00020",
+        "count": 171
       },
       {
-        "color": "#300060",
-        "count": 438
+        "color": "#a0c0e0",
+        "count": 280
       },
       {
-        "color": "#200030",
-        "count": 268
+        "color": "#0070c0",
+        "count": 140
       },
       {
-        "color": "#400070",
-        "count": 236
+        "color": "#0080c0",
+        "count": 113
       }
     ],
     "teams": [
@@ -58,7 +58,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -70,10 +70,11 @@
       }
     ],
     "logoPath": "/assets/club-logos/albinoleffe.webp",
-    "logoSourceUrl": "https://www.seriec.com/storage/app/media/youtube-thumbs/jQLXt-ogoPo.jpg",
-    "logoProvider": "Lega Pro A",
-    "logoProviderTeamId": null,
-    "logoMatchedName": "Albinoleffe - AC Carpi 0-1 | Gli Highlights | 3ª giornata di Serie C Sky Wifi 2026/2027"
+    "logoSourceUrl": "https://img.sofascore.com/api/v1/team/2732/image",
+    "logoProvider": "Sofascore",
+    "logoProviderTeamId": "2732",
+    "logoMatchedName": "AlbinoLeffe",
+    "logoMatchedFrom": "verified-fallback"
   },
   {
     "id": "altamura",
@@ -84,7 +85,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -101,7 +102,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -122,7 +123,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -139,7 +140,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -160,7 +161,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -177,7 +178,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -198,7 +199,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -215,7 +216,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -239,7 +240,7 @@
     "colorSecondary": "#1560bd",
     "colorsSource": "adapted",
     "colorsNote": "Nerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -256,7 +257,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       },
@@ -273,7 +274,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.572Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -298,7 +299,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -315,7 +316,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -336,7 +337,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -353,7 +354,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -377,7 +378,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Biancorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -394,7 +395,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -415,7 +416,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -432,7 +433,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -453,7 +454,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -470,7 +471,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -494,7 +495,7 @@
     "colorSecondary": "#16255e",
     "colorsSource": "adapted",
     "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -511,7 +512,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -535,7 +536,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Biancazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -552,7 +553,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -576,7 +577,7 @@
     "colorSecondary": "#14213d",
     "colorsSource": "adapted",
     "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -593,7 +594,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -614,7 +615,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -631,7 +632,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -652,7 +653,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -669,7 +670,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -690,7 +691,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -707,7 +708,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -728,7 +729,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -745,7 +746,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -766,7 +767,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -783,7 +784,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -800,44 +801,44 @@
     "officialName": "Catania",
     "shortName": "Catania",
     "aliases": [],
-    "colorPrimary": "#300050",
-    "colorSecondary": "#000000",
+    "colorPrimary": "#00a0e0",
+    "colorSecondary": "#e00010",
     "colorsSource": "adapted",
-    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega Pro A.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.585Z",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Sofascore.",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.811Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
-        "color": "#300050",
-        "count": 2201
+        "color": "#00a0e0",
+        "count": 1207
       },
       {
-        "color": "#200040",
-        "count": 1201
+        "color": "#e00010",
+        "count": 1146
+      },
+      {
+        "color": "#202020",
+        "count": 1886
+      },
+      {
+        "color": "#e01010",
+        "count": 216
+      },
+      {
+        "color": "#f00000",
+        "count": 184
+      },
+      {
+        "color": "#00a0f0",
+        "count": 104
+      },
+      {
+        "color": "#e00000",
+        "count": 77
       },
       {
         "color": "#000000",
-        "count": 2835
-      },
-      {
-        "color": "#400060",
-        "count": 593
-      },
-      {
-        "color": "#300040",
-        "count": 477
-      },
-      {
-        "color": "#300060",
-        "count": 422
-      },
-      {
-        "color": "#200030",
-        "count": 275
-      },
-      {
-        "color": "#400070",
-        "count": 241
+        "count": 171
       }
     ],
     "teams": [
@@ -854,7 +855,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -866,10 +867,11 @@
       }
     ],
     "logoPath": "/assets/club-logos/catania.webp",
-    "logoSourceUrl": "https://www.seriec.com/storage/app/media/youtube-thumbs/ZSJSeKBuKJ4.jpg",
-    "logoProvider": "Lega Pro A",
-    "logoProviderTeamId": null,
-    "logoMatchedName": "Catania - Cosenza 4-0 | Gli Highlights | 3ª giornata di Serie C Sky Wifi 2026/2027"
+    "logoSourceUrl": "https://img.sofascore.com/api/v1/team/2725/image",
+    "logoProvider": "Sofascore",
+    "logoProviderTeamId": "2725",
+    "logoMatchedName": "Catania",
+    "logoMatchedFrom": "verified-fallback"
   },
   {
     "id": "catanzaro",
@@ -880,7 +882,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -897,7 +899,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -918,7 +920,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -935,7 +937,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -959,7 +961,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -976,7 +978,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -997,7 +999,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1014,7 +1016,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1038,7 +1040,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Biancoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1055,7 +1057,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -1076,7 +1078,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1093,7 +1095,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -1114,7 +1116,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1131,7 +1133,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1152,7 +1154,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1169,7 +1171,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -1190,7 +1192,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1207,7 +1209,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1228,7 +1230,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1245,7 +1247,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1269,7 +1271,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Azzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1286,7 +1288,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1307,7 +1309,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1324,7 +1326,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1350,7 +1352,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Viola: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1367,7 +1369,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -1384,44 +1386,44 @@
     "officialName": "Foggia",
     "shortName": "Foggia",
     "aliases": [],
-    "colorPrimary": "#300050",
-    "colorSecondary": "#000000",
+    "colorPrimary": "#d02030",
+    "colorSecondary": "#202020",
     "colorsSource": "adapted",
-    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega Pro A.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.630Z",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Sofascore.",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.847Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
-        "color": "#300050",
-        "count": 2180
+        "color": "#d02030",
+        "count": 2536
       },
       {
-        "color": "#200040",
-        "count": 1060
+        "color": "#202020",
+        "count": 1435
       },
       {
-        "color": "#000000",
-        "count": 2839
+        "color": "#e02030",
+        "count": 271
       },
       {
-        "color": "#400060",
-        "count": 496
+        "color": "#002020",
+        "count": 212
       },
       {
-        "color": "#300040",
-        "count": 436
+        "color": "#102020",
+        "count": 290
       },
       {
-        "color": "#300060",
-        "count": 430
+        "color": "#f02030",
+        "count": 206
       },
       {
-        "color": "#200030",
-        "count": 253
+        "color": "#d03030",
+        "count": 217
       },
       {
-        "color": "#400070",
-        "count": 245
+        "color": "#d02020",
+        "count": 198
       }
     ],
     "teams": [
@@ -1438,7 +1440,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -1450,10 +1452,11 @@
       }
     ],
     "logoPath": "/assets/club-logos/foggia.webp",
-    "logoSourceUrl": "https://www.seriec.com/storage/app/media/youtube-thumbs/fAm3il0azuM.jpg",
-    "logoProvider": "Lega Pro A",
-    "logoProviderTeamId": null,
-    "logoMatchedName": "Foggia - Audace Cerignola 0-2 | Gli Highlights | 3ª giornata di Serie C Sky Wifi 2026/2027"
+    "logoSourceUrl": "https://img.sofascore.com/api/v1/team/2803/image",
+    "logoProvider": "Sofascore",
+    "logoProviderTeamId": "2803",
+    "logoMatchedName": "Foggia",
+    "logoMatchedFrom": "verified-fallback"
   },
   {
     "id": "folgore-caratese",
@@ -1464,7 +1467,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1481,7 +1484,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1502,7 +1505,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1519,7 +1522,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -1540,7 +1543,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1557,7 +1560,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -1581,7 +1584,7 @@
     "colorSecondary": "#17245c",
     "colorsSource": "adapted",
     "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1598,7 +1601,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -1619,7 +1622,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1636,7 +1639,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1657,7 +1660,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1674,7 +1677,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -1695,7 +1698,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1712,7 +1715,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1733,7 +1736,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1750,7 +1753,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -1771,7 +1774,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1788,7 +1791,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1814,7 +1817,7 @@
     "colorSecondary": "#1c3f94",
     "colorsSource": "adapted",
     "colorsNote": "Gialloblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1831,7 +1834,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -1857,7 +1860,7 @@
     "colorSecondary": "#000000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega Serie A.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.206Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.241Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -1907,7 +1910,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.566Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       },
@@ -1924,7 +1927,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.572Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -1943,7 +1946,8 @@
     "logoSourceUrl": "https://media-sdp.legaseriea.it/clubLogos/b7421caff23448c49134fa4f9095ee09_light.webp",
     "logoProvider": "Lega Serie A",
     "logoProviderTeamId": null,
-    "logoMatchedName": "Internazionale"
+    "logoMatchedName": "Internazionale",
+    "logoMatchedFrom": "official-league"
   },
   {
     "id": "juventus-fc",
@@ -1959,7 +1963,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -1976,7 +1980,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           },
           {
             "season": "2026/2027",
@@ -1984,7 +1988,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       },
@@ -2001,7 +2005,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.572Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -2030,7 +2034,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2047,7 +2051,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2068,7 +2072,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2085,7 +2089,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -2109,7 +2113,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Biancoceleste: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.566Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2126,7 +2130,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.566Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -2147,7 +2151,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2164,7 +2168,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -2185,7 +2189,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2202,7 +2206,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2223,7 +2227,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2240,7 +2244,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2261,7 +2265,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2278,7 +2282,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2304,7 +2308,7 @@
     "colorSecondary": "#c99a4b",
     "colorsSource": "adapted",
     "colorsNote": "Biancorosso: identità di club già in uso nell'app prima di questa funzione.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2321,7 +2325,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2345,7 +2349,7 @@
     "colorSecondary": "#000000",
     "colorsSource": "adapted",
     "colorsNote": "Rossonero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2362,7 +2366,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           },
           {
             "season": "2026/2027",
@@ -2370,7 +2374,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2395,7 +2399,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2412,7 +2416,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2433,7 +2437,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2450,7 +2454,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -2471,7 +2475,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2488,7 +2492,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -2512,7 +2516,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega Serie A.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.235Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.354Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2529,7 +2533,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -2544,7 +2548,8 @@
     "logoSourceUrl": "https://media-sdp.legaseriea.it/clubLogos/f791dab8f0e4449e9884dd8dbd42dbcc_light.webp",
     "logoProvider": "Lega Serie A",
     "logoProviderTeamId": null,
-    "logoMatchedName": "Napoli"
+    "logoMatchedName": "Napoli",
+    "logoMatchedFrom": "official-league"
   },
   {
     "id": "novara",
@@ -2555,7 +2560,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2572,7 +2577,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2593,7 +2598,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2610,7 +2615,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2631,7 +2636,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2648,7 +2653,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -2669,7 +2674,7 @@
     "colorSecondary": "#ffc0c0",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega B.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.306Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.457Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2719,7 +2724,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2734,7 +2739,8 @@
     "logoSourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/padova-b.png",
     "logoProvider": "Lega B",
     "logoProviderTeamId": null,
-    "logoMatchedName": "Logo Padova"
+    "logoMatchedName": "Logo Padova",
+    "logoMatchedFrom": "official-league"
   },
   {
     "id": "palermo-fc",
@@ -2748,7 +2754,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega B.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.355Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.514Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -2770,7 +2776,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2785,7 +2791,8 @@
     "logoSourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/palermo-nero.png",
     "logoProvider": "Lega B",
     "logoProviderTeamId": null,
-    "logoMatchedName": "Logo Palermo"
+    "logoMatchedName": "Logo Palermo",
+    "logoMatchedFrom": "official-league"
   },
   {
     "id": "parma-calcio-1913",
@@ -2799,7 +2806,7 @@
     "colorSecondary": "#1a2b6d",
     "colorsSource": "adapted",
     "colorsNote": "Crociato (giallo/blu): identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2816,7 +2823,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -2837,7 +2844,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2854,7 +2861,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2878,7 +2885,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Biancorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2895,7 +2902,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -2916,7 +2923,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2933,7 +2940,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -2954,7 +2961,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -2971,7 +2978,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -2992,7 +2999,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3009,7 +3016,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3030,7 +3037,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3047,7 +3054,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3068,7 +3075,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3085,7 +3092,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3106,7 +3113,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3123,7 +3130,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3144,7 +3151,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3161,7 +3168,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3182,7 +3189,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3199,7 +3206,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3220,7 +3227,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3237,7 +3244,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3258,7 +3265,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3275,7 +3282,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3299,7 +3306,7 @@
     "colorSecondary": "#ffb000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega Serie A.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.158Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.163Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3349,7 +3356,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.566Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -3364,7 +3371,8 @@
     "logoSourceUrl": "https://media-sdp.legaseriea.it/clubLogos/8ddc09c1aa73448da2dff953edd95d82_light.webp",
     "logoProvider": "Lega Serie A",
     "logoProviderTeamId": null,
-    "logoMatchedName": "Roma"
+    "logoMatchedName": "Roma",
+    "logoMatchedFrom": "official-league"
   },
   {
     "id": "salernitana",
@@ -3375,7 +3383,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3392,7 +3400,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3413,7 +3421,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3430,7 +3438,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3456,7 +3464,7 @@
     "colorSecondary": "#000000",
     "colorsSource": "adapted",
     "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega B.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.400Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.571Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
@@ -3506,7 +3514,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3521,7 +3529,8 @@
     "logoSourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/sampdoria.png",
     "logoProvider": "Lega B",
     "logoProviderTeamId": null,
-    "logoMatchedName": "Logo Sampdoria"
+    "logoMatchedName": "Logo Sampdoria",
+    "logoMatchedFrom": "official-league"
   },
   {
     "id": "us-sassuolo-calcio",
@@ -3535,7 +3544,7 @@
     "colorSecondary": "#0a0a0a",
     "colorsSource": "adapted",
     "colorsNote": "Neroverde: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3552,7 +3561,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -3573,7 +3582,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3590,7 +3599,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3611,7 +3620,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3628,7 +3637,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3649,7 +3658,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.571Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3666,7 +3675,7 @@
             "groupName": "Girone C",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.571Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3687,7 +3696,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3704,7 +3713,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3725,7 +3734,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3742,7 +3751,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3766,7 +3775,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Granata: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3783,7 +3792,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -3804,7 +3813,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3821,7 +3830,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -3838,44 +3847,44 @@
     "officialName": "Trento",
     "shortName": "Trento",
     "aliases": [],
-    "colorPrimary": "#003030",
-    "colorSecondary": "#006070",
+    "colorPrimary": "#ffd030",
+    "colorSecondary": "#202040",
     "colorsSource": "adapted",
-    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Lega Pro A.",
-    "colorsVerifiedAt": "2026-09-11T20:28:24.543Z",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma ottenuto da Sofascore.",
+    "colorsVerifiedAt": "2026-09-11T20:38:30.767Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [
       {
-        "color": "#003030",
-        "count": 527
+        "color": "#ffd030",
+        "count": 1355
       },
       {
-        "color": "#005050",
-        "count": 487
+        "color": "#202040",
+        "count": 1500
       },
       {
-        "color": "#004040",
-        "count": 451
+        "color": "#202050",
+        "count": 891
       },
       {
-        "color": "#006060",
-        "count": 408
+        "color": "#f0d030",
+        "count": 444
       },
       {
-        "color": "#005060",
-        "count": 236
+        "color": "#ffe030",
+        "count": 300
       },
       {
-        "color": "#006070",
-        "count": 236
+        "color": "#e0c030",
+        "count": 283
       },
       {
-        "color": "#007070",
-        "count": 195
+        "color": "#202020",
+        "count": 529
       },
       {
-        "color": "#002020",
-        "count": 193
+        "color": "#d0b030",
+        "count": 204
       }
     ],
     "teams": [
@@ -3892,7 +3901,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3904,10 +3913,11 @@
       }
     ],
     "logoPath": "/assets/club-logos/trento.webp",
-    "logoSourceUrl": "https://www.seriec.com/storage/app/media/tv-logos/Now.png",
-    "logoProvider": "Lega Pro A",
-    "logoProviderTeamId": null,
-    "logoMatchedName": "NOW"
+    "logoSourceUrl": "https://img.sofascore.com/api/v1/team/258972/image",
+    "logoProvider": "Sofascore",
+    "logoProviderTeamId": "258972",
+    "logoMatchedName": "Trento",
+    "logoMatchedFrom": "verified-fallback"
   },
   {
     "id": "treviso",
@@ -3918,7 +3928,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.569Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.606Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3935,7 +3945,7 @@
             "groupName": "Girone A",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.569Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -3959,7 +3969,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "adapted",
     "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.567Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -3976,7 +3986,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.567Z"
+            "verifiedAt": "2026-09-11T20:38:14.605Z"
           }
         ]
       }
@@ -3997,7 +4007,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -4014,7 +4024,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
@@ -4038,7 +4048,7 @@
     "colorSecondary": "#0a0a0a",
     "colorsSource": "adapted",
     "colorsNote": "Arancionerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.568Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.605Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -4055,7 +4065,7 @@
             "groupName": null,
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.568Z"
+            "verifiedAt": "2026-09-11T20:38:14.606Z"
           }
         ]
       }
@@ -4076,7 +4086,7 @@
     "colorSecondary": "#ffffff",
     "colorsSource": "unknown",
     "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
-    "colorsVerifiedAt": "2026-09-11T20:28:05.570Z",
+    "colorsVerifiedAt": "2026-09-11T20:38:14.607Z",
     "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
     "logoPaletteCandidates": [],
     "teams": [
@@ -4093,7 +4103,7 @@
             "groupName": "Girone B",
             "territory": "Italia",
             "dataSource": "Diretta.it",
-            "verifiedAt": "2026-09-11T20:28:05.570Z"
+            "verifiedAt": "2026-09-11T20:38:14.607Z"
           }
         ]
       }
