@@ -29,6 +29,9 @@ jobs:
       - name: Run scraper
         run: node scripts/scrape-diretta-clubs.mjs --season=${{ inputs.season }}
 
+      - name: Resolve team logos and colors
+        run: node scripts/enrich-club-logos.mjs --season=${{ inputs.season }}
+
       - name: Upload generated files
         uses: actions/upload-artifact@v4
         with:
