@@ -78,18 +78,20 @@ function bestOfficial(club, rows) {
 }
 
 async function json(url) {
-  const r = await fetch(url, { headers: { Accept: 'application/json', 'User-Agent': UA }, signal: AbortSignal.timeout(25000) });
+  const r = await fetch(url, { headers: { Accept: 'application/json', 'User-Agent': UA, Referer: 'https://www.sofascore.com/' }, signal: AbortSignal.timeout(25000) });
   if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
   return r.json();
 }
 
 async function sofaLogo(club) {
-  const queries = [club.shortName, club.officialName, ...(club.aliases || [])].filter(Boolean).slice(0, 4);
+  const queries = [club.shortName, club.officialName, ...(club.aliases || [])].filter(Boolean).slice(0, 5);
   let best = null;
+
   for (const q of queries) {
     const url = `https://api.sofascore.com/api/v1/search/all?q=${encodeURIComponent(q)}`;
     const d = await json(url).catch(() => null);
     const results = d?.results || d?.data?.results || [];
+
     for (const raw of results) {
       const e = raw.entity || raw;
       const type = String(raw.type || e.type || '').toLowerCase();
@@ -99,14 +101,22 @@ async function sofaLogo(club) {
       if (sport && sport !== 'football' && sport !== 'soccer') continue;
       if (country && !country.includes('ital')) continue;
       if (!e.id || !e.name) continue;
+
       let score = nameScore(e.name, club);
-      if (country.includes('ital')) score += 15;
-      if (!best || score > best.score) best = { id: e.id, name: e.name, score };
+      if (country.includes('ital')) score += 20;
+      if (norm(e.name) === norm(q)) score += 20;
+
+      if (!best || score > best.score) {
+        best = { id: e.id, name: e.name, score };
+      }
     }
-    if (best?.score >= 120) break;
+
+    if (best?.score >= 140) break;
     await sleep(250);
   }
-  if (!best || best.score < 85) return null;
+
+  if (!best || best.score < 90) return null;
+
   return {
     source: 'Sofascore',
     src: `https://img.sofascore.com/api/v1/team/${best.id}/image`,
@@ -117,7 +127,8 @@ async function sofaLogo(club) {
 }
 
 async function getBytes(url) {
-  const r = await fetch(url, { headers: { Accept: 'image/*,*/*;q=0.8', 'User-Agent': UA, Referer: 'https://www.google.com/' }, signal: AbortSignal.timeout(30000), redirect: 'follow' });
+  const referer = /sofascore\.com/i.test(url) ? 'https://www.sofascore.com/' : 'https://www.google.com/';
+  const r = await fetch(url, { headers: { Accept: 'image/*,*/*;q=0.8', 'User-Agent': UA, Referer: referer }, signal: AbortSignal.timeout(30000), redirect: 'follow' });
   if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
   const b = Buffer.from(await r.arrayBuffer());
   if (b.length < 200) throw new Error('immagine troppo piccola');
@@ -157,6 +168,7 @@ const wanted = [
 ];
 const selected = wanted.map(([competition, name]) => ({ competition, club: findClub(clubs, name), wantedName: name })).filter(x => x.club);
 console.log(`TEST MULTI-SORGENTE: ${selected.length}/10 società: ${selected.map(x => x.wantedName).join(', ')}`);
+console.log('Serie C: sorgente FORZATA = Sofascore (nessun tentativo Lega Pro/Wikipedia).');
 
 await rm(logoDir, { recursive: true, force: true });
 await mkdir(logoDir, { recursive: true });
@@ -164,14 +176,10 @@ await mkdir(logoDir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ viewport: { width: 1440, height: 1200 }, locale: 'it-IT', userAgent: UA });
 const page = await context.newPage();
-let serieA = [], serieB = [], serieC = [];
+let serieA = [], serieB = [];
 try {
   serieA = await scrapeImageIndex(page, 'https://www.legaseriea.it/team', 'Lega Serie A').catch(e => { console.warn(`Lega A non disponibile: ${e.message}`); return []; });
   serieB = await scrapeImageIndex(page, 'https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4', 'Lega B').catch(e => { console.warn(`Lega B non disponibile: ${e.message}`); return []; });
-  for (const [g, u] of [['A','https://www.lega-pro.com/campionato/squadre/girone-a/'],['B','https://www.lega-pro.com/campionato/squadre/girone-b/'],['C','https://www.lega-pro.com/campionato/squadre/girone-c/']]) {
-    const r = await scrapeImageIndex(page, u, `Lega Pro ${g}`).catch(() => []);
-    serieC.push(...r);
-  }
 } finally {
   await context.close().catch(() => {});
   await browser.close().catch(() => {});
@@ -183,25 +191,42 @@ for (let i = 0; i < selected.length; i++) {
   const { competition, club, wantedName } = selected[i];
   const label = club.shortName || club.officialName || wantedName;
   process.stdout.write(`[${i + 1}/${selected.length}] ${label}: `);
+
   try {
-    const pool = competition === 'Serie A' ? serieA : competition === 'Serie B' ? serieB : serieC;
-    const official = bestOfficial(club, pool);
-    let hit = official ? { source: official.source, src: official.src, score: official.score, matchedName: official.alt || official.nearText } : null;
+    let hit = null;
     let b = null;
-    if (hit) {
-      try { b = await getBytes(hit.src); } catch { hit = null; }
-    }
-    if (!hit) {
+
+    if (competition === 'Serie C') {
       hit = await sofaLogo(club);
       if (hit) b = await getBytes(hit.src);
+    } else {
+      const pool = competition === 'Serie A' ? serieA : serieB;
+      const official = bestOfficial(club, pool);
+      hit = official ? { source: official.source, src: official.src, score: official.score, matchedName: official.alt || official.nearText } : null;
+
+      if (hit) {
+        try {
+          b = await getBytes(hit.src);
+        } catch {
+          hit = null;
+        }
+      }
+
+      if (!hit) {
+        hit = await sofaLogo(club);
+        if (hit) b = await getBytes(hit.src);
+      }
     }
+
     if (!hit || !b) {
       missing.push({ id: club.id, name: label, competition });
       console.log('NON TROVATO');
       continue;
     }
+
     const pal = await palette(b);
     await sharp(b, { failOn: 'none' }).resize(256, 256, { fit: 'inside', withoutEnlargement: true }).webp({ quality: 92, alphaQuality: 100 }).toFile(resolve(logoDir, `${club.id}.webp`));
+
     Object.assign(club, {
       logoPath: `/assets/club-logos/${club.id}.webp`,
       logoSourceUrl: hit.src,
@@ -215,9 +240,23 @@ for (let i = 0; i < selected.length; i++) {
       colorsVerifiedAt: new Date().toISOString(),
       logoPaletteCandidates: pal.candidates
     });
-    manifest[club.id] = { name: label, competition, path: club.logoPath, source: hit.source, sourceUrl: hit.src, providerTeamId: hit.providerTeamId || null, matchedName: hit.matchedName || null, score: hit.score || null, colorPrimary: pal.primary, colorSecondary: pal.secondary, scrapedAt: new Date().toISOString() };
+
+    manifest[club.id] = {
+      name: label,
+      competition,
+      path: club.logoPath,
+      source: hit.source,
+      sourceUrl: hit.src,
+      providerTeamId: hit.providerTeamId || null,
+      matchedName: hit.matchedName || null,
+      score: hit.score || null,
+      colorPrimary: pal.primary,
+      colorSecondary: pal.secondary,
+      scrapedAt: new Date().toISOString()
+    };
+
     found++;
-    console.log(`OK [${hit.source}] ${hit.matchedName || ''} -> ${pal.primary} / ${pal.secondary}`);
+    console.log(`OK [${hit.source}] ${hit.matchedName || ''}${hit.providerTeamId ? ` (teamId ${hit.providerTeamId})` : ''} -> ${pal.primary} / ${pal.secondary}`);
   } catch (e) {
     missing.push({ id: club.id, name: label, competition, error: e.message });
     console.log(`ERRORE: ${e.message}`);
