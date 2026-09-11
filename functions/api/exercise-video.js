@@ -11,6 +11,10 @@ const VIDEO_TIMEOUT_MS = 280000;
 const DOWNLOAD_TIMEOUT_MS = 60000;
 const MAX_VIDEO_BYTES = 25 * 1024 * 1024;
 const COOLDOWN_MS = 60000;
+// Se una riga resta "generating" più a lungo di questo, la considero
+// abbandonata (client disconnesso, tab chiusa, worker terminato) invece di
+// bloccare per sempre nuovi tentativi con un 409.
+const STALE_GENERATING_MS = 6 * 60 * 1000;
 
 const STORYBOARD_SYSTEM_PROMPT = `Sei un assistente che trasforma la descrizione di un esercizio per
 portieri in uno storyboard cronologico in INGLESE, pensato per generare
@@ -47,7 +51,28 @@ async function withTimeout(promise, ms, label) {
   }
 }
 
-export async function onRequestPost({ request, env, waitUntil }) {
+// Riga "generating" da più di STALE_GENERATING_MS: considerata abbandonata,
+// non blocca un nuovo tentativo.
+function isStaleGenerating(row) {
+  if (row.video_status !== "generating") return false;
+  if (!row.video_created_at) return true;
+  const elapsed = Date.now() - new Date(row.video_created_at).getTime();
+  return !Number.isFinite(elapsed) || elapsed > STALE_GENERATING_MS;
+}
+
+export async function onRequestPost({ request, env }) {
+  try {
+    return await handlePost(request, env);
+  } catch (err) {
+    // Stesso pattern degli altri endpoint: senza try/catch qui un'eccezione
+    // imprevista (es. env.DB non disponibile) torna una pagina d'errore
+    // HTML generica invece di JSON.
+    console.error("exercise-video POST failed", err);
+    return error(`Errore avvio generazione: ${err?.message || String(err || "errore sconosciuto")}`, 500);
+  }
+}
+
+async function handlePost(request, env) {
   const originError = assertSameOrigin(request);
   if (originError) return originError;
 
@@ -61,26 +86,36 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const existing = await loadOwned(env, user.id, exerciseId);
   if (!existing) return error("Esercizio non trovato", 404);
 
-  if (existing.video_status === "generating") return error("Generazione video già in corso per questo esercizio", 409);
-  if (existing.video_created_at) {
+  if (existing.video_status === "generating" && !isStaleGenerating(existing)) {
+    return error("Generazione video già in corso per questo esercizio", 409);
+  }
+  if (existing.video_created_at && existing.video_status !== "generating") {
     const elapsed = Date.now() - new Date(existing.video_created_at).getTime();
     if (Number.isFinite(elapsed) && elapsed < COOLDOWN_MS) return error("Attendi qualche secondo prima di riprovare", 429);
   }
   // Una sola generazione concorrente per utente: il costo di una generazione
-  // video è significativamente più alto di quella del testo/JSON.
-  const inFlight = await env.DB.prepare("select count(*) as n from custom_exercises where user_id = ? and video_status = 'generating'")
-    .bind(user.id).first();
-  if ((inFlight?.n || 0) > 0) return error("Hai già una generazione video in corso, attendi che finisca", 409);
+  // video è significativamente più alto di quella del testo/JSON. Le righe
+  // "generating" ma stantie non contano (vedi isStaleGenerating).
+  const inFlight = await env.DB.prepare("select id, video_created_at from custom_exercises where user_id = ? and video_status = 'generating'")
+    .bind(user.id).all();
+  const reallyInFlight = (inFlight.results || []).filter((row) => row.id !== exerciseId && !isStaleGenerating(row));
+  if (reallyInFlight.length > 0) return error("Hai già una generazione video in corso, attendi che finisca", 409);
 
   const now = new Date().toISOString();
   await env.DB.prepare("update custom_exercises set video_status = 'generating', video_error = null, video_created_at = ? where id = ? and user_id = ?")
     .bind(now, exerciseId, user.id).run();
 
-  const task = runVideoGeneration(env, user.id, { ...existing, video_status: "generating" });
-  if (typeof waitUntil === "function") waitUntil(task);
-  else task.catch((err) => console.error("exercise-video background task failed", err));
+  // Sincrono, niente ctx.waitUntil(): quel meccanismo ha un limite hard di
+  // 30 secondi dopo l'invio della risposta, ben sotto il tempo reale di una
+  // generazione video — il task veniva ucciso in silenzio prima di
+  // raggiungere il catch, lasciando la riga bloccata su "generating" per
+  // sempre. L'attesa di rete (fetch/subrequest) NON conta come CPU time su
+  // Workers/Pages, quindi tenere la richiesta HTTP aperta per la durata
+  // reale della generazione è il modo corretto, non un compromesso.
+  await runVideoGeneration(env, user.id, { ...existing, video_status: "generating" });
 
-  return json({ status: "generating" }, 202);
+  const final = await loadOwned(env, user.id, exerciseId);
+  return json({ status: final?.video_status || "failed", error: final?.video_error || null });
 }
 
 async function setFailed(env, userId, exerciseId, message) {

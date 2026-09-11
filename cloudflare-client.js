@@ -436,7 +436,6 @@
   async function logout() {
     await api("/api/logout", { method: "POST" }).catch((e) => console.warn("Logout API non riuscita:", e.message));
     cloudUser = null; cloudProfile = null; cloudHistory = []; customExercises = [];
-    stopVideoPolling();
     showAuth("Logout effettuato.");
   }
 
@@ -1018,11 +1017,6 @@
     if (target === "home") { renderProfileSummary(); renderExercises(); }
     if (target === "training") renderTrainingView();
     if (target === "exerciseForm") renderExerciseForm();
-    // Il polling dello stato video vive solo mentre si guarda il dettaglio
-    // dell'esercizio in generazione: si ferma appena si esce da quella
-    // vista e riparte da sola se la si riapre mentre è ancora "generating".
-    if (target !== "detail") stopVideoPolling();
-    else if (selectedExercise?.source === "custom" && selectedExercise.videoStatus === "generating") startVideoPolling(selectedExercise.id);
   };
 
   getProfile = () => cloudProfile;
@@ -1274,51 +1268,29 @@
 
   // --- Video esercizio personale (functions/api/exercise-video.js) --------
   // Nessuna generazione automatica: solo un click esplicito dell'utente
-  // (Genera video / Rigenera video) chiama POST /api/exercise-video. Lo
-  // stato torna "generating" subito; il polling qui sotto aggiorna la UI
-  // quando il worker in background (ctx.waitUntil sul server) finisce.
-  let videoPollTimer = null;
-  let videoPollExerciseId = null;
-
-  function stopVideoPolling() {
-    if (videoPollTimer) clearInterval(videoPollTimer);
-    videoPollTimer = null;
-    videoPollExerciseId = null;
-  }
-
-  function startVideoPolling(id) {
-    stopVideoPolling();
-    videoPollExerciseId = id;
-    const startedAt = Date.now();
-    videoPollTimer = setInterval(async () => {
-      // Rete di sicurezza: se lo stato non si aggiorna mai (es. un errore
-      // silenzioso lato server), il polling si ferma da solo invece di
-      // girare all'infinito in background.
-      if (Date.now() - startedAt > 6 * 60 * 1000) { stopVideoPolling(); return; }
-      try {
-        await loadCustomExercises();
-        const ex = customExercises.find((e) => e.id === id);
-        if (!ex) { stopVideoPolling(); return; }
-        if (selectedExercise?.id === id) {
-          selectedExercise = ex;
-          if (q("detailView")?.classList.contains("active")) renderDetail();
-        }
-        if (ex.videoStatus !== "generating") stopVideoPolling();
-      } catch (e) {
-        console.warn("Polling stato video non riuscito:", e.message);
-      }
-    }, 4000);
-  }
-
+  // (Genera video / Rigenera video) chiama POST /api/exercise-video. La
+  // richiesta resta aperta per tutta la durata reale della generazione (il
+  // server la esegue in modo sincrono, non in background: vedi il commento
+  // in exercise-video.js sul perché ctx.waitUntil non andava bene) e la
+  // risposta porta già lo stato finale — niente polling da gestire qui.
   async function startVideoGeneration(id) {
+    // Stato "generating" ottimistico subito, prima ancora che la richiesta
+    // parta: l'utente vede l'indicatore immediatamente, non solo a fine
+    // chiamata (che può durare a lungo).
+    const ex = customExercises.find((e) => e.id === id);
+    if (ex) ex.videoStatus = "generating";
+    if (selectedExercise?.id === id) { selectedExercise = { ...selectedExercise, videoStatus: "generating" }; renderDetail(); }
     try {
       await api("/api/exercise-video", { method: "POST", body: { customExerciseId: id } });
-      const ex = customExercises.find((e) => e.id === id);
-      if (ex) ex.videoStatus = "generating";
-      if (selectedExercise?.id === id) { selectedExercise = { ...selectedExercise, videoStatus: "generating" }; renderDetail(); }
-      startVideoPolling(id);
     } catch (e) {
-      alert(`Generazione video non avviata: ${e.message}`);
+      alert(`Generazione video non riuscita: ${e.message}`);
+    } finally {
+      // Si rilegge sempre dal server, sia in successo che in errore: lo
+      // stato reale (ready/failed/ancora generating se stantio) è già lì,
+      // non va ricostruito lato client.
+      await loadCustomExercises().catch(() => {});
+      const updated = customExercises.find((e) => e.id === id);
+      if (selectedExercise?.id === id && updated) { selectedExercise = updated; renderDetail(); }
     }
   }
 
