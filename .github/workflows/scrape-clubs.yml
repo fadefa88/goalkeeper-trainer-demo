@@ -7,6 +7,15 @@ on:
         description: Starting year of the season
         required: true
         default: '2026'
+      import_to_d1:
+        description: Import generated catalog into the app database
+        required: true
+        type: boolean
+        default: false
+      base_url:
+        description: App base URL used for D1 import, e.g. https://example.pages.dev
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -35,11 +44,37 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Run scraper
+      - name: Scrape Serie A, Serie B and Serie C catalog
         run: node scripts/scrape-diretta-clubs.mjs --season=${{ inputs.season }}
 
-      - name: Resolve team logos and colors
+      - name: Resolve official logos and derive UI palettes
         run: node scripts/enrich-club-logos.mjs --season=${{ inputs.season }}
+
+      - name: Validate D1 import
+        if: ${{ inputs.import_to_d1 }}
+        env:
+          ADMIN_IMPORT_TOKEN: ${{ secrets.ADMIN_IMPORT_TOKEN }}
+          APP_BASE_URL: ${{ inputs.base_url }}
+        run: |
+          if [ -z "$APP_BASE_URL" ]; then
+            echo "base_url is required when import_to_d1 is enabled"
+            exit 1
+          fi
+          if [ -z "$ADMIN_IMPORT_TOKEN" ]; then
+            echo "GitHub secret ADMIN_IMPORT_TOKEN is required when import_to_d1 is enabled"
+            exit 1
+          fi
+          node scripts/import-clubs.mjs "scripts/import-serie-abc-${{ inputs.season }}.json" \
+            --base-url="$APP_BASE_URL" --dry-run
+
+      - name: Import catalog and palettes into D1
+        if: ${{ inputs.import_to_d1 }}
+        env:
+          ADMIN_IMPORT_TOKEN: ${{ secrets.ADMIN_IMPORT_TOKEN }}
+          APP_BASE_URL: ${{ inputs.base_url }}
+        run: |
+          node scripts/import-clubs.mjs "scripts/import-serie-abc-${{ inputs.season }}.json" \
+            --base-url="$APP_BASE_URL" --apply
 
       - name: Upload generated files
         uses: actions/upload-artifact@v4
