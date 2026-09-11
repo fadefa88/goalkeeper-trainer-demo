@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-import './enrich-multisource-logos-test.mjs';
+import './enrich-multisource-logos.mjs';
