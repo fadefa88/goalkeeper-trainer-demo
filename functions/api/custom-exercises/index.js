@@ -1,7 +1,4 @@
-import { sanitizeScene } from "../_diagram-scene.js";
 import { assertSameOrigin, error, json, mapCustomExercise, readJson, requireAuth, validateCustomExercisePayload } from "../_shared.js";
-
-const HASH_RE = /^[0-9a-f]{64}$/;
 
 export async function onRequestGet({ request, env }) {
   const { response, user } = await requireAuth(env, request);
@@ -33,21 +30,16 @@ async function create(request, env) {
   const { value, error: validationError } = validateCustomExercisePayload(body);
   if (validationError) return error(validationError, 400);
 
-  // diagramSceneJson arriva (se presente) già come oggetto generato da
-  // POST /api/exercise-diagram: viene comunque riconvalidato qui, non ci si
-  // fida di un client che scrivesse direttamente su questo endpoint.
-  const scene = body.diagramSceneJson ? sanitizeScene(body.diagramSceneJson) : null;
-  const diagramSourceHash = scene && HASH_RE.test(String(body.diagramSourceHash || "")) ? body.diagramSourceHash : null;
-
   const now = new Date().toISOString();
   const id = crypto.randomUUID();
+  // video_status resta "none" (default D1): la generazione video è sempre
+  // un'azione esplicita successiva (POST /api/exercise-video), mai
+  // automatica alla creazione.
   await env.DB.prepare(
-    "insert into custom_exercises (id, user_id, name, objective, description, category, duration_minutes, keepers_count, equipment, notes, diagram_scene_json, diagram_version, diagram_source_hash, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    "insert into custom_exercises (id, user_id, name, objective, description, category, duration_minutes, keepers_count, equipment, notes, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
   ).bind(
     id, user.id, value.name, value.objective, value.description, value.category, value.durationMinutes,
-    value.keepersCount, value.equipment, value.notes,
-    scene ? JSON.stringify(scene) : null, scene ? scene.version : 1, diagramSourceHash,
-    now, now
+    value.keepersCount, value.equipment, value.notes, now, now
   ).run();
 
   const row = await env.DB.prepare("select * from custom_exercises where id = ? and user_id = ?").bind(id, user.id).first();

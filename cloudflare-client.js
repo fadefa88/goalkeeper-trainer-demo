@@ -76,12 +76,17 @@
     return data;
   }
 
-  // Controparte client di hashText() in functions/api/_diagram-scene.js
-  // (stesso algoritmo: SHA-256 esadecimale del testo normalizzato). Non
-  // importabile da lì: le Pages Functions sono moduli ESM, questo script no.
-  // Usata solo per confrontare hash, mai per verificarne la sicurezza.
-  async function hashDescription(text) {
-    const bytes = new TextEncoder().encode(String(text ?? "").trim());
+  // Controparte client di hashVideoSource() in functions/api/_video-prompt.js
+  // (stesso algoritmo e stesso ordine di chiavi nel JSON: il risultato deve
+  // combaciare byte per byte). Non importabile da lì: le Pages Functions
+  // sono moduli ESM, questo script no. Usata solo per confrontare hash, mai
+  // per verificarne la sicurezza.
+  async function hashVideoSource({ description, objective, equipment, keepersCount, category }) {
+    const payload = JSON.stringify({
+      description: description || "", objective: objective || "", equipment: equipment || "",
+      keepersCount: keepersCount ?? null, category: category || ""
+    });
+    const bytes = new TextEncoder().encode(payload);
     const digest = await crypto.subtle.digest("SHA-256", bytes);
     return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
   }
@@ -149,7 +154,7 @@
   // resto dell'app già legge per qualunque esercizio (name/ambito/durationMin/
   // docCategory...), così exerciseById/plannerExercisePool/filteredExercises
   // non devono sapere se un esercizio è builtin o custom. I campi custom
-  // originali (objective/category/keepersCount/equipment/notes/diagram*)
+  // originali (objective/category/keepersCount/equipment/notes/video*)
   // restano comunque disponibili per il dettaglio e il form di modifica.
   function normalizeCustomExercise(row) {
     return {
@@ -166,9 +171,11 @@
       keepersCount: row.keepersCount ?? null,
       equipment: row.equipment || "",
       notes: row.notes || "",
-      diagramSceneJson: row.diagramSceneJson || null,
-      diagramVersion: row.diagramVersion || 1,
-      diagramSourceHash: row.diagramSourceHash || null,
+      videoStatus: row.videoStatus || "none",
+      videoSourceHash: row.videoSourceHash || null,
+      videoModel: row.videoModel || null,
+      videoCreatedAt: row.videoCreatedAt || null,
+      videoError: row.videoError || null,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt
     };
@@ -429,6 +436,7 @@
   async function logout() {
     await api("/api/logout", { method: "POST" }).catch((e) => console.warn("Logout API non riuscita:", e.message));
     cloudUser = null; cloudProfile = null; cloudHistory = []; customExercises = [];
+    stopVideoPolling();
     showAuth("Logout effettuato.");
   }
 
@@ -1010,6 +1018,11 @@
     if (target === "home") { renderProfileSummary(); renderExercises(); }
     if (target === "training") renderTrainingView();
     if (target === "exerciseForm") renderExerciseForm();
+    // Il polling dello stato video vive solo mentre si guarda il dettaglio
+    // dell'esercizio in generazione: si ferma appena si esce da quella
+    // vista e riparte da sola se la si riapre mentre è ancora "generating".
+    if (target !== "detail") stopVideoPolling();
+    else if (selectedExercise?.source === "custom" && selectedExercise.videoStatus === "generating") startVideoPolling(selectedExercise.id);
   };
 
   getProfile = () => cloudProfile;
@@ -1070,13 +1083,12 @@
 
   // --- Form creazione/modifica esercizio personale ------------------------
   // Unico form, riusato da "+ Nuovo esercizio" (pagina Esercizi), dal planner
-  // del Calendario e da "Duplica (come personale)". editing = riga esistente
-  // da modificare; prefillFrom = esercizio (builtin o personale) da cui
-  // precompilare senza modificarlo (duplicazione); returnTo decide dove si
-  // torna dopo il salvataggio.
+  // del Calendario e da "Duplica" (custom o builtin). Gestisce solo i campi
+  // testuali: il video si genera sempre dopo il salvataggio, dal dettaglio
+  // (vedi startVideoGeneration più sotto), mai durante la compilazione del
+  // form — evita di pagare una generazione per un esercizio non salvato.
   function openExerciseForm({ editing = null, prefillFrom = null, returnTo = { view: "home" } } = {}) {
     const base = editing || prefillFrom;
-    const carryDiagram = Boolean(base?.diagramSceneJson);
     const category = base && CUSTOM_EXERCISE_CATEGORIES.includes(base.category) ? base.category
       : (base && CUSTOM_EXERCISE_CATEGORIES.includes(base.ambito) ? base.ambito : "Tecnico");
     exerciseFormState = {
@@ -1092,14 +1104,12 @@
         equipment: base?.equipment || "",
         notes: base?.notes || ""
       },
-      diagram: carryDiagram ? { scene: base.diagramSceneJson, sourceHash: base.diagramSourceHash } : null,
-      diagramSourceHash: editing ? (base?.diagramSourceHash || null) : null,
-      // Duplicare porta lo schema esistente da salvare subito (stessa
-      // descrizione al momento della copia); modificare no, finché non si
-      // rigenera esplicitamente.
-      diagramDirty: Boolean(prefillFrom && carryDiagram),
+      // Usati solo in modifica, per rilevare "la descrizione è cambiata da
+      // quando ho generato il video" (vedi handleExerciseFormSubmit).
+      videoStatus: editing?.videoStatus || "none",
+      videoSourceHash: editing?.videoSourceHash || null,
       changeAcknowledged: false,
-      generating: false,
+      autoRegenerateVideo: false,
       error: ""
     };
     showView("exerciseForm");
@@ -1107,13 +1117,6 @@
 
   function exerciseFormCategoryOptions(selected) {
     return CUSTOM_EXERCISE_CATEGORIES.map((c) => `<option value="${esc(c)}"${c === selected ? " selected" : ""}>${esc(c)}</option>`).join("");
-  }
-
-  function exerciseDiagramSectionHtml() {
-    const diagram = exerciseFormState.diagram;
-    if (exerciseFormState.generating) return `<p class="muted small-note">Generazione schema in corso...</p>`;
-    if (diagram?.scene) return renderDiagramScene(diagram.scene);
-    return `<p class="muted small-note">Schema non disponibile.</p>`;
   }
 
   function renderExerciseForm() {
@@ -1141,17 +1144,12 @@
           <label>Materiale<input id="exEquipment" type="text" maxlength="300" placeholder="es. palloni, coni, sagome" value="${esc(v.equipment)}" /></label>
           <label>Note<textarea id="exNotes" maxlength="2000" rows="3">${esc(v.notes)}</textarea></label>
           <p id="exerciseFormError" class="setup-error" ${exerciseFormState.error ? "" : "hidden"}>${esc(exerciseFormState.error)}</p>
-          <div id="diagramChangedBanner" class="diagram-changed-banner" hidden>
-            <p class="muted small-note">La descrizione è cambiata. Vuoi aggiornare lo schema?</p>
+          <div id="videoChangedBanner" class="state-changed-banner" hidden>
+            <p class="muted small-note">Il video non corrisponde più alla descrizione aggiornata.</p>
             <div class="button-row">
-              <button type="button" class="ghost-btn" data-exercise-keep-diagram>Mantieni schema</button>
-              <button type="button" class="accent-btn" data-exercise-regenerate-inline>Rigenera</button>
+              <button type="button" class="ghost-btn" data-exercise-keep-video>Mantieni video</button>
+              <button type="button" class="accent-btn" data-exercise-regenerate-video-inline>Rigenera video</button>
             </div>
-          </div>
-          <div class="detail-block">
-            <h3>Schema tattico</h3>
-            <div id="exerciseDiagramPreview">${exerciseDiagramSectionHtml()}</div>
-            <button type="button" id="generateDiagramBtn" class="dark-btn full" style="margin-top:var(--sp-3)" ${exerciseFormState.generating ? "disabled" : ""}>${exerciseFormState.generating ? "Generazione in corso..." : "Genera schema con AI"}</button>
           </div>
           <div class="setup-actions">
             <button type="submit" class="primary-btn full">Salva esercizio</button>
@@ -1164,10 +1162,9 @@
 
   function bindExerciseFormEvents() {
     q("exerciseForm")?.addEventListener("submit", handleExerciseFormSubmit);
-    q("generateDiagramBtn")?.addEventListener("click", generateDiagramForForm);
-    const banner = q("diagramChangedBanner");
-    banner?.querySelector("[data-exercise-keep-diagram]")?.addEventListener("click", confirmKeepDiagram);
-    banner?.querySelector("[data-exercise-regenerate-inline]")?.addEventListener("click", confirmRegenerateDiagram);
+    const banner = q("videoChangedBanner");
+    banner?.querySelector("[data-exercise-keep-video]")?.addEventListener("click", confirmKeepVideo);
+    banner?.querySelector("[data-exercise-regenerate-video-inline]")?.addEventListener("click", confirmRegenerateVideoFromForm);
   }
 
   function readExerciseFormValues() {
@@ -1196,59 +1193,21 @@
     if (el) { el.textContent = exerciseFormState.error; el.hidden = !exerciseFormState.error; }
   }
 
-  function setDiagramGenerating(busy) {
-    exerciseFormState.generating = busy;
-    const btn = q("generateDiagramBtn");
-    if (btn) { btn.disabled = busy; btn.textContent = busy ? "Generazione in corso..." : "Genera schema con AI"; }
-  }
-
-  async function generateDiagramForForm() {
-    const description = q("exDescription")?.value?.trim() || "";
-    if (description.length < 10) { showExerciseFormError("Scrivi una descrizione più dettagliata prima di generare lo schema."); return; }
-    showExerciseFormError("");
-    setDiagramGenerating(true);
-    try {
-      const res = await api("/api/exercise-diagram", {
-        method: "POST",
-        body: { description, objective: q("exObjective")?.value || "", category: q("exCategory")?.value || "" }
-      });
-      exerciseFormState.generating = false;
-      if (res.scene) {
-        exerciseFormState.diagram = { scene: res.scene, sourceHash: res.sourceHash };
-        exerciseFormState.diagramSourceHash = res.sourceHash;
-        exerciseFormState.diagramDirty = true;
-        exerciseFormState.changeAcknowledged = true;
-      } else {
-        // env.AI assente/quota/timeout/output non valido: mai un errore
-        // bloccante, solo "schema non disponibile" (vedi reason in res).
-        exerciseFormState.diagram = null;
-      }
-    } catch (e) {
-      exerciseFormState.generating = false;
-      exerciseFormState.diagram = null;
-      showExerciseFormError(`Generazione schema non riuscita: ${e.message}`);
-    }
-    const preview = q("exerciseDiagramPreview");
-    if (preview) preview.innerHTML = exerciseDiagramSectionHtml();
-    const btn = q("generateDiagramBtn");
-    if (btn) { btn.disabled = false; btn.textContent = "Genera schema con AI"; }
-  }
-
-  function hideDiagramChangedBanner() {
-    const el = q("diagramChangedBanner");
+  function hideVideoChangedBanner() {
+    const el = q("videoChangedBanner");
     if (el) el.hidden = true;
   }
 
-  async function confirmKeepDiagram() {
+  async function confirmKeepVideo() {
     exerciseFormState.changeAcknowledged = true;
-    hideDiagramChangedBanner();
+    hideVideoChangedBanner();
     if (exerciseFormState.pendingValues) await persistExercise(exerciseFormState.pendingValues);
   }
 
-  async function confirmRegenerateDiagram() {
-    hideDiagramChangedBanner();
-    await generateDiagramForForm();
+  async function confirmRegenerateVideoFromForm() {
     exerciseFormState.changeAcknowledged = true;
+    exerciseFormState.autoRegenerateVideo = true;
+    hideVideoChangedBanner();
     if (exerciseFormState.pendingValues) await persistExercise(exerciseFormState.pendingValues);
   }
 
@@ -1259,14 +1218,15 @@
     if (validationError) { showExerciseFormError(validationError); return; }
     showExerciseFormError("");
 
-    // Modifica di un esercizio che ha già uno schema: se la descrizione è
-    // cambiata da quando è stato generato, si chiede prima di salvare invece
-    // di rigenerare in automatico o di salvare uno schema ormai disallineato.
-    if (exerciseFormState.id && exerciseFormState.diagram?.scene && !exerciseFormState.changeAcknowledged) {
-      const currentHash = await hashDescription(values.description);
-      if (currentHash !== exerciseFormState.diagramSourceHash) {
+    // Solo in modifica di un esercizio con un video pronto: se la
+    // descrizione (o gli altri campi che incidono sul video) sono cambiati
+    // da quando è stato generato, si chiede prima di salvare invece di
+    // rigenerare in automatico o di lasciare un video ormai disallineato.
+    if (exerciseFormState.id && exerciseFormState.videoStatus === "ready" && exerciseFormState.videoSourceHash && !exerciseFormState.changeAcknowledged) {
+      const currentHash = await hashVideoSource(values);
+      if (currentHash !== exerciseFormState.videoSourceHash) {
         exerciseFormState.pendingValues = values;
-        const banner = q("diagramChangedBanner");
+        const banner = q("videoChangedBanner");
         if (banner) banner.hidden = false;
         return;
       }
@@ -1275,20 +1235,18 @@
   }
 
   async function persistExercise(values) {
-    const payload = { ...values };
-    if (exerciseFormState.diagramDirty) {
-      payload.diagramSceneJson = exerciseFormState.diagram?.scene || null;
-      payload.diagramSourceHash = exerciseFormState.diagram?.sourceHash || null;
-    }
     const submitBtn = q("exerciseForm")?.querySelector('button[type="submit"]');
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Salvataggio..."; }
     try {
       const isEdit = Boolean(exerciseFormState.id);
       const res = isEdit
-        ? await api(`/api/custom-exercises/${exerciseFormState.id}`, { method: "PUT", body: payload })
-        : await api("/api/custom-exercises", { method: "POST", body: payload });
+        ? await api(`/api/custom-exercises/${exerciseFormState.id}`, { method: "PUT", body: values })
+        : await api("/api/custom-exercises", { method: "POST", body: values });
       await loadCustomExercises();
-      returnFromExerciseForm(normalizeCustomExercise(res.exercise));
+      const saved = normalizeCustomExercise(res.exercise);
+      const autoRegenerate = exerciseFormState.autoRegenerateVideo;
+      returnFromExerciseForm(saved);
+      if (autoRegenerate) startVideoGeneration(saved.id);
     } catch (e) {
       showExerciseFormError(e.message || "Errore durante il salvataggio.");
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Salva esercizio"; }
@@ -1314,15 +1272,83 @@
     }
   }
 
+  // --- Video esercizio personale (functions/api/exercise-video.js) --------
+  // Nessuna generazione automatica: solo un click esplicito dell'utente
+  // (Genera video / Rigenera video) chiama POST /api/exercise-video. Lo
+  // stato torna "generating" subito; il polling qui sotto aggiorna la UI
+  // quando il worker in background (ctx.waitUntil sul server) finisce.
+  let videoPollTimer = null;
+  let videoPollExerciseId = null;
+
+  function stopVideoPolling() {
+    if (videoPollTimer) clearInterval(videoPollTimer);
+    videoPollTimer = null;
+    videoPollExerciseId = null;
+  }
+
+  function startVideoPolling(id) {
+    stopVideoPolling();
+    videoPollExerciseId = id;
+    const startedAt = Date.now();
+    videoPollTimer = setInterval(async () => {
+      // Rete di sicurezza: se lo stato non si aggiorna mai (es. un errore
+      // silenzioso lato server), il polling si ferma da solo invece di
+      // girare all'infinito in background.
+      if (Date.now() - startedAt > 6 * 60 * 1000) { stopVideoPolling(); return; }
+      try {
+        await loadCustomExercises();
+        const ex = customExercises.find((e) => e.id === id);
+        if (!ex) { stopVideoPolling(); return; }
+        if (selectedExercise?.id === id) {
+          selectedExercise = ex;
+          if (q("detailView")?.classList.contains("active")) renderDetail();
+        }
+        if (ex.videoStatus !== "generating") stopVideoPolling();
+      } catch (e) {
+        console.warn("Polling stato video non riuscito:", e.message);
+      }
+    }, 4000);
+  }
+
+  async function startVideoGeneration(id) {
+    try {
+      await api("/api/exercise-video", { method: "POST", body: { customExerciseId: id } });
+      const ex = customExercises.find((e) => e.id === id);
+      if (ex) ex.videoStatus = "generating";
+      if (selectedExercise?.id === id) { selectedExercise = { ...selectedExercise, videoStatus: "generating" }; renderDetail(); }
+      startVideoPolling(id);
+    } catch (e) {
+      alert(`Generazione video non avviata: ${e.message}`);
+    }
+  }
+
+  function confirmAndRegenerateVideo(id) {
+    if (!confirm("Creare un nuovo video sostituirà quello attuale e utilizzerà una nuova generazione AI. Continuare?")) return;
+    startVideoGeneration(id);
+  }
+
   // --- Dettaglio esercizio personale ---------------------------------------
+  function videoSectionHtml(ex) {
+    if (ex.videoStatus === "ready") {
+      return `<video class="exercise-video" controls playsinline muted preload="metadata" src="/api/custom-exercises/${esc(ex.id)}/video"></video>
+        <button class="dark-btn full" type="button" data-exercise-video-regenerate="${esc(ex.id)}" style="margin-top:var(--sp-3)">Rigenera video</button>`;
+    }
+    if (ex.videoStatus === "generating") {
+      return `<p class="muted small-note video-generating">Creazione video...</p>`;
+    }
+    if (ex.videoStatus === "failed") {
+      return `<p class="muted small-note">Video non disponibile.</p>
+        <button class="dark-btn full" type="button" data-exercise-video-generate="${esc(ex.id)}" style="margin-top:var(--sp-3)">Riprova</button>`;
+    }
+    return `<button class="dark-btn full" type="button" data-exercise-video-generate="${esc(ex.id)}">Genera video</button>`;
+  }
+
   function customExerciseDetailHtml(ex) {
-    const diagramHtml = ex.diagramSceneJson
-      ? renderDiagramScene(ex.diagramSceneJson)
-      : `<p class="muted small-note">Schema non disponibile.</p>`;
     return `
       <div class="detail-card">
         <p class="eyebrow">Personale · ${esc(ex.ambito)}</p>
         <h2>${esc(ex.name)}</h2>
+        <div class="detail-block">${videoSectionHtml(ex)}</div>
         ${ex.objective ? `<p class="muted" style="margin-top:10px">${esc(ex.objective)}</p>` : ""}
         <div class="detail-grid">
           <div class="mini-metric"><strong>${esc(ex.durationMin)}'</strong><span>Durata</span></div>
@@ -1332,12 +1358,10 @@
         <div class="detail-block"><h3>Descrizione</h3><p class="muted">${esc(ex.description)}</p></div>
         ${ex.equipment ? `<div class="detail-block"><h3>Materiale</h3><p class="muted">${esc(ex.equipment)}</p></div>` : ""}
         ${ex.notes ? `<div class="detail-block"><h3>Note</h3><p class="muted">${esc(ex.notes)}</p></div>` : ""}
-        <div class="detail-block"><h3>Schema</h3>${diagramHtml}</div>
         <div class="setup-actions">
           <button class="primary-btn full" type="button" data-exercise-add-session="${esc(ex.id)}">Aggiungi a seduta</button>
           <button class="dark-btn full" type="button" data-exercise-edit="${esc(ex.id)}">Modifica</button>
           <button class="dark-btn full" type="button" data-exercise-duplicate="1">Duplica</button>
-          <button class="dark-btn full" type="button" data-exercise-regenerate="${esc(ex.id)}">Rigenera schema</button>
           <button class="danger-btn full" type="button" data-exercise-delete="${esc(ex.id)}">Elimina</button>
         </div>
       </div>`;
@@ -1365,36 +1389,6 @@
       showView("home");
     } catch (e) {
       alert(`Eliminazione non riuscita: ${e.message}`);
-    }
-  }
-
-  async function regenerateDiagramForExisting(id) {
-    const ex = customExercises.find((e) => e.id === id);
-    if (!ex) return;
-    try {
-      const genRes = await api("/api/exercise-diagram", {
-        method: "POST",
-        body: { description: ex.description, objective: ex.objective, category: ex.category }
-      });
-      if (!genRes.scene) {
-        // AI non disponibile/output non valido questa volta: nessuna PUT, lo
-        // schema esistente (se c'era) resta quello che era, non viene svuotato.
-        alert("Rigenerazione non riuscita: schema non disponibile al momento. L'esercizio resta invariato.");
-        return;
-      }
-      const res = await api(`/api/custom-exercises/${id}`, {
-        method: "PUT",
-        body: {
-          name: ex.name, objective: ex.objective, description: ex.description, category: ex.category,
-          durationMinutes: ex.durationMinutes, keepersCount: ex.keepersCount, equipment: ex.equipment, notes: ex.notes,
-          diagramSceneJson: genRes.scene, diagramSourceHash: genRes.sourceHash
-        }
-      });
-      await loadCustomExercises();
-      selectedExercise = normalizeCustomExercise(res.exercise);
-      renderDetail();
-    } catch (e) {
-      alert(`Rigenerazione non riuscita: ${e.message}`);
     }
   }
 
@@ -1482,10 +1476,12 @@
       }
       const deleteBtn = event.target.closest?.("[data-exercise-delete]");
       if (deleteBtn) { deleteCustomExercise(deleteBtn.dataset.exerciseDelete); return; }
-      const regenBtn = event.target.closest?.("[data-exercise-regenerate]");
-      if (regenBtn) { regenerateDiagramForExisting(regenBtn.dataset.exerciseRegenerate); return; }
       const addSessionBtn = event.target.closest?.("[data-exercise-add-session]");
       if (addSessionBtn) { addCustomExerciseToSession(addSessionBtn.dataset.exerciseAddSession); return; }
+      const videoGenBtn = event.target.closest?.("[data-exercise-video-generate]");
+      if (videoGenBtn) { startVideoGeneration(videoGenBtn.dataset.exerciseVideoGenerate); return; }
+      const videoRegenBtn = event.target.closest?.("[data-exercise-video-regenerate]");
+      if (videoRegenBtn) { confirmAndRegenerateVideo(videoRegenBtn.dataset.exerciseVideoRegenerate); return; }
     });
     document.addEventListener("change", (event) => {
       const target = event.target;
