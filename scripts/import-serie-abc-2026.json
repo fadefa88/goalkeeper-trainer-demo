@@ -1,0 +1,4041 @@
+[
+  {
+    "id": "albinoleffe",
+    "officialName": "AlbinoLeffe",
+    "shortName": "AlbinoLeffe",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "rVfjdq9o"
+      }
+    ]
+  },
+  {
+    "id": "altamura",
+    "officialName": "Altamura",
+    "shortName": "Altamura",
+    "aliases": [],
+    "colorPrimary": "#d00000",
+    "colorSecondary": "#f0f0f0",
+    "colorsSource": "adapted",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma risolto tramite Wikipedia/Wikimedia.",
+    "colorsVerifiedAt": "2026-09-11T20:17:36.621Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [
+      {
+        "color": "#d00000",
+        "count": 1063
+      },
+      {
+        "color": "#f0f0f0",
+        "count": 1172
+      },
+      {
+        "color": "#800000",
+        "count": 100
+      },
+      {
+        "color": "#d01010",
+        "count": 94
+      },
+      {
+        "color": "#d0d0d0",
+        "count": 164
+      },
+      {
+        "color": "#b01010",
+        "count": 56
+      },
+      {
+        "color": "#b0a050",
+        "count": 66
+      },
+      {
+        "color": "#a09050",
+        "count": 68
+      }
+    ],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "G4uko37a"
+      }
+    ],
+    "logoPath": "/assets/club-logos/altamura.webp",
+    "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Altamura-Stemma.svg",
+    "logoProvider": "itwiki-image",
+    "wikidataId": "Q125784026",
+    "wikipediaTitle": "Altamura Società Sportiva",
+    "logoFileTitle": "File:Altamura-Stemma.svg",
+    "logoLicense": "CC BY-SA 4.0",
+    "logoLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "logoAttribution": "Opera propria"
+  },
+  {
+    "id": "arezzo",
+    "officialName": "Arezzo",
+    "shortName": "Arezzo",
+    "aliases": [],
+    "colorPrimary": "#a09070",
+    "colorSecondary": "#706040",
+    "colorsSource": "adapted",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma risolto tramite Wikipedia/Wikimedia.",
+    "colorsVerifiedAt": "2026-09-11T20:17:38.613Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [
+      {
+        "color": "#a09070",
+        "count": 1483
+      },
+      {
+        "color": "#908060",
+        "count": 1012
+      },
+      {
+        "color": "#909060",
+        "count": 850
+      },
+      {
+        "color": "#a09060",
+        "count": 765
+      },
+      {
+        "color": "#909070",
+        "count": 934
+      },
+      {
+        "color": "#a08060",
+        "count": 739
+      },
+      {
+        "color": "#a0a070",
+        "count": 727
+      },
+      {
+        "color": "#a0a080",
+        "count": 674
+      }
+    ],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "r5DdTIZC"
+      }
+    ],
+    "logoPath": "/assets/club-logos/arezzo.webp",
+    "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Arezzo,_palazzo_pretorio,_stemma_05.jpg",
+    "logoProvider": "commons-search",
+    "wikidataId": "Q297430",
+    "wikipediaTitle": "Società Sportiva Arezzo",
+    "logoFileTitle": "File:Arezzo, palazzo pretorio, stemma 05.jpg",
+    "logoLicense": "CC BY-SA 3.0",
+    "logoLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "logoAttribution": "I, Sailko"
+  },
+  {
+    "id": "arzignano",
+    "officialName": "Arzignano",
+    "shortName": "Arzignano",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "I5Z9Cg0t"
+      }
+    ]
+  },
+  {
+    "id": "ascoli",
+    "officialName": "Ascoli",
+    "shortName": "Ascoli",
+    "aliases": [],
+    "colorPrimary": "#101010",
+    "colorSecondary": "#e0d0c0",
+    "colorsSource": "adapted",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma risolto tramite Wikipedia/Wikimedia.",
+    "colorsVerifiedAt": "2026-09-11T20:17:42.559Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [
+      {
+        "color": "#101010",
+        "count": 1506
+      },
+      {
+        "color": "#e0d0c0",
+        "count": 946
+      },
+      {
+        "color": "#000000",
+        "count": 1122
+      },
+      {
+        "color": "#e0e0c0",
+        "count": 515
+      },
+      {
+        "color": "#d0d0c0",
+        "count": 531
+      },
+      {
+        "color": "#e0e0d0",
+        "count": 536
+      },
+      {
+        "color": "#101000",
+        "count": 135
+      },
+      {
+        "color": "#a09070",
+        "count": 228
+      }
+    ],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "hd6UOqvB"
+      }
+    ],
+    "logoPath": "/assets/club-logos/ascoli.webp",
+    "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Emblema_Del_Duca_Ascoli.jpg",
+    "logoProvider": "commons-search",
+    "wikidataId": "Q6630",
+    "wikipediaTitle": "Ascoli Calcio 1898 FC",
+    "logoFileTitle": "File:Emblema Del Duca Ascoli.jpg",
+    "logoLicense": "Public domain",
+    "logoLicenseUrl": null,
+    "logoAttribution": "Edizioni Panini Modena"
+  },
+  {
+    "id": "atalanta-bc",
+    "officialName": "Atalanta BC",
+    "shortName": "Atalanta",
+    "aliases": [],
+    "city": "Bergamo",
+    "region": "Lombardia",
+    "province": "BG",
+    "colorPrimary": "#14213d",
+    "colorSecondary": "#1560bd",
+    "colorsSource": "adapted",
+    "colorsNote": "Nerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      },
+      {
+        "teamType": "altra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": "U23",
+        "label": "Atalanta U23",
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "8C9JjMXu"
+      },
+      {
+        "provider": "diretta",
+        "providerId": "UFGjrnma"
+      }
+    ]
+  },
+  {
+    "id": "audace-cerignola",
+    "officialName": "Audace Cerignola",
+    "shortName": "Audace Cerignola",
+    "aliases": [],
+    "colorPrimary": "#0090d0",
+    "colorSecondary": "#104080",
+    "colorsSource": "adapted",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma risolto tramite Wikipedia/Wikimedia.",
+    "colorsVerifiedAt": "2026-09-11T20:17:46.275Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [
+      {
+        "color": "#0090d0",
+        "count": 1281
+      },
+      {
+        "color": "#104080",
+        "count": 882
+      },
+      {
+        "color": "#f0e040",
+        "count": 908
+      },
+      {
+        "color": "#104090",
+        "count": 500
+      },
+      {
+        "color": "#0080c0",
+        "count": 198
+      },
+      {
+        "color": "#003080",
+        "count": 179
+      },
+      {
+        "color": "#ffe040",
+        "count": 189
+      },
+      {
+        "color": "#f0e030",
+        "count": 130
+      }
+    ],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "WtT3GZCk"
+      }
+    ],
+    "logoPath": "/assets/club-logos/audace-cerignola.webp",
+    "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Logo_Audace_Cerignola.png",
+    "logoProvider": "commons-search",
+    "wikidataId": "Q3629463",
+    "wikipediaTitle": "Società Sportiva Audace Cerignola",
+    "logoFileTitle": "File:Logo Audace Cerignola.png",
+    "logoLicense": "CC BY-SA 3.0",
+    "logoLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "logoAttribution": "U.S.D. Audace Cerignola"
+  },
+  {
+    "id": "avellino",
+    "officialName": "Avellino",
+    "shortName": "Avellino",
+    "aliases": [],
+    "colorPrimary": "#206020",
+    "colorSecondary": "#a08040",
+    "colorsSource": "adapted",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma risolto tramite Wikipedia/Wikimedia.",
+    "colorsVerifiedAt": "2026-09-11T20:17:48.665Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [
+      {
+        "color": "#206020",
+        "count": 24
+      },
+      {
+        "color": "#a08040",
+        "count": 23
+      },
+      {
+        "color": "#609060",
+        "count": 29
+      },
+      {
+        "color": "#105010",
+        "count": 18
+      },
+      {
+        "color": "#508050",
+        "count": 22
+      },
+      {
+        "color": "#106020",
+        "count": 14
+      },
+      {
+        "color": "#307030",
+        "count": 17
+      },
+      {
+        "color": "#407040",
+        "count": 19
+      }
+    ],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "A332L1f5"
+      }
+    ],
+    "logoPath": "/assets/club-logos/avellino.webp",
+    "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Logo_Avellino_Footvolley.png",
+    "logoProvider": "commons-search",
+    "wikidataId": "Q298217",
+    "wikipediaTitle": "Unione Sportiva Avellino 1912",
+    "logoFileTitle": "File:Logo Avellino Footvolley.png",
+    "logoLicense": "CC BY-SA 4.0",
+    "logoLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "logoAttribution": "Avellino Footvolley"
+  },
+  {
+    "id": "ssc-bari",
+    "officialName": "SSC Bari",
+    "shortName": "Bari",
+    "aliases": [],
+    "city": "Bari",
+    "region": "Puglia",
+    "province": "BA",
+    "colorPrimary": "#cc092f",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Biancorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "xIkUr2vO"
+      }
+    ]
+  },
+  {
+    "id": "barletta",
+    "officialName": "Barletta",
+    "shortName": "Barletta",
+    "aliases": [],
+    "colorPrimary": "#e02010",
+    "colorSecondary": "#b0b0b0",
+    "colorsSource": "adapted",
+    "colorsNote": "Palette ricavata automaticamente dallo stemma risolto tramite Wikipedia/Wikimedia.",
+    "colorsVerifiedAt": "2026-09-11T20:17:50.566Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [
+      {
+        "color": "#e02010",
+        "count": 908
+      },
+      {
+        "color": "#e02020",
+        "count": 470
+      },
+      {
+        "color": "#e01010",
+        "count": 258
+      },
+      {
+        "color": "#b0b0b0",
+        "count": 536
+      },
+      {
+        "color": "#c0c0c0",
+        "count": 461
+      },
+      {
+        "color": "#a0a0a0",
+        "count": 352
+      },
+      {
+        "color": "#d0d0d0",
+        "count": 242
+      },
+      {
+        "color": "#e01000",
+        "count": 73
+      }
+    ],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "AkCGbD8i"
+      }
+    ],
+    "logoPath": "/assets/club-logos/barletta.webp",
+    "logoSourceUrl": "https://it.wikipedia.org/wiki/File:Officialssbarletta1922logo.png",
+    "logoProvider": "itwiki-pageimage",
+    "wikidataId": "Q2095185",
+    "wikipediaTitle": "Società Sportiva Barletta 1922",
+    "logoFileTitle": "File:Officialssbarletta1922logo.png",
+    "logoLicense": "Marchio",
+    "logoLicenseUrl": null,
+    "logoAttribution": null
+  },
+  {
+    "id": "benevento",
+    "officialName": "Benevento",
+    "shortName": "Benevento",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "rZhSxrse"
+      }
+    ]
+  },
+  {
+    "id": "bologna-fc-1909",
+    "officialName": "Bologna FC 1909",
+    "shortName": "Bologna",
+    "aliases": [],
+    "city": "Bologna",
+    "region": "Emilia-Romagna",
+    "province": "BO",
+    "colorPrimary": "#8b1d2c",
+    "colorSecondary": "#16255e",
+    "colorsSource": "adapted",
+    "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "0M9xNN8N"
+      }
+    ]
+  },
+  {
+    "id": "brescia-calcio",
+    "officialName": "Brescia Calcio",
+    "shortName": "Brescia",
+    "aliases": [],
+    "city": "Brescia",
+    "region": "Lombardia",
+    "province": "BS",
+    "colorPrimary": "#1c6fd1",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Biancazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "b3fwvdum"
+      }
+    ]
+  },
+  {
+    "id": "cagliari-calcio",
+    "officialName": "Cagliari Calcio",
+    "shortName": "Cagliari",
+    "aliases": [],
+    "city": "Cagliari",
+    "region": "Sardegna",
+    "province": "CA",
+    "colorPrimary": "#b71234",
+    "colorSecondary": "#14213d",
+    "colorsSource": "adapted",
+    "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "SCGVmKHb"
+      }
+    ]
+  },
+  {
+    "id": "campobasso",
+    "officialName": "Campobasso",
+    "shortName": "Campobasso",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "8rNMmUnk"
+      }
+    ]
+  },
+  {
+    "id": "carpi",
+    "officialName": "Carpi",
+    "shortName": "Carpi",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "4Mj4hjbN"
+      }
+    ]
+  },
+  {
+    "id": "carrarese",
+    "officialName": "Carrarese",
+    "shortName": "Carrarese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "hG4fg4z3"
+      }
+    ]
+  },
+  {
+    "id": "casarano",
+    "officialName": "Casarano",
+    "shortName": "Casarano",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Mc1agWrH"
+      }
+    ]
+  },
+  {
+    "id": "casertana",
+    "officialName": "Casertana",
+    "shortName": "Casertana",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "QuL4OyJG"
+      }
+    ]
+  },
+  {
+    "id": "catania",
+    "officialName": "Catania",
+    "shortName": "Catania",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "4rwnnbnB"
+      }
+    ]
+  },
+  {
+    "id": "catanzaro",
+    "officialName": "Catanzaro",
+    "shortName": "Catanzaro",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "GnizyMB7"
+      }
+    ]
+  },
+  {
+    "id": "cavese",
+    "officialName": "Cavese",
+    "shortName": "Cavese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "QeTCXvTK"
+      }
+    ]
+  },
+  {
+    "id": "cesena-fc",
+    "officialName": "Cesena FC",
+    "shortName": "Cesena",
+    "aliases": [],
+    "city": "Cesena",
+    "region": "Emilia-Romagna",
+    "province": "FC",
+    "colorPrimary": "#0a0a0a",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "xddf1qfh"
+      }
+    ]
+  },
+  {
+    "id": "cittadella",
+    "officialName": "Cittadella",
+    "shortName": "Cittadella",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "C0yUqo8c"
+      }
+    ]
+  },
+  {
+    "id": "como-1907",
+    "officialName": "Como 1907",
+    "shortName": "Como",
+    "aliases": [],
+    "city": "Como",
+    "region": "Lombardia",
+    "province": "CO",
+    "colorPrimary": "#1560bd",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Biancoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "ttyLthOA"
+      }
+    ]
+  },
+  {
+    "id": "cosenza",
+    "officialName": "Cosenza",
+    "shortName": "Cosenza",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "p84TeBhA"
+      }
+    ]
+  },
+  {
+    "id": "cremonese",
+    "officialName": "Cremonese",
+    "shortName": "Cremonese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "KUzfp5N3"
+      }
+    ]
+  },
+  {
+    "id": "crotone",
+    "officialName": "Crotone",
+    "shortName": "Crotone",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "d8H0SxkJ"
+      }
+    ]
+  },
+  {
+    "id": "desenzano",
+    "officialName": "Desenzano",
+    "shortName": "Desenzano",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "h20BPVS0"
+      }
+    ]
+  },
+  {
+    "id": "dolomiti-bellunesi",
+    "officialName": "Dolomiti Bellunesi",
+    "shortName": "Dolomiti Bellunesi",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Aa1dxLIB"
+      }
+    ]
+  },
+  {
+    "id": "empoli-fc",
+    "officialName": "Empoli FC",
+    "shortName": "Empoli",
+    "aliases": [],
+    "city": "Empoli",
+    "region": "Toscana",
+    "province": "FI",
+    "colorPrimary": "#1f4e8c",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Azzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "0ESCnI1H"
+      }
+    ]
+  },
+  {
+    "id": "entella",
+    "officialName": "Entella",
+    "shortName": "Entella",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "hUuJfYbb"
+      }
+    ]
+  },
+  {
+    "id": "acf-fiorentina",
+    "officialName": "ACF Fiorentina",
+    "shortName": "Fiorentina",
+    "aliases": [
+      "Viola"
+    ],
+    "city": "Firenze",
+    "region": "Toscana",
+    "province": "FI",
+    "colorPrimary": "#5c2d91",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Viola: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Q3A3IbXH"
+      }
+    ]
+  },
+  {
+    "id": "foggia",
+    "officialName": "Foggia",
+    "shortName": "Foggia",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "4nSGWbrR"
+      }
+    ]
+  },
+  {
+    "id": "folgore-caratese",
+    "officialName": "Folgore Caratese",
+    "shortName": "Folgore Caratese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "QJdMoMJ8"
+      }
+    ]
+  },
+  {
+    "id": "forli",
+    "officialName": "Forlì",
+    "shortName": "Forlì",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "EF2WpDTI"
+      }
+    ]
+  },
+  {
+    "id": "frosinone",
+    "officialName": "Frosinone",
+    "shortName": "Frosinone",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "pfo9H1Wp"
+      }
+    ]
+  },
+  {
+    "id": "genoa-cfc",
+    "officialName": "Genoa CFC",
+    "shortName": "Genoa",
+    "aliases": [],
+    "city": "Genova",
+    "region": "Liguria",
+    "province": "GE",
+    "colorPrimary": "#b3151c",
+    "colorSecondary": "#17245c",
+    "colorsSource": "adapted",
+    "colorsNote": "Rossoblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "d0PJxeie"
+      }
+    ]
+  },
+  {
+    "id": "giana-erminio",
+    "officialName": "Giana Erminio",
+    "shortName": "Giana Erminio",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "MwxjuB2g"
+      }
+    ]
+  },
+  {
+    "id": "giugliano",
+    "officialName": "Giugliano",
+    "shortName": "Giugliano",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "YJJyOk94"
+      }
+    ]
+  },
+  {
+    "id": "grosseto",
+    "officialName": "Grosseto",
+    "shortName": "Grosseto",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "AmqIPPO4"
+      }
+    ]
+  },
+  {
+    "id": "gubbio",
+    "officialName": "Gubbio",
+    "shortName": "Gubbio",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "nV1kjOZR"
+      }
+    ]
+  },
+  {
+    "id": "guidonia",
+    "officialName": "Guidonia",
+    "shortName": "Guidonia",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "O44quWxq"
+      }
+    ]
+  },
+  {
+    "id": "hellas-verona-fc",
+    "officialName": "Hellas Verona FC",
+    "shortName": "Hellas Verona",
+    "aliases": [
+      "Verona"
+    ],
+    "city": "Verona",
+    "region": "Veneto",
+    "province": "VR",
+    "colorPrimary": "#f2c230",
+    "colorSecondary": "#1c3f94",
+    "colorsSource": "adapted",
+    "colorsNote": "Gialloblù: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "rJVAIaHo"
+      }
+    ]
+  },
+  {
+    "id": "fc-internazionale-milano",
+    "officialName": "FC Internazionale Milano",
+    "shortName": "Inter",
+    "aliases": [
+      "Inter Milano"
+    ],
+    "city": "Milano",
+    "region": "Lombardia",
+    "province": "MI",
+    "colorPrimary": "#0c2c73",
+    "colorSecondary": "#0d0d0d",
+    "colorsSource": "adapted",
+    "colorsNote": "Nerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      },
+      {
+        "teamType": "altra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": "U23",
+        "label": "Inter U23",
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Iw7eKK25"
+      },
+      {
+        "provider": "diretta",
+        "providerId": "rqn271Ga"
+      }
+    ]
+  },
+  {
+    "id": "juventus-fc",
+    "officialName": "Juventus FC",
+    "shortName": "Juventus",
+    "aliases": [
+      "Juve"
+    ],
+    "city": "Torino",
+    "region": "Piemonte",
+    "province": "TO",
+    "colorPrimary": "#101010",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          },
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      },
+      {
+        "teamType": "altra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": "U23",
+        "label": "Juventus U23",
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "C06aJvIB"
+      },
+      {
+        "provider": "diretta",
+        "providerId": "hKSfjtsQ"
+      },
+      {
+        "provider": "diretta",
+        "providerId": "pW9laeGO"
+      }
+    ]
+  },
+  {
+    "id": "l-r-vicenza",
+    "officialName": "L.R. Vicenza",
+    "shortName": "L.R. Vicenza",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "plvm35Pu"
+      }
+    ]
+  },
+  {
+    "id": "latina",
+    "officialName": "Latina",
+    "shortName": "Latina",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "CrARgwBF"
+      }
+    ]
+  },
+  {
+    "id": "ss-lazio",
+    "officialName": "SS Lazio",
+    "shortName": "Lazio",
+    "aliases": [],
+    "city": "Roma",
+    "region": "Lazio",
+    "province": "RM",
+    "colorPrimary": "#87d0f2",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Biancoceleste: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "URcSl02h"
+      }
+    ]
+  },
+  {
+    "id": "lecce",
+    "officialName": "Lecce",
+    "shortName": "Lecce",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "G8lYsMgU"
+      }
+    ]
+  },
+  {
+    "id": "lecco",
+    "officialName": "Lecco",
+    "shortName": "Lecco",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "IsxHSx6l"
+      }
+    ]
+  },
+  {
+    "id": "livorno",
+    "officialName": "Livorno",
+    "shortName": "Livorno",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "0zxhbdWT"
+      }
+    ]
+  },
+  {
+    "id": "lumezzane",
+    "officialName": "Lumezzane",
+    "shortName": "Lumezzane",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "8hzzdqhG"
+      }
+    ]
+  },
+  {
+    "id": "mantova-1911",
+    "officialName": "Mantova 1911",
+    "shortName": "Mantova",
+    "aliases": [
+      "Virgiliani"
+    ],
+    "city": "Mantova",
+    "region": "Lombardia",
+    "province": "MN",
+    "colorPrimary": "#dc0619",
+    "colorSecondary": "#c99a4b",
+    "colorsSource": "adapted",
+    "colorsNote": "Biancorosso: identità di club già in uso nell'app prima di questa funzione.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "z7WK5Pwb"
+      }
+    ]
+  },
+  {
+    "id": "ac-milan",
+    "officialName": "AC Milan",
+    "shortName": "Milan",
+    "aliases": [],
+    "city": "Milano",
+    "region": "Lombardia",
+    "province": "MI",
+    "colorPrimary": "#fb0016",
+    "colorSecondary": "#000000",
+    "colorsSource": "adapted",
+    "colorsNote": "Rossonero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          },
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "8Sa8HInO"
+      },
+      {
+        "provider": "diretta",
+        "providerId": "OdthnF7f"
+      }
+    ]
+  },
+  {
+    "id": "modena",
+    "officialName": "Modena",
+    "shortName": "Modena",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "MBn63swN"
+      }
+    ]
+  },
+  {
+    "id": "monopoli",
+    "officialName": "Monopoli",
+    "shortName": "Monopoli",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "zRCkw6tr"
+      }
+    ]
+  },
+  {
+    "id": "monza",
+    "officialName": "Monza",
+    "shortName": "Monza",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "4YSMlwj7"
+      }
+    ]
+  },
+  {
+    "id": "ssc-napoli",
+    "officialName": "SSC Napoli",
+    "shortName": "Napoli",
+    "aliases": [],
+    "city": "Napoli",
+    "region": "Campania",
+    "province": "NA",
+    "colorPrimary": "#1d59ba",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Azzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "69Dxbc61"
+      }
+    ]
+  },
+  {
+    "id": "novara",
+    "officialName": "Novara",
+    "shortName": "Novara",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "rPRQmc5D"
+      }
+    ]
+  },
+  {
+    "id": "ospitaletto",
+    "officialName": "Ospitaletto",
+    "shortName": "Ospitaletto",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "SfaJmg0R"
+      }
+    ]
+  },
+  {
+    "id": "ostiamare",
+    "officialName": "Ostiamare",
+    "shortName": "Ostiamare",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "dEsI6Z9g"
+      }
+    ]
+  },
+  {
+    "id": "padova",
+    "officialName": "Padova",
+    "shortName": "Padova",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "2gUwEtrE"
+      }
+    ]
+  },
+  {
+    "id": "palermo-fc",
+    "officialName": "Palermo FC",
+    "shortName": "Palermo",
+    "aliases": [],
+    "city": "Palermo",
+    "region": "Sicilia",
+    "province": "PA",
+    "colorPrimary": "#e0116f",
+    "colorSecondary": "#0a0a0a",
+    "colorsSource": "adapted",
+    "colorsNote": "Rosanero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "n38Nktmn"
+      }
+    ]
+  },
+  {
+    "id": "parma-calcio-1913",
+    "officialName": "Parma Calcio 1913",
+    "shortName": "Parma",
+    "aliases": [],
+    "city": "Parma",
+    "region": "Emilia-Romagna",
+    "province": "PR",
+    "colorPrimary": "#f4d03f",
+    "colorSecondary": "#1a2b6d",
+    "colorsSource": "adapted",
+    "colorsNote": "Crociato (giallo/blu): identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "6DxlaxHN"
+      }
+    ]
+  },
+  {
+    "id": "pergolettese",
+    "officialName": "Pergolettese",
+    "shortName": "Pergolettese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "pvWU6W5U"
+      }
+    ]
+  },
+  {
+    "id": "ac-perugia-calcio",
+    "officialName": "AC Perugia Calcio",
+    "shortName": "Perugia",
+    "aliases": [],
+    "city": "Perugia",
+    "region": "Umbria",
+    "province": "PG",
+    "colorPrimary": "#cc092f",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Biancorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "ht2m7Kl6"
+      }
+    ]
+  },
+  {
+    "id": "pescara",
+    "officialName": "Pescara",
+    "shortName": "Pescara",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "WW0i6v4C"
+      }
+    ]
+  },
+  {
+    "id": "pianese",
+    "officialName": "Pianese",
+    "shortName": "Pianese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "drgCKhvg"
+      }
+    ]
+  },
+  {
+    "id": "picerno",
+    "officialName": "Picerno",
+    "shortName": "Picerno",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Ee7aFeEG"
+      }
+    ]
+  },
+  {
+    "id": "pineto",
+    "officialName": "Pineto",
+    "shortName": "Pineto",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "S8fKXrK7"
+      }
+    ]
+  },
+  {
+    "id": "pisa",
+    "officialName": "Pisa",
+    "shortName": "Pisa",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "roasMsOT"
+      }
+    ]
+  },
+  {
+    "id": "potenza",
+    "officialName": "Potenza",
+    "shortName": "Potenza",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "p0AhJIYO"
+      }
+    ]
+  },
+  {
+    "id": "pro-vercelli",
+    "officialName": "Pro Vercelli",
+    "shortName": "Pro Vercelli",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "KjGeTD9G"
+      }
+    ]
+  },
+  {
+    "id": "ravenna",
+    "officialName": "Ravenna",
+    "shortName": "Ravenna",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "rZdj2Pvn"
+      }
+    ]
+  },
+  {
+    "id": "reggiana",
+    "officialName": "Reggiana",
+    "shortName": "Reggiana",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "6ulJbMCe"
+      }
+    ]
+  },
+  {
+    "id": "renate",
+    "officialName": "Renate",
+    "shortName": "Renate",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "6TuwAQGc"
+      }
+    ]
+  },
+  {
+    "id": "as-roma",
+    "officialName": "AS Roma",
+    "shortName": "Roma",
+    "aliases": [],
+    "city": "Roma",
+    "region": "Lazio",
+    "province": "RM",
+    "colorPrimary": "#8e1f2f",
+    "colorSecondary": "#f0bc42",
+    "colorsSource": "adapted",
+    "colorsNote": "Giallorosso: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.140Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "zVqqL0ma"
+      }
+    ]
+  },
+  {
+    "id": "salernitana",
+    "officialName": "Salernitana",
+    "shortName": "Salernitana",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Mq05g4BP"
+      }
+    ]
+  },
+  {
+    "id": "sambenedettese",
+    "officialName": "Sambenedettese",
+    "shortName": "Sambenedettese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "b5iXlOJt"
+      }
+    ]
+  },
+  {
+    "id": "uc-sampdoria",
+    "officialName": "UC Sampdoria",
+    "shortName": "Sampdoria",
+    "aliases": [
+      "Samp"
+    ],
+    "city": "Genova",
+    "region": "Liguria",
+    "province": "GE",
+    "colorPrimary": "#16255e",
+    "colorSecondary": "#b3151c",
+    "colorsSource": "adapted",
+    "colorsNote": "Blucerchiato: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "nJbCGx2U"
+      }
+    ]
+  },
+  {
+    "id": "us-sassuolo-calcio",
+    "officialName": "US Sassuolo Calcio",
+    "shortName": "Sassuolo",
+    "aliases": [],
+    "city": "Sassuolo",
+    "region": "Emilia-Romagna",
+    "province": "MO",
+    "colorPrimary": "#1b7a3d",
+    "colorSecondary": "#0a0a0a",
+    "colorsSource": "adapted",
+    "colorsNote": "Neroverde: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "QDdvI0zl"
+      }
+    ]
+  },
+  {
+    "id": "savoia",
+    "officialName": "Savoia",
+    "shortName": "Savoia",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "rmyNgpBn"
+      }
+    ]
+  },
+  {
+    "id": "scafatese",
+    "officialName": "Scafatese",
+    "shortName": "Scafatese",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.144Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.144Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "plMTaQu7"
+      }
+    ]
+  },
+  {
+    "id": "sorrento",
+    "officialName": "Sorrento",
+    "shortName": "Sorrento",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone C",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "WIkum2lg"
+      }
+    ]
+  },
+  {
+    "id": "spezia",
+    "officialName": "Spezia",
+    "shortName": "Spezia",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "re6VD39b"
+      }
+    ]
+  },
+  {
+    "id": "sudtirol",
+    "officialName": "Südtirol",
+    "shortName": "Südtirol",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie B",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "W02MZDnp"
+      }
+    ]
+  },
+  {
+    "id": "torino-fc",
+    "officialName": "Torino FC",
+    "shortName": "Torino",
+    "aliases": [],
+    "city": "Torino",
+    "region": "Piemonte",
+    "province": "TO",
+    "colorPrimary": "#7b1e3a",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Granata: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "MZFZnvX4"
+      }
+    ]
+  },
+  {
+    "id": "torres",
+    "officialName": "Torres",
+    "shortName": "Torres",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "UiGfvfvT"
+      }
+    ]
+  },
+  {
+    "id": "trento",
+    "officialName": "Trento",
+    "shortName": "Trento",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Gtx2eRRF"
+      }
+    ]
+  },
+  {
+    "id": "treviso",
+    "officialName": "Treviso",
+    "shortName": "Treviso",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone A",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "Qucu3NNG"
+      }
+    ]
+  },
+  {
+    "id": "udinese-calcio",
+    "officialName": "Udinese Calcio",
+    "shortName": "Udinese",
+    "aliases": [],
+    "city": "Udine",
+    "region": "Friuli-Venezia Giulia",
+    "province": "UD",
+    "colorPrimary": "#050505",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "adapted",
+    "colorsNote": "Bianconero: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.141Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.141Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "rXw8YKDE"
+      }
+    ]
+  },
+  {
+    "id": "vado",
+    "officialName": "Vado",
+    "shortName": "Vado",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "8WeFoDPP"
+      }
+    ]
+  },
+  {
+    "id": "venezia-fc",
+    "officialName": "Venezia FC",
+    "shortName": "Venezia",
+    "aliases": [],
+    "city": "Venezia",
+    "region": "Veneto",
+    "province": "VE",
+    "colorPrimary": "#ff7f11",
+    "colorSecondary": "#0a0a0a",
+    "colorsSource": "adapted",
+    "colorsNote": "Arancionerazzurro: identità di club di dominio pubblico, non tonalità HEX ufficiali.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.142Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie A",
+            "groupName": null,
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.142Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "MkPmVv50"
+      }
+    ]
+  },
+  {
+    "id": "vis-pesaro",
+    "officialName": "Vis Pesaro",
+    "shortName": "Vis Pesaro",
+    "aliases": [],
+    "colorPrimary": "#111111",
+    "colorSecondary": "#ffffff",
+    "colorsSource": "unknown",
+    "colorsNote": "Logo non disponibile durante lo scraping: palette di fallback da verificare.",
+    "colorsVerifiedAt": "2026-09-11T20:17:20.143Z",
+    "dataSource": "Diretta.it standings + logo scrape 2026-09-11",
+    "logoPaletteCandidates": [],
+    "teams": [
+      {
+        "teamType": "prima_squadra",
+        "discipline": "calcio11",
+        "gender": "maschile",
+        "ageGroup": null,
+        "label": null,
+        "seasons": [
+          {
+            "season": "2026/2027",
+            "competition": "Serie C",
+            "groupName": "Girone B",
+            "territory": "Italia",
+            "dataSource": "Diretta.it",
+            "verifiedAt": "2026-09-11T20:17:20.143Z"
+          }
+        ]
+      }
+    ],
+    "providerIds": [
+      {
+        "provider": "diretta",
+        "providerId": "pYTSXlNe"
+      }
+    ]
+  }
+]
