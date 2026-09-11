@@ -1,3 +1,6 @@
 .wrangler/
 node_modules/
 .dev.vars
+scripts/.current-catalog.json
+scripts/.api-football-raw-*.json
+scripts/.af-*
