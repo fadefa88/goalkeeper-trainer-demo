@@ -249,6 +249,62 @@ export function mapSession(row) {
   };
 }
 
+// Deve restare identico ai valori CHECK(category IN (...)) di
+// cloudflare-d1-schema.sql e alle opzioni del select "Ambito" nel form.
+export const CUSTOM_EXERCISE_CATEGORIES = ["Tecnico", "Difesa spazio", "Finalizzazione", "Motorio", "Conoscenza del gioco", "Altro"];
+
+export function mapCustomExercise(row) {
+  let diagramSceneJson = null;
+  if (row.diagram_scene_json) {
+    try { diagramSceneJson = JSON.parse(row.diagram_scene_json); } catch { diagramSceneJson = null; }
+  }
+  return {
+    id: row.id,
+    name: row.name,
+    objective: row.objective || "",
+    description: row.description,
+    category: row.category,
+    durationMinutes: row.duration_minutes,
+    keepersCount: row.keepers_count,
+    equipment: row.equipment || "",
+    notes: row.notes || "",
+    diagramSceneJson,
+    diagramVersion: row.diagram_version,
+    diagramSourceHash: row.diagram_source_hash || null,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+
+// Valida e normalizza i campi "piatti" di un custom exercise (non i campi
+// diagramma, sanitizzati a parte in _diagram-scene.js). Ritorna { value }
+// oppure { error } con un messaggio pronto per error().
+export function validateCustomExercisePayload(body) {
+  const name = String(body?.name || "").trim().slice(0, 120);
+  if (!name) return { error: "Il nome è obbligatorio" };
+
+  const description = String(body?.description || "").trim().slice(0, 4000);
+  if (!description) return { error: "La descrizione è obbligatoria" };
+
+  const category = CUSTOM_EXERCISE_CATEGORIES.includes(body?.category) ? body.category : null;
+  if (!category) return { error: "Ambito non valido" };
+
+  const durationMinutes = Number(body?.durationMinutes);
+  if (!Number.isFinite(durationMinutes) || durationMinutes <= 0 || durationMinutes > 240) {
+    return { error: "Durata non valida" };
+  }
+
+  const objective = String(body?.objective || "").trim().slice(0, 160) || null;
+  const equipment = String(body?.equipment || "").trim().slice(0, 300) || null;
+  const notes = String(body?.notes || "").trim().slice(0, 2000) || null;
+  const keepersCountRaw = Number(body?.keepersCount);
+  const keepersCount = Number.isFinite(keepersCountRaw) && keepersCountRaw > 0 ? Math.min(20, Math.round(keepersCountRaw)) : null;
+
+  return {
+    value: { name, objective, description, category, durationMinutes: Math.round(durationMinutes), keepersCount, equipment, notes }
+  };
+}
+
 export async function loadSessions(env, userId) {
   // Le righe "__physical__"/"__plan__" sono storage per il profilo (vedi
   // buildProfileExtraStatements), non sedute: non devono mai comparire come
