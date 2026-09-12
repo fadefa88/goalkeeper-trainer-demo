@@ -90,11 +90,11 @@ async function fetchEspnTeams(league) {
   if (!response.ok) throw new Error(`ESPN ${league} teams ${response.status}`);
   const data = await response.json();
   const sports = Array.isArray(data?.sports) ? data.sports : [];
-  const rows = sports.flatMap((sport) => Array.isArray(sport?.leagues) ? sport.leagues : [])
+  return sports
+    .flatMap((sport) => Array.isArray(sport?.leagues) ? sport.leagues : [])
     .flatMap((leagueRow) => Array.isArray(leagueRow?.teams) ? leagueRow.teams : [])
     .map((row) => row?.team || row)
     .filter((team) => team?.id);
-  return rows;
 }
 
 function clubNames(club) {
@@ -144,8 +144,7 @@ async function resolveEspnTeamId(club, league) {
   if (!best || best.score < 80) return null;
   return {
     id: String(best.team.id),
-    name: best.team.displayName || best.team.shortDisplayName || best.team.name || club?.shortName || club?.officialName || "Squadra",
-    score: best.score
+    name: best.team.displayName || best.team.shortDisplayName || best.team.name || club?.shortName || club?.officialName || "Squadra"
   };
 }
 
@@ -165,11 +164,15 @@ async function loadEspnMatches(teamEspnId, league, leagueName, season) {
   ]);
   const fulfilled = results.filter((result) => result.status === "fulfilled");
   if (!fulfilled.length) {
-    const reasons = results.map((result) => result.status === "rejected" ? result.reason?.message || String(result.reason) : "").filter(Boolean);
+    const reasons = results
+      .map((result) => result.status === "rejected" ? result.reason?.message || String(result.reason) : "")
+      .filter(Boolean);
     throw new Error(reasons.join("; ") || "ESPN non disponibile");
   }
-  const matches = dedupeMatches(fulfilled.flatMap((result) => result.value || []));
-  return { source: "ESPN live", matches };
+  return {
+    source: "ESPN live",
+    matches: dedupeMatches(fulfilled.flatMap((result) => result.value || []))
+  };
 }
 
 async function explicitEspnSource(env, clubTeamId) {
@@ -181,10 +184,6 @@ async function explicitEspnSource(env, clubTeamId) {
   return String(row.provider_team_id);
 }
 
-// Per Serie A e Serie B il calendario è risolto automaticamente dalla
-// formazione scelta: categoria -> lega ESPN -> squadra ESPN. Un mapping
-// esplicito già presente in club_calendar_sources viene usato solo come ID
-// verificato, ma non è più necessario per abilitare il calendario.
 async function resolveCalendarSource(env, userId) {
   const pref = await loadClubPreference(env, userId);
   if (!pref?.club || !pref?.clubTeam || !pref?.season) return null;
@@ -203,12 +202,18 @@ async function resolveCalendarSource(env, userId) {
   }
 
   return {
-    provider: "espn",
     providerTeamId,
     teamName: pref.club.shortName || pref.club.officialName || matchedName,
     leagueCode: league.code,
     leagueName: league.name
   };
+}
+
+function currentEspnSeason() {
+  const now = new Date();
+  // ESPN usa l'anno di conclusione per le stagioni europee:
+  // 2026/27 => season=2027, 2025/26 => season=2026.
+  return now.getUTCMonth() >= 6 ? now.getUTCFullYear() + 1 : now.getUTCFullYear();
 }
 
 export async function onRequestGet({ request, env }) {
@@ -233,8 +238,7 @@ export async function onRequestGet({ request, env }) {
         }, 200, { "Cache-Control": "no-store, max-age=0" });
       }
 
-      const now = new Date();
-      const season = now.getUTCMonth() >= 6 ? now.getUTCFullYear() : now.getUTCFullYear() - 1;
+      const season = currentEspnSeason();
       const result = await loadEspnMatches(source.providerTeamId, source.leagueCode, source.leagueName, season);
 
       return json({
@@ -242,6 +246,7 @@ export async function onRequestGet({ request, env }) {
         available: true,
         team: { espnId: source.providerTeamId, name: source.teamName },
         source: result.source,
+        season,
         fetchedAt: new Date().toISOString(),
         matches: result.matches
       }, 200, { "Cache-Control": "no-store, max-age=0" });
