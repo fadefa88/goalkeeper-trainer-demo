@@ -175,13 +175,20 @@ function dedupeMatches(rows) {
   return [...byId.values()].sort((a, b) => a.startTimestamp - b.startTimestamp);
 }
 
+function matchesForSeason(matches, seasonEnd) {
+  if (!Number.isFinite(seasonEnd)) return matches;
+  const start = Date.UTC(seasonEnd - 1, 6, 1) / 1000;
+  const end = Date.UTC(seasonEnd, 6, 1) / 1000;
+  return matches.filter((match) => Number(match?.startTimestamp || 0) >= start && Number(match?.startTimestamp || 0) < end);
+}
+
 async function fetchBestSchedule(league, name, teamEspnId, seasonEnd) {
   const candidates = [null, seasonEnd, seasonEnd ? seasonEnd - 1 : null]
     .filter((value, index, rows) => value === null || (Number.isFinite(value) && rows.indexOf(value) === index));
   let lastError = null;
   for (const candidate of candidates) {
     try {
-      const matches = await fetchEspnSchedule(league, name, teamEspnId, candidate);
+      const matches = matchesForSeason(await fetchEspnSchedule(league, name, teamEspnId, candidate), seasonEnd);
       if (matches.length) return matches;
     } catch (err) {
       lastError = err;
