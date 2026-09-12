@@ -190,13 +190,15 @@ function findSeedClub(name, seedIndex) {
   if (!key) return null;
   if (seedIndex.has(key)) return seedIndex.get(key);
 
-  // Fallback prudente: solo inclusione quasi esatta, mai similarità fuzzy.
-  // Alias molto corti (es. "Juve") restano validi come match esatti sopra,
-  // ma non vengono usati per assorbire nomi diversi come "Juve Stabia".
+  // Fallback prudente: solo inclusione per parole/frasi intere, mai similarità fuzzy.
+  // Alias corti restano validi come match esatti sopra, ma non possono assorbire
+  // nomi diversi (es. "Juve" -> "Juve Stabia", "Milan" -> "Alcione Milano").
   const matches = [];
   for (const [candidateKey, club] of seedIndex.entries()) {
     if (candidateKey.length < 5 || key.length < 5) continue;
-    if (candidateKey.includes(key) || key.includes(candidateKey)) matches.push(club);
+    const candidatePhrase = ` ${candidateKey} `;
+    const keyPhrase = ` ${key} `;
+    if (candidatePhrase.includes(` ${key} `) || keyPhrase.includes(` ${candidateKey} `)) matches.push(club);
   }
   const unique = [...new Map(matches.map((m) => [m.id || m.officialName, m])).values()];
   return unique.length === 1 ? unique[0] : null;
