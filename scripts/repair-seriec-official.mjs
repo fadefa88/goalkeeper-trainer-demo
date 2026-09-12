@@ -312,7 +312,7 @@ async function clickGroup(page, groupName) {
   return false;
 }
 
-async function scrapeCalendarGroup(page, group) {
+async function scrapeCalendarGroup(page, group, clubs) {
   const clicked = await clickGroup(page, group.name);
   if (!clicked) throw new Error(`Serie C ${group.name}: tab non trovato su ${CALENDAR_URL}`);
   await page.waitForTimeout(600);
@@ -321,11 +321,6 @@ async function scrapeCalendarGroup(page, group) {
     const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
     const dateRe = /\b(?:Lun|Mar|Mer|Gio|Ven|Sab|Dom)?\s*\d{1,2}\s+(?:Gen|Feb|Mar|Apr|Mag|Giu|Lug|Ago|Set|Ott|Nov|Dic)(?:\s+\d{4})?(?:\s+\d{1,2}:\d{2})?\b/i;
     const genericAlt = /^(?:serie c|lega pro|sky|now|rai|logo|facebook|instagram|youtube|linkedin|x)$/i;
-    const visible = el => {
-      if (!el) return false;
-      const style = getComputedStyle(el);
-      return style.display !== 'none' && style.visibility !== 'hidden' && el.getClientRects().length > 0;
-    };
     const teamImages = root => [...root.querySelectorAll('img[alt]')].filter(img => {
       const alt = clean(img.alt);
       if (!alt || genericAlt.test(alt)) return false;
@@ -335,7 +330,7 @@ async function scrapeCalendarGroup(page, group) {
 
     const roots = new Set();
     const dateNodes = [...document.querySelectorAll('body *')].filter(el => {
-      if (!visible(el) || el.children.length > 3) return false;
+      if (el.children.length > 3) return false;
       const text = clean(el.textContent);
       return text.length <= 45 && dateRe.test(text);
     });
@@ -344,7 +339,7 @@ async function scrapeCalendarGroup(page, group) {
       let node = dateNode;
       let chosen = null;
       for (let depth = 0; depth < 9 && node; depth++, node = node.parentElement) {
-        const text = clean(node.innerText || node.textContent);
+        const text = clean(node.textContent);
         if (text.length > 700) break;
         const imgs = teamImages(node);
         if (imgs.length === 2 && dateRe.test(text)) {
@@ -356,14 +351,14 @@ async function scrapeCalendarGroup(page, group) {
     }
 
     const markers = [...document.querySelectorAll('body *')].filter(el => {
-      if (!visible(el) || el.children.length > 4) return false;
+      if (el.children.length > 4) return false;
       return /^Giornata\s+\d+$/i.test(clean(el.textContent));
     });
 
     const out = [];
     const seen = new Set();
     for (const root of roots) {
-      const text = clean(root.innerText || root.textContent);
+      const text = clean(root.textContent);
       const dateMatch = text.match(dateRe);
       const imgs = teamImages(root);
       if (!dateMatch || imgs.length !== 2) continue;
@@ -395,7 +390,13 @@ async function scrapeCalendarGroup(page, group) {
     return out;
   });
 
-  const matches = rows.map((row, index) => {
+  const groupRows = rows.filter(row =>
+    resolveSerieCTeam(clubs, group.name, row.homeTeam) &&
+    resolveSerieCTeam(clubs, group.name, row.awayTeam)
+  );
+  console.log(`Serie C ${group.name}: ${rows.length} card calendario presenti nel DOM; ${groupRows.length} appartenenti al girone.`);
+
+  const matches = groupRows.map((row, index) => {
     const startTimestamp = parseCalendarDate(row.dateText);
     const finished = Number.isFinite(row.homeScore) && Number.isFinite(row.awayScore);
     const roundNumber = Number(String(row.round || '').match(/\d+/)?.[0] || 0);
@@ -425,8 +426,8 @@ async function scrapeCalendarGroup(page, group) {
   }
   const unique = [...dedup.values()].sort((a, b) => a.startTimestamp - b.startTimestamp);
   if (unique.length !== 380) {
-    const preview = String(await page.locator('body').innerText().catch(() => '')).replace(/\s+/g, ' ').slice(0, 1400);
-    throw new Error(`Serie C ${group.name}: estratte ${unique.length}/380 gare ufficiali. Preview: ${preview}`);
+    const preview = String(await page.locator('body').textContent().catch(() => '')).replace(/\s+/g, ' ').slice(0, 1400);
+    throw new Error(`Serie C ${group.name}: estratte ${unique.length}/380 gare ufficiali da ${groupRows.length} card del girone (${rows.length} card totali nel DOM). Preview: ${preview}`);
   }
   console.log(`Serie C ${group.name}: ${unique.length}/380 gare ufficiali estratte da SerieC.com.`);
   return unique;
@@ -457,7 +458,7 @@ async function runCalendarSync() {
     }
 
     for (const group of GROUPS) {
-      const matches = await scrapeCalendarGroup(page, group);
+      const matches = await scrapeCalendarGroup(page, group, clubs);
       let mapped = 0;
       const unresolved = new Set();
       for (const match of matches) {
