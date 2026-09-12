@@ -272,7 +272,7 @@ async function importRow(env, row, dryRun) {
       continue;
     }
     if (!dryRun && !conflict) {
-      await env.DB.prepare("insert into club_provider_ids (id, club_id, provider, provider_id, created_at) values (?, ?, ?, ?, ?")
+      await env.DB.prepare("insert into club_provider_ids (id, club_id, provider, provider_id, created_at) values (?, ?, ?, ?, ?)")
         .bind(crypto.randomUUID(), id, p.provider, String(p.providerId), now).run();
     }
   }
