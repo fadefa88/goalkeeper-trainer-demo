@@ -21,6 +21,16 @@ function leagueForCompetition(value) {
   return LEAGUES[normalizeName(value)] || null;
 }
 
+function seasonEndYear(value) {
+  const text = String(value || "").trim();
+  const years = text.match(/\d{2,4}/g) || [];
+  if (!years.length) return null;
+  const last = years[years.length - 1];
+  if (last.length === 4) return Number(last);
+  if (last.length === 2) return 2000 + Number(last);
+  return null;
+}
+
 function numericScore(value) {
   const raw = value && typeof value === "object"
     ? (value.value ?? value.displayValue ?? value.display ?? null)
@@ -70,8 +80,9 @@ function normalizeEspnMatch(event, leagueName, teamEspnId) {
   };
 }
 
-async function fetchEspnSchedule(league, name, teamEspnId, season) {
-  const response = await fetch(`${ESPN_BASE}/${league}/teams/${teamEspnId}/schedule?season=${season}`, {
+async function fetchEspnSchedule(league, name, teamEspnId, season = null) {
+  const suffix = season ? `?season=${encodeURIComponent(season)}` : "";
+  const response = await fetch(`${ESPN_BASE}/${league}/teams/${teamEspnId}/schedule${suffix}`, {
     headers: { Accept: "application/json" },
     cf: { cacheTtl: 300, cacheEverything: true }
   });
@@ -83,7 +94,7 @@ async function fetchEspnSchedule(league, name, teamEspnId, season) {
 }
 
 async function fetchEspnTeams(league) {
-  const response = await fetch(`${ESPN_BASE}/${league}/teams?limit=100`, {
+  const response = await fetch(`${ESPN_BASE}/${league}/teams?limit=500`, {
     headers: { Accept: "application/json" },
     cf: { cacheTtl: 86400, cacheEverything: true }
   });
@@ -134,14 +145,21 @@ function matchScore(club, team) {
   return best;
 }
 
-async function resolveEspnTeamId(club, league) {
-  const teams = await fetchEspnTeams(league);
+function bestTeamMatch(club, teams) {
   let best = null;
   for (const team of teams) {
     const score = matchScore(club, team);
     if (!best || score > best.score) best = { team, score };
   }
-  if (!best || best.score < 80) return null;
+  return best && best.score >= 80 ? best : null;
+}
+
+async function resolveEspnTeamId(club, league) {
+  let best = bestTeamMatch(club, await fetchEspnTeams(league));
+  if (!best) {
+    try { best = bestTeamMatch(club, await fetchEspnTeams("all")); } catch {}
+  }
+  if (!best) return null;
   return {
     id: String(best.team.id),
     name: best.team.displayName || best.team.shortDisplayName || best.team.name || club?.shortName || club?.officialName || "Squadra"
@@ -157,22 +175,36 @@ function dedupeMatches(rows) {
   return [...byId.values()].sort((a, b) => a.startTimestamp - b.startTimestamp);
 }
 
-async function loadEspnMatches(teamEspnId, league, leagueName, season) {
+async function fetchBestSchedule(league, name, teamEspnId, seasonEnd) {
+  const candidates = [null, seasonEnd, seasonEnd ? seasonEnd - 1 : null]
+    .filter((value, index, rows) => value === null || (Number.isFinite(value) && rows.indexOf(value) === index));
+  let lastError = null;
+  for (const candidate of candidates) {
+    try {
+      const matches = await fetchEspnSchedule(league, name, teamEspnId, candidate);
+      if (matches.length) return matches;
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  if (lastError) throw lastError;
+  return [];
+}
+
+async function loadEspnMatches(teamEspnId, league, leagueName, seasonEnd) {
   const results = await Promise.allSettled([
-    fetchEspnSchedule(league, leagueName, teamEspnId, season),
-    fetchEspnSchedule("ita.coppa_italia", "Coppa Italia", teamEspnId, season)
+    fetchBestSchedule(league, leagueName, teamEspnId, seasonEnd),
+    fetchBestSchedule("ita.coppa_italia", "Coppa Italia", teamEspnId, seasonEnd)
   ]);
-  const fulfilled = results.filter((result) => result.status === "fulfilled");
-  if (!fulfilled.length) {
+  const remote = results.flatMap((result) => result.status === "fulfilled" ? result.value : []);
+  const matches = dedupeMatches(remote);
+  if (!matches.length) {
     const reasons = results
       .map((result) => result.status === "rejected" ? result.reason?.message || String(result.reason) : "")
       .filter(Boolean);
-    throw new Error(reasons.join("; ") || "ESPN non disponibile");
+    throw new Error(reasons.join("; ") || "ESPN non ha restituito partite per la squadra selezionata");
   }
-  return {
-    source: "ESPN live",
-    matches: dedupeMatches(fulfilled.flatMap((result) => result.value || []))
-  };
+  return { source: "ESPN live", matches };
 }
 
 async function explicitEspnSource(env, clubTeamId) {
@@ -193,7 +225,6 @@ async function resolveCalendarSource(env, userId) {
 
   let providerTeamId = await explicitEspnSource(env, pref.clubTeam.id);
   let matchedName = pref.club.shortName || pref.club.officialName;
-
   if (!providerTeamId) {
     const resolved = await resolveEspnTeamId(pref.club, league.code);
     if (!resolved) return null;
@@ -205,15 +236,9 @@ async function resolveCalendarSource(env, userId) {
     providerTeamId,
     teamName: pref.club.shortName || pref.club.officialName || matchedName,
     leagueCode: league.code,
-    leagueName: league.name
+    leagueName: league.name,
+    seasonEnd: seasonEndYear(pref.season.season)
   };
-}
-
-function currentEspnSeason() {
-  const now = new Date();
-  // ESPN usa l'anno di conclusione per le stagioni europee:
-  // 2026/27 => season=2027, 2025/26 => season=2026.
-  return now.getUTCMonth() >= 6 ? now.getUTCFullYear() + 1 : now.getUTCFullYear();
 }
 
 export async function onRequestGet({ request, env }) {
@@ -238,15 +263,13 @@ export async function onRequestGet({ request, env }) {
         }, 200, { "Cache-Control": "no-store, max-age=0" });
       }
 
-      const season = currentEspnSeason();
-      const result = await loadEspnMatches(source.providerTeamId, source.leagueCode, source.leagueName, season);
-
+      const result = await loadEspnMatches(source.providerTeamId, source.leagueCode, source.leagueName, source.seasonEnd);
       return json({
         ok: true,
         available: true,
         team: { espnId: source.providerTeamId, name: source.teamName },
         source: result.source,
-        season,
+        season: source.seasonEnd,
         fetchedAt: new Date().toISOString(),
         matches: result.matches
       }, 200, { "Cache-Control": "no-store, max-age=0" });
@@ -272,20 +295,9 @@ export async function onRequestGet({ request, env }) {
   }
 
   try {
-    const tables = await env.DB
-      .prepare("select name from sqlite_master where type = 'table' order by name")
-      .all();
-
-    return json({
-      ok: true,
-      db: true,
-      tables: (tables.results || []).map((row) => row.name)
-    });
+    const tables = await env.DB.prepare("select name from sqlite_master where type = 'table' order by name").all();
+    return json({ ok: true, db: true, tables: (tables.results || []).map((row) => row.name) });
   } catch (err) {
-    return json({
-      ok: false,
-      db: true,
-      error: err?.message || String(err || "errore sconosciuto")
-    }, 500);
+    return json({ ok: false, db: true, error: err?.message || String(err || "errore sconosciuto") }, 500);
   }
 }
