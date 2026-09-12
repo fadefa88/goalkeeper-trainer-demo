@@ -52,12 +52,26 @@ function parseTimestamp(rawTimestamp, text, startYear) {
     return Math.floor(new Date(Number(y), Number(m) - 1, Number(d), Number(hh), Number(mm)).getTime() / 1000);
   }
 
-  match = value.match(/\b(\d{1,2})\.(\d{1,2})\.\s*(\d{1,2}):(\d{2})\b/);
+  match = value.match(/\b(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})\b/);
+  if (match) {
+    const [, d, m, y] = match;
+    return Math.floor(new Date(Number(y), Number(m) - 1, Number(d), 12, 0).getTime() / 1000);
+  }
+
+  match = value.match(/\b(\d{1,2})[.\/](\d{1,2})[.]?\s*(\d{1,2}):(\d{2})\b/);
   if (match) {
     const [, d, m, hh, mm] = match;
     const month = Number(m);
     const year = month >= 7 ? startYear : startYear + 1;
     return Math.floor(new Date(year, month - 1, Number(d), Number(hh), Number(mm)).getTime() / 1000);
+  }
+
+  match = value.match(/\b(\d{1,2})[.\/](\d{1,2})[.]?\b/);
+  if (match) {
+    const [, d, m] = match;
+    const month = Number(m);
+    const year = month >= 7 ? startYear : startYear + 1;
+    return Math.floor(new Date(year, month - 1, Number(d), 12, 0).getTime() / 1000);
   }
 
   return 0;
@@ -98,15 +112,34 @@ async function expandAllMatches(page) {
 async function scrapeMatchPage(page, url, competition) {
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
   await acceptCookies(page);
-  await page.waitForTimeout(1000);
-  await page.waitForSelector('.event__match, [class*="event__match"]', { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(1200);
+  await page.waitForFunction(() => {
+    const oldRows = document.querySelectorAll('.event__match, [class*="event__match"]');
+    const participants = document.querySelectorAll(
+      '.event__participant--home,.event__participant--away,[class*="participant--home"],[class*="participant--away"],[class*="homeParticipant"],[class*="awayParticipant"]'
+    );
+    const fixtureLinks = [...document.querySelectorAll('a')].filter(a => /\s+-\s+/.test((a.textContent || '').trim()));
+    return oldRows.length > 0 || participants.length >= 4 || fixtureLinks.length >= 4;
+  }, null, { timeout: 15000 }).catch(() => {});
   await expandAllMatches(page);
 
   const rows = await page.evaluate(() => {
     const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
+    const HOME_SELECTORS = [
+      '.event__participant--home',
+      '[class*="participant--home"]',
+      '[class*="homeParticipant"]',
+      '[class*="participant"][class*="home"]'
+    ];
+    const AWAY_SELECTORS = [
+      '.event__participant--away',
+      '[class*="participant--away"]',
+      '[class*="awayParticipant"]',
+      '[class*="participant"][class*="away"]'
+    ];
     const text = (root, selectors) => {
       for (const selector of selectors) {
-        const node = root.querySelector(selector);
+        const node = root?.querySelector?.(selector);
         const value = clean(node?.textContent);
         if (value) return value;
       }
@@ -116,14 +149,27 @@ async function scrapeMatchPage(page, url, competition) {
       const m = String(value || '').match(/-?\d+(?:[.,]\d+)?/);
       return m ? Number(m[0].replace(',', '.')) : null;
     };
+    const hasDateishText = value => /\b\d{1,2}[.\/-]\d{1,2}(?:[.\/-]\d{2,4})?\b/.test(String(value || ''));
+
+    const candidateRows = new Set(document.querySelectorAll('.event__match, [class*="event__match"]'));
+
+    for (const homeNode of document.querySelectorAll(HOME_SELECTORS.join(','))) {
+      let node = homeNode;
+      for (let depth = 0; depth < 8 && node; depth++, node = node.parentElement) {
+        if (text(node, HOME_SELECTORS) && text(node, AWAY_SELECTORS)) {
+          candidateRows.add(node);
+          break;
+        }
+      }
+    }
 
     const seen = new Set();
     const out = [];
-    const matchRows = [...document.querySelectorAll('.event__match, [class*="event__match"]')];
-    for (const row of matchRows) {
-      const home = text(row, ['.event__participant--home', '[class*="homeParticipant"]', '[class*="participant--home"]']);
-      const away = text(row, ['.event__participant--away', '[class*="awayParticipant"]', '[class*="participant--away"]']);
-      if (!home || !away) continue;
+    const pushRow = (row, forcedHome = '', forcedAway = '', forcedHref = '') => {
+      if (!row) return;
+      const home = forcedHome || text(row, HOME_SELECTORS);
+      const away = forcedAway || text(row, AWAY_SELECTORS);
+      if (!home || !away) return;
 
       const attrs = [...row.attributes].map(a => [a.name, a.value]);
       const rawTimestamp = attrs.find(([name, value]) => /(?:start|timestamp|event.*time|time.*event)/i.test(name) && /^\d{10,13}$/.test(value))?.[1] || '';
@@ -132,13 +178,15 @@ async function scrapeMatchPage(page, url, competition) {
       const round = text(row, ['.event__round', '[class*="event__round"]']);
       const homeScoreText = text(row, ['.event__score--home', '[class*="homeScore"]', '[class*="score--home"]']);
       const awayScoreText = text(row, ['.event__score--away', '[class*="awayScore"]', '[class*="score--away"]']);
-      const link = row.querySelector('a[href*="/partita/"], a[href*="/match/"], a.eventRowLink');
-      const href = link?.href || '';
+      const link = row.querySelector?.('a[href*="/partita/"], a[href*="/match/"], a.eventRowLink');
+      const href = forcedHref || link?.href || '';
       const idFromRow = String(row.id || '').replace(/^g_\d_/, '').trim();
-      const idFromHref = href ? href.split('/').filter(Boolean).pop() || '' : '';
+      const hrefParts = href ? href.split('/').filter(Boolean) : [];
+      const idFromHref = hrefParts.length ? hrefParts[hrefParts.length - 1] : '';
       const providerMatchId = idFromRow || idFromHref;
-      const key = providerMatchId || `${home}|${away}|${timeText}`;
-      if (seen.has(key)) continue;
+      const rowText = clean(row.textContent);
+      const key = providerMatchId || `${home}|${away}|${timeText}|${rowText.slice(0, 80)}`;
+      if (seen.has(key)) return;
       seen.add(key);
 
       out.push({
@@ -152,12 +200,45 @@ async function scrapeMatchPage(page, url, competition) {
         homeScore: numberText(homeScoreText),
         awayScore: numberText(awayScoreText),
         className: String(row.className || ''),
-        ariaLabel: row.getAttribute('aria-label') || '',
-        rowText: clean(row.textContent)
+        ariaLabel: row.getAttribute?.('aria-label') || '',
+        rowText
       });
+    };
+
+    for (const row of candidateRows) pushRow(row);
+
+    if (out.length < 20) {
+      for (const anchor of document.querySelectorAll('a')) {
+        const label = clean(anchor.textContent);
+        const parts = label.split(/\s+-\s+/);
+        if (parts.length !== 2 || !parts[0] || !parts[1]) continue;
+        if (parts[0].length > 80 || parts[1].length > 80) continue;
+
+        let row = anchor;
+        let best = anchor;
+        for (let depth = 0; depth < 7 && row; depth++, row = row.parentElement) {
+          const t = clean(row.textContent);
+          if (t.length <= 600) best = row;
+          if (hasDateishText(t) && t.includes(parts[0]) && t.includes(parts[1])) {
+            best = row;
+            break;
+          }
+        }
+        pushRow(best, parts[0].trim(), parts[1].trim(), anchor.href || '');
+      }
     }
+
     return out;
   });
+
+  if (!rows.length) {
+    const debug = await page.evaluate(() => ({
+      title: document.title,
+      href: location.href,
+      body: String(document.body?.innerText || '').replace(/\s+/g, ' ').slice(0, 1200)
+    })).catch(() => ({ title: '', href: url, body: '' }));
+    console.warn(`${competition}: nessuna riga partita DOM. Pagina: ${debug.href} | ${debug.title} | ${debug.body}`);
+  }
 
   return rows.map(row => {
     const startTimestamp = parseTimestamp(row.rawTimestamp, `${row.timeText} ${row.ariaLabel} ${row.rowText}`, seasonStart);
