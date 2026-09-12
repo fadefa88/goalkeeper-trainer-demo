@@ -1,27 +1,3 @@
-// Motore del tema per società/cliente. Caricato per PRIMO in <head> (prima
-// di style.css finisca pure, non serve: le custom property si applicano
-// comunque appena il CSS le legge) così il tema corretto (neutro o
-// dell'ultimo account noto) è già impostato prima che l'utente veda un
-// frame con i colori sbagliati.
-//
-// Design del contrasto (vedi anche verifica manuale in fondo al file):
-// - --red / --mantova-gold: colore sociale "grezzo", solo con un pavimento
-//   di leggibilità (>=3:1) contro lo sfondo più scuro, per usi NON testuali
-//   (bordi, puntini, accent-color nativi). Quasi sempre resta invariato.
-// - --red-fill: stesso colore, usato come sfondo pieno di bottoni/celle
-//   selezionate. Non viene toccato per il pannello (non è testo lì
-//   sopra), solo eventualmente nudged quanto basta perché esista un testo
-//   leggibile sopra (--on-accent) — per i colori sociali reali non scatta
-//   quasi mai: il bottone resta fedele al colore della società.
-// - --red-text: variante SEPARATA, schiarita/scurita quanto serve per
-//   restare leggibile (>=4.5:1) quando il colore compare come TESTO su una
-//   card scura (--panel-2). Tenerla distinta da --red-fill evita di dover
-//   sbiadire i bottoni pieni solo per rendere leggibile una scritta altrove.
-// - --red-on-light: variante per l'unico caso di testo colorato su sfondo
-//   bianco fisso (badge giorno partita).
-// - --on-accent: testo (chiaro o scuro) da usare SOPRA --red-fill, scelto
-//   in base al contrasto reale, non sempre bianco (vedi giallo/celeste).
-// Riferimento: W3C contrasto testo (1.4.3) e non-testo (1.4.11).
 (() => {
   if (window.gkTheme) return;
 
@@ -31,11 +7,9 @@
   const TEXT_DARK = "#101112";
   const HEX_RE = /^#[0-9a-f]{6}$/i;
   const CLUB_ID_RE = /^[a-z0-9][a-z0-9-]{0,79}$/;
-  const NEUTRAL_LOGO = "icon.svg";
-
-  // Tema neutro e professionale: nessun colore di nessuna società, usato
-  // al primo accesso, per account senza preferenza e all'auth screen.
   const NEUTRAL = { primary: "#5b6f9e", secondary: "#8792a6" };
+  const NEUTRAL_LOGO = "icon.svg";
+  const NEUTRAL_BRAND = "GK Trainer";
 
   function hexToRgb(hex) {
     const m = String(hex).replace("#", "").match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
@@ -43,7 +17,7 @@
     return { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) };
   }
   function rgbToHex({ r, g, b }) {
-    const h = (n) => Math.round(Math.min(255, Math.max(0, n))).toString(16).padStart(2, "0");
+    const h = n => Math.round(Math.min(255, Math.max(0, n))).toString(16).padStart(2, "0");
     return `#${h(r)}${h(g)}${h(b)}`;
   }
   function srgbToLinear(c) {
@@ -53,33 +27,35 @@
   function relativeLuminance(rgb) {
     return 0.2126 * srgbToLinear(rgb.r) + 0.7152 * srgbToLinear(rgb.g) + 0.0722 * srgbToLinear(rgb.b);
   }
-  function contrastRatio(hexA, hexB) {
-    const la = relativeLuminance(hexToRgb(hexA));
-    const lb = relativeLuminance(hexToRgb(hexB));
+  function contrastRatio(a, b) {
+    const la = relativeLuminance(hexToRgb(a));
+    const lb = relativeLuminance(hexToRgb(b));
     const [hi, lo] = la >= lb ? [la, lb] : [lb, la];
     return (hi + 0.05) / (lo + 0.05);
   }
   function rgbToHsl({ r, g, b }) {
     r /= 255; g /= 255; b /= 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h, s;
+    let h = 0, s = 0;
     const l = (max + min) / 2;
-    if (max === min) { h = 0; s = 0; } else {
+    if (max !== min) {
       const d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        default: h = (r - g) / d + 4;
-      }
+      if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
       h /= 6;
     }
     return { h, s, l };
   }
   function hslToRgb({ h, s, l }) {
-    if (s === 0) { const v = Math.round(l * 255); return { r: v, g: v, b: v }; }
-    const hue2rgb = (p, q, t) => {
-      if (t < 0) t += 1; if (t > 1) t -= 1;
+    if (!s) {
+      const v = Math.round(l * 255);
+      return { r: v, g: v, b: v };
+    }
+    const hue = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
       if (t < 1 / 6) return p + (q - p) * 6 * t;
       if (t < 1 / 2) return q;
       if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
@@ -88,78 +64,65 @@
     const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
     const p = 2 * l - q;
     return {
-      r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
-      g: Math.round(hue2rgb(p, q, h) * 255),
-      b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
+      r: Math.round(hue(p, q, h + 1 / 3) * 255),
+      g: Math.round(hue(p, q, h) * 255),
+      b: Math.round(hue(p, q, h - 1 / 3) * 255)
     };
   }
   function withLightness(hex, l) {
     const hsl = rgbToHsl(hexToRgb(hex));
     return rgbToHex(hslToRgb({ ...hsl, l: Math.min(0.96, Math.max(0.04, l)) }));
   }
-  function adjustForContrast(hex, bgHex, minRatio) {
-    if (contrastRatio(hex, bgHex) >= minRatio) return hex;
+  function adjustForContrast(hex, bg, minRatio) {
+    if (contrastRatio(hex, bg) >= minRatio) return hex;
     const hsl = rgbToHsl(hexToRgb(hex));
     for (let step = 1; step <= 46; step++) {
-      const delta = step * 0.02;
-      const lighter = withLightness(hex, hsl.l + delta);
-      if (contrastRatio(lighter, bgHex) >= minRatio) return lighter;
-      const darker = withLightness(hex, hsl.l - delta);
-      if (contrastRatio(darker, bgHex) >= minRatio) return darker;
+      const d = step * 0.02;
+      const lighter = withLightness(hex, hsl.l + d);
+      if (contrastRatio(lighter, bg) >= minRatio) return lighter;
+      const darker = withLightness(hex, hsl.l - d);
+      if (contrastRatio(darker, bg) >= minRatio) return darker;
     }
-    const white = "#ffffff", black = "#0a0a0a";
-    return contrastRatio(white, bgHex) >= contrastRatio(black, bgHex) ? white : black;
+    return contrastRatio("#ffffff", bg) >= contrastRatio("#0a0a0a", bg) ? "#ffffff" : "#0a0a0a";
   }
   function pickOnAccent(hex) {
-    const cw = contrastRatio(TEXT_LIGHT, hex);
-    const cd = contrastRatio(TEXT_DARK, hex);
-    return cw >= cd ? { color: TEXT_LIGHT, ratio: cw } : { color: TEXT_DARK, ratio: cd };
+    const light = contrastRatio(TEXT_LIGHT, hex);
+    const dark = contrastRatio(TEXT_DARK, hex);
+    return light >= dark ? { color: TEXT_LIGHT, ratio: light } : { color: TEXT_DARK, ratio: dark };
   }
   function rgbaFromHex(hex, alpha) {
     const { r, g, b } = hexToRgb(hex);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
-
   function buildTokens(primaryIn, secondaryIn) {
     const primary = HEX_RE.test(primaryIn || "") ? primaryIn : NEUTRAL.primary;
     const secondaryRaw = HEX_RE.test(secondaryIn || "") ? secondaryIn : primary;
-    const red = adjustForContrast(primary, BG, 3.0);
+    const red = adjustForContrast(primary, BG, 3);
     let fill = primary;
     let onAccent = pickOnAccent(fill);
-    for (let guard = 0; onAccent.ratio < 4.5 && guard < 30; guard++) {
+    for (let i = 0; onAccent.ratio < 4.5 && i < 30; i++) {
       const hsl = rgbToHsl(hexToRgb(fill));
-      const dir = onAccent.color === TEXT_LIGHT ? -0.02 : 0.02;
-      fill = withLightness(fill, hsl.l + dir);
+      fill = withLightness(fill, hsl.l + (onAccent.color === TEXT_LIGHT ? -0.02 : 0.02));
       onAccent = pickOnAccent(fill);
     }
-    const redText = adjustForContrast(primary, PANEL_2, 4.5);
-    const redOnLight = adjustForContrast(primary, "#ffffff", 4.5);
     const fillDeep = withLightness(fill, rgbToHsl(hexToRgb(fill)).l - 0.14);
-    const secondary = adjustForContrast(secondaryRaw, PANEL_2, 3.0);
     return {
       "--red": red,
-      "--red-text": redText,
+      "--red-text": adjustForContrast(primary, PANEL_2, 4.5),
       "--red-fill": fill,
       "--red-fill-deep": fillDeep,
-      "--red-on-light": redOnLight,
+      "--red-on-light": adjustForContrast(primary, "#ffffff", 4.5),
       "--red-soft": rgbaFromHex(red, 0.14),
       "--red-soft-strong": rgbaFromHex(red, 0.28),
       "--on-accent": onAccent.color,
-      "--mantova-gold": secondary
+      "--mantova-gold": adjustForContrast(secondaryRaw, PANEL_2, 3)
     };
   }
 
   const root = document.documentElement;
-  function applyTokens(tokens) {
-    Object.entries(tokens).forEach(([name, value]) => root.style.setProperty(name, value));
-  }
-  function applyPalette(primary, secondary) {
-    applyTokens(buildTokens(primary, secondary));
-  }
+  const applyTokens = tokens => Object.entries(tokens).forEach(([k, v]) => root.style.setProperty(k, v));
+  const applyPalette = (primary, secondary) => applyTokens(buildTokens(primary, secondary));
 
-  // Logo UI dinamico: il file viene derivato dall'id stabile del club,
-  // perché la pipeline salva sempre assets/club-logos/<club-id>.webp.
-  // Non tocca manifest/favicon/icona PWA installata.
   let logoRequestVersion = 0;
   function applyLogo(pref) {
     const version = ++logoRequestVersion;
@@ -178,22 +141,60 @@
     probe.src = path;
   }
 
+  let brandRequestVersion = 0;
+  function brandName(pref) {
+    if (pref?.themeMode === "club" && pref.club) {
+      return String(pref.club.shortName || pref.club.officialName || NEUTRAL_BRAND).trim().slice(0, 80) || NEUTRAL_BRAND;
+    }
+    if (pref?.themeMode === "custom" && pref.customClubName) {
+      return String(pref.customClubName).trim().slice(0, 80) || NEUTRAL_BRAND;
+    }
+    return NEUTRAL_BRAND;
+  }
+  function applyBrandName(pref) {
+    const version = ++brandRequestVersion;
+    const name = brandName(pref);
+    const commit = () => {
+      if (version !== brandRequestVersion) return;
+      const el = document.querySelector(".app-brand");
+      if (!el) return;
+      el.textContent = name;
+      el.title = name;
+      el.setAttribute("aria-label", name);
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", commit, { once: true });
+    else commit();
+  }
+
+  function paletteFromPreference(pref) {
+    if (!pref) return null;
+    if (pref.useCustomColors && HEX_RE.test(pref.colorPrimary || "")) {
+      return { primary: pref.colorPrimary, secondary: HEX_RE.test(pref.colorSecondary || "") ? pref.colorSecondary : pref.colorPrimary };
+    }
+    if (pref.club && HEX_RE.test(pref.club.colorPrimary || "")) {
+      return { primary: pref.club.colorPrimary, secondary: HEX_RE.test(pref.club.colorSecondary || "") ? pref.club.colorSecondary : pref.club.colorPrimary };
+    }
+    return null;
+  }
+  function applyPreference(pref) {
+    const palette = paletteFromPreference(pref);
+    applyPalette(palette?.primary || NEUTRAL.primary, palette?.secondary || NEUTRAL.secondary);
+    applyLogo(pref);
+    applyBrandName(pref);
+  }
   function applyNeutral() {
     applyPalette(NEUTRAL.primary, NEUTRAL.secondary);
     applyLogo(null);
+    applyBrandName(null);
   }
 
-  // --- Cache locale per-account -------------------------------------------
   const ACTIVE_KEY = "gk_theme_active_account";
-  function cacheKey(accountId) { return `gk_theme_${accountId}`; }
-
+  const cacheKey = accountId => `gk_theme_${accountId}`;
   function readCache(accountId) {
     if (!accountId) return null;
     try {
       const raw = localStorage.getItem(cacheKey(accountId));
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      return parsed && typeof parsed === "object" ? parsed : null;
+      return raw ? JSON.parse(raw) : null;
     } catch { return null; }
   }
   function writeCache(accountId, state) {
@@ -210,30 +211,9 @@
     try { return localStorage.getItem(ACTIVE_KEY) || null; } catch { return null; }
   }
 
-  function paletteFromPreference(pref) {
-    if (!pref) return null;
-    if (pref.useCustomColors && HEX_RE.test(pref.colorPrimary || "")) {
-      return { primary: pref.colorPrimary, secondary: HEX_RE.test(pref.colorSecondary || "") ? pref.colorSecondary : pref.colorPrimary };
-    }
-    if (pref.club && HEX_RE.test(pref.club.colorPrimary || "")) {
-      return { primary: pref.club.colorPrimary, secondary: HEX_RE.test(pref.club.colorSecondary || "") ? pref.club.colorSecondary : pref.club.colorPrimary };
-    }
-    return null;
-  }
-
-  function applyPreference(pref) {
-    const palette = paletteFromPreference(pref);
-    if (palette) applyPalette(palette.primary, palette.secondary);
-    else applyPalette(NEUTRAL.primary, NEUTRAL.secondary);
-    applyLogo(pref);
-  }
-
-  (function bootstrap() {
-    const activeId = getActiveAccount();
-    const cached = activeId ? readCache(activeId) : null;
-    if (cached) applyPreference(cached);
-    else applyNeutral();
-  })();
+  const activeId = getActiveAccount();
+  const cached = activeId ? readCache(activeId) : null;
+  if (cached) applyPreference(cached); else applyNeutral();
 
   window.gkTheme = {
     NEUTRAL,
@@ -243,8 +223,7 @@
     applyPreference,
     hydrateAccount(accountId) {
       setActiveAccount(accountId);
-      const cached = readCache(accountId);
-      applyPreference(cached);
+      applyPreference(readCache(accountId));
     },
     setForAccount(accountId, pref) {
       setActiveAccount(accountId);
