@@ -288,23 +288,28 @@ function resolveSerieCTeam(clubs, groupName, rawName) {
 }
 
 async function clickGroup(page, groupName) {
-  const target = page.getByText(new RegExp(`^${groupName}$`, 'i')).first();
-  if (await target.count()) {
+  const escaped = groupName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const exact = new RegExp(`^\\s*${escaped}\\s*$`, 'i');
+  const candidates = page.locator('button, [role="tab"], [role="button"]').filter({ hasText: exact });
+  const count = await candidates.count();
+
+  for (let i = 0; i < count; i++) {
+    const target = candidates.nth(i);
+    if (!await target.isVisible().catch(() => false)) continue;
     try {
       await target.click({ timeout: 2500 });
-      await page.waitForTimeout(800);
+      await page.waitForTimeout(900);
+      const current = new URL(page.url());
+      if (current.pathname.replace(/\/$/, '') !== '/calendario') {
+        throw new Error(`click tab ha navigato a ${current.pathname}`);
+      }
+      console.log(`Serie C ${groupName}: tab calendario selezionato.`);
       return true;
-    } catch {}
+    } catch (err) {
+      console.warn(`Serie C ${groupName}: controllo tab ignorato (${err?.message || err}).`);
+    }
   }
-  return page.evaluate((groupName) => {
-    const clean = s => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
-    const target = clean(groupName);
-    const nodes = [...document.querySelectorAll('button, a, [role="button"], [role="tab"]')];
-    const el = nodes.find(n => clean(n.innerText || n.textContent) === target);
-    if (!el) return false;
-    el.click();
-    return true;
-  }, groupName).catch(() => false);
+  return false;
 }
 
 async function scrapeCalendarGroup(page, group) {
