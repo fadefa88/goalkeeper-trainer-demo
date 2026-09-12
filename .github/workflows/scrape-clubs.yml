@@ -50,6 +50,9 @@ jobs:
       - name: Resolve official logos and derive UI palettes
         run: node scripts/enrich-club-logos.mjs --season=${{ inputs.season }}
 
+      - name: Attach complete Serie C calendars
+        run: node scripts/repair-seriec-official.mjs --season=${{ inputs.season }} --calendar-only
+
       - name: Validate D1 import
         if: ${{ inputs.import_to_d1 }}
         env:
