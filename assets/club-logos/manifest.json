@@ -64,7 +64,7 @@
         "saturation": 0.333
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.304Z"
+    "scrapedAt": "2026-09-12T11:07:49.247Z"
   },
   "ascoli": {
     "name": "Ascoli",
@@ -131,7 +131,7 @@
         "saturation": 0.75
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.378Z"
+    "scrapedAt": "2026-09-12T11:07:49.307Z"
   },
   "avellino": {
     "name": "Avellino",
@@ -198,7 +198,7 @@
         "saturation": 0.583
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.434Z"
+    "scrapedAt": "2026-09-12T11:07:49.365Z"
   },
   "benevento": {
     "name": "Benevento",
@@ -265,7 +265,7 @@
         "saturation": 0.867
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.477Z"
+    "scrapedAt": "2026-09-12T11:07:49.418Z"
   },
   "bologna-fc-1909": {
     "name": "Bologna",
@@ -332,7 +332,7 @@
         "saturation": 0.667
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.538Z"
+    "scrapedAt": "2026-09-12T11:07:49.461Z"
   },
   "cagliari-calcio": {
     "name": "Cagliari",
@@ -399,7 +399,7 @@
         "saturation": 0.5
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.577Z"
+    "scrapedAt": "2026-09-12T11:07:49.495Z"
   },
   "carrarese": {
     "name": "Carrarese",
@@ -466,7 +466,7 @@
         "saturation": 0.818
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.637Z"
+    "scrapedAt": "2026-09-12T11:07:49.551Z"
   },
   "catanzaro": {
     "name": "Catanzaro",
@@ -533,7 +533,7 @@
         "saturation": 0.923
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.674Z"
+    "scrapedAt": "2026-09-12T11:07:49.583Z"
   },
   "cesena-fc": {
     "name": "Cesena",
@@ -600,7 +600,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.727Z"
+    "scrapedAt": "2026-09-12T11:07:49.630Z"
   },
   "como-1907": {
     "name": "Como",
@@ -667,7 +667,7 @@
         "saturation": 0.714
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.761Z"
+    "scrapedAt": "2026-09-12T11:07:49.659Z"
   },
   "cremonese": {
     "name": "Cremonese",
@@ -734,7 +734,7 @@
         "saturation": 0.615
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.802Z"
+    "scrapedAt": "2026-09-12T11:07:49.694Z"
   },
   "empoli-fc": {
     "name": "Empoli",
@@ -801,7 +801,7 @@
         "saturation": 0.583
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.837Z"
+    "scrapedAt": "2026-09-12T11:07:49.725Z"
   },
   "entella": {
     "name": "Entella",
@@ -868,7 +868,7 @@
         "saturation": 0.333
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.885Z"
+    "scrapedAt": "2026-09-12T11:07:49.769Z"
   },
   "acf-fiorentina": {
     "name": "Fiorentina",
@@ -935,7 +935,7 @@
         "saturation": 0.133
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.945Z"
+    "scrapedAt": "2026-09-12T11:07:49.802Z"
   },
   "frosinone": {
     "name": "Frosinone",
@@ -1002,7 +1002,7 @@
         "saturation": 0.875
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:47.984Z"
+    "scrapedAt": "2026-09-12T11:07:49.834Z"
   },
   "genoa-cfc": {
     "name": "Genoa",
@@ -1069,7 +1069,7 @@
         "saturation": 0.923
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.028Z"
+    "scrapedAt": "2026-09-12T11:07:49.865Z"
   },
   "hellas-verona-fc": {
     "name": "Hellas Verona",
@@ -1101,7 +1101,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.074Z"
+    "scrapedAt": "2026-09-12T11:07:49.908Z"
   },
   "fc-internazionale-milano": {
     "name": "Inter",
@@ -1168,7 +1168,74 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.110Z"
+    "scrapedAt": "2026-09-12T11:07:49.939Z"
+  },
+  "juve-stabia": {
+    "name": "Juve Stabia",
+    "competition": "Serie B",
+    "groupName": null,
+    "path": "/assets/club-logos/juve-stabia.webp",
+    "source": "Lega B",
+    "sourcePage": "https://www.legab.it/seriebkt/calendario/2026-2027/stagione-regolare/4",
+    "sourceUrl": "https://d5rzfs5ck83rq.cloudfront.net/legab.it/img/club/loghi/juve_stabia_scuro.png",
+    "providerTeamId": null,
+    "matchedName": "Logo Juve Stabia",
+    "score": 191,
+    "colorPrimary": "#ffd030",
+    "colorSecondary": "#202030",
+    "paletteCandidates": [
+      {
+        "color": "#ffd030",
+        "share": 0.3115,
+        "saturation": 0.812
+      },
+      {
+        "color": "#202030",
+        "share": 0.2562,
+        "saturation": 0.333
+      },
+      {
+        "color": "#101030",
+        "share": 0.0721,
+        "saturation": 0.667
+      },
+      {
+        "color": "#f0d030",
+        "share": 0.0412,
+        "saturation": 0.8
+      },
+      {
+        "color": "#f0c030",
+        "share": 0.0244,
+        "saturation": 0.8
+      },
+      {
+        "color": "#ffe030",
+        "share": 0.0218,
+        "saturation": 0.812
+      },
+      {
+        "color": "#b09030",
+        "share": 0.0196,
+        "saturation": 0.727
+      },
+      {
+        "color": "#d0b030",
+        "share": 0.0184,
+        "saturation": 0.769
+      },
+      {
+        "color": "#c0a030",
+        "share": 0.0157,
+        "saturation": 0.75
+      },
+      {
+        "color": "#e0b030",
+        "share": 0.013,
+        "saturation": 0.786
+      }
+    ],
+    "scrapedAt": "2026-09-12T11:07:49.986Z"
   },
   "juventus-fc": {
     "name": "Juventus",
@@ -1190,7 +1257,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.138Z"
+    "scrapedAt": "2026-09-12T11:07:50.040Z"
   },
   "l-r-vicenza": {
     "name": "L.R. Vicenza",
@@ -1257,7 +1324,7 @@
         "saturation": 0.467
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.194Z"
+    "scrapedAt": "2026-09-12T11:07:50.090Z"
   },
   "ss-lazio": {
     "name": "Lazio",
@@ -1324,7 +1391,7 @@
         "saturation": 0.5
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.225Z"
+    "scrapedAt": "2026-09-12T11:07:50.118Z"
   },
   "lecce": {
     "name": "Lecce",
@@ -1391,7 +1458,7 @@
         "saturation": 0.75
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.261Z"
+    "scrapedAt": "2026-09-12T11:07:50.196Z"
   },
   "mantova-1911": {
     "name": "Mantova",
@@ -1458,7 +1525,7 @@
         "saturation": 0.875
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.313Z"
+    "scrapedAt": "2026-09-12T11:07:50.243Z"
   },
   "ac-milan": {
     "name": "Milan",
@@ -1525,7 +1592,7 @@
         "saturation": 0.889
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.355Z"
+    "scrapedAt": "2026-09-12T11:07:50.294Z"
   },
   "modena": {
     "name": "Modena",
@@ -1592,7 +1659,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.394Z"
+    "scrapedAt": "2026-09-12T11:07:50.328Z"
   },
   "monza": {
     "name": "Monza",
@@ -1605,61 +1672,61 @@
     "providerTeamId": null,
     "matchedName": "Monza",
     "score": 191,
-    "colorPrimary": "#f01040",
+    "colorPrimary": "#e00030",
     "colorSecondary": "#f05070",
     "paletteCandidates": [
       {
-        "color": "#f01040",
-        "share": 0.6293,
-        "saturation": 0.933
+        "color": "#e00030",
+        "share": 0.7037,
+        "saturation": 1
       },
       {
-        "color": "#f02040",
-        "share": 0.0479,
-        "saturation": 0.867
+        "color": "#e01040",
+        "share": 0.0212,
+        "saturation": 0.929
       },
       {
-        "color": "#f01030",
-        "share": 0.0394,
-        "saturation": 0.933
+        "color": "#e01030",
+        "share": 0.019,
+        "saturation": 0.929
       },
       {
         "color": "#e02040",
-        "share": 0.0181,
+        "share": 0.0182,
         "saturation": 0.857
       },
       {
-        "color": "#f03050",
-        "share": 0.0171,
-        "saturation": 0.8
-      },
-      {
-        "color": "#f04060",
-        "share": 0.0146,
-        "saturation": 0.733
-      },
-      {
-        "color": "#e03050",
-        "share": 0.0086,
-        "saturation": 0.786
-      },
-      {
         "color": "#f05070",
-        "share": 0.01,
+        "share": 0.022,
         "saturation": 0.667
       },
       {
-        "color": "#ffa0b0",
-        "share": 0.0141,
-        "saturation": 0.373
+        "color": "#f04060",
+        "share": 0.0186,
+        "saturation": 0.733
       },
       {
-        "color": "#f06070",
-        "share": 0.0091,
+        "color": "#f090a0",
+        "share": 0.0239,
+        "saturation": 0.4
+      },
+      {
+        "color": "#f03050",
+        "share": 0.0128,
+        "saturation": 0.8
+      },
+      {
+        "color": "#f06080",
+        "share": 0.0132,
         "saturation": 0.6
+      },
+      {
+        "color": "#f08090",
+        "share": 0.0143,
+        "saturation": 0.467
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.429Z"
+    "scrapedAt": "2026-09-12T11:07:50.391Z"
   },
   "ssc-napoli": {
     "name": "Napoli",
@@ -1681,7 +1748,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.462Z"
+    "scrapedAt": "2026-09-12T11:07:50.420Z"
   },
   "padova": {
     "name": "Padova",
@@ -1748,7 +1815,7 @@
         "saturation": 0.733
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.510Z"
+    "scrapedAt": "2026-09-12T11:07:50.462Z"
   },
   "palermo-fc": {
     "name": "Palermo",
@@ -1770,7 +1837,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.559Z"
+    "scrapedAt": "2026-09-12T11:07:50.506Z"
   },
   "parma-calcio-1913": {
     "name": "Parma",
@@ -1837,7 +1904,7 @@
         "saturation": 0.625
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.592Z"
+    "scrapedAt": "2026-09-12T11:07:50.540Z"
   },
   "pisa": {
     "name": "Pisa",
@@ -1904,7 +1971,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.634Z"
+    "scrapedAt": "2026-09-12T11:07:50.576Z"
   },
   "as-roma": {
     "name": "Roma",
@@ -1971,7 +2038,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.669Z"
+    "scrapedAt": "2026-09-12T11:07:50.606Z"
   },
   "uc-sampdoria": {
     "name": "Sampdoria",
@@ -2038,7 +2105,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.718Z"
+    "scrapedAt": "2026-09-12T11:07:50.651Z"
   },
   "us-sassuolo-calcio": {
     "name": "Sassuolo",
@@ -2105,7 +2172,7 @@
         "saturation": 0.9
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.754Z"
+    "scrapedAt": "2026-09-12T11:07:50.695Z"
   },
   "sudtirol": {
     "name": "Südtirol",
@@ -2172,7 +2239,7 @@
         "saturation": 0.615
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.802Z"
+    "scrapedAt": "2026-09-12T11:07:50.738Z"
   },
   "torino-fc": {
     "name": "Torino",
@@ -2239,7 +2306,7 @@
         "saturation": 0.75
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.858Z"
+    "scrapedAt": "2026-09-12T11:07:50.831Z"
   },
   "udinese-calcio": {
     "name": "Udinese",
@@ -2306,7 +2373,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.898Z"
+    "scrapedAt": "2026-09-12T11:07:50.903Z"
   },
   "venezia-fc": {
     "name": "Venezia",
@@ -2373,7 +2440,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:48.959Z"
+    "scrapedAt": "2026-09-12T11:07:50.940Z"
   },
   "albinoleffe": {
     "name": "AlbinoLeffe",
@@ -2439,7 +2506,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.193Z"
+    "scrapedAt": "2026-09-12T11:07:59.563Z"
   },
   "arzignano": {
     "name": "Arzignano",
@@ -2505,7 +2572,7 @@
         "saturation": 0.5
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.236Z"
+    "scrapedAt": "2026-09-12T11:07:59.600Z"
   },
   "atalanta-bc": {
     "name": "Atalanta",
@@ -2571,7 +2638,7 @@
         "saturation": 0.462
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.281Z"
+    "scrapedAt": "2026-09-12T11:07:59.642Z"
   },
   "audace-cerignola": {
     "name": "Audace Cerignola",
@@ -2637,7 +2704,7 @@
         "saturation": 0.9
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.321Z"
+    "scrapedAt": "2026-09-12T11:07:59.676Z"
   },
   "ssc-bari": {
     "name": "Bari",
@@ -2703,7 +2770,7 @@
         "saturation": 0.929
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.345Z"
+    "scrapedAt": "2026-09-12T11:07:59.695Z"
   },
   "barletta": {
     "name": "Barletta",
@@ -2769,7 +2836,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.396Z"
+    "scrapedAt": "2026-09-12T11:07:59.736Z"
   },
   "brescia-calcio": {
     "name": "Brescia",
@@ -2805,7 +2872,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.437Z"
+    "scrapedAt": "2026-09-12T11:07:59.769Z"
   },
   "campobasso": {
     "name": "Campobasso",
@@ -2871,7 +2938,7 @@
         "saturation": 0.917
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.488Z"
+    "scrapedAt": "2026-09-12T11:07:59.815Z"
   },
   "carpi": {
     "name": "Carpi",
@@ -2937,7 +3004,7 @@
         "saturation": 0.929
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.527Z"
+    "scrapedAt": "2026-09-12T11:07:59.848Z"
   },
   "casarano": {
     "name": "Casarano",
@@ -3003,7 +3070,7 @@
         "saturation": 0.9
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.561Z"
+    "scrapedAt": "2026-09-12T11:07:59.881Z"
   },
   "casertana": {
     "name": "Casertana",
@@ -3069,7 +3136,7 @@
         "saturation": 0.778
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.598Z"
+    "scrapedAt": "2026-09-12T11:07:59.912Z"
   },
   "catania": {
     "name": "Catania",
@@ -3135,7 +3202,7 @@
         "saturation": 0.667
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.627Z"
+    "scrapedAt": "2026-09-12T11:07:59.936Z"
   },
   "cavese": {
     "name": "Cavese",
@@ -3201,7 +3268,7 @@
         "saturation": 0.545
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.660Z"
+    "scrapedAt": "2026-09-12T11:07:59.964Z"
   },
   "cittadella": {
     "name": "Cittadella",
@@ -3267,7 +3334,7 @@
         "saturation": 0.7
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.697Z"
+    "scrapedAt": "2026-09-12T11:07:59.999Z"
   },
   "cosenza": {
     "name": "Cosenza",
@@ -3333,7 +3400,7 @@
         "saturation": 0.667
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.731Z"
+    "scrapedAt": "2026-09-12T11:08:00.033Z"
   },
   "crotone": {
     "name": "Crotone",
@@ -3399,7 +3466,7 @@
         "saturation": 0.714
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.767Z"
+    "scrapedAt": "2026-09-12T11:08:00.061Z"
   },
   "dolomiti-bellunesi": {
     "name": "Dolomiti Bellunesi",
@@ -3450,7 +3517,7 @@
         "saturation": 0.31
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.811Z"
+    "scrapedAt": "2026-09-12T11:08:00.100Z"
   },
   "foggia": {
     "name": "Foggia",
@@ -3516,7 +3583,7 @@
         "saturation": 0.923
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.841Z"
+    "scrapedAt": "2026-09-12T11:08:00.126Z"
   },
   "folgore-caratese": {
     "name": "Folgore Caratese",
@@ -3582,7 +3649,7 @@
         "saturation": 0.786
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.879Z"
+    "scrapedAt": "2026-09-12T11:08:00.170Z"
   },
   "forli": {
     "name": "Forlì",
@@ -3648,7 +3715,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.918Z"
+    "scrapedAt": "2026-09-12T11:08:00.206Z"
   },
   "giana-erminio": {
     "name": "Giana Erminio",
@@ -3714,7 +3781,7 @@
         "saturation": 0.333
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.955Z"
+    "scrapedAt": "2026-09-12T11:08:00.241Z"
   },
   "giugliano": {
     "name": "Giugliano",
@@ -3780,7 +3847,7 @@
         "saturation": 0.75
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:57.990Z"
+    "scrapedAt": "2026-09-12T11:08:00.271Z"
   },
   "grosseto": {
     "name": "Grosseto",
@@ -3846,7 +3913,7 @@
         "saturation": 0.923
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.018Z"
+    "scrapedAt": "2026-09-12T11:08:00.296Z"
   },
   "gubbio": {
     "name": "Gubbio",
@@ -3912,7 +3979,7 @@
         "saturation": 0.833
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.074Z"
+    "scrapedAt": "2026-09-12T11:08:00.334Z"
   },
   "guidonia": {
     "name": "Guidonia",
@@ -3978,7 +4045,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.108Z"
+    "scrapedAt": "2026-09-12T11:08:00.366Z"
   },
   "latina": {
     "name": "Latina",
@@ -4044,7 +4111,7 @@
         "saturation": 0.6
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.159Z"
+    "scrapedAt": "2026-09-12T11:08:00.412Z"
   },
   "lecco": {
     "name": "Lecco",
@@ -4110,7 +4177,7 @@
         "saturation": 0.857
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.192Z"
+    "scrapedAt": "2026-09-12T11:08:00.441Z"
   },
   "livorno": {
     "name": "Livorno",
@@ -4176,7 +4243,7 @@
         "saturation": 0.8
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.224Z"
+    "scrapedAt": "2026-09-12T11:08:00.470Z"
   },
   "lumezzane": {
     "name": "Lumezzane",
@@ -4242,7 +4309,7 @@
         "saturation": 0.917
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.261Z"
+    "scrapedAt": "2026-09-12T11:08:00.499Z"
   },
   "monopoli": {
     "name": "Monopoli",
@@ -4308,7 +4375,7 @@
         "saturation": 0.231
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.298Z"
+    "scrapedAt": "2026-09-12T11:08:00.530Z"
   },
   "novara": {
     "name": "Novara",
@@ -4374,7 +4441,7 @@
         "saturation": 0.385
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.334Z"
+    "scrapedAt": "2026-09-12T11:08:00.561Z"
   },
   "ospitaletto": {
     "name": "Ospitaletto",
@@ -4440,7 +4507,7 @@
         "saturation": 0.6
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.372Z"
+    "scrapedAt": "2026-09-12T11:08:00.594Z"
   },
   "ostiamare": {
     "name": "Ostiamare",
@@ -4506,7 +4573,7 @@
         "saturation": 0.778
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.442Z"
+    "scrapedAt": "2026-09-12T11:08:00.658Z"
   },
   "pergolettese": {
     "name": "Pergolettese",
@@ -4572,7 +4639,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.478Z"
+    "scrapedAt": "2026-09-12T11:08:00.691Z"
   },
   "ac-perugia-calcio": {
     "name": "Perugia",
@@ -4638,7 +4705,7 @@
         "saturation": 0.846
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.517Z"
+    "scrapedAt": "2026-09-12T11:08:00.727Z"
   },
   "pescara": {
     "name": "Pescara",
@@ -4704,7 +4771,7 @@
         "saturation": 0.917
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.544Z"
+    "scrapedAt": "2026-09-12T11:08:00.749Z"
   },
   "pianese": {
     "name": "Pianese",
@@ -4770,7 +4837,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.575Z"
+    "scrapedAt": "2026-09-12T11:08:00.775Z"
   },
   "picerno": {
     "name": "Picerno",
@@ -4836,7 +4903,7 @@
         "saturation": 1
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.612Z"
+    "scrapedAt": "2026-09-12T11:08:00.805Z"
   },
   "pineto": {
     "name": "Pineto",
@@ -4902,7 +4969,7 @@
         "saturation": 0.6
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.648Z"
+    "scrapedAt": "2026-09-12T11:08:00.835Z"
   },
   "potenza": {
     "name": "Potenza",
@@ -4968,7 +5035,7 @@
         "saturation": 0.917
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.685Z"
+    "scrapedAt": "2026-09-12T11:08:00.864Z"
   },
   "pro-vercelli": {
     "name": "Pro Vercelli",
@@ -5034,7 +5101,7 @@
         "saturation": 0.818
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.719Z"
+    "scrapedAt": "2026-09-12T11:08:00.890Z"
   },
   "ravenna": {
     "name": "Ravenna",
@@ -5100,7 +5167,7 @@
         "saturation": 0.923
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.757Z"
+    "scrapedAt": "2026-09-12T11:08:00.923Z"
   },
   "reggiana": {
     "name": "Reggiana",
@@ -5166,7 +5233,7 @@
         "saturation": 0.556
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.787Z"
+    "scrapedAt": "2026-09-12T11:08:00.946Z"
   },
   "renate": {
     "name": "Renate",
@@ -5232,7 +5299,7 @@
         "saturation": 0.833
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.830Z"
+    "scrapedAt": "2026-09-12T11:08:00.980Z"
   },
   "salernitana": {
     "name": "Salernitana",
@@ -5298,7 +5365,7 @@
         "saturation": 0.714
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.865Z"
+    "scrapedAt": "2026-09-12T11:08:01.011Z"
   },
   "sambenedettese": {
     "name": "Sambenedettese",
@@ -5364,7 +5431,7 @@
         "saturation": 0.923
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.907Z"
+    "scrapedAt": "2026-09-12T11:08:01.048Z"
   },
   "savoia": {
     "name": "Savoia",
@@ -5430,7 +5497,7 @@
         "saturation": 0.833
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:58.957Z"
+    "scrapedAt": "2026-09-12T11:08:01.092Z"
   },
   "scafatese": {
     "name": "Scafatese",
@@ -5496,7 +5563,7 @@
         "saturation": 0.929
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:59.017Z"
+    "scrapedAt": "2026-09-12T11:08:01.150Z"
   },
   "spezia": {
     "name": "Spezia",
@@ -5562,7 +5629,7 @@
         "saturation": 0
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:59.051Z"
+    "scrapedAt": "2026-09-12T11:08:01.179Z"
   },
   "torres": {
     "name": "Torres",
@@ -5628,7 +5695,7 @@
         "saturation": 0.333
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:59.088Z"
+    "scrapedAt": "2026-09-12T11:08:01.208Z"
   },
   "trento": {
     "name": "Trento",
@@ -5694,7 +5761,7 @@
         "saturation": 0.5
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:59.129Z"
+    "scrapedAt": "2026-09-12T11:08:01.243Z"
   },
   "treviso": {
     "name": "Treviso",
@@ -5760,7 +5827,7 @@
         "saturation": 0.643
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:59.154Z"
+    "scrapedAt": "2026-09-12T11:08:01.265Z"
   },
   "vado": {
     "name": "Vado",
@@ -5826,7 +5893,7 @@
         "saturation": 0.625
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:59.196Z"
+    "scrapedAt": "2026-09-12T11:08:01.304Z"
   },
   "vis-pesaro": {
     "name": "Vis Pesaro",
@@ -5892,6 +5959,6 @@
         "saturation": 0.867
       }
     ],
-    "scrapedAt": "2026-09-12T10:37:59.229Z"
+    "scrapedAt": "2026-09-12T11:08:01.336Z"
   }
 }
