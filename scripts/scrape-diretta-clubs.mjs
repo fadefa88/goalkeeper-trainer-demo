@@ -191,9 +191,11 @@ function findSeedClub(name, seedIndex) {
   if (seedIndex.has(key)) return seedIndex.get(key);
 
   // Fallback prudente: solo inclusione quasi esatta, mai similarità fuzzy.
+  // Alias molto corti (es. "Juve") restano validi come match esatti sopra,
+  // ma non vengono usati per assorbire nomi diversi come "Juve Stabia".
   const matches = [];
   for (const [candidateKey, club] of seedIndex.entries()) {
-    if (candidateKey.length < 4 || key.length < 4) continue;
+    if (candidateKey.length < 5 || key.length < 5) continue;
     if (candidateKey.includes(key) || key.includes(candidateKey)) matches.push(club);
   }
   const unique = [...new Map(matches.map((m) => [m.id || m.officialName, m])).values()];
