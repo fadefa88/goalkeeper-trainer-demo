@@ -2,14 +2,6 @@
 // chiamato da scripts/import-clubs.mjs con un file CSV/JSON locale, MAI dal
 // client durante l'uso dell'app: la ricerca nel wizard (functions/api/clubs.js)
 // legge solo D1, non chiama mai questo endpoint né un provider esterno.
-//
-// Protezione minima: un token condiviso in ADMIN_IMPORT_TOKEN (variabile
-// d'ambiente Cloudflare Pages, mai nel repo). Senza quel token configurato
-// l'endpoint rifiuta sempre: niente scrittura sul catalogo condiviso
-// possibile "per sbaglio" in un ambiente dove il token non è stato impostato.
-//
-// dryRun:true calcola l'anteprima (created/updated/skipped/error per riga)
-// senza scrivere nulla: usalo sempre prima di un import vero.
 import {
   buildClubSearchKey,
   error,
@@ -40,6 +32,119 @@ function defaultTeam() {
   return { teamType: "prima_squadra", discipline: "calcio11", gender: "maschile", ageGroup: null, label: null };
 }
 
+async function ensureCalendarSchema(env) {
+  await env.DB.prepare(`
+    create table if not exists club_matches (
+      id text primary key,
+      club_team_id text not null references club_teams(id) on delete cascade,
+      season text not null,
+      competition text not null,
+      provider text not null,
+      provider_match_id text not null,
+      start_timestamp integer not null,
+      status text not null default 'notstarted',
+      status_description text,
+      round_name text,
+      home_team text not null,
+      away_team text not null,
+      home_score real,
+      away_score real,
+      venue text,
+      is_home integer not null default 0,
+      data_source text,
+      verified_at text,
+      created_at text not null default current_timestamp,
+      updated_at text not null default current_timestamp,
+      unique(club_team_id, provider, provider_match_id)
+    )
+  `).run();
+  await env.DB.prepare("create index if not exists club_matches_team_season_idx on club_matches(club_team_id, season, start_timestamp)").run();
+}
+
+function normalizeMatch(raw) {
+  const season = String(raw?.season || "").trim().slice(0, 20);
+  const competition = String(raw?.competition || "").trim().slice(0, 80);
+  const provider = String(raw?.provider || "diretta").trim().toLowerCase().slice(0, 40);
+  const providerMatchId = String(raw?.providerMatchId || raw?.id || "").trim().slice(0, 160);
+  const startTimestamp = Math.floor(Number(raw?.startTimestamp || 0));
+  const homeTeam = String(raw?.homeTeam || "").trim().slice(0, 160);
+  const awayTeam = String(raw?.awayTeam || "").trim().slice(0, 160);
+  if (!season || !competition || !provider || !providerMatchId || !startTimestamp || !homeTeam || !awayTeam) return null;
+
+  const score = value => {
+    if (value === null || value === undefined || value === "") return null;
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  };
+
+  return {
+    season,
+    competition,
+    provider,
+    providerMatchId,
+    startTimestamp,
+    status: String(raw?.status || "notstarted").trim().slice(0, 30) || "notstarted",
+    statusDescription: raw?.statusDescription ? String(raw.statusDescription).trim().slice(0, 120) : null,
+    roundName: raw?.round ? String(raw.round).trim().slice(0, 120) : null,
+    homeTeam,
+    awayTeam,
+    homeScore: score(raw?.homeScore),
+    awayScore: score(raw?.awayScore),
+    venue: raw?.venue ? String(raw.venue).trim().slice(0, 160) : null,
+    isHome: raw?.isHome ? 1 : 0,
+    dataSource: raw?.dataSource ? String(raw.dataSource).trim().slice(0, 160) : null,
+    verifiedAt: raw?.verifiedAt ? String(raw.verifiedAt).trim().slice(0, 40) : null
+  };
+}
+
+async function syncTeamMatches(env, teamId, rawMatches, dryRun, warnings) {
+  if (!Array.isArray(rawMatches) || !rawMatches.length) return 0;
+  const matches = [];
+  for (const raw of rawMatches) {
+    const match = normalizeMatch(raw);
+    if (!match) {
+      warnings.push(`partita incompleta ignorata per team ${teamId}`);
+      continue;
+    }
+    matches.push(match);
+  }
+  if (!matches.length || dryRun) return matches.length;
+
+  const groups = new Map();
+  for (const match of matches) {
+    const key = `${match.season}|${match.provider}`;
+    if (!groups.has(key)) groups.set(key, { season: match.season, provider: match.provider });
+  }
+
+  const statements = [];
+  for (const group of groups.values()) {
+    statements.push(env.DB.prepare("delete from club_matches where club_team_id = ? and season = ? and provider = ?")
+      .bind(teamId, group.season, group.provider));
+  }
+  const now = new Date().toISOString();
+  for (const match of matches) {
+    statements.push(env.DB.prepare(`
+      insert into club_matches (
+        id, club_team_id, season, competition, provider, provider_match_id,
+        start_timestamp, status, status_description, round_name, home_team, away_team,
+        home_score, away_score, venue, is_home, data_source, verified_at, created_at, updated_at
+      ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      on conflict(club_team_id, provider, provider_match_id) do update set
+        season=excluded.season, competition=excluded.competition, start_timestamp=excluded.start_timestamp,
+        status=excluded.status, status_description=excluded.status_description, round_name=excluded.round_name,
+        home_team=excluded.home_team, away_team=excluded.away_team, home_score=excluded.home_score,
+        away_score=excluded.away_score, venue=excluded.venue, is_home=excluded.is_home,
+        data_source=excluded.data_source, verified_at=excluded.verified_at, updated_at=excluded.updated_at
+    `).bind(
+      crypto.randomUUID(), teamId, match.season, match.competition, match.provider, match.providerMatchId,
+      match.startTimestamp, match.status, match.statusDescription, match.roundName, match.homeTeam, match.awayTeam,
+      match.homeScore, match.awayScore, match.venue, match.isHome, match.dataSource, match.verifiedAt, now, now
+    ));
+  }
+  await env.DB.batch(statements);
+  return matches.length;
+}
+
 async function importRow(env, row, dryRun) {
   const officialName = String(row.officialName || "").trim().slice(0, 160);
   if (!officialName) return { id: row.id || null, action: "error", message: "officialName mancante" };
@@ -64,10 +169,6 @@ async function importRow(env, row, dryRun) {
 
   const existing = await env.DB.prepare("select * from clubs where id = ?").bind(id).first();
   const locked = new Set(existing?.locked_fields ? JSON.parse(existing.locked_fields) : []);
-
-  // Una correzione manuale (colonna elencata in locked_fields dalla volta
-  // precedente) sopravvive a questo import: il valore che arriva dal file
-  // viene scartato per quella colonna, resta quello già in D1.
   const finalRow = {
     official_name: locked.has("official_name") ? existing.official_name : officialName,
     short_name: locked.has("short_name") ? existing.short_name : shortName,
@@ -113,9 +214,9 @@ async function importRow(env, row, dryRun) {
     }
   }
 
-  // --- Formazioni (club_teams) ---
   const teams = Array.isArray(row.teams) && row.teams.length ? row.teams : [defaultTeam()];
   const teamIds = [];
+  let importedMatches = 0;
   for (const rawTeam of teams) {
     const teamType = TEAM_TYPES.includes(rawTeam.teamType) ? rawTeam.teamType : "prima_squadra";
     const discipline = DISCIPLINES.includes(rawTeam.discipline) ? rawTeam.discipline : "calcio11";
@@ -124,18 +225,18 @@ async function importRow(env, row, dryRun) {
     const label = rawTeam.label ? String(rawTeam.label).trim().slice(0, 120) : null;
     const teamId = rawTeam.id ? slugify(rawTeam.id) : slugify(`${id}-${teamNaturalKey({ teamType, discipline, gender, ageGroup })}`);
     teamIds.push({ id: teamId, teamType, discipline, gender, ageGroup, raw: rawTeam });
-    if (dryRun) continue;
 
-    const existingTeam = await env.DB.prepare("select id from club_teams where id = ?").bind(teamId).first();
-    if (existingTeam) {
-      await env.DB.prepare("update club_teams set team_type=?, discipline=?, gender=?, age_group=?, label=?, updated_at=? where id=?")
-        .bind(teamType, discipline, gender, ageGroup, label, now, teamId).run();
-    } else {
-      await env.DB.prepare("insert into club_teams (id, club_id, team_type, discipline, gender, age_group, label, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
-        .bind(teamId, id, teamType, discipline, gender, ageGroup, label, now, now).run();
+    if (!dryRun) {
+      const existingTeam = await env.DB.prepare("select id from club_teams where id = ?").bind(teamId).first();
+      if (existingTeam) {
+        await env.DB.prepare("update club_teams set team_type=?, discipline=?, gender=?, age_group=?, label=?, updated_at=? where id=?")
+          .bind(teamType, discipline, gender, ageGroup, label, now, teamId).run();
+      } else {
+        await env.DB.prepare("insert into club_teams (id, club_id, team_type, discipline, gender, age_group, label, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+          .bind(teamId, id, teamType, discipline, gender, ageGroup, label, now, now).run();
+      }
     }
 
-    // Stagione verificata (opzionale)
     for (const s of Array.isArray(rawTeam.seasons) ? rawTeam.seasons : []) {
       const season = String(s.season || "").trim();
       if (!season) { warnings.push(`stagione senza campo "season" ignorata per team ${teamId}`); continue; }
@@ -149,7 +250,6 @@ async function importRow(env, row, dryRun) {
       }
     }
 
-    // Fonte calendario (opzionale, solo se davvero verificata)
     for (const cal of Array.isArray(rawTeam.calendarSources) ? rawTeam.calendarSources : []) {
       if (!cal.provider || !cal.providerTeamId) { warnings.push(`calendarSource incompleto ignorato per team ${teamId}`); continue; }
       if (!dryRun) {
@@ -160,9 +260,10 @@ async function importRow(env, row, dryRun) {
         `).bind(crypto.randomUUID(), teamId, cal.provider, String(cal.providerTeamId), cal.active === false ? 0 : 1, now).run();
       }
     }
+
+    importedMatches += await syncTeamMatches(env, teamId, rawTeam.matches, dryRun, warnings);
   }
 
-  // --- ID provider esterni (separati dall'id interno, mai deduplicati per somiglianza nome) ---
   for (const p of Array.isArray(row.providerIds) ? row.providerIds : []) {
     if (!p.provider || !p.providerId) { warnings.push("providerId incompleto ignorato"); continue; }
     const conflict = await env.DB.prepare("select club_id from club_provider_ids where provider = ? and provider_id = ?").bind(p.provider, String(p.providerId)).first();
@@ -171,12 +272,12 @@ async function importRow(env, row, dryRun) {
       continue;
     }
     if (!dryRun && !conflict) {
-      await env.DB.prepare("insert into club_provider_ids (id, club_id, provider, provider_id, created_at) values (?, ?, ?, ?, ?)")
+      await env.DB.prepare("insert into club_provider_ids (id, club_id, provider, provider_id, created_at) values (?, ?, ?, ?, ?")
         .bind(crypto.randomUUID(), id, p.provider, String(p.providerId), now).run();
     }
   }
 
-  return { id, action: existing ? "updated" : "created", teams: teamIds.map((t) => t.id), warnings };
+  return { id, action: existing ? "updated" : "created", teams: teamIds.map((t) => t.id), matches: importedMatches, warnings };
 }
 
 export async function onRequestPost({ request, env }) {
@@ -192,6 +293,7 @@ export async function onRequestPost({ request, env }) {
     if (!rows.length) return error("Nessuna riga da importare (body.rows vuoto)", 400);
     if (rows.length > 500) return error("Troppe righe in un solo import (max 500): dividi il file", 400);
     const dryRun = Boolean(body.dryRun);
+    if (!dryRun) await ensureCalendarSchema(env);
 
     const results = [];
     for (const row of rows) {
@@ -203,6 +305,7 @@ export async function onRequestPost({ request, env }) {
     }
 
     const summary = results.reduce((acc, r) => { acc[r.action] = (acc[r.action] || 0) + 1; return acc; }, {});
+    summary.matches = results.reduce((sum, r) => sum + Number(r.matches || 0), 0);
     return json({ ok: true, dryRun, summary, results });
   } catch (err) {
     console.error("clubs-import failed", err);
