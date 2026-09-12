@@ -210,6 +210,17 @@
   function getActiveAccount() {
     try { return localStorage.getItem(ACTIVE_KEY) || null; } catch { return null; }
   }
+  function preferenceTeamKey(pref) {
+    if (pref?.clubTeam?.id) return `club:${pref.clubTeam.id}`;
+    if (pref?.themeMode === "custom") return `custom:${pref.customClubName || ""}:${pref.customTeamLabel || ""}`;
+    return "none";
+  }
+  function refreshCalendarForTeamChange(accountId, previousPref, nextPref) {
+    if (!accountId || preferenceTeamKey(previousPref) === preferenceTeamKey(nextPref)) return;
+    try { localStorage.removeItem(`gk_matches_${accountId}`); } catch {}
+    window.gkCalendarExtras?.resetInMemoryState?.();
+    window.gkCalendarExtras?.ensureMatchesLoaded?.(true);
+  }
 
   const activeId = getActiveAccount();
   const cached = activeId ? readCache(activeId) : null;
@@ -226,9 +237,11 @@
       applyPreference(readCache(accountId));
     },
     setForAccount(accountId, pref) {
+      const previous = readCache(accountId);
       setActiveAccount(accountId);
       writeCache(accountId, pref || null);
       applyPreference(pref);
+      refreshCalendarForTeamChange(accountId, previous, pref);
     },
     resetVisual() {
       setActiveAccount(null);
