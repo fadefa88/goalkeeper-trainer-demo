@@ -30,6 +30,8 @@
   const TEXT_LIGHT = "#f2f2f0";
   const TEXT_DARK = "#101112";
   const HEX_RE = /^#[0-9a-f]{6}$/i;
+  const CLUB_ID_RE = /^[a-z0-9][a-z0-9-]{0,79}$/;
+  const NEUTRAL_LOGO = "icon.svg";
 
   // Tema neutro e professionale: nessun colore di nessuna società, usato
   // al primo accesso, per account senza preferenza e all'auth screen.
@@ -95,10 +97,6 @@
     const hsl = rgbToHsl(hexToRgb(hex));
     return rgbToHex(hslToRgb({ ...hsl, l: Math.min(0.96, Math.max(0.04, l)) }));
   }
-  // Sposta la luminosità in piccoli passi (schiarendo O scurendo, qualunque
-  // direzione arrivi prima al target) finché il contrasto con bgHex non
-  // raggiunge minRatio. Fallback estremo: bianco o nero puro, quello dei
-  // due con contrasto migliore.
   function adjustForContrast(hex, bgHex, minRatio) {
     if (contrastRatio(hex, bgHex) >= minRatio) return hex;
     const hsl = rgbToHsl(hexToRgb(hex));
@@ -125,9 +123,7 @@
   function buildTokens(primaryIn, secondaryIn) {
     const primary = HEX_RE.test(primaryIn || "") ? primaryIn : NEUTRAL.primary;
     const secondaryRaw = HEX_RE.test(secondaryIn || "") ? secondaryIn : primary;
-
     const red = adjustForContrast(primary, BG, 3.0);
-
     let fill = primary;
     let onAccent = pickOnAccent(fill);
     for (let guard = 0; onAccent.ratio < 4.5 && guard < 30; guard++) {
@@ -136,12 +132,10 @@
       fill = withLightness(fill, hsl.l + dir);
       onAccent = pickOnAccent(fill);
     }
-
     const redText = adjustForContrast(primary, PANEL_2, 4.5);
     const redOnLight = adjustForContrast(primary, "#ffffff", 4.5);
     const fillDeep = withLightness(fill, rgbToHsl(hexToRgb(fill)).l - 0.14);
     const secondary = adjustForContrast(secondaryRaw, PANEL_2, 3.0);
-
     return {
       "--red": red,
       "--red-text": redText,
@@ -162,16 +156,34 @@
   function applyPalette(primary, secondary) {
     applyTokens(buildTokens(primary, secondary));
   }
+
+  // Logo UI dinamico: il file viene derivato dall'id stabile del club,
+  // perché la pipeline salva sempre assets/club-logos/<club-id>.webp.
+  // Non tocca manifest/favicon/icona PWA installata.
+  let logoRequestVersion = 0;
+  function applyLogo(pref) {
+    const version = ++logoRequestVersion;
+    root.style.setProperty("--app-logo", `url("${NEUTRAL_LOGO}")`);
+    if (!pref || pref.themeMode !== "club" || !pref.club?.id || typeof Image === "undefined") return;
+    const clubId = String(pref.club.id).trim().toLowerCase();
+    if (!CLUB_ID_RE.test(clubId)) return;
+    const path = `/assets/club-logos/${clubId}.webp`;
+    const probe = new Image();
+    probe.onload = () => {
+      if (version === logoRequestVersion) root.style.setProperty("--app-logo", `url("${path}")`);
+    };
+    probe.onerror = () => {
+      if (version === logoRequestVersion) root.style.setProperty("--app-logo", `url("${NEUTRAL_LOGO}")`);
+    };
+    probe.src = path;
+  }
+
   function applyNeutral() {
     applyPalette(NEUTRAL.primary, NEUTRAL.secondary);
+    applyLogo(null);
   }
 
   // --- Cache locale per-account -------------------------------------------
-  // Una voce per account (mai globale): due account sullo stesso
-  // dispositivo non si vedono mai i colori a vicenda. "active account" è un
-  // puntatore separato, cancellato al logout, che permette una riapertura
-  // istantanea (stessa sessione valida) senza mostrare per un istante il
-  // tema neutro prima della fetch di rete.
   const ACTIVE_KEY = "gk_theme_active_account";
   function cacheKey(accountId) { return `gk_theme_${accountId}`; }
 
@@ -198,10 +210,6 @@
     try { return localStorage.getItem(ACTIVE_KEY) || null; } catch { return null; }
   }
 
-  // Preferenza salvata (da /api/club-preference) -> {primary, secondary} o
-  // null (tema neutro). useCustomColors ha sempre priorità quando presente
-  // e valido: sono i colori scelti dal cliente, anche sopra un club del
-  // catalogo.
   function paletteFromPreference(pref) {
     if (!pref) return null;
     if (pref.useCustomColors && HEX_RE.test(pref.colorPrimary || "")) {
@@ -216,14 +224,10 @@
   function applyPreference(pref) {
     const palette = paletteFromPreference(pref);
     if (palette) applyPalette(palette.primary, palette.secondary);
-    else applyNeutral();
+    else applyPalette(NEUTRAL.primary, NEUTRAL.secondary);
+    applyLogo(pref);
   }
 
-  // Applicazione immediata (sincrona, prima di qualunque fetch) dell'ultimo
-  // tema noto per l'account ancora "attivo" secondo il dispositivo: non
-  // significa sessione valida, solo "ultima volta usata da qui". loadData()
-  // in cloudflare-client.js la riconcilia subito dopo con la risposta reale
-  // del server, quindi un'ipotesi sbagliata dura al più un frame.
   (function bootstrap() {
     const activeId = getActiveAccount();
     const cached = activeId ? readCache(activeId) : null;
@@ -237,27 +241,16 @@
     applyPalette,
     applyNeutral,
     applyPreference,
-    // Idratazione immediata SOLO da cache locale (nessuna scrittura): usata
-    // da loadData() appena /api/me risponde, prima ancora di sapere se
-    // questo account ha una preferenza sul server. Se non c'è cache, applica
-    // il tema neutro (mai quello di un account precedente).
     hydrateAccount(accountId) {
       setActiveAccount(accountId);
       const cached = readCache(accountId);
       applyPreference(cached);
     },
-    // Applica + salva in cache per l'account indicato, con la preferenza
-    // AUTORITATIVA appena arrivata dal server (dopo un salvataggio riuscito
-    // su /api/club-preference, o dopo la GET in loadData()).
     setForAccount(accountId, pref) {
       setActiveAccount(accountId);
       writeCache(accountId, pref || null);
       applyPreference(pref);
     },
-    // Solo reset visivo (usato al logout / sessione scaduta): NON cancella
-    // la cache dell'account, così la stessa persona la ritrova intatta al
-    // login successivo. Cancella solo il puntatore "attivo", così l'auth
-    // screen resta neutro finché non c'è un login riuscito.
     resetVisual() {
       setActiveAccount(null);
       applyNeutral();
