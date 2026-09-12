@@ -6,7 +6,7 @@ function normalizeCompetition(value) {
 
 function calendarSupported(pref) {
   const competition = normalizeCompetition(pref?.season?.competition);
-  return competition === "serie a" || competition === "serie b";
+  return competition === "serie a" || competition === "serie b" || competition === "serie c";
 }
 
 function mapMatch(row) {
@@ -33,7 +33,7 @@ async function loadStoredMatches(env, userId) {
   if (!pref?.club || !pref?.clubTeam || !pref?.season || !calendarSupported(pref)) {
     return {
       available: false,
-      reason: "Calendario automatico disponibile al momento solo per squadre di Serie A e Serie B.",
+      reason: "Calendario automatico disponibile al momento per squadre di Serie A, Serie B e Serie C.",
       preference: pref,
       matches: []
     };
@@ -89,7 +89,7 @@ export async function onRequestGet({ request, env }) {
         available: result.available,
         reason: result.available ? null : result.reason,
         team: pref?.club ? { id: pref.club.id, name: pref.club.shortName || pref.club.officialName || "Squadra" } : null,
-        source: result.available ? "Diretta.it · sincronizzato in D1" : null,
+        source: result.available ? "Fonti ufficiali + Diretta.it · sincronizzato in D1" : null,
         season: pref?.season?.season || null,
         fetchedAt: new Date().toISOString(),
         matches: result.matches
