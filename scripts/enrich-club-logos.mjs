@@ -282,8 +282,11 @@ async function scrapeLeagueCalendar(page, league) {
   const calendar = await scrapeMatchPage(page, league.calendarUrl, league.competition);
   const results = await scrapeMatchPage(page, league.resultsUrl, league.competition);
   const matches = dedupeMatches([...calendar, ...results]);
+  if (matches.length < 180) {
+    throw new Error(`${league.competition}: estratte solo ${matches.length} partite con data valida (attese almeno 180 per una copertura rolling affidabile). Import calendario annullato.`);
+  }
   if (matches.length < 300) {
-    throw new Error(`${league.competition}: estratte solo ${matches.length} partite con data valida (attese almeno 300). Import calendario annullato.`);
+    console.warn(`${league.competition}: ${matches.length} partite datate disponibili oggi; importo la copertura rolling verificata e le prossime Action aggiungeranno le gare future quando Diretta pubblicherà la data.`);
   }
   console.log(`${league.competition}: ${matches.length} partite calendario/risultati estratte da Diretta.it`);
   return matches;
@@ -363,9 +366,9 @@ function attachCalendars(clubs, calendars) {
     }
 
     const teams = clubs.map(club => competitionTeam(club, league.competition)).filter(Boolean);
-    const weak = teams.filter(team => (team.matches || []).length < 25);
+    const weak = teams.filter(team => (team.matches || []).length < 18);
     if (weak.length) {
-      throw new Error(`${league.competition}: ${weak.length} squadre hanno meno di 25 partite associate; annullo per evitare un import parziale.`);
+      throw new Error(`${league.competition}: ${weak.length} squadre hanno meno di 18 partite associate; annullo per evitare un import sbilanciato.`);
     }
     console.log(`${league.competition}: ${mapped}/${rows.length} partite associate alle squadre del catalogo`);
   }
